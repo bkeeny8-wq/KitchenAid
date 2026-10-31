@@ -1,0 +1,343 @@
+{
+  "schemaVersion": 1,
+  "id": "ny-strip-crostini-with-creamed-horseradish-spinach",
+  "title": "NY Strip Crostini with Creamed Horseradish Spinach",
+  "summary": "Crisp baguette, warm creamed horseradish spinach, and thin slices of seared NY strip.",
+  "yieldText": "12 crostini (serves 4)",
+  "yieldAmount": 12,
+  "yieldUnitLabel": "crostini",
+  "servings": 4,
+  "activeMinutes": 35,
+  "totalMinutes": 70,
+  "components": [
+    {
+      "name": "Crostini and steak",
+      "lines": [
+        {
+          "name": "baguette",
+          "preparation": "1/2 inch thick",
+          "raw": "12 slices            baguette, 1/2 inch thick",
+          "qualifier": null,
+          "unit": "slice",
+          "dimension": "count",
+          "lineID": "baguette-1",
+          "hasQuantity": true,
+          "amountNumerator": 12,
+          "amountDenominator": 1,
+          "display": "12"
+        },
+        {
+          "name": "olive oil",
+          "preparation": null,
+          "raw": "3 tbsp               olive oil",
+          "qualifier": null,
+          "unit": "tbsp",
+          "dimension": "volume",
+          "lineID": "olive-oil-1",
+          "hasQuantity": true,
+          "amountNumerator": 3,
+          "amountDenominator": 1,
+          "display": "3"
+        },
+        {
+          "name": "NY strip steak",
+          "preparation": "about 1.25 inches thick",
+          "raw": "16 oz                NY strip steak, about 1.25 inches thick",
+          "qualifier": null,
+          "unit": "oz",
+          "dimension": "mass",
+          "dimensionConfirmed": true,
+          "lineID": "ny-strip-steak-1",
+          "hasQuantity": true,
+          "amountNumerator": 16,
+          "amountDenominator": 1,
+          "display": "16"
+        },
+        {
+          "name": "kosher salt",
+          "preparation": null,
+          "raw": "1 tsp                kosher salt",
+          "qualifier": null,
+          "unit": "tsp",
+          "dimension": "volume",
+          "lineID": "kosher-salt-1",
+          "hasQuantity": true,
+          "amountNumerator": 1,
+          "amountDenominator": 1,
+          "display": "1"
+        },
+        {
+          "name": "black pepper",
+          "preparation": null,
+          "raw": "1/2 tsp              black pepper",
+          "qualifier": null,
+          "unit": "tsp",
+          "dimension": "volume",
+          "lineID": "black-pepper-1",
+          "hasQuantity": true,
+          "amountNumerator": 1,
+          "amountDenominator": 2,
+          "display": "1/2"
+        },
+        {
+          "name": "butter",
+          "preparation": null,
+          "raw": "1 tbsp               butter",
+          "qualifier": null,
+          "unit": "tbsp",
+          "dimension": "volume",
+          "lineID": "butter-1",
+          "hasQuantity": true,
+          "amountNumerator": 1,
+          "amountDenominator": 1,
+          "display": "1"
+        },
+        {
+          "name": "garlic",
+          "preparation": "smashed",
+          "raw": "2                    garlic cloves, smashed",
+          "qualifier": null,
+          "unit": "clove",
+          "dimension": "count",
+          "lineID": "garlic-1",
+          "hasQuantity": true,
+          "amountNumerator": 2,
+          "amountDenominator": 1,
+          "display": "2"
+        }
+      ]
+    },
+    {
+      "name": "Creamed horseradish spinach",
+      "lines": [
+        {
+          "name": "baby spinach",
+          "preparation": null,
+          "raw": "10 oz                baby spinach",
+          "qualifier": null,
+          "unit": "oz",
+          "dimension": "mass",
+          "dimensionConfirmed": true,
+          "lineID": "baby-spinach-1",
+          "hasQuantity": true,
+          "amountNumerator": 10,
+          "amountDenominator": 1,
+          "display": "10"
+        },
+        {
+          "name": "shallot",
+          "preparation": "minced",
+          "raw": "1                    shallot, minced",
+          "qualifier": null,
+          "unit": null,
+          "dimension": "count",
+          "lineID": "shallot-1",
+          "hasQuantity": true,
+          "amountNumerator": 1,
+          "amountDenominator": 1,
+          "display": "1"
+        },
+        {
+          "name": "butter",
+          "preparation": null,
+          "raw": "1 tbsp               butter",
+          "qualifier": null,
+          "unit": "tbsp",
+          "dimension": "volume",
+          "lineID": "butter-2",
+          "hasQuantity": true,
+          "amountNumerator": 1,
+          "amountDenominator": 1,
+          "display": "1"
+        },
+        {
+          "name": "cream cheese",
+          "preparation": null,
+          "raw": "4 oz                 cream cheese",
+          "qualifier": null,
+          "unit": "oz",
+          "dimension": "mass",
+          "dimensionConfirmed": true,
+          "lineID": "cream-cheese-1",
+          "hasQuantity": true,
+          "amountNumerator": 4,
+          "amountDenominator": 1,
+          "display": "4"
+        },
+        {
+          "name": "heavy cream",
+          "preparation": null,
+          "raw": "3 tbsp               heavy cream",
+          "qualifier": null,
+          "unit": "tbsp",
+          "dimension": "volume",
+          "lineID": "heavy-cream-1",
+          "hasQuantity": true,
+          "amountNumerator": 3,
+          "amountDenominator": 1,
+          "display": "3"
+        },
+        {
+          "name": "prepared horseradish",
+          "preparation": "drained",
+          "raw": "3 tbsp               prepared horseradish, drained",
+          "qualifier": null,
+          "unit": "tbsp",
+          "dimension": "volume",
+          "lineID": "prepared-horseradish-1",
+          "hasQuantity": true,
+          "amountNumerator": 3,
+          "amountDenominator": 1,
+          "display": "3"
+        },
+        {
+          "name": "Parmesan",
+          "preparation": "grated",
+          "raw": "2 tbsp               grated Parmesan",
+          "qualifier": null,
+          "unit": "tbsp",
+          "dimension": "volume",
+          "lineID": "parmesan-1",
+          "hasQuantity": true,
+          "amountNumerator": 2,
+          "amountDenominator": 1,
+          "display": "2"
+        },
+        {
+          "name": "lemon juice",
+          "preparation": null,
+          "raw": "1 tsp                lemon juice",
+          "qualifier": null,
+          "unit": "tsp",
+          "dimension": "volume",
+          "lineID": "lemon-juice-1",
+          "hasQuantity": true,
+          "amountNumerator": 1,
+          "amountDenominator": 1,
+          "display": "1"
+        },
+        {
+          "name": "kosher salt",
+          "preparation": null,
+          "raw": "1/4 tsp              kosher salt",
+          "qualifier": null,
+          "unit": "tsp",
+          "dimension": "volume",
+          "lineID": "kosher-salt-2",
+          "hasQuantity": true,
+          "amountNumerator": 1,
+          "amountDenominator": 4,
+          "display": "1/4"
+        }
+      ]
+    },
+    {
+      "name": "To finish",
+      "lines": [
+        {
+          "name": "fresh chives",
+          "preparation": "finely chopped",
+          "raw": "1 tbsp               fresh chives, finely chopped",
+          "qualifier": null,
+          "unit": "tbsp",
+          "dimension": "volume",
+          "lineID": "fresh-chives-1",
+          "hasQuantity": true,
+          "amountNumerator": 1,
+          "amountDenominator": 1,
+          "display": "1"
+        },
+        {
+          "name": "flaky salt",
+          "preparation": null,
+          "raw": "Pinch                flaky salt",
+          "qualifier": "Pinch",
+          "unit": null,
+          "dimension": null,
+          "lineID": "flaky-salt-1",
+          "hasQuantity": false,
+          "amountNumerator": 0,
+          "amountDenominator": 1,
+          "display": "Pinch"
+        }
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "order": 1,
+      "title": "Season the steak",
+      "body": "Pat the steak dry and season all over with 1 tsp kosher salt and 1/2 tsp black pepper. Let it sit at room temperature so it sears evenly.",
+      "minMinutes": 30,
+      "maxMinutes": 30,
+      "stepID": "season-the-steak-1"
+    },
+    {
+      "order": 2,
+      "title": "Toast the baguette",
+      "body": "Heat the oven to 400F. Arrange the baguette slices on a sheet pan, brush with olive oil, and bake until golden and crisp.",
+      "minMinutes": 9,
+      "maxMinutes": 9,
+      "stepID": "toast-the-baguette-1"
+    },
+    {
+      "order": 3,
+      "title": "Sear the steak",
+      "body": "Heat a heavy skillet over high heat until smoking. Sear the steak 3 to 4 minutes per side for medium rare (125F). In the last minute, add 1 tbsp butter and the smashed garlic and spoon the butter over the steak.",
+      "minMinutes": 7,
+      "maxMinutes": 8,
+      "stepID": "sear-the-steak-1"
+    },
+    {
+      "order": 4,
+      "title": "Rest the steak",
+      "body": "Move the steak to a board and let it rest. Wipe most of the drippings out of the skillet before the spinach.",
+      "minMinutes": 9,
+      "maxMinutes": 9,
+      "stepID": "rest-the-steak-1"
+    },
+    {
+      "order": 5,
+      "title": "Wilt the spinach",
+      "body": "In a medium pan over medium heat, melt 1 tbsp butter and cook the shallot for 2 minutes. Add the spinach in handfuls until wilted. Transfer to a clean towel or sieve, squeeze out as much liquid as you can, and roughly chop.",
+      "minMinutes": 5,
+      "maxMinutes": 5,
+      "stepID": "wilt-the-spinach-1"
+    },
+    {
+      "order": 6,
+      "title": "Make the creamed spinach",
+      "body": "In the same pan over low heat, melt the cream cheese with the heavy cream and horseradish, stirring until smooth. Fold in the spinach, Parmesan, lemon juice, and 1/4 tsp salt. Taste and add more horseradish if you want more heat.",
+      "minMinutes": 2,
+      "maxMinutes": 2,
+      "stepID": "make-the-creamed-spinach-1"
+    },
+    {
+      "order": 7,
+      "title": "Slice the steak",
+      "body": "Slice the steak thinly against the grain, then cut the slices to fit the crostini.",
+      "minMinutes": null,
+      "maxMinutes": null,
+      "stepID": "slice-the-steak-1"
+    },
+    {
+      "order": 8,
+      "title": "Assemble",
+      "body": "Spoon warm spinach onto each crostini, top with a slice of steak, and finish with chives and a pinch of flaky salt. Serve right away.",
+      "minMinutes": null,
+      "maxMinutes": null,
+      "stepID": "assemble-1"
+    }
+  ],
+  "notes": [
+    "The spinach can be made a day ahead and gently rewarmed with a splash of cream.",
+    "Squeezing the spinach dry is the key step. Extra water makes the crostini soggy.",
+    "For a sharper bite, stir a little extra horseradish into the spinach just before serving, or add a thin horseradish drizzle on top of the steak.",
+    "Toast the baguette just before serving so it stays crisp."
+  ],
+  "warnings": [],
+  "aggregatesWithinRecipe": [
+    "butter",
+    "kosher salt"
+  ]
+}
