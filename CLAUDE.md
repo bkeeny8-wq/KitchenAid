@@ -177,7 +177,30 @@ python3 -I scripts/test_import.py
 
 The test asserts all twelve requirements against the fixture. **It runs
 anywhere, including cloud sessions** — so if you touch the importer, run it.
-It is the only automated check in this project that can actually execute.
+
+## The Swift checker
+
+```bash
+python3 -I scripts/check_swift.py
+```
+
+With the two Python tests, this is the whole of what can actually execute in a
+cloud session. **Run it before claiming any Swift change is sound.** It checks
+only what a missing compiler makes expensive to get wrong:
+
+- Every `@Model` is in `KitchenAidSchemaV1.models`, and vice versa. A model
+  missing from that array is **not** a build error — it simply has no table, and
+  the first fetch fails at runtime, on a device, with real data in it.
+- Braces, parens and brackets balance per file.
+- No `@Attribute(.unique)` and no non-optional to-many relationship.
+- No symbol from a declined or cut feature has crept back.
+- Type names used but declared nowhere in the tree. This heuristic is what found
+  `CalendarKey` and `RecipeLoader` being referenced by files that compiled
+  against nothing, and it has an allowlist of framework types — a newly used
+  Apple type must be added to `KNOWN` in the script.
+
+It is **not a compiler**: it cannot see a type error, a wrong argument label, or
+an unsatisfied protocol conformance. Say so rather than implying otherwise.
 
 ## Layout and style
 
