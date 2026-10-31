@@ -18,7 +18,9 @@ wrong, say so and ask.
 | **Opens on** | **Today** — what's planned for today with a Cook button, falling back to recent recipes when the plan is empty. Not the library, not the week. |
 | **Cooking history** | **Last-made date only.** No journal, no ratings, no "how did it go". He was offered a full journal and declined it. |
 | **In-app editing** | **Notes and tweaks only.** Adjust a quantity, fix a step, add a note after cooking. No authoring UI — recipes are written before they arrive. |
-| **Household** | **Named people with a full or half portion.** No allergy or dietary data; he declined it. Attendance drives scaling. |
+| **Household** | **Named people with a full or half portion**, addable and removable at will. Today it is "mostly just me plus 1 adult", so ship two and never hardcode a count. Plus a **guest count** per meal for when there's a party — counted, not named. No allergy or dietary data; he declined it. Attendance drives scaling. |
+| **Inventory** | **The full ledger.** Offered a simple current-amount version, he chose lots with purchase dates, a transaction record of every add and depletion, par levels and reconciliation. ~8 models, and he knows it. Level is summed from **transactions, not lots**. |
+| **A meal** | **Several recipes per meal.** Tuesday dinner is a main plus sides, scaled together for whoever is eating. Costs the `MealRecipe` join; he picked it over one-recipe-per-slot. |
 | **Photos** | **None, anywhere.** Not on recipes, not on steps. Do not add `PhotosUI`, an asset folder, or an image property "for later". |
 | **Units** | Per-ingredient, per-context. See the catalogue section. |
 
@@ -200,9 +202,17 @@ speculative:
 
 ## Deliberately not in v1
 
-CloudKit sync · runtime recipe import (paste or open a file — designed for, not
-built) · purchase-unit rounding ("1 baguette" instead of "12 slices") ·
-leftovers tracking · nutrition data · a recipe authoring UI.
+CloudKit sync · runtime recipe import (paste or open a file — offered in v1 and
+he chose to defer it, since he is in a build loop anyway; designed for, so it
+drops in without reshaping anything) · leftovers tracking · nutrition data ·
+a recipe authoring UI.
+
+**Purchase-unit rounding is now IN v1**, not deferred: the panel specified a
+two-pass count collapse (count→count first, so `clove → 1/10 head` and
+`slice → 1/12 loaf`; then count→mass only if every noun shares a target). That
+turns the fixture's "12 slices baguette" into "1 baguette" and garlic into
+"need 1 3/10 heads, buy 2 heads". The mechanism is written, so the marginal
+cost is low and it makes the core feature correct rather than merely working.
 
 Several of these are *designed for* without being built. Check
 `docs/ARCHITECTURE.md` before assuming one needs a migration.
