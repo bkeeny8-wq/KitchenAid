@@ -1,0 +1,30 @@
+.DS_Store
+*.xcuserstate
+xcuserdata/
+DerivedData/
+build/
+*.ipa
+*.dSYM.zip
+
+# Xcode's per-user scheme management. The shared scheme in xcshareddata/ IS
+# tracked so a fresh clone opens with a runnable scheme instead of none.
+!Kitchen.xcodeproj/xcshareddata/
+
+# Swift Package Manager
+.swiftpm/
+.build/
+
+# Local-only build overrides. The tracked template must ship or a clone
+# cannot build.
+Config/*.local.xcconfig
+
+# Recipe photos are camera-roll imports: large, binary, and re-importable.
+# The FOLDER stays tracked via .gitkeep because the Xcode project holds a
+# reference to it — ignoring the directory itself would leave a clone with a
+# dangling folder reference.
+Kitchen/Resources/RecipePhotos/*
+!Kitchen/Resources/RecipePhotos/.gitkeep
+
+# Python bytecode from recipe import/parsing scripts
+__pycache__/
+*.pyc
