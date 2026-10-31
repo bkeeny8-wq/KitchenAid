@@ -73,6 +73,39 @@ Two are counterintuitive and get re-broken often:
 Quantities are **exact rationals**, never `Double`. Scaling 1/3 cup by 3 has to
 give exactly 1 cup.
 
+## The shipped ingredient catalogue
+
+`KitchenAid/Resources/ingredients.json` ships with the app and is loaded on
+first launch. It exists for one reason: **adding something must be picking, not
+typing.** Brandon is not going to populate a few hundred ingredients by hand,
+and an app that asks him to is an app he stops opening.
+
+```bash
+python3 -I scripts/build_catalogue.py   # regenerate the JSON
+python3 -I scripts/test_catalogue.py    # rebuild + check it
+```
+
+Never hand-edit `ingredients.json` — edit `scripts/build_catalogue.py` and
+regenerate, or the next build silently reverts the change.
+
+Each entry carries `name`, `aisle` (orders the shopping list the way you walk a
+store), `dimension` (mass/volume/count — decides what can be added to what),
+`unit`, `staple`, and `aliases`.
+
+Two rules the tests enforce:
+
+- **No ambiguous lookups.** A name or alias resolving to two purchases makes the
+  pantry match whichever comes first. The build script fails on collisions; it
+  already caught `coriander`, which is the herb in British usage and the dried
+  seed in American. Only `fresh coriander` maps to cilantro.
+- **Recipe 01 must be fully covered.** All 16 of its ingredients have to resolve
+  and land in a sensible aisle. A catalogue that misses ingredients from the
+  first real recipe is not doing its job.
+
+**Staples** (salt, pepper, oils, vinegars, every spice) are tracked present or
+absent with **no quantity**. Counting teaspoons of salt is work nobody does, and
+a list that keeps asking for salt is a list you stop reading.
+
 ## Importer
 
 Recipes in the ReportLab PDF layout go in via the importer rather than by hand:
@@ -112,11 +145,29 @@ docs/                  ARCHITECTURE.md, fixture, requirements
 - **Comments explain why, not what**, and cite the bug that motivated them where
   there was one. Match the voice in `CFAL3/App/CFAL3App.swift`.
 
+## Asked for, not yet built
+
+Brandon asked for these after seeing the design, so they are intended, not
+speculative:
+
+- **Receipt scanning** to bulk-add to the pantry. On-device OCR via the Vision
+  framework, no network. Receipt text is abbreviated (`GV CRM CHS 8Z`), so it
+  matches against the catalogue and its aliases and asks about what it cannot
+  place — once, then remembers.
+- **Barcode scanning**, with a caveat that shapes the design: a barcode is only
+  a number. Turning one into "heavy cream" needs a commercial product database,
+  which means a subscription and a network call this app does not have. So the
+  first scan of an item asks what it is and every later scan fills itself in.
+  The kitchen becomes its own database. Do not design this as though a lookup
+  service exists.
+
 ## Deliberately not in v1
 
-CloudKit sync · OCR / photo recipe import · nutrition data · barcode scanning ·
-unit conversion by ingredient density (so volume↔mass is refused, not guessed) ·
-purchase-unit rounding ("1 baguette" instead of "12 slices") · leftovers tracking.
+CloudKit sync · photo/OCR recipe import (receipts yes, recipes not yet) ·
+nutrition data · unit conversion by ingredient density (so volume↔mass is
+refused, not guessed — same-dimension conversion like tbsp↔ml does work) ·
+purchase-unit rounding ("1 baguette" instead of "12 slices") · leftovers
+tracking.
 
 Several of these are *designed for* without being built. Check
 `docs/ARCHITECTURE.md` before assuming one needs a migration.

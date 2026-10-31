@@ -1,0 +1,4029 @@
+{
+ "version": 1,
+ "items": [
+  {
+   "name": "bagel",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "baguette",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "french bread"
+   ]
+  },
+  {
+   "name": "breadcrumbs",
+   "aisle": "Bakery",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "brioche",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "loaf",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ciabatta",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "loaf",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "corn tortilla",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "country loaf",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "loaf",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "croissant",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "english muffin",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "flour tortilla",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "tortilla"
+   ]
+  },
+  {
+   "name": "hamburger bun",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "hot dog bun",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "naan",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "panko",
+   "aisle": "Bakery",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": [
+    "panko breadcrumbs"
+   ]
+  },
+  {
+   "name": "pita",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pizza dough",
+   "aisle": "Bakery",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "puff pastry",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "sheet",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "rye bread",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "loaf",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sandwich bread",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "loaf",
+   "staple": false,
+   "aliases": [
+    "white bread"
+   ]
+  },
+  {
+   "name": "sourdough",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "loaf",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "whole wheat bread",
+   "aisle": "Bakery",
+   "dimension": "count",
+   "unit": "loaf",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "active dry yeast",
+   "aisle": "Baking",
+   "dimension": "count",
+   "unit": "packet",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "almond flour",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "baking powder",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "baking soda",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "bittersweet chocolate",
+   "aisle": "Baking",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "brown sugar",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": true,
+   "aliases": [
+    "light brown sugar"
+   ]
+  },
+  {
+   "name": "cocoa powder",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": [
+    "unsweetened cocoa powder"
+   ]
+  },
+  {
+   "name": "cornstarch",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": [
+    "corn flour"
+   ]
+  },
+  {
+   "name": "cream of tartar",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dark brown sugar",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dark chocolate",
+   "aisle": "Baking",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dutch process cocoa",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "food coloring",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "granulated sugar",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": true,
+   "aliases": [
+    "sugar",
+    "white sugar"
+   ]
+  },
+  {
+   "name": "instant yeast",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "marshmallows",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "milk chocolate",
+   "aisle": "Baking",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "powdered sugar",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": [
+    "confectioners sugar",
+    "icing sugar"
+   ]
+  },
+  {
+   "name": "semisweet chocolate chips",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": [
+    "chocolate chips"
+   ]
+  },
+  {
+   "name": "shortening",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sprinkles",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sweetened shredded coconut",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "turbinado sugar",
+   "aisle": "Baking",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "raw sugar"
+   ]
+  },
+  {
+   "name": "white chocolate",
+   "aisle": "Baking",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "apple juice",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "beer",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "bourbon",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "brandy",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": [
+    "cognac"
+   ]
+  },
+  {
+   "name": "club soda",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "coffee",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cola",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cranberry juice",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dry vermouth",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "espresso",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "gin",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lemon juice",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lime juice",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "marsala",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "orange juice",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "port",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "red wine",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": [
+    "dry red wine"
+   ]
+  },
+  {
+   "name": "rum",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sherry",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sparkling water",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tea",
+   "aisle": "Beverages",
+   "dimension": "count",
+   "unit": "bag",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tequila",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tonic water",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "vodka",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "whiskey",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "white wine",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": [
+    "dry white wine"
+   ]
+  },
+  {
+   "name": "bacon",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "beef shank",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "beef stew meat",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "brisket",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "chicken breast",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "boneless skinless chicken breast"
+   ]
+  },
+  {
+   "name": "chicken drumstick",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "chicken thigh",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "chicken thighs"
+   ]
+  },
+  {
+   "name": "chicken wings",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "chorizo",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "chuck roast",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "duck breast",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "filet mignon",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "beef tenderloin"
+   ]
+  },
+  {
+   "name": "flank steak",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "flat iron steak",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ground beef",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": [
+    "hamburger"
+   ]
+  },
+  {
+   "name": "ground chicken",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ground lamb",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ground pork",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ground turkey",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ham",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "hanger steak",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "italian sausage",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "kielbasa",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lamb chop",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lamb shoulder",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "leg of lamb",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ny strip steak",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "new york strip",
+    "strip steak"
+   ]
+  },
+  {
+   "name": "oxtail",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pancetta",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pork belly",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pork chop",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pork shoulder",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": [
+    "pork butt"
+   ]
+  },
+  {
+   "name": "pork tenderloin",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "prosciutto",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ribeye",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "ribeye steak"
+   ]
+  },
+  {
+   "name": "sausage",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "short ribs",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sirloin",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "top sirloin"
+   ]
+  },
+  {
+   "name": "skirt steak",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "turkey breast",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "veal",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "whole chicken",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "anchovy paste",
+   "aisle": "Canned",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "artichoke hearts",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "jar",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "beef stock",
+   "aisle": "Canned",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": [
+    "beef broth"
+   ]
+  },
+  {
+   "name": "canned black beans",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "canned chickpeas",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "canned corn",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "canned tomatoes",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": [
+    "tinned tomatoes"
+   ]
+  },
+  {
+   "name": "capers",
+   "aisle": "Canned",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "chicken stock",
+   "aisle": "Canned",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": [
+    "chicken broth"
+   ]
+  },
+  {
+   "name": "coconut cream",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "coconut milk",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "condensed milk",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "crushed tomatoes",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "diced tomatoes",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "evaporated milk",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "green olives",
+   "aisle": "Canned",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "kalamata olives",
+   "aisle": "Canned",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "olives",
+   "aisle": "Canned",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pumpkin puree",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "roasted red peppers",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "jar",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "san marzano tomatoes",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sardines",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sun-dried tomatoes",
+   "aisle": "Canned",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tomato paste",
+   "aisle": "Canned",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tomato sauce",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tuna in oil",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": [
+    "canned tuna"
+   ]
+  },
+  {
+   "name": "vegetable stock",
+   "aisle": "Canned",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": [
+    "vegetable broth"
+   ]
+  },
+  {
+   "name": "whole peeled tomatoes",
+   "aisle": "Canned",
+   "dimension": "count",
+   "unit": "can",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "almond butter",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "apple cider vinegar",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "avocado oil",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "balsamic vinegar",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "bbq sauce",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "barbecue sauce"
+   ]
+  },
+  {
+   "name": "canola oil",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "chili oil",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "coconut oil",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dijon mustard",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": [
+    "dijon"
+   ]
+  },
+  {
+   "name": "distilled white vinegar",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "extra virgin olive oil",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "fish sauce",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "gochujang",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "grapeseed oil",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "harissa",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "hoisin sauce",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "honey",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "hot sauce",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "jam",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "preserves"
+   ]
+  },
+  {
+   "name": "ketchup",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "malt vinegar",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "maple syrup",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "mayonnaise",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": [
+    "mayo"
+   ]
+  },
+  {
+   "name": "miso paste",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "miso"
+   ]
+  },
+  {
+   "name": "molasses",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "mustard",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "olive oil",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "oyster sauce",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "peanut butter",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "peanut oil",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pesto",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pickles",
+   "aisle": "Condiments",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "prepared horseradish",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "horseradish"
+   ]
+  },
+  {
+   "name": "red wine vinegar",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "relish",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "rice vinegar",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "salsa",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sesame oil",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sherry vinegar",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "soy sauce",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "sriracha",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tabasco",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tahini",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tamari",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "vegetable oil",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "white wine vinegar",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "whole grain mustard",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "worcestershire sauce",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "yellow mustard",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "blue cheese",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "brie",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "burrata",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "butter",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "unsalted butter",
+    "salted butter"
+   ]
+  },
+  {
+   "name": "buttermilk",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cheddar",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "sharp cheddar"
+   ]
+  },
+  {
+   "name": "cottage cheese",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cream cheese",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "creme fraiche",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "crème fraîche"
+   ]
+  },
+  {
+   "name": "egg whites",
+   "aisle": "Dairy",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "egg yolks",
+   "aisle": "Dairy",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "eggs",
+   "aisle": "Dairy",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "egg"
+   ]
+  },
+  {
+   "name": "feta",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "fresh mozzarella",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "goat cheese",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "chevre"
+   ]
+  },
+  {
+   "name": "gorgonzola",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "greek yogurt",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "gruyere",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "gruyère"
+   ]
+  },
+  {
+   "name": "half and half",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "heavy cream",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": [
+    "heavy whipping cream"
+   ]
+  },
+  {
+   "name": "manchego",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "mascarpone",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "milk",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": [
+    "whole milk"
+   ]
+  },
+  {
+   "name": "monterey jack",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "mozzarella",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "parmesan",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "parmigiano reggiano",
+    "grated parmesan"
+   ]
+  },
+  {
+   "name": "pecorino",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "pecorino romano"
+   ]
+  },
+  {
+   "name": "provolone",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ricotta",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sour cream",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "swiss cheese",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "yogurt",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "all-purpose flour",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": true,
+   "aliases": [
+    "plain flour",
+    "flour"
+   ]
+  },
+  {
+   "name": "arborio rice",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "barley",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": [
+    "pearl barley"
+   ]
+  },
+  {
+   "name": "basmati rice",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "black beans",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "bread flour",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "brown rice",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "bucatini",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "bulgur",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cake flour",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cannellini beans",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "chickpeas",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": [
+    "garbanzo beans"
+   ]
+  },
+  {
+   "name": "cornflakes",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cornmeal",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "couscous",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "egg noodles",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "farro",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "fettuccine",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "fusilli",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "gelatin",
+   "aisle": "Dry goods",
+   "dimension": "count",
+   "unit": "packet",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "jasmine rice",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "kidney beans",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lasagna noodles",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lentils",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "linguine",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "oats",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": [
+    "rolled oats"
+   ]
+  },
+  {
+   "name": "orzo",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pasta",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "penne",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pinto beans",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "polenta",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "quinoa",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ramen noodles",
+   "aisle": "Dry goods",
+   "dimension": "count",
+   "unit": "package",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "red lentils",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "rice",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": [
+    "white rice"
+   ]
+  },
+  {
+   "name": "rice noodles",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "rigatoni",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "semolina",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "soba noodles",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "spaghetti",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "split peas",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "steel-cut oats",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "udon",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "whole wheat flour",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "wild rice",
+   "aisle": "Dry goods",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "frozen berries",
+   "aisle": "Frozen",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "frozen broccoli",
+   "aisle": "Frozen",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "frozen corn",
+   "aisle": "Frozen",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "frozen edamame",
+   "aisle": "Frozen",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "frozen french fries",
+   "aisle": "Frozen",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "frozen peas",
+   "aisle": "Frozen",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "frozen pizza",
+   "aisle": "Frozen",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "frozen shrimp",
+   "aisle": "Frozen",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "frozen spinach",
+   "aisle": "Frozen",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ice cream",
+   "aisle": "Frozen",
+   "dimension": "volume",
+   "unit": "ml",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "phyllo dough",
+   "aisle": "Frozen",
+   "dimension": "count",
+   "unit": "package",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pie crust",
+   "aisle": "Frozen",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "almonds",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cashews",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "chia seeds",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dates",
+   "aisle": "Nuts",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dried apricots",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dried cranberries",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "flax seeds",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "flaxseed"
+   ]
+  },
+  {
+   "name": "hazelnuts",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "macadamia nuts",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "peanuts",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pecans",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pine nuts",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "pignoli"
+   ]
+  },
+  {
+   "name": "pistachios",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pumpkin seeds",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "pepitas"
+   ]
+  },
+  {
+   "name": "raisins",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "shredded coconut",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sliced almonds",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sunflower seeds",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "walnuts",
+   "aisle": "Nuts",
+   "dimension": "volume",
+   "unit": "cup",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "acorn squash",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "apple",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "arugula",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "rocket"
+   ]
+  },
+  {
+   "name": "asparagus",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "avocado",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "baby spinach",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "spinach"
+   ]
+  },
+  {
+   "name": "banana",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "basil",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": [
+    "fresh basil"
+   ]
+  },
+  {
+   "name": "beefsteak tomato",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "beet",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "bell pepper",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "blackberry",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "blackberries"
+   ]
+  },
+  {
+   "name": "blueberry",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "blueberries"
+   ]
+  },
+  {
+   "name": "broccoli",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "broccolini",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "brussels sprouts",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "butter lettuce",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "butternut squash",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cabbage",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cantaloupe",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "carrot",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cauliflower",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "celery",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "stalk",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "celery root",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "celeriac"
+   ]
+  },
+  {
+   "name": "cherry",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "cherries"
+   ]
+  },
+  {
+   "name": "cherry tomato",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "chives",
+   "aisle": "Produce",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": false,
+   "aliases": [
+    "fresh chives"
+   ]
+  },
+  {
+   "name": "cilantro",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": [
+    "fresh coriander"
+   ]
+  },
+  {
+   "name": "clementine",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "collard greens",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "corn",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "ear",
+   "staple": false,
+   "aliases": [
+    "corn on the cob"
+   ]
+  },
+  {
+   "name": "cremini mushroom",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "baby bella"
+   ]
+  },
+  {
+   "name": "cucumber",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dill",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": [
+    "fresh dill"
+   ]
+  },
+  {
+   "name": "eggplant",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "aubergine"
+   ]
+  },
+  {
+   "name": "english cucumber",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "fennel",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bulb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "fig",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "figs"
+   ]
+  },
+  {
+   "name": "garlic",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "clove",
+   "staple": false,
+   "aliases": [
+    "garlic cloves"
+   ]
+  },
+  {
+   "name": "ginger",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "fresh ginger"
+   ]
+  },
+  {
+   "name": "granny smith apple",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "grape",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "grapes"
+   ]
+  },
+  {
+   "name": "grapefruit",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "green beans",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "haricot vert"
+   ]
+  },
+  {
+   "name": "green bell pepper",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "habanero",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "honeydew",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "iceberg lettuce",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "jalapeno",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "jalapeño"
+   ]
+  },
+  {
+   "name": "kale",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "leek",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lemon",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lettuce",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lime",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "mango",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "marjoram",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "mint",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": [
+    "fresh mint"
+   ]
+  },
+  {
+   "name": "mushroom",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "mushrooms"
+   ]
+  },
+  {
+   "name": "napa cabbage",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "nectarine",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "onion",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "orange",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "oregano",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": [
+    "fresh oregano"
+   ]
+  },
+  {
+   "name": "oyster mushroom",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "parsley",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": [
+    "flat-leaf parsley",
+    "italian parsley"
+   ]
+  },
+  {
+   "name": "parsnip",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "peach",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pear",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "peas",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pineapple",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "plum",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "poblano pepper",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pomegranate",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "portobello mushroom",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "potato",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "radish",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "raspberry",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "raspberries"
+   ]
+  },
+  {
+   "name": "red bell pepper",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "red cabbage",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "red onion",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "red potato",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "roma tomato",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "plum tomato"
+   ]
+  },
+  {
+   "name": "romaine",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "rosemary",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": [
+    "fresh rosemary"
+   ]
+  },
+  {
+   "name": "russet potato",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "rutabaga",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sage",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": [
+    "fresh sage"
+   ]
+  },
+  {
+   "name": "scallion",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "green onion",
+    "spring onion"
+   ]
+  },
+  {
+   "name": "serrano pepper",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "shallot",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "shiitake mushroom",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "snap peas",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "sugar snap peas"
+   ]
+  },
+  {
+   "name": "snow peas",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "spaghetti squash",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "strawberry",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "strawberries"
+   ]
+  },
+  {
+   "name": "sweet onion",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sweet potato",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "swiss chard",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tarragon",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": [
+    "fresh tarragon"
+   ]
+  },
+  {
+   "name": "thyme",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "staple": false,
+   "aliases": [
+    "fresh thyme"
+   ]
+  },
+  {
+   "name": "tomato",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "turnip",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "watermelon",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "white onion",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "yellow bell pepper",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "yellow onion",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "yellow squash",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "yukon gold potato",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "zucchini",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "courgette"
+   ]
+  },
+  {
+   "name": "anchovy",
+   "aisle": "Seafood",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": [
+    "anchovies"
+   ]
+  },
+  {
+   "name": "branzino",
+   "aisle": "Seafood",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "calamari",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "squid"
+   ]
+  },
+  {
+   "name": "clams",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cod",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "crab",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "halibut",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lobster",
+   "aisle": "Seafood",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lobster tail",
+   "aisle": "Seafood",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "mahi mahi",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "mussels",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "lb",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "oysters",
+   "aisle": "Seafood",
+   "dimension": "count",
+   "unit": "each",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "salmon",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "salmon fillet"
+   ]
+  },
+  {
+   "name": "scallops",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sea bass",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "shrimp",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "prawns"
+   ]
+  },
+  {
+   "name": "smoked salmon",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "lox"
+   ]
+  },
+  {
+   "name": "snapper",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sole",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "swordfish",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "trout",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tuna",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "staple": false,
+   "aliases": [
+    "tuna steak"
+   ]
+  },
+  {
+   "name": "allspice",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "almond extract",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "ancho chili powder",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "bay leaves",
+   "aisle": "Spices",
+   "dimension": "count",
+   "unit": "each",
+   "staple": true,
+   "aliases": [
+    "bay leaf"
+   ]
+  },
+  {
+   "name": "black pepper",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "freshly ground black pepper",
+    "pepper"
+   ]
+  },
+  {
+   "name": "caraway seeds",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "cardamom",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "cayenne",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "cayenne pepper"
+   ]
+  },
+  {
+   "name": "celery seed",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "chili powder",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "chipotle powder",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "cinnamon",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "ground cinnamon"
+   ]
+  },
+  {
+   "name": "cloves",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "ground cloves"
+   ]
+  },
+  {
+   "name": "coriander",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "ground coriander"
+   ]
+  },
+  {
+   "name": "cumin",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "ground cumin"
+   ]
+  },
+  {
+   "name": "curry powder",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "dried basil",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "dried dill",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "dried oregano",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "dried rosemary",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "dried thyme",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "everything bagel seasoning",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "fennel seeds",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "five spice powder",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "flaky salt",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "maldon",
+    "flaky sea salt"
+   ]
+  },
+  {
+   "name": "garam masala",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "garlic powder",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "ginger powder",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "ground ginger"
+   ]
+  },
+  {
+   "name": "herbes de provence",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "italian seasoning",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "kosher salt",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "mustard powder",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "dry mustard"
+   ]
+  },
+  {
+   "name": "nutmeg",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "ground nutmeg"
+   ]
+  },
+  {
+   "name": "old bay",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "onion powder",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "paprika",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "poppy seeds",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "red pepper flakes",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "crushed red pepper"
+   ]
+  },
+  {
+   "name": "saffron",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "sea salt",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "sesame seeds",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "smoked paprika",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "table salt",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": [
+    "salt"
+   ]
+  },
+  {
+   "name": "turmeric",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "vanilla extract",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "white pepper",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "za'atar",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "staple": true,
+   "aliases": []
+  }
+ ]
+}
