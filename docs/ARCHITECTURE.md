@@ -6,11 +6,15 @@ commit with the reason, then change the code — never the other way round.
 
 **Code-fence convention, because half this document is a contract and half is a sketch.**
 A `swift` fence is **compilable Swift** — every declaration in it has a body, and §1–§3
-are entirely `swift` for that reason. A `text` fence is an **API sketch**: signatures
-and field lists whose bodies are specified in the prose beside them. **The `text` blocks are
-exactly these: §4.1, §5.1–§5.4, §5.5's two namespaces, and §7's `PDFExportService` and
-`PDFPaginator`** — because their bodies are §4.2's, §5's and §7's prose. Everything else is
-`swift`, including all of §1–§3 and §7.1's `PrintPage` and `PDFPageWriter`. A bodiless `func`
+are entirely `swift` for that reason. A `text` fence is **everything else**: an API sketch
+(signatures and field lists whose bodies are specified in the prose beside them), a
+pseudocode body, a hand trace, a filename list or a tree. **There are no bare fences in this
+document** — a block is `swift` or it is `text` — so a reader never has to guess whether a
+block was meant to compile. The `text` blocks are §4.1, §4.2's step bodies, §4.3's worked
+traces, §5.1–§5.4, §5.5's two namespaces, §6's view tree, §7's `PDFExportService`,
+`PDFPaginator` and filename list, and §8.1's file tree. Everything else is `swift`: all of
+§1–§3, §5.3's predicate snippet, §5.6's configuration and launch task, and §7.1's
+`PrintPage` and `PDFPageWriter`. A bodiless `func`
 or a
 `{ get }` accessor requirement is a parse error outside a `protocol`, so one never appears
 inside a `swift` fence anywhere in this document. If you are copying a block into Xcode:
@@ -134,8 +138,17 @@ in the house.** The relationship is explicit and one-directional:
   a house that stocks 80 of them makes every pantry screen a filter over mostly-empty rows,
   and makes a catalogue update a migration. `FoodItemResolver.findOrCreate` mints a
   `FoodItem` the first time something is actually needed, copying the template's
-  `dimension`, `unit`, `gramsPerCup`, `staple` and aisle onto it so he can then override
-  any of them. After that the row is his and the template is only provenance.
+  `dimension`, `gramsPerCup` and `staple` onto it and resolving its `aisle` to a seeded
+  `StoreSection`, so he can then override any of them. After that the row is his and the
+  template is only provenance. Two details the mint cannot skip:
+  **`gramsPerCup` is a two-field invariant** — the row stores
+  `hasDensity` plus a numerator/denominator pair, and `FoodItem.gramsPerCup` returns nil
+  without the Bool, so the mint sets `hasDensity = (entry.gramsPerCup != nil)` or §4.3(b′)'s
+  density bridge silently never fires. And the template's **`unit` is deliberately NOT
+  copied**: `FoodItem` has no unit field, the two unit fields it does have mean other things
+  (`parLevelUnitCode` is the par level's unit), and inventing a meaning for one of them is
+  worse than reading the template live — a default unit for an add-stock sheet is
+  `catalog.entry(named: item.catalogName)?.defaultUnit` (§2.6).
 - **Lookup order** in `FoodItemResolver`: existing `FoodItem.matchKey` → existing
   `FoodItem.aliasBlob` → catalogue `name` → catalogue `aliases` → create unresolved. So
   "scallion" finds the catalogue's `scallion` row and "green onion" finds it through the
@@ -172,7 +185,7 @@ turning it on later must not reshape the store.
 5. **No `.deny`.** Only `.cascade` and `.nullify`, decided per edge in §2.8.
 6. **No stored array attributes for data two devices might both append to.** A stored
    `[String]` is last-writer-wins on the *whole blob* and is invisible to `#Predicate`.
-   Aliases and count equivalences are child **rows**. The **six** deliberate
+   Aliases are child **rows**. The **six** deliberate
    delimited-`String` fields, across **four** justifications, are named and justified in
    §2.8.
 7. **Nothing is an incrementing counter.** There is no `cookCount` in this schema at all
@@ -245,8 +258,8 @@ Two things differ:
    `Codable` structs decoded from bundled JSON, joined to SwiftData by a string id. But
    its *persistence* side is a real object graph, for one decisive reason: de-duplicating a
    `FoodItem` means **enumerating every referrer**. With explicit inverses that is **three
-   referrer arrays to repoint (`lots`, `transactions`, `shoppingLines`) plus two child
-   arrays to union (`aliases`, `countEquivalences`)**. With `foodItemID: UUID?` it is a
+   referrer arrays to repoint (`lots`, `transactions`, `shoppingLines`) plus one child
+   array to union (`aliases`)**. With `foodItemID: UUID?` it is a
    full-store scan of every `StockLot`, `InventoryTransaction` and `ShoppingListLine` on
    every launch, forever.
 
@@ -279,7 +292,7 @@ bucket**, the **per-lot / per-item split** and the **cache-versus-ledger delta**
 those are the three things the reconcile screen exists to show.
 
 **0.9.4 — `AppTab`'s cases were never listed and "6 tabs" contradicted the four in the view
-tree.** The enum is written out in §2.28: **five tabs — Today, Recipes, Plan, Shop,
+tree.** The enum is written out in §2.27: **five tabs — Today, Recipes, Plan, Shop,
 Pantry.** Cook is a `fullScreenCover` and Settings is a sheet; neither is a tab. Every count
 in this document says five. **The app opens on Today, which the panel did not have at all**,
 so there is a Today screen the panel never specified; it is added in §6.1.
@@ -307,22 +320,21 @@ portrait prep-ahead page are one document.
 | 10 | **`hasQuantity == false` is how "Pinch" is stored.** Never a zero sentinel. | A nil quantity never enters arithmetic, never suppresses a line, and cannot be confused with a deliberate zero or a parse failure. `0` would aggregate into "2 pinches". |
 | 11 | **Culinary conversion factors as exact rationals, volume base = teaspoon.** tsp 1 / tbsp 3 / fl oz 6 / cup 48 / pint 96 / quart 192 / gallon 768; metric anchored on 1 tsp = 5 mL. Mass: g 1, oz 567/20, lb 2268/5. | SI-exact factors make 1 cup = 236.588 mL, so a 240 mL carton leaves a 3.4 mL residue that surfaces as a spurious "1 tsp heavy cream" line. They also give 32-million denominators and the whole overflow-fallback path those require. |
 | 12 | **`KitchenUnit` is a struct with a `code: String`, not an enum.** | Count nouns are an open set. More importantly each count noun is its own merge bucket, which is the only thing that stops `2 cloves + 1 head` summing to "4 cloves". |
-| 13 | **The `.count` dimension is partitioned by count noun first**, then collapsed across noun buckets through `CountEquivalence`. **The THREE-pass collapse is IN v1**, and the passes are deliberately different in kind: pass A **normalises** every count bucket toward the item's PURCHASE noun and runs even when there is only one bucket; pass B **folds** buckets into one another and needs two of them; pass C bridges what remains into mass or volume, only when every surviving noun resolves to the same one. | `CLAUDE.md` moved purchase-unit rounding into v1. Pass A is what turns the fixture's "12 slices baguette" into "1 loaf" → "1 baguette" — the fixture produces exactly ONE count bucket, so a fold-only design can never reach its own headline case (§3.6). Pass B is what turns garlic's "3 cloves + 1 head" into "need 1 3/10 heads, buy 2 heads". |
-| 14 | **`CountEquivalence` is a per-`FoodItem` row table**, not a scalar `gramsPerCount`. | Garlic needs both clove→1/10 head and head→50 g. One scalar structurally cannot hold two count units. |
-| 15 | **Every shopping line carries an N-element set of per-dimension subtotal ROWS** for requested / have / toBuy / purchase. | Flour arriving as cup + gram + package is three dimensions. A single `secondaryText` slot drops the third. |
-| 16 | **Both `needed` and the rounded `purchase` quantity are stored, and receive-into-inventory posts the PURCHASE quantity.** | Restocking what the recipe needed makes tracked stock drift monotonically to zero and the pantry is useless within a month. The line reads "need 1 1/3 cups, buy 1 quart" and the quart enters the ledger. |
-| 17 | **`StoreSection` and `StorageLocation` are `@Model` rows under a `Store` parent**, with `sortIndex` and `defaultShelfLifeDays`. | Enums mean no "Fish counter" or "Garage fridge" without a build, and a walk order in `UserDefaults` is deliberately not synced — his iPad would shop a different store than his phone. |
-| 18 | **The catalogue is not seeded into SwiftData.** `FoodItem` rows are minted on demand from a catalogue template, linked by `catalogName: String`. | 668 mostly-empty rows make every pantry screen a filter and every catalogue update a migration. See §0.3. |
-| 19 | **Staples aggregate fully and divert at presentation.** The staples footer shows the summed quantity. | The fixture's kosher salt (1 tsp + 1/4 tsp = 1 1/4 tsp) is the document's own proof case for intra-recipe aggregation. Diverting salt to a quantity-less bucket means the arithmetic never runs on it and butter becomes the only surviving proof. |
-| 20 | **A meal holds several recipes:** `PlannedMeal` + `MealRecipe` + `MealAttendance`. | He chose it. A dinner is a main and two sides, and each dish scales and is cooked separately. |
-| 21 | **Named `Eater` rows, addable and removable, each full or half portion. Ship two, hardcode no count. A `guestCount` on `PlannedMeal` for parties — counted, never named.** | `CLAUDE.md`: named people with a full or half portion, no allergy or dietary data. "Sarah's parents came" must not permanently join the roster, and does not need a name to be fed. |
-| 22 | **No `Household` entity.** The household *is* the set of `Eater` rows. | A singleton row created by bootstrap-if-empty means two offline devices both bootstrap, and now there are two rosters with attendance split across them. |
-| 23 | **`dayKey: Int` (yyyymmdd) stored beside `date: Date`.** | A `#Predicate` on a `Date` range is correct until he crosses a timezone or a DST boundary, and then "Tuesday's dinner" renders on Monday night. Written in exactly one place, `PlannedMeal.setDate(_:)`. |
-| 24 | **`ShoppingListSource` keeps denormalized snapshot strings AND a live `.nullify` edge to `plannedMeal`.** | The snapshots preserve history across a recipe revision; the live edge makes "drop Thursday's dinner" and "jump to the meal that caused this line" queries instead of a decode-every-blob scan. |
-| 25 | **Sub-recipe expansion converts the line quantity into the sub-recipe's YIELD dimension and divides by `yieldAmount`** — never by a serving count. Impossible conversion or absent yield → the line is **not expanded**; it stays a buy-it line flagged `.unknownYield`. | Dividing millilitres by servings shops for 118 batches of stock, and the error compounds at every level of the recursion. |
-| 26 | **The cycle guard `visited` is passed BY VALUE.** | As `inout` it becomes a global already-seen set, so one stock recipe feeding two of the week's meals contributes zero ingredients on the second use. |
-| 27 | **Meals whose status is `.cooked` are excluded from collection, as well as `.skipped`.** | Cooking already depleted inventory; collecting it again shops twice for a meal already made. |
-| 28 | **The defensive `ModelContainer` init falls back to an in-memory store**, and `UITestMode` is copied structurally from `CFAL3App.swift`. | A migration the runtime declines to infer should explain itself instead of crashing on every launch and locking him out of his own data. |
+| 13 | **The `.count` dimension is partitioned by count noun, and the partition is final.** `count:clove` and `count:head` are two buckets and stay two; the only collapse in v1 is volume↔mass on a per-item density. | "2 cloves + 1 head" must never read "3 cloves". Folding one count noun into another, or into a purchase noun, is **purchase-unit rounding** — it was added here on initiative, failed review twice, and was cut; see `CLAUDE.md` before re-adding it. So the fixture's baguette line ships honestly as **"12 slices"**, which is what the design mockup already said. |
+| 14 | **Every shopping line carries an N-element set of per-dimension subtotal ROWS** for requested / have / toBuy / purchase. | Flour arriving as cup + gram + package is three dimensions. A single `secondaryText` slot drops the third. |
+| 15 | **`toBuy` and `purchase` are separate stored roles, and receive-into-inventory posts the PURCHASE one.** In v1 `purchase` is a copy of `toBuy` — purchase-unit rounding is deferred (`CLAUDE.md`). | What enters the ledger must be what actually came home, not what the recipe asked for, or tracked stock drifts monotonically below reality and the pantry is useless within a month. Keeping the role separate while it holds the same number is what lets rounding arrive later as a writer rather than as a migration. |
+| 16 | **`StoreSection` and `StorageLocation` are `@Model` rows under a `Store` parent**, with `sortIndex` and `defaultShelfLifeDays`. | Enums mean no "Fish counter" or "Garage fridge" without a build, and a walk order in `UserDefaults` is deliberately not synced — his iPad would shop a different store than his phone. |
+| 17 | **The catalogue is not seeded into SwiftData.** `FoodItem` rows are minted on demand from a catalogue template, linked by `catalogName: String`. | 668 mostly-empty rows make every pantry screen a filter and every catalogue update a migration. See §0.3. |
+| 18 | **Staples aggregate fully and divert at presentation.** The staples footer shows the summed quantity. | The fixture's kosher salt (1 tsp + 1/4 tsp = 1 1/4 tsp) is the document's own proof case for intra-recipe aggregation. Diverting salt to a quantity-less bucket means the arithmetic never runs on it and butter becomes the only surviving proof. |
+| 19 | **A meal holds several recipes:** `PlannedMeal` + `MealRecipe` + `MealAttendance`. | He chose it. A dinner is a main and two sides, and each dish scales and is cooked separately. |
+| 20 | **Named `Eater` rows, addable and removable, each full or half portion. Ship two, hardcode no count. A `guestCount` on `PlannedMeal` for parties — counted, never named.** | `CLAUDE.md`: named people with a full or half portion, no allergy or dietary data. "Sarah's parents came" must not permanently join the roster, and does not need a name to be fed. |
+| 21 | **No `Household` entity.** The household *is* the set of `Eater` rows. | A singleton row created by bootstrap-if-empty means two offline devices both bootstrap, and now there are two rosters with attendance split across them. |
+| 22 | **`dayKey: Int` (yyyymmdd) stored beside `date: Date`.** | A `#Predicate` on a `Date` range is correct until he crosses a timezone or a DST boundary, and then "Tuesday's dinner" renders on Monday night. Written in exactly one place, `PlannedMeal.setDate(_:)`. |
+| 23 | **`ShoppingListSource` keeps denormalized snapshot strings AND a live `.nullify` edge to `plannedMeal`.** | The snapshots preserve history across a recipe revision; the live edge makes "drop Thursday's dinner" and "jump to the meal that caused this line" queries instead of a decode-every-blob scan. |
+| 24 | **Sub-recipe expansion converts the line quantity into the sub-recipe's YIELD dimension and divides by `yieldAmount`** — never by a serving count. Impossible conversion or absent yield → the line is **not expanded**; it stays a buy-it line flagged `.unknownYield`. | Dividing millilitres by servings shops for 118 batches of stock, and the error compounds at every level of the recursion. |
+| 25 | **The cycle guard `visited` is passed BY VALUE.** | As `inout` it becomes a global already-seen set, so one stock recipe feeding two of the week's meals contributes zero ingredients on the second use. |
+| 26 | **Meals whose status is `.cooked` are excluded from collection, as well as `.skipped`.** | Cooking already depleted inventory; collecting it again shops twice for a meal already made. |
+| 27 | **The defensive `ModelContainer` init falls back to an in-memory store**, and `UITestMode` is copied structurally from `CFAL3App.swift`. | A migration the runtime declines to infer should explain itself instead of crashing on every launch and locking him out of his own data. |
 
 ---
 
@@ -330,7 +342,7 @@ portrait prep-ahead page are one document.
 
 Every Swift file to be created, grouped by folder, with what it owns. Complete and
 non-overlapping — this is the build work-list, and **every type named anywhere in this
-document has exactly one owning file below.** 22 `@Model` classes, 6 bundled content value
+document has exactly one owning file below.** 21 `@Model` classes, 6 bundled content value
 types, 5 tabs.
 
 ### `KitchenAid/App/`
@@ -339,7 +351,7 @@ types, 5 tabs.
 |---|---|
 | `KitchenAid/App/KitchenAidApp.swift` | `@main`. The schema list, the defensive `ModelContainer` with in-memory fallback, `storeFailure`, every `@Observable` service as `@State` injected via `.environment(...)`, and the launch `.task` (load content → seed → reconcile → rebuild caches). |
 | `KitchenAid/App/UITestMode.swift` | `-uitesting` launch arg, the in-memory store flag, and the `static let` throwaway `UserDefaults` suite. Copied structurally from `CFAL3App.swift`, comment and all. |
-| `KitchenAid/App/AppTab.swift` | `AppTab` — the five-case tab enum with `title`, `symbol` and the test-addressable `identifier`. §2.28. |
+| `KitchenAid/App/AppTab.swift` | `AppTab` — the five-case tab enum with `title`, `symbol` and the test-addressable `identifier`. §2.27. |
 | `KitchenAid/App/RootTabView.swift` | `TabView` over `AppTab`, the store-failure banner, the cook-mode `fullScreenCover`, the Settings sheet. |
 | `KitchenAid/App/KitchenAidRouter.swift` | `@Observable`. Selected tab, presented sheets, the active cook-mode payload. Modelled on CFAL3's `TabRouter`. |
 
@@ -361,7 +373,7 @@ types, 5 tabs.
 | `KitchenAid/Models/Content/RecipeTag.swift` | `RecipeTag`. A tag as content, with `name` and `kind`. |
 | `KitchenAid/Models/Content/CatalogEntry.swift` | `CatalogEntry` and `CatalogFile` — the decoded `ingredients.json`, field-for-field as `scripts/build_catalogue.py` emits it. |
 | `KitchenAid/Models/Content/ResolvedRecipe.swift` | `ResolvedRecipe` and `ResolvedRecipe.LapsedOverride` — bundled content with the `RecipeTweak` overlay applied to a COPY, plus which lines and steps were overridden and which overrides have lapsed. What every view renders (§3.10). |
-| `KitchenAid/Models/Content/ContentDiagnostic.swift` | `ContentDiagnostic` — what `RecipeLoader` and `IngredientCatalog` report when a bundled file is malformed, duplicated or references a missing id. Surfaced in `StoreHealthView`, never silently swallowed. |
+| `KitchenAid/Models/Content/ContentDiagnostic.swift` | `ContentDiagnostic` **and its nested `Kind`** — what `RecipeLoader` and `IngredientCatalog` report when a bundled file is malformed, duplicated or references a missing id. Surfaced in `StoreHealthView`, never silently swallowed. |
 
 ### `KitchenAid/Models/Overlay/` — the SwiftData side of content
 
@@ -377,7 +389,6 @@ types, 5 tabs.
 |---|---|
 | `KitchenAid/Models/Catalog/FoodItem.swift` | `@Model`. The thing actually in the house. The only row that means "a thing in my kitchen". |
 | `KitchenAid/Models/Catalog/FoodItemAlias.swift` | `@Model`. One alias row he added (`scallion` → green onion) with its own `matchKey`. Shipped aliases stay in the catalogue. |
-| `KitchenAid/Models/Catalog/CountEquivalence.swift` | `@Model`. One count-unit bridge per row (clove → 1/10 head, head → 50 g, slice → 1/12 loaf). |
 | `KitchenAid/Models/Catalog/Store.swift` | `@Model`. A store, owning its own section geography. |
 | `KitchenAid/Models/Catalog/StoreSection.swift` | `@Model`. One aisle with a `sortIndex` he drags. |
 | `KitchenAid/Models/Catalog/StorageLocation.swift` | `@Model`. Pantry / fridge / freezer / garage fridge, with `defaultShelfLifeDays`. |
@@ -420,22 +431,22 @@ types, 5 tabs.
 | `KitchenAid/Models/Support/UnitCatalog.swift` | `UnitCatalog`. The conversion table (culinary, exact rationals), synonym resolution (`T`/`tbsp`/`tablespoons`), `countUnit(noun:)` for the open set, `displayCandidates(for:system:)`. The only place a factor is written. |
 | `KitchenAid/Models/Support/Quantity.swift` | `Quantity` (`amount` + `unit`, `base`, `scaled(by:)`, `converted(to:)`, `displayString(system:)`) **and the `QuantityCarrying` protocol** that gives a model holding one quantity its five stored primitives and one computed accessor. |
 | `KitchenAid/Models/Support/QuantitySubtotal.swift` | `QuantitySubtotal` and `SubtotalRole`. One (dimension, count-noun) subtotal in base units, plus its role. **The only declaration of either** (§0.9.2). |
-| `KitchenAid/Models/Support/QuantityMath.swift` | `QuantityMath` **and its nested `Contribution`**: `hintUnit`, `displayUnit(forBase:dimensionKey:hint:system:)`, `sum`, `normalizeCountBucketsToPurchaseNoun`, `collapseCountBuckets`, `collapseAcrossDimensions`, `bridgeHave`, `subtract`, `purchaseQuantity`. The arithmetic under test. |
-| `KitchenAid/Models/Support/MergeKey.swift` | `ItemIdentity` (`.cataloged(UUID)` / `.freeText(String)`) and `MergeKey`, the aggregation bucket `(item, dimensionKey)`. |
+| `KitchenAid/Models/Support/QuantityMath.swift` | `QuantityMath` **and its nested `Contribution`**: `hintUnit`, `displayUnit(forBase:dimensionKey:hint:system:)`, `sum`, `collapseAcrossDimensions`, `bridgeHave`, `subtract`. The arithmetic under test. |
+| `KitchenAid/Models/Support/MergeKey.swift` | `ItemIdentity` (`.cataloged(UUID)` / `.freeText(String)`) and `MergeKey`, the **subtotal** bucket `(item, dimensionKey)`. A LINE is keyed by `ItemIdentity` alone — one line per `FoodItem` per list — and `MergeKey` keys the buckets inside it, never a line (§3.7, §4.2 step 4). |
 | `KitchenAid/Models/Support/KitchenAidEnums.swift` | `UnitSystem`, `MealSlot`, `MealEntryKind`, `AttendanceStatus`, `PlanStatus`, `CourseKind`, `Difficulty`, `ComponentKind`, `NoteKind`, `BatchGranularity`, `ScalingRule`, `SubRecipePolicy`, `StockTrackingMode`, `StorageKind`, `TransactionKind`, `ResolutionState`, `LineStatus`, `LineSourceKind`, `PlanScope`, `TagKind`. All `String`-raw-value-backed. |
 | `KitchenAid/Models/Support/ScalingNote.swift` | `ScalingNote` — `.noAttendance / .unknownYield / .snappedToBatch / .overridden / .leftoversIncluded` and their badge text. |
 | `KitchenAid/Models/Support/LineFlag.swift` | `LineFlag`, the shopping-line flag set (14 cases, **including `leftoversIncluded`** so `from(_:)` is total over `ScalingNote`), its `badge` text, and its `\|`-delimited blob encoding. |
 | `KitchenAid/Models/Support/CalendarKey.swift` | `CalendarKey`: `dayKey(for:in:)`, `date(fromDayKey:)`, `weekInterval(containing:)`, `monthInterval(containing:)`, `dayKeys(in:)`. The ONLY place day math lives. |
-| `KitchenAid/Models/Support/NameNormalizer.swift` | `NameNormalizer`. Lowercase, diacritic-fold, strip punctuation and parentheticals, drop trailing prep qualifiers, conservative singularize with a stoplist. Produces the `matchKey`. |
+| `KitchenAid/Models/Support/NameNormalizer.swift` | `NameNormalizer`. Lowercase, diacritic-fold, strip punctuation and parentheticals, drop trailing prep qualifiers, conservative singularize with a stoplist. `matchKey(_:)` and `slug(_:)` — the latter is the `lineID` / `stepID` / recipe-file-name slug, a line-for-line port of the importer's, and the Python one is the reference (§2.3, §2.4, §8.1). |
 | `KitchenAid/Models/Support/LedgerDivergence.swift` | `LedgerDivergence` and `LedgerDivergence.Scope`. The reconcile screen's row type: per-lot and per-item, including the unassigned-lot bucket, carrying the cache-versus-ledger delta (§3.11). |
-| `KitchenAid/Models/Support/DeleteRefusal.swift` | `DeleteRefusal`. Why a delete was refused, and what to offer instead (§3.12). |
+| `KitchenAid/Models/Support/DeleteRefusal.swift` | `DeleteRefusal` **and its nested `Reason`**. Why a delete was refused, and what to offer instead (§3.12). |
 | `KitchenAid/Models/Support/CookTimer.swift` | `CookTimer`. One running step timer: step id, label, total and remaining seconds, notification request id (§3.13). |
 
 ### `KitchenAid/Models/Transfer/`
 
 | Path | Owns |
 |---|---|
-| `KitchenAid/Models/Transfer/KitchenAidUTType.swift` | The two `UTType` **extension constants** `.kitchenAidRecipe` and `.kitchenAidPlannedMeal`, matching `Info.plist`'s exported type declarations. It declares no type of its own — the file is named for what it holds (§2.30). |
+| `KitchenAid/Models/Transfer/KitchenAidUTType.swift` | The two `UTType` **extension constants** `.kitchenAidRecipe` and `.kitchenAidPlannedMeal`, matching `Info.plist`'s exported type declarations. It declares no type of its own — the file is named for what it holds (§2.29). |
 | `KitchenAid/Models/Transfer/RecipeTransfer.swift` | `RecipeTransfer`: `Codable + Transferable` drag payload — a `recipeID` and a title, plus `ProxyRepresentation(exporting: \.title)`. |
 | `KitchenAid/Models/Transfer/PlannedMealTransfer.swift` | `PlannedMealTransfer`. Same shape for dragging a planned meal between calendar cells. Never a `@Model` — a `@Model` class is neither reliably `Codable` nor `Sendable`. |
 
@@ -447,10 +458,10 @@ types, 5 tabs.
 | `KitchenAid/Services/MealScaling.swift` | `MealScaling` and `MealScaling.Result` — portions, exact `Rational` scale, batch snapping, `[ScalingNote]`, `description`. |
 | `KitchenAid/Services/ShoppingListBuilder.swift` | `ShoppingListBuilder`: `Options`, `DraftSource`, `DraftLine`, `Draft`, `preview`, `build`. The algorithm in §4. Takes fetched values and closures, returns a `Draft`. No fetches, no mutation. |
 | `KitchenAid/Services/PDFPaginator.swift` | `PDFPaginator` and its nested `MeasuredSection`. Measured section heights → page assignment, packing whole sections so nothing is cut mid-line. `paginate(sections:pageSize:name:)` (§7.1). |
-| `KitchenAid/Services/MealPlanStats.swift` | `MealPlanStats` and its nested `Coverage`. `coverage(for:in:)`, `repeats(in:)`, `neverMade(from:tweaks:)` — the numbers behind the week brief and the Today screen (§6.1). |
+| `KitchenAid/Services/MealPlanStats.swift` | `MealPlanStats` and its nested `Coverage`. `coverage(for:meals:)`, `repeats(in:)`, `neverMade(from:tweaks:)` — the numbers behind the week brief and the Today screen (§6.1). |
 | `KitchenAid/Services/WeekBriefBuilder.swift` | `WeekBriefBuilder` and its nested `Brief`. Assembles the Plan tab's landing summary from plan + inventory (§6.2). |
 | `KitchenAid/Services/ExportError.swift` | `ExportError`. Every way a render can fail, with user-facing text (§3.14). |
-| `KitchenAid/Services/KitchenAidSeed.swift` | `KitchenAidSeed.applyIfNeeded(in:catalog:)`. A **static namespace**, called once from the launch task and never held as state. Store sections in the order `IngredientCatalog.aisleOrder` gives, storage locations, two `Eater` rows, and the bridges the fixture needs — all `SeedRecord`-gated. **It seeds no recipes and no catalogue rows.** |
+| `KitchenAid/Services/KitchenAidSeed.swift` | `KitchenAidSeed.applyIfNeeded(in:catalog:)`. A **static namespace**, called once from the launch task and never held as state. Store sections in the order `IngredientCatalog.aisleOrder` gives, storage locations and two `Eater` rows — all `SeedRecord`-gated. **It seeds no recipes and no catalogue rows.** |
 | `KitchenAid/Services/KitchenAidMaintenance.swift` | `rebuildLotCaches(in:)`, `findDuplicateFoodItems(in:)`, `mergeDuplicateTweaks(in:)`, `forgetMissingRecipeRows(in:loader:)`. A **static namespace** — it holds no state between calls. Wired to remote-change notifications, not only to a Settings button. |
 
 ### `KitchenAid/Services/` — `@Observable` classes, `@State` on the App
@@ -464,10 +475,10 @@ injected.)
 
 | Path | Owns |
 |---|---|
-| `KitchenAid/Services/RecipeLoader.swift` | `@Observable`. Decodes every `Resources/Recipes/*.json` once at launch into `[String: Recipe]`, exposes `recipe(id:)`, `all`, `allTags`, `isMissing(_:)`, `diagnostics`. **The only place a `Recipe` comes from.** |
+| `KitchenAid/Services/RecipeLoader.swift` | `@Observable`. Decodes every `Resources/Recipes/*.json` once at launch into `[String: Recipe]`, exposes `recipe(id:)`, `all`, `allIncludingArchived`, `allTags`, `isMissing(_:)`, `usages(of:)` (the "used in 6 dishes" count `RecipeUsageSection` renders, computed over content references rather than stored), `diagnostics`. **The only place a `Recipe` comes from.** |
 | `KitchenAid/Services/IngredientCatalog.swift` | `@Observable`. Decodes `ingredients.json` once, exposes `entry(named:)`, `entry(matching:)` (name then alias, by `matchKey`), `all`, `aisleOrder` (**read from the JSON's `aisleOrder` — the authoritative walk order, never hand-copied**), `aisleNames` (the distinct `aisle` values actually present, for the `.unknownAisle` check), `diagnostics`. |
 | `KitchenAid/Services/InventoryLedger.swift` | `@Observable`. `level(of:in:includeExpired:asOf:graceEnd:)` — which returns the **flags it raised** as well as the subtotals, because it is the only thing that can see a lot's `expiresAt` (§5.4) — plus FIFO lot selection, `apply`, `receive`, `recompute`, `rebuildAllCaches`, `reconcileReport`, `expiringSoon`, `pendingBridgeTransactions`, `resolve`. Holds its `ModelContainer` so `level` has a context on the hot path. |
-| `KitchenAid/Services/FoodItemResolver.swift` | `@Observable`. The ONLY place a `FoodItem` is created. `matchKey` + alias + catalogue lookup, `findOrCreate`, `addAlias`, `reindex`, `canDelete`, and the deterministic `reconcile`. |
+| `KitchenAid/Services/FoodItemResolver.swift` | `@Observable`. The ONLY place a `FoodItem` is created. `matchKey` + alias + catalogue lookup, `findOrCreate(name:createIfMissing:in:)`, `findOrCreate(fromCatalog:in:)`, `addAlias(_:to:in:)`, `reindex(_:)`, `merge(_:into:in:)` (which writes the `MergeRecord` `MergeFoodItemsView` renders), `canDelete(_:)`, and the deterministic `reconcile(in:)`. |
 | `KitchenAid/Services/TweakStore.swift` | `@Observable`. The overlay's accessor, spelled exactly as §5.2 declares it: `tweak(for:in:)`, `tweakIfExists(for:)`, `setQuantity(_:forLine:in:)`, `setPreparation(_:forLine:in:)`, `setStep(title:body:minMinutes:maxMinutes:forStep:in:)`, `setNotes(_:for:)`, `setFavorite(_:for:)`, `markMade(_:at:)`, `clearIngredientOverride(lineID:in:)`, `clearStepOverride(stepID:in:)`, `pruneIfEmpty(_:in:)`, and `effectiveRecipe(id:)` → a `ResolvedRecipe` (§3.10) with every override applied. **Nothing else reads an override row.** |
 | `KitchenAid/Services/CookSession.swift` | `@Observable`. Active resolved recipe, live scale, completed step ids, concurrent `CookTimer`s. |
 | `KitchenAid/Services/CookingService.swift` | `@Observable`. The cook-finish path: set `RecipeTweak.lastMadeAt`, deplete inventory, set the meal `.cooked`. There is no log row to write. |
@@ -545,7 +556,7 @@ injected.)
 |---|---|
 | `KitchenAid/Views/Pantry/InventoryHomeView.swift` | Grouped by location, with running-low and expiring-soon banners and the two inbox badges. |
 | `KitchenAid/Views/Pantry/LocationDetailView.swift` | One location's lots. |
-| `KitchenAid/Views/Pantry/FoodItemDetailView.swift` | Lots, the transaction ledger as a timeline, aliases, bridges, purchase pack, section, tracking mode, par level, and the catalogue template it came from. |
+| `KitchenAid/Views/Pantry/FoodItemDetailView.swift` | Lots, the transaction ledger as a timeline, aliases, density, section, tracking mode, par level, and the catalogue template it came from. |
 | `KitchenAid/Views/Pantry/QuickAddStockView.swift` | Catalogue-backed name picker → quantity → location in three taps. **Picking, not typing.** |
 | `KitchenAid/Views/Pantry/InventoryCountView.swift` | Walk a location and correct everything; writes `.inventoryCount` transactions. |
 | `KitchenAid/Views/Pantry/UnresolvedDepletionsView.swift` | The `.pendingBridge` inbox. |
@@ -560,13 +571,13 @@ injected.)
 | `KitchenAid/Views/Settings/AttendanceDefaultsView.swift` | The recurring attendance rules. |
 | `KitchenAid/Views/Settings/StoreLayoutView.swift` | Stores and drag-to-reorder sections. |
 | `KitchenAid/Views/Settings/StorageLocationsView.swift` | Locations and shelf lives. |
-| `KitchenAid/Views/Settings/FoodItemCatalogView.swift` | His `FoodItem` rows: densities, count equivalences, sections, purchase packs, tracking mode, par levels. |
+| `KitchenAid/Views/Settings/FoodItemCatalogView.swift` | His `FoodItem` rows: densities, sections, tracking mode, par levels. |
 | `KitchenAid/Views/Settings/MergeFoodItemsView.swift` | The de-dup reconciliation and the `MergeRecord` log. |
 | `KitchenAid/Views/Settings/ReconcileView.swift` | `LedgerDivergence` rows, surfaced not hidden. |
 | `KitchenAid/Views/Settings/MissingRecipesView.swift` | Dangling `recipeID`s with their title snapshots, and "forget these rows" (§0.2). |
 | `KitchenAid/Views/Settings/UnitPreferenceView.swift` | US / metric display. |
 | `KitchenAid/Views/Settings/ExportView.swift` | Export jobs and `ShareLink`. |
-| `KitchenAid/Views/Settings/StoreHealthView.swift` | Row counts, the store-failure detail, the schema version, and `ContentDiagnostic`s from both loaders. |
+| `KitchenAid/Views/Settings/StoreHealthView.swift` | Row counts, the store-failure detail, the schema version, `ContentDiagnostic`s from both loaders, and — when `sections.v1` has no `SeedRecord` because the catalogue failed to load — the "store sections not seeded yet" explanation (§8). |
 
 ### `KitchenAid/Views/Export/` — print views. **No `List`, no `ScrollView`, no `LazyVStack` anywhere inside these.**
 
@@ -612,16 +623,21 @@ injected.)
 |---|---|
 | `KitchenAidTests/RationalTests.swift` | Reduction, overflow-reporting on all four operators, `approximating`, ceiling, and **`Codable` round-trip including a `denominator: 0` in the JSON**. Plus the two `Int.min` cases, which nothing else exercises: `Rational(Int.min, 1)` and `Rational(1, Int.min)` both yield zero rather than trapping, `(-2^62) * 2` reports overflow, and `Rational(approximating:)` at a value near the 1e15 bound with `maxDenominator: 10_000` terminates without trapping. |
 | `KitchenAidTests/UnitCatalogTests.swift` | The full US volume ladder round-trip, and `1 cup == 240 mL` exactly. |
-| `KitchenAidTests/QuantityMathTests.swift` | `2 tbsp + 1/4 cup == 6 tbsp`. Count-noun partitioning. **All three `CountEquivalence` passes separately**: pass A normalising a SINGLE `count:slice = 12` bucket to `count:loaf = 1` (the fixture's case, and the one a fold-only design cannot reach), pass B folding clove into head, pass C refusing when only some nouns bridge. `purchaseQuantity` crossing one `CountEquivalence` hop. `bridgeHave` converting a 4 oz mass lot against a 2 tbsp volume requirement at `gramsPerCup: 227`, and NOT raising `.needsBridge` when it succeeds. `displayUnit` including the `18 tsp → 6 tbsp` case that must not render as `3 fl oz`. |
+| `KitchenAidTests/QuantityMathTests.swift` | `2 tbsp + 1/4 cup == 6 tbsp`. **Count-noun partitioning, asserted as a partition that HOLDS**: `count:clove` and `count:head` on one line stay two subtotals, and `count:slice = 12` stays `count:slice = 12` — nothing folds one count noun into another. `collapseAcrossDimensions` merging a cup and a gram bucket at a known density, and declining with no density. `bridgeHave` converting a 4 oz mass lot against a 2 tbsp volume requirement at `gramsPerCup: 227`, and NOT raising `.needsBridge` when it succeeds. `displayUnit` including the `18 tsp → 6 tbsp` case that must not render as `3 fl oz`. |
 | `KitchenAidTests/RecipeLoaderTests.swift` | Decodes every bundled recipe; asserts no duplicate ids, every `subRecipeID` and `sourceRecipeID` resolves, and the fixture decodes to the tree in §8.2. |
 | `KitchenAidTests/IngredientCatalogTests.swift` | Decodes `ingredients.json`; asserts **all 16 of the fixture's ingredients resolve** by name or alias and land in a seeded aisle. |
 | `KitchenAidTests/TweakStoreTests.swift` | An override applies; `effectiveRecipe` never mutates the loaded content; an override whose `lineID` no longer exists lapses silently and is reported. |
 | `KitchenAidTests/MealScalingTests.swift` | 12-crostini/4-serving yields `scale = portions/4`. Half portions. Guest count. Batch snapping. No-attendance fallback. |
 | `KitchenAidTests/RecipeGraphTests.swift` | By-value cycle guard: one sub-recipe used in two sibling branches contributes twice. Dimensional sub-recipe scale. Refusal when the yield is absent. |
-| `KitchenAidTests/ShoppingListBuilderTests.swift` | The fixture's butter (2 tbsp) and **kosher salt (1 1/4 tsp, through the staple-diversion path)**. The 240 mL carton leaving no residue. **The baguette: `count:slice = 12` normalising to `count:loaf = 1` and purchase-rounding to "1 baguette"** — asserted on the pass-A path, since the fixture has only one count bucket (§3.6). `partiallyHave` on a half-covered line. `needsBridge` only when no bridge exists. Negative-have clamping. `.cooked` exclusion. Leftovers contributing nothing. |
+| `KitchenAidTests/ShoppingListBuilderTests.swift` | The fixture's butter (2 tbsp) and **kosher salt (1 1/4 tsp, through the staple-diversion path)**. The 240 mL carton leaving no residue. **The baguette shipping as `12 slices`** — one count bucket, unfolded, which is what the list says now that purchase-unit rounding is cut (`CLAUDE.md`). **Garlic's `2 clove` against a `1 clove` lot leaving `1 clove`**, `.partiallyHave`, not "buy 1 head". `partiallyHave` on a half-covered line. `needsBridge` only when no bridge exists. Negative-have clamping. `.cooked` exclusion. Leftovers contributing nothing. |
 | `KitchenAidTests/InventoryLedgerTests.swift` | FIFO order, orphaned-transaction accounting, `pendingBridge` writing, `LedgerDivergence` attribution. |
 | `KitchenAidTests/FoodItemResolverTests.swift` | Catalogue-template creation, alias lookup, deterministic survivor, referrer repointing. |
 | `KitchenAidUITests/…` | Launch on Today, cook a recipe, plan a meal, generate a list, export a PDF. Addressed by `accessibilityIdentifier`. |
+
+**Four of these suites read the bundled fixture recipe** — `RecipeLoaderTests`,
+`TweakStoreTests`, `MealScalingTests` and `ShoppingListBuilderTests` — and that file is **not
+in the repo yet**: §8.1 is what generates and commits it. Generating it is therefore a
+prerequisite of the first test run, not a later tidy.
 
 ---
 
@@ -635,8 +651,8 @@ Counts, so nothing can drift: **6 content value types** — `Recipe`, `RecipeCom
 `IngredientLine`, `RecipeStep`, `RecipeNote`, `RecipeTag` — plus the six other value types
 the manifest also places under `Models/Content/`: `RecipeFile`, `CatalogEntry`,
 `CatalogFile`, `ContentDiagnostic`, `ResolvedRecipe` and its nested
-`ResolvedRecipe.LapsedOverride`. Then **22 `@Model` classes**, matching
-`KitchenAidSchemaV1.models` exactly (§2.29). The §1 `Models/Content/` folder listing
+`ResolvedRecipe.LapsedOverride`. Then **21 `@Model` classes**, matching
+`KitchenAidSchemaV1.models` exactly (§2.28). The §1 `Models/Content/` folder listing
 enumerates the same twelve.
 
 ### 2.0 One decoding rule for all content
@@ -1434,7 +1450,7 @@ recur.
 |---|---|---|---|
 | RecipeTweak → **ingredientOverrides** | RecipeTweak | `.cascade` | An override has no life without the tweak row that groups it. |
 | RecipeTweak → **stepOverrides** | RecipeTweak | `.cascade` | Same. |
-| FoodItem → **aliases**, **countEquivalences** | FoodItem | `.cascade` | A bridge for a deleted item is nothing. |
+| FoodItem → **aliases** | FoodItem | `.cascade` | An alias for a deleted item is nothing. |
 | FoodItem → **lots**, **transactions** | FoodItem | **`.nullify`** | **Decision 7.** A cascade means one stray `.onDelete` torches the ledger. `foodItemNameSnapshot` on both keeps an orphan readable, and `FoodItemResolver.canDelete` refuses any item with history and offers "merge into…" instead — but the *schema* is what guarantees nothing is destroyed. |
 | FoodItem ← **shoppingLines** | FoodItem | `.nullify` | Deleting an item must never eat a printed list. |
 | StockLot → **transactions** | StockLot | `.nullify` | **Decision 8.** The lot is a cache home, not the parent. An orphan still contributes to `level(of:)` through the item, in an "unassigned lot" bucket, so divergence stays attributable. |
@@ -1728,8 +1744,12 @@ import SwiftData
 /// It is NOT the catalogue. `KitchenAid/Resources/ingredients.json` is the shipped
 /// catalogue of a few hundred TEMPLATES (§0.3); a `FoodItem` is minted from one by
 /// `FoodItemResolver.findOrCreate` the first time something is actually needed, copying the
-/// template's dimension, unit, density, staple flag and aisle so he can then override any
-/// of them. After that the row is his and `catalogName` is only provenance.
+/// template's dimension, density and staple flag and resolving its aisle, so he can then
+/// override any of them. The density copies as BOTH `hasDensity` and the `gramsPerCup`
+/// pair, because the accessor below returns nil without the Bool. The template's **unit is
+/// not copied — there is no unit field here to copy it into**; a default unit is read live
+/// as `catalog.entry(named: catalogName)?.defaultUnit` (§0.3, §2.6).
+/// After that the row is his and `catalogName` is only provenance.
 ///
 /// The catalogue is deliberately NOT seeded into the store: 668 mostly-empty rows make
 /// every pantry screen a filter over nothing and make a catalogue rebuild a migration.
@@ -1766,7 +1786,7 @@ final class FoodItem {
     /// present, never depleted, and never shopped unless `isRunningLow` or a par level
     /// trips. Without this the app demands he inventory his salt and he abandons it in week
     /// two. Staples still AGGREGATE fully and are shown with their summed quantity in a
-    /// collapsed footer — decision 19, which is why the fixture's 1 tsp + 1/4 tsp kosher
+    /// collapsed footer — decision 18, which is why the fixture's 1 tsp + 1/4 tsp kosher
     /// salt is a live test case and not a skipped path.
     var trackingModeRaw: String = StockTrackingMode.tracked.rawValue
     var isRunningLow: Bool = false
@@ -1780,13 +1800,6 @@ final class FoodItem {
     var hasDensity: Bool = false
     var gramsPerCupNumerator: Int = 0
     var gramsPerCupDenominator: Int = 1
-
-    // MARK: Purchase pack — what you can actually put in a cart
-    var purchasePackHasQuantity: Bool = false
-    var purchasePackNumerator: Int = 0
-    var purchasePackDenominator: Int = 1
-    var purchasePackUnitCode: String = ""
-    var purchasePackDimensionRaw: String = MeasureDimension.unmeasured.rawValue
 
     // MARK: Par level — a staple reaches the list by a RULE, not by a hand-flipped Bool
     var hasParLevel: Bool = false
@@ -1811,9 +1824,6 @@ final class FoodItem {
 
     @Relationship(deleteRule: .cascade, inverse: \FoodItemAlias.item)
     var aliases: [FoodItemAlias]? = []
-
-    @Relationship(deleteRule: .cascade, inverse: \CountEquivalence.item)
-    var countEquivalences: [CountEquivalence]? = []
 
     // MARK: The ledger edges are .nullify, and this is load-bearing
     //
@@ -1847,11 +1857,6 @@ final class FoodItem {
         hasDensity: Bool = false,
         gramsPerCupNumerator: Int = 0,
         gramsPerCupDenominator: Int = 1,
-        purchasePackHasQuantity: Bool = false,
-        purchasePackNumerator: Int = 0,
-        purchasePackDenominator: Int = 1,
-        purchasePackUnitCode: String = "",
-        purchasePackDimensionRaw: String = MeasureDimension.unmeasured.rawValue,
         hasParLevel: Bool = false,
         parLevelNumerator: Int = 0,
         parLevelDenominator: Int = 1,
@@ -1874,11 +1879,6 @@ final class FoodItem {
         self.hasDensity = hasDensity
         self.gramsPerCupNumerator = gramsPerCupNumerator
         self.gramsPerCupDenominator = gramsPerCupDenominator
-        self.purchasePackHasQuantity = purchasePackHasQuantity
-        self.purchasePackNumerator = purchasePackNumerator
-        self.purchasePackDenominator = purchasePackDenominator
-        self.purchasePackUnitCode = purchasePackUnitCode
-        self.purchasePackDimensionRaw = purchasePackDimensionRaw
         self.hasParLevel = hasParLevel
         self.parLevelNumerator = parLevelNumerator
         self.parLevelDenominator = parLevelDenominator
@@ -1909,19 +1909,6 @@ extension FoodItem {
         return Rational(gramsPerCupNumerator, max(1, gramsPerCupDenominator))
     }
 
-    var purchasePack: Quantity? {
-        guard purchasePackHasQuantity,
-              let unit = UnitCatalog.unit(
-                  code: purchasePackUnitCode,
-                  fallbackDimension: MeasureDimension(rawValue: purchasePackDimensionRaw)
-              )
-        else { return nil }
-        return Quantity(
-            amount: Rational(purchasePackNumerator, max(1, purchasePackDenominator)),
-            unit: unit
-        )
-    }
-
     var parLevel: Quantity? {
         guard hasParLevel,
               let unit = UnitCatalog.unit(
@@ -1937,24 +1924,6 @@ extension FoodItem {
 
     var orderedAliases: [FoodItemAlias] {
         (aliases ?? []).sorted { $0.createdAt < $1.createdAt }
-    }
-
-    /// Every count bridge this item knows. Garlic carries BOTH clove (1/10 head) and head
-    /// (50 g); a single `gramsPerCount` scalar structurally cannot hold two count units, and
-    /// the fixture's "12 slices baguette" needs slice-to-loaf to ever shop as "1 baguette".
-    func countEquivalence(forNoun noun: String) -> CountEquivalence? {
-        (countEquivalences ?? []).first { $0.countUnitCode == noun }
-    }
-
-    /// **The item's PURCHASE noun**, when it has one: the count unit of `purchasePack`.
-    /// Baguette's is `loaf`, garlic's is `head`, an egg's is `each`.
-    ///
-    /// `QuantityMath.normalizeCountBucketsToPurchaseNoun` reads this, and it is the reason
-    /// no new stored field was needed for the normalisation pass: the purchase noun is
-    /// already recorded, on the pack, which is the only place it means anything.
-    var purchaseCountNoun: String? {
-        guard let pack = purchasePack, pack.unit.isCount else { return nil }
-        return pack.unit.code
     }
 
     var hasLedgerHistory: Bool {
@@ -2005,76 +1974,7 @@ final class FoodItemAlias {
 }
 ```
 
-### 2.14 `KitchenAid/Models/Catalog/CountEquivalence.swift`
-
-```swift
-import Foundation
-import SwiftData
-
-/// One count-unit bridge for one `FoodItem`: clove → 1/10 head, head → 50 g,
-/// slice → 1/12 loaf, egg → 50 g.
-///
-/// A per-item ROW TABLE rather than a single `gramsPerCount` scalar, because garlic in the
-/// fixture needs clove for the ingredient line and head for the purchase, and "12 slices
-/// baguette" needs slice-to-loaf. One scalar per item can hold exactly one count unit,
-/// which is not enough for either case.
-///
-/// The target may itself be a count unit (slice → loaf), which is how a count bucket
-/// becomes another count bucket. Two different functions read these rows and the
-/// difference matters: `QuantityMath.normalizeCountBucketsToPurchaseNoun` follows a
-/// count→count row toward the item's PURCHASE noun whether or not the target bucket is
-/// already on the line, and `QuantityMath.collapseCountBuckets` folds two buckets that
-/// both are. Both are IN v1, because purchase-unit rounding moved into v1.
-@Model
-final class CountEquivalence {
-    var id: UUID = UUID()
-    /// The count noun being defined: "clove", "head", "slice", "bunch".
-    var countUnitCode: String = ""
-    /// What one of them equals.
-    var equalsNumerator: Int = 0
-    var equalsDenominator: Int = 1
-    var equalsUnitCode: String = ""
-    var equalsDimensionRaw: String = MeasureDimension.mass.rawValue
-    var createdAt: Date = .now
-    /// Owner. Macro lives on `FoodItem.countEquivalences`.
-    var item: FoodItem? = nil
-
-    init(
-        id: UUID = UUID(),
-        countUnitCode: String = "",
-        equalsNumerator: Int = 0,
-        equalsDenominator: Int = 1,
-        equalsUnitCode: String = "",
-        equalsDimensionRaw: String = MeasureDimension.mass.rawValue,
-        createdAt: Date = .now,
-        item: FoodItem? = nil
-    ) {
-        self.id = id
-        self.countUnitCode = countUnitCode
-        self.equalsNumerator = equalsNumerator
-        self.equalsDenominator = equalsDenominator
-        self.equalsUnitCode = equalsUnitCode
-        self.equalsDimensionRaw = equalsDimensionRaw
-        self.createdAt = createdAt
-        self.item = item
-    }
-}
-
-extension CountEquivalence {
-    var equals: Quantity? {
-        guard let unit = UnitCatalog.unit(
-            code: equalsUnitCode,
-            fallbackDimension: MeasureDimension(rawValue: equalsDimensionRaw)
-        ) else { return nil }
-        return Quantity(
-            amount: Rational(equalsNumerator, max(1, equalsDenominator)),
-            unit: unit
-        )
-    }
-}
-```
-
-### 2.15 `Store.swift`, `StoreSection.swift`, `StorageLocation.swift`
+### 2.14 `Store.swift`, `StoreSection.swift`, `StorageLocation.swift`
 
 ```swift
 // Store.swift
@@ -2135,8 +2035,12 @@ import SwiftData
 ///
 /// The seeded `name`s are exactly the catalogue's 13 `aisle` values (§8), matched on
 /// `matchKey`, so a `FoodItem` minted from a template lands in the right aisle with no
-/// mapping table. **The walk order lives here, not in the JSON** — `ingredients.json` is
-/// sorted alphabetically by aisle, so it cannot carry an order.
+/// mapping table. **The walk order is READ from the JSON's `aisleOrder`** (§0.3), not kept
+/// here: `ingredients.json`'s `items` array is sorted alphabetically by aisle, which is not
+/// a walk order, so the file carries the order separately in `aisleOrder` and
+/// `KitchenAidSeed` writes it into `sortIndex` once. From then on `sortIndex` is a row he
+/// drags. This comment used to say the order lived here and the JSON could not carry one;
+/// the second copy that invited had already drifted from the build script's (§8).
 @Model
 final class StoreSection {
     var id: UUID = UUID()
@@ -2234,7 +2138,7 @@ extension StorageLocation {
 }
 ```
 
-### 2.16 `MergeRecord.swift` and `SeedRecord.swift`
+### 2.15 `MergeRecord.swift` and `SeedRecord.swift`
 
 ```swift
 // MergeRecord.swift
@@ -2312,7 +2216,7 @@ final class SeedRecord {
 
 ---
 
-### 2.17 `KitchenAid/Models/Planning/Eater.swift`
+### 2.16 `KitchenAid/Models/Planning/Eater.swift`
 
 ```swift
 import Foundation
@@ -2411,7 +2315,7 @@ extension Eater {
 }
 ```
 
-### 2.18 `KitchenAid/Models/Planning/AttendanceDefault.swift`
+### 2.17 `KitchenAid/Models/Planning/AttendanceDefault.swift`
 
 ```swift
 import Foundation
@@ -2465,7 +2369,7 @@ extension AttendanceDefault {
 }
 ```
 
-### 2.19 `KitchenAid/Models/Planning/PlannedMeal.swift`
+### 2.18 `KitchenAid/Models/Planning/PlannedMeal.swift`
 
 ```swift
 import Foundation
@@ -2667,7 +2571,7 @@ extension PlannedMeal {
 }
 ```
 
-### 2.20 `KitchenAid/Models/Planning/MealRecipe.swift`
+### 2.19 `KitchenAid/Models/Planning/MealRecipe.swift`
 
 ```swift
 import Foundation
@@ -2749,7 +2653,7 @@ extension MealRecipe {
 }
 ```
 
-### 2.21 `KitchenAid/Models/Planning/MealAttendance.swift`
+### 2.20 `KitchenAid/Models/Planning/MealAttendance.swift`
 
 ```swift
 import Foundation
@@ -2763,7 +2667,7 @@ import SwiftData
 /// servings fall out instead of being special-cased.
 ///
 /// There is no `guestName` and no acknowledged-warning child. An unnamed head at a party is
-/// `PlannedMeal.guestCount` (§2.19), and diet warnings were declined (§0.5). So every row
+/// `PlannedMeal.guestCount` (§2.18), and diet warnings were declined (§0.5). So every row
 /// here is a household member, and `eater == nil` means only one thing: the person was
 /// removed from the roster and `eaterNameSnapshot` is now the name.
 @Model
@@ -2841,7 +2745,7 @@ extension MealAttendance {
 }
 ```
 
-### 2.22 `KitchenAid/Models/Inventory/StockLot.swift`
+### 2.21 `KitchenAid/Models/Inventory/StockLot.swift`
 
 ```swift
 import Foundation
@@ -2993,7 +2897,7 @@ extension StockLot {
 }
 ```
 
-### 2.23 `KitchenAid/Models/Inventory/InventoryTransaction.swift`
+### 2.22 `KitchenAid/Models/Inventory/InventoryTransaction.swift`
 
 ```swift
 import Foundation
@@ -3128,7 +3032,7 @@ extension InventoryTransaction {
 
 ---
 
-### 2.24 `KitchenAid/Models/Shopping/ShoppingList.swift`
+### 2.23 `KitchenAid/Models/Shopping/ShoppingList.swift`
 
 ```swift
 import Foundation
@@ -3174,7 +3078,6 @@ final class ShoppingList {
     var expiringGraceDays: Int = 0
     var includeStaples: Bool = false
     var includeOptionalLines: Bool = false
-    var roundToPurchaseUnits: Bool = true
     var maxExpansionDepth: Int = 4
     /// `UnitSystem` raw value. Stored, never an enum (§0.4).
     var unitSystemRaw: String = UnitSystem.us.rawValue
@@ -3216,7 +3119,6 @@ final class ShoppingList {
         expiringGraceDays: Int = 0,
         includeStaples: Bool = false,
         includeOptionalLines: Bool = false,
-        roundToPurchaseUnits: Bool = true,
         maxExpansionDepth: Int = 4,
         unitSystemRaw: String = UnitSystem.us.rawValue,
         defaultDinerCount: Int = 2,
@@ -3239,7 +3141,6 @@ final class ShoppingList {
         self.expiringGraceDays = expiringGraceDays
         self.includeStaples = includeStaples
         self.includeOptionalLines = includeOptionalLines
-        self.roundToPurchaseUnits = roundToPurchaseUnits
         self.maxExpansionDepth = maxExpansionDepth
         self.unitSystemRaw = unitSystemRaw
         self.defaultDinerCount = defaultDinerCount
@@ -3301,7 +3202,7 @@ extension ShoppingList {
 }
 ```
 
-### 2.25 `KitchenAid/Models/Shopping/ShoppingListLine.swift`
+### 2.24 `KitchenAid/Models/Shopping/ShoppingListLine.swift`
 
 ```swift
 import Foundation
@@ -3421,7 +3322,9 @@ extension ShoppingListLine {
     var requested: [ShoppingListLineSubtotal] { rows(for: .requested) }
     var have: [ShoppingListLineSubtotal] { rows(for: .have) }
     var toBuy: [ShoppingListLineSubtotal] { rows(for: .toBuy) }
-    /// What actually enters the ledger on the trip home: the rounded pack.
+    /// What actually enters the ledger on the trip home. In v1 it is a copy of `toBuy`;
+    /// it is its own stored row so purchase-unit rounding can be added later without a
+    /// migration (deferred — see `CLAUDE.md`).
     var purchase: [ShoppingListLineSubtotal] { rows(for: .purchase) }
 
     var orderedSources: [ShoppingListSource] {
@@ -3430,7 +3333,7 @@ extension ShoppingListLine {
 }
 ```
 
-### 2.26 `KitchenAid/Models/Shopping/ShoppingListLineSubtotal.swift`
+### 2.25 `KitchenAid/Models/Shopping/ShoppingListLineSubtotal.swift`
 
 ```swift
 import Foundation
@@ -3523,7 +3426,7 @@ extension ShoppingListLineSubtotal {
 }
 ```
 
-### 2.27 `KitchenAid/Models/Shopping/ShoppingListSource.swift`
+### 2.26 `KitchenAid/Models/Shopping/ShoppingListSource.swift`
 
 ```swift
 import Foundation
@@ -3630,7 +3533,7 @@ extension ShoppingListSource {
 }
 ```
 
-### 2.28 `KitchenAid/App/AppTab.swift`
+### 2.27 `KitchenAid/App/AppTab.swift`
 
 ```swift
 import Foundation
@@ -3680,7 +3583,7 @@ enum AppTab: String, CaseIterable, Identifiable, Sendable {
 }
 ```
 
-### 2.29 `KitchenAid/Models/Schema/KitchenAidSchema.swift`
+### 2.28 `KitchenAid/Models/Schema/KitchenAidSchema.swift`
 
 ```swift
 import Foundation
@@ -3698,13 +3601,13 @@ enum KitchenAidSchemaV1: VersionedSchema {
     /// ONE array, shared by the container and the tests. A model added to one list and not
     /// the other is a runtime "entity not found", not a compile error.
     ///
-    /// **22 entries. There is no `Recipe` here** — recipes are bundled content and have no
+    /// **21 entries. There is no `Recipe` here** — recipes are bundled content and have no
     /// row (§0.2).
     static var models: [any PersistentModel.Type] = [
         // Overlay — the SwiftData side of bundled content
         RecipeTweak.self, IngredientOverride.self, StepOverride.self,
         // Catalog
-        FoodItem.self, FoodItemAlias.self, CountEquivalence.self,
+        FoodItem.self, FoodItemAlias.self,
         Store.self, StoreSection.self, StorageLocation.self,
         MergeRecord.self, SeedRecord.self,
         // Planning
@@ -3724,7 +3627,7 @@ enum KitchenAidMigrationPlan: SchemaMigrationPlan {
 }
 ```
 
-### 2.30 `KitchenAid/Models/Transfer/` — drag payloads
+### 2.29 `KitchenAid/Models/Transfer/` — drag payloads
 
 ```swift
 // KitchenAidUTType.swift
@@ -4375,7 +4278,8 @@ struct Quantity: Hashable, Sendable {
     }
 
     /// nil across dimension keys — including across two different count nouns, which is the
-    /// point. Crossing those needs a `CountEquivalence` and goes through `QuantityMath`.
+    /// point. Nothing in v1 crosses two count nouns: that is purchase-unit rounding, and it
+    /// is deferred (`CLAUDE.md`).
     func converted(to target: KitchenUnit) -> Quantity? {
         guard target.dimensionKey == dimensionKey, target.baseFactor != .zero else { return nil }
         return Quantity(amount: base / target.baseFactor, unit: target)
@@ -4411,7 +4315,7 @@ import Foundation
 /// exists to avoid. Five defaulted scalars survive every additive schema change.
 ///
 /// A type may conform once, so the models carrying TWO or MORE quantities — `StockLot`
-/// (`remaining`, `original`), `FoodItem` (`gramsPerCup`, `purchasePack`, `parLevel`) — use
+/// (`remaining`, `original`), `FoodItem` (`gramsPerCup`, `parLevel`) — use
 /// the same five-primitive shape with distinct prefixes and their own accessors instead. The
 /// protocol is the convenience; the SHAPE is the contract. In this schema the one conformer
 /// is `IngredientOverride`.
@@ -4476,7 +4380,7 @@ import Foundation
 /// the same thing as a nested `QuantityMath.Subtotal` — so half its signatures said one and
 /// half said the other, and neither had an owner (§0.9.2). Resolved here: this is a top-level
 /// type in its own file, `QuantityMath.Subtotal` does not exist, and every signature in §3.6,
-/// §4 and §5 names `QuantitySubtotal`. `ShoppingListLineSubtotal` (§2.26) is its persisted
+/// §4 and §5 names `QuantitySubtotal`. `ShoppingListLineSubtotal` (§2.25) is its persisted
 /// mirror and converts both ways.
 struct QuantitySubtotal: Hashable, Sendable {
     /// "volume" | "mass" | "count:clove". The aggregation bucket, and the reason clove and
@@ -4508,7 +4412,9 @@ struct QuantitySubtotal: Hashable, Sendable {
 /// Which of the four numbers on a shopping line this subtotal is.
 ///
 /// All four are kept per line and per dimension. `toBuy` is what he shops by; `purchase` is
-/// the rounded pack and is what `InventoryLedger.receive` posts (decision 16).
+/// what `InventoryLedger.receive` posts (decision 15). In v1 `purchase` equals `toBuy`,
+/// because purchase-unit rounding is deferred (`CLAUDE.md`) — it is a separate role so the
+/// rounding can arrive as a writer rather than as a migration.
 enum SubtotalRole: String, Codable, CaseIterable, Sendable {
     case requested, have, toBuy, purchase
 
@@ -4611,9 +4517,13 @@ enum QuantityMath {
 
     // MARK: - Summation
 
-    /// Partition by `dimensionKey`, add EXACTLY within each partition, then attempt the two
-    /// collapses. Count nouns are partitioned FIRST and only bridged by `CountEquivalence`,
-    /// which is why "2 cloves + 1 head" never becomes "3 cloves".
+    /// Partition by `dimensionKey`, add EXACTLY within each partition, then attempt the one
+    /// collapse there is: volume <-> mass, on a per-item density.
+    ///
+    /// Count nouns are partitioned FIRST and are **never folded into one another**, which is
+    /// why "2 cloves + 1 head" never becomes "3 cloves" — and why it stays two subtotals on
+    /// one line instead of one purchase noun. Turning a count noun into a different purchase
+    /// noun is purchase-unit rounding, which is deferred; see `CLAUDE.md`.
     static func sum(
         _ contributions: [Contribution],
         using item: FoodItem?,
@@ -4635,199 +4545,8 @@ enum QuantityMath {
                 isApproximateDisplay: approx
             )
         }
-        subtotals = normalizeCountBucketsToPurchaseNoun(subtotals, using: item, system: system)
-        subtotals = collapseCountBuckets(subtotals, using: item, system: system)
         subtotals = collapseAcrossDimensions(subtotals, using: item, system: system)
         return subtotals.sorted { $0.dimensionKey < $1.dimensionKey }
-    }
-
-    // MARK: - Pass A: normalize toward the purchase noun
-    //
-    // This is a DIFFERENT OPERATION from folding buckets into each other, and separating
-    // them is the fix for a defect that made the fixture's own headline case unreachable.
-    //
-    // The bug, stated exactly, because it is the kind that survives three reviews: the
-    // fixture produces ONE count bucket — `count:slice = 12` — and no `count:loaf` bucket
-    // at all. `collapseCountBuckets` opened with `count > 1`, its loop re-checked
-    // `count > 1`, and its fold additionally required the TARGET noun to be on the line
-    // already. All three declined. `purchaseQuantity` then also declined, because it
-    // compared `count:slice` against a `1 loaf` pack and bailed on the mismatch. So the
-    // line shipped as "12 slices baguette" while four other places in this document — the
-    // §4.3(d) worked example, §8.2 requirement 9, decision 13 and an asserted test —
-    // promised "1 baguette".
-    //
-    // Folding is a comparison between two things he asked for, so it may reasonably want
-    // two buckets. Normalising is a statement about how the item is BOUGHT, and twelve
-    // slices of bread is one baguette whether or not anything else on the line is measured
-    // in loaves. So this pass has no count gate: it runs on one bucket, and it runs first.
-
-    /// Rewrites every count bucket into the item's PURCHASE noun where a `CountEquivalence`
-    /// chain reaches it. **Unconditional in the number of buckets** — one is enough.
-    ///
-    /// Follows count→count rows up to four hops (slice → loaf, clove → head → braid), stops
-    /// at the purchase noun, and leaves a bucket alone when no chain reaches it. Buckets
-    /// that land on the same noun are summed, so this also collapses `slice` and `loaf`
-    /// into one row on a line that happened to carry both.
-    static func normalizeCountBucketsToPurchaseNoun(
-        _ subtotals: [QuantitySubtotal], using item: FoodItem?, system: UnitSystem
-    ) -> [QuantitySubtotal] {
-        guard let item, let target = item.purchaseCountNoun else { return subtotals }
-        let targetKey = "count:\(target)"
-
-        var kept = subtotals.filter { !$0.dimensionKey.hasPrefix("count:") }
-        var total: Rational = .zero
-        var notes: [String] = []
-        var hint: KitchenUnit? = nil
-        var reachedAny = false
-
-        for bucket in subtotals where bucket.dimensionKey.hasPrefix("count:") {
-            if bucket.dimensionKey == targetKey {
-                total = total + bucket.base
-                if !bucket.conversionNote.isEmpty { notes.append(bucket.conversionNote) }
-                hint = hint ?? bucket.preferredUnit
-                reachedAny = true
-                continue
-            }
-            // Walk the chain toward the purchase noun, multiplying the factors.
-            var noun = String(bucket.dimensionKey.dropFirst("count:".count))
-            var factor: Rational = .one
-            var landed = false
-            for _ in 0..<4 {
-                guard let eq = item.countEquivalence(forNoun: noun),
-                      let equals = eq.equals,
-                      equals.unit.isCount,
-                      equals.base != .zero
-                else { break }
-                factor = factor * equals.base
-                noun = equals.unit.code
-                if noun == target { landed = true; break }
-            }
-            guard landed else { kept.append(bucket); continue }
-            let moved = bucket.base * factor
-            total = total + moved
-            notes.append(
-                "\(bucket.base.mixedDescription) \(String(bucket.dimensionKey.dropFirst("count:".count))) counted as \(moved.mixedDescription) \(target)"
-            )
-            reachedAny = true
-        }
-
-        guard reachedAny else { return subtotals }
-        let (unit, approx) = displayUnit(
-            forBase: total, dimensionKey: targetKey, hint: hint, system: system
-        )
-        kept.append(QuantitySubtotal(
-            dimensionKey: targetKey, base: total, preferredUnit: unit,
-            conversionNote: notes.joined(separator: "; "), isApproximateDisplay: approx
-        ))
-        return kept
-    }
-
-    /// Passes B and C: FOLDING count buckets into each other, then into mass or volume.
-    /// **IN v1** — purchase-unit rounding moved into v1 with `CLAUDE.md`.
-    ///
-    /// It runs AFTER `normalizeCountBucketsToPurchaseNoun`, and the two are not
-    /// interchangeable. This function compares buckets that are both on the line, so the
-    /// `> 1` gates below are correct here and are deliberately kept; the fixture's
-    /// single-bucket case is pass A's job and nothing in this function should be relaxed to
-    /// try to cover it.
-    ///
-    /// Pass B, count → count. A noun whose `CountEquivalence` is expressed in ANOTHER noun
-    /// present on the line folds into it: with clove → 1/10 head, "3 cloves + 1 head" becomes
-    /// 1 3/10 heads, which purchase-rounds to "buy 2 heads". Iterated to a fixed point,
-    /// capped, because clove → head → braid is legal. (Garlic reaches this pass with both
-    /// nouns present, which is why it works where the baguette did not.)
-    ///
-    /// Pass C, count → mass or volume. Only when EVERY remaining count bucket has an
-    /// equivalence resolving to the SAME non-count dimension. If only some nouns have one,
-    /// nothing is collapsed: "3 cloves + 1 head" is more useful to a shopper than
-    /// "3 cloves + 50 g".
-    ///
-    /// All three passes together are the fix for the bug where `.count` shares one dimension
-    /// with a factor into "each": there, "2 cloves garlic + 1 clove + 1 head garlic" sums to
-    /// base 4 and renders "4 cloves", understating garlic by about 50 g, and "6 slices
-    /// baguette + 1 loaf" renders "7 slices". The data to fix it existed on the model but was
-    /// consulted only when crossing DIMENSIONS, so the bridge could never fire inside
-    /// `.count`. Partition by noun first, then bridge — in that order.
-    static func collapseCountBuckets(
-        _ subtotals: [QuantitySubtotal], using item: FoodItem?, system: UnitSystem
-    ) -> [QuantitySubtotal] {
-        guard let item else { return subtotals }
-        var working = subtotals
-        guard working.filter({ $0.dimensionKey.hasPrefix("count:") }).count > 1 else {
-            return working
-        }
-
-        // Pass B: fold a count noun into another count noun present on the line.
-        for _ in 0..<8 {
-            let countKeys = Set(working.filter { $0.dimensionKey.hasPrefix("count:") }.map(\.dimensionKey))
-            guard countKeys.count > 1 else { break }
-            var changed = false
-            for key in countKeys.sorted() {
-                let noun = String(key.dropFirst("count:".count))
-                guard let eq = item.countEquivalence(forNoun: noun),
-                      let equals = eq.equals,
-                      equals.dimensionKey.hasPrefix("count:"),
-                      equals.dimensionKey != key,
-                      countKeys.contains(equals.dimensionKey),
-                      let sourceIndex = working.firstIndex(where: { $0.dimensionKey == key }),
-                      let targetIndex = working.firstIndex(where: { $0.dimensionKey == equals.dimensionKey })
-                else { continue }
-                let source = working[sourceIndex]
-                let moved = source.base * equals.base
-                let total = working[targetIndex].base + moved
-                let (unit, approx) = displayUnit(
-                    forBase: total, dimensionKey: equals.dimensionKey,
-                    hint: working[targetIndex].preferredUnit, system: system
-                )
-                let note = "\(source.base.mixedDescription) \(noun) counted as \(moved.mixedDescription) \(equals.unit.code)"
-                working[targetIndex] = QuantitySubtotal(
-                    dimensionKey: equals.dimensionKey, base: total, preferredUnit: unit,
-                    conversionNote: [working[targetIndex].conversionNote, note]
-                        .filter { !$0.isEmpty }.joined(separator: "; "),
-                    isApproximateDisplay: approx
-                )
-                working.remove(at: sourceIndex)
-                changed = true
-                break
-            }
-            if !changed { break }
-        }
-
-        // Pass C: fold every remaining count noun into one shared non-count dimension.
-        let countBuckets = working.filter { $0.dimensionKey.hasPrefix("count:") }
-        guard countBuckets.count > 1 else { return working }
-
-        var targets: Set<String> = []
-        var converted: [(QuantitySubtotal, Rational, String)] = []
-        for bucket in countBuckets {
-            let noun = String(bucket.dimensionKey.dropFirst("count:".count))
-            guard let eq = item.countEquivalence(forNoun: noun),
-                  let equals = eq.equals,
-                  !equals.dimensionKey.hasPrefix("count:")
-            else { return working }
-            targets.insert(equals.dimensionKey)
-            converted.append((bucket, bucket.base * equals.base, noun))
-        }
-        guard targets.count == 1, let targetKey = targets.first else { return working }
-
-        var kept = working.filter { !$0.dimensionKey.hasPrefix("count:") }
-        var total: Rational = kept.first(where: { $0.dimensionKey == targetKey })?.base ?? .zero
-        var notes: [String] = kept
-            .first(where: { $0.dimensionKey == targetKey })
-            .map { $0.conversionNote.isEmpty ? [] : [$0.conversionNote] } ?? []
-        kept.removeAll { $0.dimensionKey == targetKey }
-        for (bucket, value, noun) in converted {
-            total = total + value
-            notes.append("\(bucket.base.mixedDescription) \(noun) counted as \(value.mixedDescription)")
-        }
-        let (unit, approx) = displayUnit(
-            forBase: total, dimensionKey: targetKey, hint: nil, system: system
-        )
-        kept.append(QuantitySubtotal(
-            dimensionKey: targetKey, base: total, preferredUnit: unit,
-            conversionNote: notes.joined(separator: "; "), isApproximateDisplay: approx
-        ))
-        return kept
     }
 
     /// Volume <-> mass, and ONLY with a per-item density.
@@ -4899,9 +4618,9 @@ enum QuantityMath {
     /// already had — and flagged `.needsBridge` on an item the shipped catalogue gives
     /// `gramsPerCup: 227`. The bridge existed; nothing called it.
     ///
-    /// Order: count equivalences first (a count of eggs becomes grams), then density
-    /// (volume ↔ mass). Anything that still has nowhere to go is returned as-is, and THAT
-    /// is what `.needsBridge` is for.
+    /// It bridges on DENSITY alone — volume ↔ mass, from the item's `gramsPerCup`. A count
+    /// bucket has nowhere to go, because count nouns are not bridged in v1, and anything
+    /// that still has nowhere to go is returned as-is. THAT is what `.needsBridge` is for.
     static func bridgeHave(
         _ have: [QuantitySubtotal],
         toward requestedKeys: Set<String>,
@@ -4920,26 +4639,9 @@ enum QuantityMath {
             }
             var moved: QuantitySubtotal? = nil
 
-            // (1) count -> whatever its equivalence names, if that is wanted.
-            if bucket.dimensionKey.hasPrefix("count:") {
-                let noun = String(bucket.dimensionKey.dropFirst("count:".count))
-                if let eq = item.countEquivalence(forNoun: noun),
-                   let equals = eq.equals,
-                   requestedKeys.contains(equals.dimensionKey) {
-                    let base = bucket.base * equals.base
-                    let (unit, approx) = displayUnit(
-                        forBase: base, dimensionKey: equals.dimensionKey, hint: nil, system: system
-                    )
-                    moved = QuantitySubtotal(
-                        dimensionKey: equals.dimensionKey, base: base, preferredUnit: unit,
-                        conversionNote: "\(bucket.base.mixedDescription) \(noun) on hand counted as \(base.mixedDescription) \(equals.unit.code)",
-                        isApproximateDisplay: approx
-                    )
-                }
-            }
-
-            // (2) volume <-> mass, and ONLY with a per-item density.
-            if moved == nil, let g = gramsPerTsp {
+            // Volume <-> mass, and ONLY with a per-item density. A count bucket that the
+            // requirement does not already use falls through to `unbridgeable`.
+            if let g = gramsPerTsp {
                 let volumeKey = MeasureDimension.volume.rawValue
                 let massKey = MeasureDimension.mass.rawValue
                 if bucket.dimensionKey == massKey, requestedKeys.contains(volumeKey) {
@@ -5013,9 +4715,9 @@ enum QuantityMath {
             clamped, toward: requestedKeys, using: item, system: system
         )
         // ONLY stock that could not be converted raises the flag. The old condition read
-        // `item?.gramsPerCup == nil`, which fired on a count-vs-mass mismatch even when a
-        // `CountEquivalence` covered it, and the second condition fired whenever ANY bucket
-        // was unmatched — so one unbridgeable row flagged every requirement on the line.
+        // `item?.gramsPerCup == nil`, which fired on a dimension mismatch the density could
+        // in fact bridge, and the second condition fired whenever ANY bucket was unmatched —
+        // so one unbridgeable row flagged every requirement on the line.
         if !unbridgeable.isEmpty { flags.insert(.needsBridge) }
         if usable.contains(where: { !$0.conversionNote.isEmpty }) { flags.insert(.converted) }
 
@@ -5043,59 +4745,6 @@ enum QuantityMath {
         }
         return (out, flags, didReduce)
     }
-
-    /// Rounds up to a purchasable pack. `5 eggs → 1 dozen`, `0.3 bunch → 1 bunch`,
-    /// `1 1/3 cups → 1 quart`. Returns the exact `toBuy` unchanged when the item has no pack,
-    /// because inflating a number silently is how a list loses trust — the rounding is always
-    /// SHOWN beside the need.
-    ///
-    /// It will cross **one `CountEquivalence` hop** to reach the pack's dimension key. Pass A
-    /// of the collapse normally gets there first, but this is the belt to its braces: a line
-    /// built before an equivalence existed, or a `have`-side bridge that landed in a
-    /// neighbouring noun, must not silently skip purchase rounding just because
-    /// `count:slice != count:loaf`. One hop and no more — a chain here would be a second,
-    /// subtly different implementation of pass A, which is how the two drift apart.
-    static func purchaseQuantity(
-        forToBuy toBuy: [QuantitySubtotal], item: FoodItem?, system: UnitSystem = .us
-    ) -> [QuantitySubtotal] {
-        guard let item, let pack = item.purchasePack, pack.base != .zero else { return toBuy }
-        return toBuy.map { subtotal in
-            var working = subtotal
-            if working.dimensionKey != pack.dimensionKey,
-               working.dimensionKey.hasPrefix("count:") {
-                let noun = String(working.dimensionKey.dropFirst("count:".count))
-                if let eq = item.countEquivalence(forNoun: noun),
-                   let equals = eq.equals,
-                   equals.dimensionKey == pack.dimensionKey,
-                   equals.base != .zero {
-                    let base = working.base * equals.base
-                    let (u, a) = displayUnit(
-                        forBase: base, dimensionKey: equals.dimensionKey,
-                        hint: pack.unit, system: system
-                    )
-                    working = QuantitySubtotal(
-                        dimensionKey: equals.dimensionKey, base: base, preferredUnit: u,
-                        conversionNote: [working.conversionNote,
-                                         "\(working.base.mixedDescription) \(noun) counted as \(base.mixedDescription) \(equals.unit.code)"]
-                            .filter { !$0.isEmpty }.joined(separator: "; "),
-                        isApproximateDisplay: a
-                    )
-                }
-            }
-            guard working.dimensionKey == pack.dimensionKey else { return subtotal }
-            let packs = Rational((working.base / pack.base).ceilingInt)
-            let total = packs * pack.base
-            let (unit, approx) = displayUnit(
-                forBase: total, dimensionKey: working.dimensionKey,
-                hint: pack.unit, system: system
-            )
-            return QuantitySubtotal(
-                dimensionKey: working.dimensionKey, base: total, preferredUnit: unit,
-                conversionNote: "need \(working.base.mixedDescription), buy \(packs.mixedDescription) × \(pack.displayString(system: system))",
-                isApproximateDisplay: approx
-            )
-        }
-    }
 }
 ```
 
@@ -5113,10 +4762,17 @@ enum ItemIdentity: Hashable, Sendable {
     case freeText(String)
 }
 
-/// The aggregation bucket.
+/// The SUBTOTAL bucket. **It never keys a line.**
+///
+/// A shopping LINE is keyed by `ItemIdentity` alone — one line per `FoodItem` per list
+/// (§2.25, §4.2 step 4) — and `MergeKey` keys the buckets within that line.
 ///
 /// `dimensionKey` carries the count NOUN, so clove and head are separate subtotals ON ONE
-/// LINE and the output type can display exactly what the merge key separated.
+/// LINE and the output type can display exactly what the merge key separated. Putting
+/// `dimensionKey` in the LINE key instead splits one `FoodItem` asked for in two dimensions
+/// into two lines, makes `DraftLine.requested` plural for nothing, and hands
+/// `QuantityMath.sum` a group that is single-dimension by construction — which disables
+/// `collapseAcrossDimensions` on the requested side, the one place it is most needed.
 ///
 /// `preparation` is deliberately NOT in the key: you buy onions, not diced-ness, so "1 cup
 /// onion, diced" and "1/2 cup onion, sliced" merge into "1 1/2 cups onion" while both cook
@@ -5360,7 +5016,7 @@ enum LineFlag: String, Codable, CaseIterable, Sendable {
     case needsBridge        // volume vs mass with no density; nothing assumed on hand
     case unresolvedItem     // matched no FoodItem and no catalogue entry
     case assumedOnHand      // a staple, diverted to the footer
-    case converted          // a density or count bridge fired; see the conversionNote
+    case converted          // the density bridge fired; see the conversionNote
     case expiredStockIgnored
     case expiringBeforeNeed // excluded by expiringGraceDays
     case tweaked            // an IngredientOverride changed this requirement
@@ -5990,8 +5646,13 @@ enum ShoppingListBuilder {
         var expiringGraceDays: Int = 0
         var includeStaples: Bool = false
         var includeOptionalLines: Bool = false
-        var roundToPurchaseUnits: Bool = true
-        // There is deliberately NO `includeCoveredLines`. Step 6 and §2.25's rationale both
+        // There is deliberately NO `roundToPurchaseUnits` either: purchase-unit
+        // rounding was cut (CLAUDE.md), and this flag outlived it in three places
+        // with no reader anywhere, defaulting to true — so every persisted list
+        // would have recorded "rounded to purchase units: yes" about a list
+        // shopped by the exact need. Which is precisely the failure the comment
+        // below describes.
+        // There is deliberately NO `includeCoveredLines`. Step 6 and §2.24's rationale both
         // FORBID removing a covered line — it is kept and collapsed under "Already have",
         // because a silently absent line is indistinguishable from a bug and he needs to see
         // the app's belief about his fridge before he will trust it. An option nothing
@@ -6088,7 +5749,7 @@ enum ShoppingListBuilder {
 
 **Step 1 — collect the meals.**
 
-```
+```text
 FetchDescriptor<PlannedMeal>(
     predicate: #Predicate { $0.dayKey >= startKey && $0.dayKey <= endKey },
     sortBy: [SortDescriptor(\.dayKey), SortDescriptor(\.slotSortIndex),
@@ -6114,7 +5775,7 @@ the header can say "3 meals with no recipe".
 — note the `?.recipe` unwrap: the builder's resolver hands back a `ResolvedRecipe?` and
 `MealScaling` takes a `Recipe?` (§4.1).
 
-```
+```text
 portions = Σ over meal.attendance where consumesPortion of effectivePortion
          + guestCount × guestPortion                    // counted, never named
          + plannedLeftoverServings                      // note .leftoversIncluded
@@ -6165,14 +5826,23 @@ unwrap is written out at the call, below.
   `line.subRecipePolicy == .expandToIngredients`. When expanding, the child scale is
   `RecipeGraph.childScale(for: line, subRecipe: sub.recipe)` — where
   `let sub = resolve(id)` is a `ResolvedRecipe`, so `.recipe` unwraps it to the bundled
-  value the signature takes:
+  value the signature takes.
 
-  ```
-  guard let q = line.quantity                           else { return nil }
-  guard let yieldAmount = sub.yieldAmount,
-        let yieldUnit = UnitCatalog.resolve(sub.yieldUnitLabel)
-                     ?? Optional(UnitCatalog.countUnit(noun: sub.yieldUnitLabel))
-                                                        else { return nil }
+  **The body is written against its own parameter, `subRecipe`.** `sub` is a local of the
+  CALLER and is not in scope inside the function, and `ResolvedRecipe` forwards only `id`,
+  `components`, `steps`, `title`, `servings` and `batchGranularity` (§3.10) — no yield — so
+  `sub.yieldAmount` would not resolve either way. No yield forwarder is added to §3.10: a
+  yield is bundled content that no override can touch (§4.1), which is exactly why
+  `childScale` takes the `Recipe`.
+
+  ```text
+  guard let q = line.quantity, let yieldAmount = subRecipe.yieldAmount else { return nil }
+  // Not a `guard let`: `resolve` returns nil for a noun it does not know, and
+  // `countUnit(noun:)` MINTS one for the open set and never fails (§3.3), so the
+  // coalesced expression is non-optional. A guard that can never fire reads as a check
+  // that is happening when none is.
+  let yieldUnit = UnitCatalog.resolve(subRecipe.yieldUnitLabel)
+               ?? UnitCatalog.countUnit(noun: subRecipe.yieldUnitLabel)
   let yieldBase = yieldAmount * yieldUnit.baseFactor
   guard q.dimensionKey == yieldUnit.dimensionKey, yieldBase != .zero else { return nil }
   return q.base / yieldBase
@@ -6203,7 +5873,18 @@ unwrap is written out at the call, below.
 **Step 4 — resolve and bucket.** `resolveItem(line.catalogName, line.displayName)` returns the
 `FoodItem` if one exists or can be minted from a catalogue template (§0.3), and
 `identity = item.map { .cataloged($0.id) } ?? .freeText(NameNormalizer.matchKey(displayName))`.
-Group by `MergeKey(item:dimensionKey:)`.
+
+**Group the LINES by `identity` alone — never by `MergeKey`.** One line per `FoodItem` per
+list (§1, §2.25), so every contribution to that item, in every dimension it was asked for,
+goes into ONE call to `QuantityMath.sum`, which partitions by `dimensionKey` internally.
+`MergeKey` is the key of those buckets inside the line and of nothing else (§3.7).
+
+Putting `dimensionKey` in the line key instead splits "1 cup flour + 200 g flour" into two
+lines, makes `DraftLine.requested: [QuantitySubtotal]` plural for nothing, contradicts step
+5's "one per dimension, N per line", and hands `sum` a group that is single-dimension by
+construction — so `collapseAcrossDimensions`, which returns early unless a volume AND a mass
+bucket are both present, can never fire on the requested side, and §4.3(b)'s flour case
+cannot happen. It is the same defect `bridgeHave` fixed on the `have` side.
 
 Resolved lines bucket by the SURVIVOR `FoodItem.id` — `FoodItemResolver.reconcile` has already
 run, so aliases have collapsed. Unresolved lines each get their own line with
@@ -6215,15 +5896,18 @@ with every provenance attached and **no arithmetic at all**. "Salt to taste" acr
 recipes is still "salt, to taste".
 
 **Step 5 — sum exactly within each bucket.** `QuantityMath.sum(_:using:system:)`: partition by
-`dimensionKey`, add exact `Rational` base values, then the three collapse passes in order —
-`normalizeCountBucketsToPurchaseNoun` (pass A: every count bucket toward the item's purchase
-noun, **whether or not it is the only one**), `collapseCountBuckets` (passes B and C:
-count→count between buckets both present, then count→mass/volume) and
+`dimensionKey`, add exact `Rational` base values, then the one collapse pass —
 `collapseAcrossDimensions` (volume↔mass via `gramsPerCup`).
+
+**Count nouns are not collapsed into one another.** Each noun is its own bucket and stays
+one, so "3 cloves + 1 head" is two subtotals on one line and the fixture's baguette line
+stays `count:slice = 12`. Rewriting a count noun into a *purchase* noun — twelve slices into
+one loaf — is purchase-unit rounding, which was added here on initiative, failed review
+twice, and is cut; read the section in `CLAUDE.md` before re-adding it.
 
 **`.converted` is set here, by the builder, and the rule is explicit so it has a writer:**
 after `sum` returns, `flags.insert(.converted)` **if any surviving subtotal has a non-empty
-`conversionNote`.** The three collapse functions return `[QuantitySubtotal]` with no flag
+`conversionNote`.** `collapseAcrossDimensions` returns `[QuantitySubtotal]` with no flag
 channel, by design — the note rides with the specific number that moved, which is the whole
 reason subtotals are rows — so the derivation lives at the one call site that sees the
 result. `QuantityMath.subtract` applies the same rule to the `have` side itself, because it
@@ -6245,8 +5929,10 @@ them, so the figures here are checkable rather than remembered.
 **Step 6 — subtract inventory.** `options.subtractInventory` →
 `inventoryLevel(item, options)`, which returns **both the subtotals and the flags it
 raised**, because the filters below need the dates and the options and the flags need a
-writer (§4.1). `InventoryLedger.level(of:in:includeExpired:asOf:)` implements it by summing
-the item's **transactions** (not its lots), excluding:
+writer (§4.1). `InventoryLedger.level(of:in:includeExpired:asOf:graceEnd:)` — the spelling
+§1 and §5.4 both declare, including the `graceEnd:` label that carries the window the third
+exclusion below is phrased in — implements it by summing the item's **transactions** (not its
+lots), excluding:
 
 - rows whose `resolutionState != .applied` or `hasDelta == false`;
 - rows whose **lot** has `expiresAt < options.now`, unless `countExpiredAsAvailable` → it
@@ -6264,7 +5950,7 @@ property of the LOT, orphans have no lot, and orphans count. `InventorySnapshotP
 closing "unassigned" block is the same decision on paper (§7.2).
 
 `level` then runs the requested side's own machinery on what it found —
-`QuantityMath.sum(_:using: item)`, same item, same three collapse passes — so both sides
+`QuantityMath.sum(_:using: item)`, same item, same collapse pass — so both sides
 land on the same `dimensionKey`s wherever they can. Without that the two sides can be
 summed into keys that never meet even when a bridge exists.
 
@@ -6274,9 +5960,23 @@ Then `QuantityMath.subtract(requested:have:item:)`, with **both sides clamped at
 stock that still has nowhere to go → `needed = requested` for that bucket (assume nothing is
 on hand) and `.needsBridge`. **A known density never raises `.needsBridge`.**
 
-Status, from `subtract`'s return:
+Status, from `subtract`'s return and the flags the line has accumulated. **The four rules are
+evaluated in this order and the first that matches wins**, so a line carrying two facts is
+never two statuses:
 
-- `needed == 0` → `status = .haveEnough`, `isCovered = true`.
+- `needed == 0` → `status = .haveEnough`, `isCovered = true`. Nothing left to buy outranks
+  everything below, whatever flags the line carries: a covered line is not an action.
+- `flags.contains(.needsBridge)` → **`status = .needsBridge`**, which **outranks
+  `.partiallyHave` and `.needed`**, because it is the one state a single tap fixes. The flag
+  has two writers and either sets the status: step 5, when two or more REQUESTED buckets are
+  irreducible (§4.3(b)'s flour), and `QuantityMath.subtract`, when stock survives
+  `bridgeHave` in a dimension the requirement does not use. Without this rule nothing in the
+  document ever wrote `.needsBridge` into `statusRaw`, so `ShoppingList.needsAttention`
+  (§2.23) — which filters on exactly `.needsBridge` and `.unresolvedItem` to fill the pinned
+  "Needs attention" block — could never contain a bridge line, and §4.3(b)'s
+  `status = .needsBridge` was unreachable. `.unresolvedItem` is set in step 4 and is not
+  revisited here; where both would apply it wins, because an unmatched item has no density
+  to fill in.
 - `needed != 0 && didReduce` → **`status = .partiallyHave`**. Some bucket was genuinely
   reduced in a matching dimension and the line is still half-covered. Without this rule
   nothing in this document ever wrote `.partiallyHave`, the case was declared on
@@ -6301,24 +6001,47 @@ own proof case for intra-recipe aggregation, and diverting salt to a quantity-le
 means the arithmetic never runs on it, leaving butter as the only surviving proof.
 `KitchenAidTests/ShoppingListBuilderTests` asserts `1 1/4 tsp` **through the staple path**.
 
+So a diverted staple **keeps its `requested` subtotals** — that `1 1/4 tsp` — and has
+**`toBuy` and `purchase` emptied**. A buy quantity printed beside "assumed on hand" is the
+footer contradicting itself, and `purchase` is what `InventoryLedger.receive` posts, so a
+non-empty one would restock something that was never bought.
+
 Which ingredients are staples comes from the catalogue's `staple` flag (§0.3) — salt, pepper,
 every oil, every vinegar, every spice — copied onto the `FoodItem` at creation and overridable
 per item afterwards.
 
-**Step 8 — par levels.** For `item.hasParLevel` whose rollup is below `parLevel`, add a line
-with a single `.parLevel` source and no meal. This is how a staple reaches the list by a rule
-rather than only when a Bool is flipped by hand.
+**Step 8 — par levels.** For `item.hasParLevel` whose rollup is below `parLevel`: **if a line
+for that `ItemIdentity` already exists, append the `.parLevel` source to it** and flag it
+`.parLevel`; only when no line exists is one created, with a single `.parLevel` source and no
+meal. This is how a staple reaches the list by a rule rather than only when a Bool is flipped
+by hand.
 
-**Step 9 — purchase rounding, section, sort.**
-`QuantityMath.purchaseQuantity(forToBuy:item:)` → the `purchase` subtotals, kept **alongside**
-`toBuy`. The line reads "need 1 1/3 cups, buy 1 quart", and it is the **quart** that
-`InventoryLedger.receive` posts. Feeding the pre-rounding number back drifts tracked stock
-monotonically below reality and makes the pantry — the feature the whole inventory model
-exists for — untrustworthy within weeks.
+The de-duplication is not tidiness. Step 7 deliberately leaves a staple with a par-level
+shortfall on the list as an ordinary line rather than diverting it, and kosher salt — the
+fixture's own staple — is the likeliest item in the kitchen to carry a par level, so an
+unconditional step 8 gives one `FoodItem` two lines on one list. It also breaks step 11,
+which matches on `(ItemIdentity, dimensionKey set)`: two lines sharing an identity make the
+check-state carry-over ambiguous, and a line he checked off comes back.
+
+**Step 9 — section and sort.** The `purchase` subtotals are written here, and in v1 each one
+is a **copy of the matching `toBuy` row**: with purchase-unit rounding cut (`CLAUDE.md`) there
+is no pack to round toward, so the list shops by the exact need and says so. A staple
+diverted in step 7 has an empty `toBuy`, so this copy correctly leaves its `purchase` empty
+as well. The role still
+gets its own stored rows, because `purchase` is what `InventoryLedger.receive` posts — what
+came home, not what the recipe asked for — and because that is where a rounded pack quantity
+lands if rounding is ever built, which makes it a new writer rather than a migration.
 
 Group by `item.defaultSection`, sections ordered by `sortIndex` (his store's actual geography,
 drag-reorderable, and a synced **row** rather than an unsynced `UserDefaults` value).
-Alphabetical within a section. A `FoodItem` minted from a catalogue template already has its
+Alphabetical within a section.
+
+**`Draft.sectionOrder` is written here, and this is its only writer**: the distinct section
+names of `lines`, ordered by the `sectionSortIndex` snapshotted beside them, with "Unsorted"
+last. The generation sheet's "32 items across 6 sections" reads it instead of re-deriving an
+order the lines already carry.
+
+A `FoodItem` minted from a catalogue template already has its
 section, because the template's `aisle` matched a seeded `StoreSection` (§8) — so "Unsorted"
 is now rare rather than the default state of a new kitchen. Unsectioned lines still land in a
 trailing "Unsorted" group with a one-tap assign that writes `defaultSection`. Section name and
@@ -6388,7 +6111,7 @@ recipe, not only across recipes in the plan.
 
 *Without a density* (`hasDensity == false`) — the honest answer:
 
-```
+```text
 volume bucket : 48 tsp     -> hint cup -> 48/48 = 1          -> "1 cup"
 mass   bucket : 200 g      -> hint g, 200 >= 64 so (a) fails
                               (b) lb: 200/(2268/5) = 250/567 < 1   skip
@@ -6409,7 +6132,7 @@ null, which are the ones whose density is genuinely unsettled.
 
 *With `gramsPerCup = 120`:*
 
-```
+```text
 gramsPerTsp = 120/48 = 5/2
 total       = 200 + 48 × 5/2 = 200 + 120 = 320 g
 display     -> "320 g"
@@ -6433,7 +6156,7 @@ that was converted**, which a line-level `secondaryText` string cannot express.
 Requirement: `1 tbsp + 1 tbsp = 6 tsp`, one `volume` bucket. Stock: one 4 oz lot, one `mass`
 bucket at `4 × 567/20 = 113.4 g`. Butter's catalogue `gramsPerCup` is **227**.
 
-```
+```text
 requestedKeys = {"volume"}
 have          = [mass: 113.4 g]              -> not in requestedKeys
 bridgeHave    : gramsPerTsp = 227/48
@@ -6458,45 +6181,46 @@ subtraction leaves a `3.41 mL` residue, nothing in `max(0, required - onHand)` h
 and the shopping list grows a spurious **"1 tsp heavy cream"** line. That single line is why
 this spec uses culinary factors.
 
-**(d) Garlic across two meals, and the fixture's baguette — both IN v1.**
+**(d) Garlic across two meals, and the fixture's baguette — the count-noun partition, and
+what it does NOT do.**
 
 `2 cloves` (steak group) + `1 clove` (another meal) + `1 head` (a third):
 
 - Buckets: `count:clove = 3`, `count:head = 1`. **Never summed to 4** — the noun is in the
-  dimension key.
-- The seed gives garlic `clove → 1/10 head` and `head → 50 g`, and a purchase pack of
-  **1 head**, so `head` is garlic's purchase noun.
-- Pass A normalises both buckets toward `head`: `3 × 1/10 = 3/10`, plus the 1 already in
-  heads → `13/10 heads` → *"1 3/10 heads"*. (Pass B would have reached the same answer here,
-  because both nouns are on the line; the baguette below is the case where only pass A can.)
-- Purchase pack `1 head` → `ceil(13/10) = 2` → **"need 1 3/10 heads, buy 2 heads"**.
+  dimension key, and that is the whole job of partitioning count by noun.
+- They are also **never folded into each other**. Nothing converts a clove into a head, so
+  the line carries two subtotals and reads *"3 cloves + 1 head"*. That is more useful to a
+  shopper than "3 cloves + 50 g", and it is honest about what the app knows.
 
-**The baguette, which is the case the old design could not reach.** The fixture gives exactly
-**one** count bucket, `count:slice = 12`, and no `count:loaf` bucket at all:
+*And the pantry case, which is the one the fixture actually produces.* The steak group wants
+`2 clove` and there is `1 clove` on hand:
 
-```
-sum                 -> [count:slice = 12]
-pass A  purchase noun = "loaf"   (from the purchase pack of 1 loaf)
-        slice -> 1/12 loaf       -> 12 × 1/12 = 1
-                    -> [count:loaf = 1]
-                       conversionNote "12 slice counted as 1 loaf"
-pass B  one bucket, nothing to fold into  -> unchanged
-pass C  one bucket, gate is > 1           -> unchanged
-purchaseQuantity    pack 1 loaf, keys match -> ceil(1/1) = 1 -> "1 loaf"
-display             -> "1 baguette"
+```text
+requested -> [count:clove = 2]
+have      -> [count:clove = 1]           same key, no bridge needed
+subtract  -> 2 - 1 = 1, didReduce = true
+status    -> .partiallyHave
+line      -> "1 clove"
 ```
 
-Every gate in pass B and pass C declines, correctly — they compare buckets, and there is
-only one. **Pass A is what produces the answer**, which is why it has no count gate and runs
-first. A fold-only design returns "12 slices baguette" here while four other places in this
-document promise "1 baguette".
+**The baguette ships as it is written.** The fixture gives exactly one count bucket and
+nothing moves it:
 
-The catalogue lists `baguette` in Bakery with `dimension: count` and **`unit: loaf`**, which
-is the same noun as the purchase pack and the same noun `slice → 1/12 loaf` targets — one
-noun, three places, no translation (§8, §0.3).
+```text
+sum                      -> [count:slice = 12]
+collapseAcrossDimensions -> no mass bucket, no volume bucket -> unchanged
+line                     -> "12 slices baguette"
+```
 
-If only *some* nouns have an equivalence, nothing collapses and the line reads *"3 cloves +
-1 head"* — more useful to a shopper than *"3 cloves + 50 g"*.
+**Purchase-unit rounding — "1 baguette", or "need 1 3/10 heads, buy 2 heads" — is deferred**,
+and the section in `CLAUDE.md` is the one to read before re-adding it. It was added here on
+initiative, failed review twice, and was cut because more than half the remaining cost of
+making this spec implementable was being spent on it. The design mockup already said "12
+slices baguette", so the list and the mockup now agree.
+
+The catalogue lists `baguette` in Bakery with `dimension: count` and **`unit: loaf`**. The
+recipe line's noun is `slice`, so the two are different buckets and the line renders in the
+noun the recipe used — which is the behaviour the partition specifies, not a defect in it.
 
 **(e) Why Tuesday's leftovers buy nothing.**
 
@@ -6673,9 +6397,20 @@ final class FoodItemResolver {
     /// `@Attribute(.unique)` CloudKit forbids.
     func findOrCreate(name: String, createIfMissing: Bool = true, in context: ModelContext) throws -> FoodItem?
 
-    /// Minted FROM A TEMPLATE when the name resolves to a catalogue entry: dimension, unit,
-    /// `gramsPerCup`, `staple` and the aisle's `StoreSection` are copied, and `catalogName` is
+    /// Minted FROM A TEMPLATE when the name resolves to a catalogue entry: `dimension`,
+    /// `staple`, the density and the aisle's `StoreSection` are copied, and `catalogName` is
     /// stamped. Everything afterwards is his to override (§0.3).
+    ///
+    /// The density is TWO fields and both are written —
+    /// `hasDensity = (entry.gramsPerCup != nil)` as well as the numerator/denominator pair.
+    /// `FoodItem.gramsPerCup` returns nil without the Bool (§2.12), so writing only the
+    /// numbers leaves §4.3(b′)'s bridge unable to fire on an item whose density ships in the
+    /// catalogue.
+    ///
+    /// The template's `unit` is NOT copied: `FoodItem` has no unit field, and landing it in
+    /// `parLevelUnitCode` would give that field a second meaning. A default unit is read
+    /// live off the template — `catalog.entry(named: item.catalogName)?.defaultUnit` (§2.6)
+    /// — which is what `QuickAddStockView` shows.
     func findOrCreate(fromCatalog entry: CatalogEntry, in context: ModelContext) throws -> FoodItem
 
     func addAlias(_ text: String, to item: FoodItem, in context: ModelContext)
@@ -6734,16 +6469,15 @@ preference:**
    lowest `id.uuidString`.** Never a "best row" heuristic such as most-lots or longest-notes —
    two devices must pick the **same** survivor with no coordination, or the merge ping-pongs
    forever.
-3. Repoint every referrer (`lots`, `transactions`, `shoppingLines`), union the alias and
-   count-equivalence rows, fill the survivor's absent scalars from the losers, reindex, delete
-   the losers.
+3. Repoint every referrer (`lots`, `transactions`, `shoppingLines`), union the alias rows,
+   fill the survivor's absent scalars from the losers, reindex, delete the losers.
 4. Write a `MergeRecord`, so Settings can report "merged 3 duplicates" instead of mutating his
    data mutely.
 
 Step 3 is why KitchenAid's persistence side uses a real relationship graph where its content
 side uses CFAL3's string-id join: merging requires **enumerating referrers**, which with
 inverses is **three referrer arrays to repoint (`lots`, `transactions`, `shoppingLines`)
-plus two child arrays to union (`aliases`, `countEquivalences`)** — the same count §0.8
+plus one child array to union (`aliases`)** — the same count §0.8
 gives — and with `foodItemID: UUID?` is a full-store scan on every launch forever. The content side needs no merge at all, because content is single-sourced in
 the bundle — which is exactly why the split is where it is.
 
@@ -6772,7 +6506,7 @@ final class InventoryLedger {
     /// `LineFlag` cases previously had no writer anywhere in the document.
     ///
     /// The subtotals it returns are `QuantityMath.sum(_:using: item)` output — **the same
-    /// item and the same three collapse passes the requested side runs**. Without that the
+    /// item and the same collapse pass the requested side runs**. Without that the
     /// two sides can be summed into keys that never meet even where a bridge exists, and
     /// `subtract` has nothing to match on.
     func level(of item: FoodItem, in location: StorageLocation? = nil,
@@ -6931,6 +6665,9 @@ and the launch `.task`, in this order, because each step depends on the one befo
     loader.load()                                             // recipes, before any resolve
     // The seed takes the catalogue because StoreSection.sortIndex comes from
     // `catalog.aisleOrder`, which is why `catalog.load()` is above it and not below (§8).
+    // If that load failed, `aisleOrder` is empty and the seed SKIPS `sections.v1` without
+    // writing its SeedRecord, so the next good launch still seeds the aisles rather than
+    // recording a store that has none as done (§8).
     try? KitchenAidSeed.applyIfNeeded(in: container.mainContext, catalog: catalog)
     try? resolver.reconcile(in: container.mainContext)         // aliases collapse first
     try? ledger.rebuildAllCaches(in: container.mainContext)    // then caches are rebuilt
@@ -6956,7 +6693,7 @@ because adding a recipe is the single most frequent change this repo will ever s
 `CLAUDE.md` says the app opens on Today. Cook is a `fullScreenCover` and Settings is a sheet;
 neither is a tab (§0.9.4).
 
-```
+```text
 KitchenAidApp                                      KitchenAid/App/KitchenAidApp.swift
 └── RootTabView  (Theme.tint, StoreFailureBanner via \.storeUnavailable,
                   CookModeView as a fullScreenCover, SettingsView as a sheet)
@@ -7011,7 +6748,7 @@ KitchenAidApp                                      KitchenAid/App/KitchenAidApp.
     │   ├── LocationDetailView          StockLot                     LocationDetailView.swift
     │   ├── FoodItemDetailView          FoodItem, StockLot,          FoodItemDetailView.swift
     │   │                               InventoryTransaction,
-    │   │                               FoodItemAlias, CountEquivalence
+    │   │                               FoodItemAlias
     │   ├── QuickAddStockView           FoodItem, StockLot           QuickAddStockView.swift
     │   ├── InventoryCountView          StockLot, InventoryTransaction InventoryCountView.swift
     │   ├── UnresolvedDepletionsView    InventoryTransaction         UnresolvedDepletionsView.swift
@@ -7031,7 +6768,7 @@ KitchenAidApp                                      KitchenAid/App/KitchenAidApp.
         ├── AttendanceDefaultsView      AttendanceDefault            AttendanceDefaultsView.swift
         ├── StoreLayoutView             Store, StoreSection          StoreLayoutView.swift
         ├── StorageLocationsView        StorageLocation              StorageLocationsView.swift
-        ├── FoodItemCatalogView         FoodItem, CountEquivalence   FoodItemCatalogView.swift
+        ├── FoodItemCatalogView         FoodItem                     FoodItemCatalogView.swift
         ├── MergeFoodItemsView          FoodItem, MergeRecord        MergeFoodItemsView.swift
         ├── ReconcileView               StockLot,                    ReconcileView.swift
         │                               InventoryTransaction
@@ -7067,7 +6804,7 @@ speculative — and two of them are the only quantity-entry affordances in the a
 | Component | Composed by |
 |---|---|
 | `DesignComponents` (card, section header, empty-state card) | every screen; the empty-state card is what `TodayRecentSection` and `ShoppingListsView` show first |
-| `QuantityField` + `FractionKeypad` | `TweakSheet`'s *Quantities* section (this is what §6.2's "tap to adjust" presents), `QuickAddStockView`, `InventoryCountView`, `ShoppingLineDetailSheet`'s "1 cup of flour is ___ g" affordance, and `FoodItemCatalogView`'s density / pack / par-level rows. **`FractionKeypad` is why ½ ⅓ ¼ is one tap and not a decimal keyboard**, which matters because every quantity in this app is a `Rational` and a decimal entry would be the one place a `Double` got in. |
+| `QuantityField` + `FractionKeypad` | `TweakSheet`'s *Quantities* section (this is what §6.2's "tap to adjust" presents), `QuickAddStockView`, `InventoryCountView`, `ShoppingLineDetailSheet`'s "1 cup of flour is ___ g" affordance, and `FoodItemCatalogView`'s density / par-level rows. **`FractionKeypad` is why ½ ⅓ ¼ is one tap and not a decimal keyboard**, which matters because every quantity in this app is a `Rational` and a decimal entry would be the one place a `Double` got in. |
 | `EaterChip` | `AttendanceGrid`, `MonthDayCell`, `TodayMealCard`, and the legend on `MealPlanWeekPrintPage` — the same initials in the same colour on screen and on paper, which is the point of sharing it |
 | `StockPill` | `RecipeDetailView`'s ingredient rows, `IngredientLineRow`, `InventoryHomeView`, `LocationDetailView` |
 | `FlagBadge` | `ShoppingListLineRow`, `ShoppingLineDetailSheet`. One badge per `LineFlag`, text from `LineFlag.badge` (§3.9). |
@@ -7118,7 +6855,7 @@ maybe → leftoversOnly. A **long-press toggles full/half portion**, which is th
 stops being the thing that makes planning feel like data entry. Combined with
 `AttendanceDefaultsView`, steady-state attendance costs **zero** taps and "who is eating" only
 becomes work on an exceptional night. The **guest stepper sits beside the grid**, not inside
-it, because guests are a number and not people (§2.19).
+it, because guests are a number and not people (§2.18).
 
 **Plan's landing content is `WeekBriefView` on iPhone.** A 7-column × 8-slot-row grid of drop
 targets does not fit on a phone, and the primary surface here is an iPhone propped against the
@@ -7394,7 +7131,7 @@ SMTP client.**
 Files are written to `FileManager.default.temporaryDirectory` with a **human filename**,
 because that string becomes the mail attachment name:
 
-```
+```text
 KitchenAid - Shopping list, Nov 3-9.pdf
 KitchenAid - Week of Nov 3.pdf
 KitchenAid - NY Strip Crostini.pdf
@@ -7415,7 +7152,7 @@ Two kinds of starting data, and the difference is the point of §0.2–0.3:
 |---|---|---|
 | Recipes | `Resources/Recipes/*.json`, decoded by `RecipeLoader` | **No.** They are content. |
 | The ingredient catalogue | `Resources/ingredients.json`, decoded by `IngredientCatalog` | **No.** `FoodItem` rows are minted on demand (§0.3). |
-| Store sections, storage locations, the household, the fixture's count bridges | `KitchenAidSeed` | Yes, `SeedRecord`-gated per key. |
+| Store sections, storage locations, the household | `KitchenAidSeed` | Yes, `SeedRecord`-gated per key. |
 
 `KitchenAidSeed.applyIfNeeded(in:catalog:)` fetches each `seedKey` before applying, so
 re-running is idempotent without `.unique`. It takes the catalogue because the store-section
@@ -7424,62 +7161,43 @@ before it in the launch task (§5.6).
 
 | Seed key | Contents |
 |---|---|
-| `sections.v1` | One `Store` ("Default", `isDefault`) with one `StoreSection` row **per entry of `IngredientCatalog.aisleOrder`, `sortIndex` = that entry's index** — then `Household` and `Unsorted` appended after it for things the catalogue does not cover. **The seed keeps no copy of the order.** It reads it, which is the whole reason `ingredients.json` now ships `aisleOrder` (§0.3): the thirteen aisles are exactly the catalogue's `aisle` values, so a `FoodItem` minted from a template lands in the right aisle with no mapping table, and a hand-written list here would be a second copy that drifts from the build script's with no test in this repo able to notice. It had already drifted — the list this row used to spell put Bakery fifth and Frozen twelfth, where the script has Bakery second and Frozen last. After seeding, `sortIndex` is his to drag and the seed never runs again. |
+| `sections.v1` | One `Store` ("Default", `isDefault`) with one `StoreSection` row **per entry of `IngredientCatalog.aisleOrder`, `sortIndex` = that entry's index** — then `Household` and `Unsorted` appended after it for things the catalogue does not cover. **The seed keeps no copy of the order.** It reads it, which is the whole reason `ingredients.json` now ships `aisleOrder` (§0.3): the thirteen aisles are exactly the catalogue's `aisle` values, so a `FoodItem` minted from a template lands in the right aisle with no mapping table, and a hand-written list here would be a second copy that drifts from the build script's with no test in this repo able to notice. It had already drifted — the list this row used to spell put Bakery fifth and Frozen twelfth, where the script has Bakery second and Frozen last. After seeding, `sortIndex` is his to drag and the seed never runs again. **If `catalog.aisleOrder` is empty this key is SKIPPED and no `SeedRecord` is written.** `catalog.load()` is a per-file decode whose failure path reports a `ContentDiagnostic` and leaves `aisleOrder` at its declared `[]` (§2.6); seeding anyway would create zero aisle sections, append Household and Unsorted, record `sections.v1` as done, and then never run again — so every minted `FoodItem` would land in "Unsorted" forever with nothing on screen explaining it. Skipping leaves the next successful launch to seed it, and because the only way to reach an empty `aisleOrder` is a catalogue that failed to load, `StoreHealthView` already has the explanation to show: the catalogue's `.decodeFailed` diagnostic plus a missing `sections.v1` `SeedRecord` is the pair it reports as "store sections not seeded yet". |
 | `locations.v1` | `StorageLocation` rows: Pantry, Fridge (`defaultShelfLifeDays: 7`), Freezer (90), Spice rack, Bar. |
 | `household.v1` | **Two `Eater` rows, both full portion**, named "Me" and "Partner" for him to rename in `HouseholdView`. Two because `CLAUDE.md` says ship two; renameable and removable because it says addable and removable; and **no count is hardcoded anywhere else in the app** — every scale comes from `portions`, so a household of one or of nine needs no code change. |
-| `bridges.v1` | **Six `CountEquivalence` rows and two purchase packs**, created on the `FoodItem`s the first list build mints. Listed in full below, because every one of them has to agree with the catalogue entry it attaches to and the old row did not. Applied lazily: the seed records the intent, and `FoodItemResolver` attaches the rows when the item is first created, so seeding does not force 668 rows into existence to hold six bridges. |
 
-**`bridges.v1` in full, with the purchase noun named for each.** The rule this table exists
-to enforce: **one item, one purchase noun**, and the catalogue's `unit`, the purchase pack's
-unit and the target of any count→count equivalence must all be that same noun. Three nouns
-for one item — which is what `baguette` had — means `UnitCatalog.countUnit` mints three
-unrelated buckets and nothing can ever meet.
+**There is no `bridges.v1` row, and no count-bridge seed of any kind.** The table that used to
+sit here gave `garlic` a `1 head` pack with `clove → 1/10 head`, `baguette` a `1 loaf` pack
+with `slice → 1/12 loaf`, and input-noun rows for `butter`, `eggs` and `lemon` — all of it to
+feed purchase-unit rounding, which is cut (`CLAUDE.md`). Nothing in the document ever wrote
+those rows, which is the defect that cut the feature; the honest state is that they do not
+exist. A recipe line's count noun is the noun the list shows.
 
-| Catalogue item | Purchase noun | Purchase pack | `CountEquivalence` rows |
-|---|---|---|---|
-| `garlic` (Produce, `count`, `unit: clove`) | **head** | 1 head | `clove → 1/10 head`, `head → 50 g` |
-| `baguette` (Bakery, `count`, `unit: loaf`) | **loaf** | 1 loaf | `slice → 1/12 loaf` |
-| `butter` (Dairy, `volume`, `unit: tbsp`, `gramsPerCup: 227`) | — (volume, no pack) | none | `stick → 113 g` |
-| `eggs` (Dairy, `count`, `unit: each`) | **each** | — | `each → 50 g` |
-| `lemon` (Produce, `count`, `unit: each`) | **each** | — | `each → 3 tbsp` |
-
-- **`baguette` is why this table is here.** It previously named three nouns that nothing
-  connected: the catalogue shipped `unit: "each"`, the fixture line is `12 slice`, and this
-  seed invented a `1 loaf` pack. `loaf` is the noun chosen, for three reasons — it is what
-  the fixture's own bridge targets (`slice → 1/12 loaf`), it is already the catalogue's unit
-  for every other bread on the shelf (`sourdough`, `ciabatta`, `brioche`, `rye bread`), and
-  "1 loaf" is what the shopping line should read. **This requires one edit to
-  `scripts/build_catalogue.py`**: `"baguette|count|each|french bread"` →
-  `"baguette|count|loaf|french bread"`. That edit is not made in this document's pass; it is
-  named here, in §0.3's example JSON and in the summary, as the change the next commit makes
-  before `test_catalogue.py` is re-run.
-- **`eggs` and `lemon` are self-consistent already, and were checked.** Both ship
-  `unit: "each"`, so the equivalence keys on `each` and the purchase noun IS `each` — one
-  noun, not three. `UnitCatalog.each` has deliberately empty `singular`/`plural`, so the
-  line renders "2" and not "2 eaches"; `Quantity.displayString` has an explicit
-  `name.isEmpty` branch for exactly this, because the line already names the item. Note that
-  neither has a count→count row and so neither needs a purchase pack: `each` is already the
-  purchase bucket, and pass A has nothing to do.
-- **`lemon each → 3 tbsp` does NOT connect `lemon juice` to `lemon`.** `lemon juice` is its
-  own catalogue entry (Beverages, `volume`, `tbsp`), so the fixture's "1 tsp lemon juice"
-  resolves there and never touches this row. The row is for a line that says "1 lemon"
-  against juice measured in the fridge, which is a real case and a different one. Stated
-  because the obvious reading of the row is the wrong one.
-- **`butter`'s purchase bucket is volume, not a count.** Its catalogue `unit` is `tbsp` and
-  its `gramsPerCup: 227` is what bridges to the mass a 4 oz lot is recorded in (§4.3b′), so
-  it needs no pack and no purchase noun. `stick → 113 g` is an INPUT noun only: it exists so
-  a recipe line reading "1 stick butter" has somewhere to go.
-
-These are the bridges that turn "12 slices baguette" into "1 baguette" and "3 cloves +
-1 head" into "buy 2 heads" (§4.3d). Everything else the catalogue already carries as
-`gramsPerCup` — 108 of its 668 entries.
+What survives is the density bridge, and it needs no seed at all: the catalogue already ships
+`gramsPerCup` on **108 of its 668** entries, `FoodItemResolver` copies it onto the `FoodItem`
+it mints, and that is what lets a 4 oz butter lot cover a 2 tbsp requirement (§4.3b′). Where
+a density is genuinely unsettled the catalogue leaves it null on purpose — kosher salt is
+~142 g/cup as Diamond Crystal and ~288 as Morton — and the line shows both numbers with a
+one-tap "these are the same" affordance that writes the density back (§4.2 step 5).
 
 ### 8.1 The fixture's bundled file
 
 `docs/fixture-recipe-01.txt` is the source text and
-`KitchenAid/Resources/Recipes/ny-strip-crostini-with-creamed-horseradish-spinach.json` is the
-committed result. The bundled file is **generated by the importer, never hand-written** —
-building it by hand is what lets a schema pass a test that the real capture path would fail.
+`KitchenAid/Resources/Recipes/ny-strip-crostini-with-creamed-horseradish-spinach.json` is
+**the file the build pass generates and commits**. It is not in the repo yet — the only
+resource committed today is `KitchenAid/Resources/ingredients.json`, and
+`KitchenAid/Resources/Recipes/` does not exist — and four test suites read it
+(`RecipeLoaderTests`, `TweakStoreTests`, `MealScalingTests`, `ShoppingListBuilderTests`), so
+generating it is the first step of that pass rather than a later tidy. One command produces
+the parse:
+
+```text
+python3 -I scripts/import_recipe.py docs/fixture-recipe-01.txt \
+    > KitchenAid/Resources/Recipes/ny-strip-crostini-with-creamed-horseradish-spinach.json
+```
+
+then the hand-classified fields listed below are added to it. The bundled file is
+**generated by the importer, never hand-written** — building it by hand is what lets a schema
+pass a test that the real capture path would fail.
 
 **The importer emits this shape. It is no longer a gap.** `scripts/import_recipe.py` now
 writes `schemaVersion`, `id` (= `slug(title)`, which is why the file name is the full title
@@ -7509,7 +7227,7 @@ parse-ambiguous and none block the schema — they are judgements about prose th
 importer deliberately does not make, and `scripts/test_import.py` is the check that the
 parse underneath them has not moved.
 
-```
+```text
 RecipeFile
   schemaVersion        1
   recipe
@@ -7595,7 +7313,7 @@ to its evidence here:
 | 6 | `oz` is ambiguous, and is weight here three times | all three `.mass` with `dimensionConfirmed == true`, resolved once by the importer's `resolve_oz` and RECORDED. `1/2 inch` lives in `preparation`; there is no length dimension. |
 | 7 | Name and preparation are separate fields | `shallot` / `minced`, `garlic` / `smashed`, and **`Parmesan` / `grated` where the adjective comes FIRST** — which every comma-splitting parser gets wrong, and which `rawText` makes recoverable. |
 | 8 | **A recipe aggregates against ITSELF** | butter `1 tbsp + 1 tbsp = 2 tbsp` across components 0 and 1; kosher salt `1 tsp + 1/4 tsp = 1 1/4 tsp` **through the staple path**. Asserted in `ShoppingListBuilderTests`. |
-| 9 | Bare counts whose unit lives in the name | `garlic-1` is `2 clove` (the importer lifted "cloves" out of "garlic cloves"); `shallot-1` is `1` with a null unit, which decodes to `each` from its recorded `count` dimension (§2.3); `baguette-1` is `12 slice`. Each its own merge bucket. **And the purchase-unit answer is now IN v1**: `slice → 1/12 loaf` plus a `1 loaf` purchase pack makes it "1 baguette" — through `normalizeCountBucketsToPurchaseNoun`, not through the bucket fold, because this line produces exactly ONE count bucket (§3.6, §4.3d). |
+| 9 | Bare counts whose unit lives in the name | `garlic-1` is `2 clove` (the importer lifted "cloves" out of "garlic cloves"); `shallot-1` is `1` with a null unit, which decodes to `each` from its recorded `count` dimension (§2.3); `baguette-1` is `12 slice`. Each its own merge bucket, and the buckets are never folded together — so the line ships as **"12 slices baguette"**, which is what the design mockup says. Turning that into "1 baguette" is purchase-unit rounding, deferred; see `CLAUDE.md` and §4.3(d). |
 | 10 | Steps carry a title, a duration — sometimes a range — and a body | `sear-the-steak-1` is 7/8; `slice-the-steak-1` and `assemble-1` are `nil`/`nil`, not `0`. |
 | 11 | Temperatures appear in step bodies and are worth extracting | `toast-the-baguette-1` oven 400F, `sear-the-steak-1` internal 125F, two fields, and `body` left verbatim so a later pass needs no re-import. |
 | 12 | Notes are a list, not a blob | four `RecipeNote` entries with four kinds, `makeAhead` additionally lifted to `makeAheadNote` without removing the note. |
@@ -7631,7 +7349,7 @@ absent.
 | **Runtime recipe import (paste, or open a file)** | **Designed for, and this is the one deferral the content split makes cheap.** A pasted block or an opened PDF would be parsed into the same `Recipe` value type and written to `Application Support/Recipes/`, which `RecipeLoader` would merge over the bundled set by id. No model changes, no migration, and the overlay keys still work because they key on the same ids. What it needs is the parser (`RecipeTextParser`, `StepTextParser`, `QuantityTokenizer` — the Python importer is the reference implementation, and **when the Swift parser and the Python one disagree, the Python one is right**, because it has a test that runs), a review sheet, and a decision about precedence when a bundled id collides with an imported one. |
 | **Receipt scanning to bulk-add to the pantry** | **Asked for** (`CLAUDE.md`), not built. On-device OCR via `VNRecognizeTextRequest`, no network. Receipt text is abbreviated (`GV CRM CHS 8Z`), so it matches against the catalogue's `name` and `aliases` — which is `IngredientCatalog.entry(matching:)` with a fuzzier key — and asks about what it cannot place, **once, then remembers** by writing a `FoodItemAlias` row. Additive: one sheet, one matcher, no schema change. |
 | **Barcode scanning** | **Asked for**, with a caveat that shapes the design: a barcode is only a number, and turning one into "heavy cream" needs a commercial product database, which means a subscription and a network call this app does not have. So the first scan of an item **asks what it is** and every later scan fills itself in. The kitchen becomes its own database. Additive: a `barcode: String` on `FoodItem` plus a scanner sheet feeding `QuickAddStockView`. **Do not design this as though a lookup service exists.** |
-| **Purchase-unit rounding** | **No longer deferred — it is in v1** (decision 13). `normalizeCountBucketsToPurchaseNoun`, `collapseCountBuckets` and `purchaseQuantity` are specified in §3.6 and tested in `QuantityMathTests`. What is still deferred is purchase-unit rounding where no `CountEquivalence` chain exists at all — an item with a `1 bag` pack and nothing saying how much a bag holds still shops by the exact need, because the only alternative is a guess. |
+| **Purchase-unit rounding** ("1 baguette" instead of "12 slices"; "buy 2 heads" instead of "3 cloves") | **Deferred, after being added on initiative and cut.** It failed review twice — first because every gate required two count buckets and the fixture produces one, then because nothing in the document ever wrote the purchase pack or the count-equivalence rows the mechanism read — and five of the twelve defects left after two review rounds existed only because of it. `CLAUDE.md` holds the full account and the prerequisites. What is already in place for it: `SubtotalRole.purchase` is a separate stored role that v1 fills with a copy of `toBuy` (decision 15), so the rounding arrives as a writer for that role plus a pack field, with **no migration**. What it needs first is a real writer for the pack and the equivalences, and **one** purchase noun per ingredient settled before any Swift is written. |
 | **Leftovers tracking** | Partly present: `MealEntryKind.leftovers`, the `leftoversFrom` self-edge, `plannedLeftoverServings` and `servingsCooked` all exist, and shopping already excludes a leftovers night. What is deferred is the REPORTING — "you are a portion short Tuesday" — which is `MealPlanStats` work, not schema work. |
 | **Nutrition data** | Needs a per-ingredient nutrient table and a serving-size bridge. Cheapest path is a new section in `ingredients.json` (it is content, and the build script already owns that file) plus a reader; no stored rows change. |
 | **Cost tracking and cost-per-meal** | `StockLot.unitCostCents`, `InventoryTransaction.priceCents` and `ShoppingListLine.priceCents` are **already stored**. Only the reporting views are missing. |
@@ -7642,7 +7360,7 @@ absent.
 
 **Three things are deliberately NOT deferred, because they cannot be added later:**
 
-1. **The inventory ledger** (§2.23). A scalar `onHand` cannot be upgraded to a transaction log,
+1. **The inventory ledger** (§2.22). A scalar `onHand` cannot be upgraded to a transaction log,
    because the history was never recorded.
 2. **Two yields on `Recipe`** (§2.1). Collapsing them at import and splitting them later cannot
    recover which number was which.
@@ -7735,10 +7453,10 @@ far cheaper error than arriving at dinner without it, so an unbridgeable require
 *Mitigation turns the flaw into the feature.* The shipped catalogue pre-populates the densities
 that are settled, so this case is rare rather than routine on day one. Where it does fire,
 every mixed line carries an inline *"these are the same — 1 cup of flour is ___ g"*; one tap,
-one number, and every present and future sum for that ingredient resolves silently.
-`CountEquivalence` rows do the same for count nouns, which is what makes "2 heads of garlic" and
-"1 baguette" possible at all. **The app learns his kitchen**, which is the right shape for a
-project whose whole premise is that he keeps adding to it for ten years.
+one number, and every present and future sum for that ingredient resolves silently. **The app
+learns his kitchen**, which is the right shape for a project whose whole premise is that he
+keeps adding to it for ten years. Count nouns get no such bridge in v1: "3 cloves + 1 head"
+stays two numbers, and turning either into a purchase noun is the cut feature (`CLAUDE.md`).
 
 **Honourable mentions.**
 

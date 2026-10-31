@@ -8,6 +8,24 @@ This is a **long-running project**. Recipes and features get added continuously
 as he cooks, usually one session at a time. Read this file and
 `docs/ARCHITECTURE.md` before changing the model layer.
 
+### The status of docs/ARCHITECTURE.md
+
+It is the **design of record, not the contract.** Where it and the Swift
+disagree, **the Swift wins** — say so and correct the document rather than
+"fixing" working code to match prose.
+
+It went through three rounds of adversarial review (`docs/SPEC_REVIEW_01.md`
+through `03`), which took it from 30 models to 21 and found real defects
+including two crash bugs and whole sections written in unbuildable syntax.
+Review 03's findings were deliberately **not** applied to the document: the
+next step transcribed §2 and §3 into Swift, and fixing the prose first would
+have meant fixing each defect twice. They are carried in the build brief
+instead, and `SPEC_REVIEW_03.md` lists them.
+
+The lesson worth keeping: review found things no amount of careful writing did,
+but the third round's yield was a fraction of the first's. Three rounds on a
+document with no compiler is roughly where it stops paying.
+
 ## Decisions Brandon has made
 
 These came from him directly. Do not quietly redesign around them; if one looks
