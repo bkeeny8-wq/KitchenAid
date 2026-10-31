@@ -43,9 +43,13 @@ def line(component_name, ingredient_name):
 
 
 def qty(l):
-    """Rebuild the exact rational, to prove nothing was lost to a float."""
-    q = l.get("quantity")
-    return Fraction(q["numerator"], q["denominator"]) if q else None
+    """Rebuild the exact rational from the flat stored fields, to prove nothing
+    was lost to a float. The app persists hasQuantity + numerator + denominator
+    rather than a Codable blob, and the importer now emits that same shape.
+    """
+    if not l.get("hasQuantity"):
+        return None
+    return Fraction(l["amountNumerator"], l["amountDenominator"])
 
 
 # R1 -- ingredients grouped into components, steps flat across the whole dish
@@ -55,7 +59,7 @@ check("R1 component names",
 check("R1 steps are recipe-level and complete", len(d["steps"]), 8)
 
 # R2 -- two different yields, neither derivable from the other
-check("R2 yieldQuantity", d["yieldQuantity"], 12)
+check("R2 yieldAmount", d["yieldAmount"], 12)
 check("R2 yieldUnitLabel", d["yieldUnitLabel"], "crostini")
 check("R2 servings", d["servings"], 4)
 
@@ -67,7 +71,7 @@ check("R3 totalMinutes", d["totalMinutes"], 70)
 check("R4 1/2 tsp black pepper", qty(line("Crostini and steak", "black pepper")), Fraction(1, 2))
 check("R4 1/4 tsp kosher salt", qty(line("Creamed horseradish spinach", "kosher salt")), Fraction(1, 4))
 check("R4 fraction renders as vulgar, not decimal",
-      line("Crostini and steak", "black pepper")["quantity"]["display"], "1/2")
+      line("Crostini and steak", "black pepper")["display"], "1/2")
 # the scaling promise a float cannot make
 third = Fraction(1, 3)
 check("R4 x3 of a third is exactly one", third * 3, Fraction(1))
@@ -75,7 +79,7 @@ check("R4 x3 of a third is exactly one", third * 3, Fraction(1))
 # R5 -- a quantity word with no number survives as a qualifier, not as 0
 flaky = line("To finish", "flaky salt")
 check("R5 Pinch kept as qualifier", flaky["qualifier"], "Pinch")
-check("R5 Pinch has no numeric quantity", flaky.get("quantity"), None)
+check("R5 Pinch has no numeric quantity", flaky["hasQuantity"], False)
 
 # R6 -- bare oz resolved to mass for all three solids, and recorded as resolved
 for comp, name in [("Crostini and steak", "NY strip steak"),
@@ -132,6 +136,50 @@ check("R12 make-ahead note intact",
       d["notes"][0].startswith("The spinach can be made a day ahead"), True)
 check("R12 wrapped note rejoined",
       d["notes"][2].endswith("horseradish drizzle on top of the steak."), True)
+
+# R13 -- the bundled-content shape the app loads, and stable overlay ids.
+# Brandon's tweaks live in SwiftData keyed by these ids while the recipe itself
+# is immutable content, so an id has to survive the file being revised.
+check("R13 schemaVersion", d["schemaVersion"], 1)
+check("R13 recipe id is a slug of the title",
+      d["id"], "ny-strip-crostini-with-creamed-horseradish-spinach")
+check("R13 summary, not description", d["summary"].startswith("Crisp baguette"), True)
+
+all_lines = [l for c in d["components"] for l in c["lines"]]
+line_ids = [l["lineID"] for l in all_lines]
+check("R13 every line has an id", len(line_ids), 18)
+check("R13 line ids are unique", len(set(line_ids)), 18)
+# Ids are name-based with an occurrence number, NOT positional: a positional id
+# silently re-points an override onto a different ingredient when a line is
+# inserted above it. This recipe is the reason the occurrence number exists.
+check("R13 butter occurs twice and is numbered",
+      sorted(l["lineID"] for l in all_lines if l["name"] == "butter"),
+      ["butter-1", "butter-2"])
+check("R13 kosher salt likewise",
+      sorted(l["lineID"] for l in all_lines if l["name"] == "kosher salt"),
+      ["kosher-salt-1", "kosher-salt-2"])
+check("R13 a single occurrence still gets -1",
+      line("Crostini and steak", "baguette")["lineID"], "baguette-1")
+for l in all_lines:
+    if not l["lineID"] or " " in l["lineID"] or l["lineID"] != l["lineID"].lower():
+        fail(f'R13 bad lineID {l["lineID"]!r}')
+
+step_ids = [s["stepID"] for s in d["steps"]]
+check("R13 every step has an id", len(step_ids), 8)
+check("R13 step ids are unique", len(set(step_ids)), 8)
+check("R13 step id is derived from its title",
+      steps[1]["stepID"], "season-the-steak-1")
+
+# The five flat quantity fields must be present on EVERY line, including the
+# ones with no number, so the store never sees a missing key.
+for l in all_lines:
+    for key in ("hasQuantity", "amountNumerator", "amountDenominator", "display"):
+        if key not in l:
+            fail(f'R13 {l["lineID"]} is missing {key}')
+    if l["amountDenominator"] == 0:
+        fail(f'R13 {l["lineID"]} has a zero denominator')
+check("R13 a qualifier line still carries a display string",
+      line("To finish", "flaky salt")["display"], "Pinch")
 
 # no silent data loss anywhere
 total_lines = sum(len(c["lines"]) for c in d["components"])

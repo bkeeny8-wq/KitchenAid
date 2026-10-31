@@ -39,6 +39,17 @@ def fail(label):
 
 # --- shape ---
 check("version", data["version"], 1)
+
+# --- the aisle walk order ships with the catalogue ---
+# Without this the app cannot order a shopping list the way the store is laid
+# out, and any hand-copied order in the spec drifts from the data silently.
+order = data.get("aisleOrder") or []
+check("aisleOrder is present", len(order) > 0, True)
+check("aisleOrder covers every aisle exactly", sorted(order), sorted({i["aisle"] for i in items}))
+check("aisleOrder has no duplicates", len(order), len(set(order)))
+check("produce is first, as the perimeter is", order[0], "Produce")
+# Frozen last is not arbitrary: anything else leaves it softening in the cart.
+check("frozen is last", order[-1], "Frozen")
 if len(items) < 300:
     fail(f"catalogue is too thin to spare Brandon the typing: {len(items)} items")
 

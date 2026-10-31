@@ -1,5 +1,20 @@
 {
  "version": 1,
+ "aisleOrder": [
+  "Produce",
+  "Bakery",
+  "Butcher",
+  "Seafood",
+  "Dairy",
+  "Dry goods",
+  "Canned",
+  "Condiments",
+  "Spices",
+  "Baking",
+  "Nuts",
+  "Beverages",
+  "Frozen"
+ ],
  "items": [
   {
    "name": "bagel",

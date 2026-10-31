@@ -203,11 +203,70 @@ def extract_count_noun(name):
     return name, None
 
 
+def slug(raw):
+    """'NY Strip Crostini' -> 'ny-strip-crostini'. Used for the recipe id and
+    as the stem of every line and step id."""
+    out = []
+    for ch in raw.lower().strip():
+        if ch.isalnum():
+            out.append(ch)
+        elif out and out[-1] != "-":
+            out.append("-")
+    return "".join(out).strip("-")
+
+
+def assign_ids(out):
+    """Give every ingredient line and step a stable id.
+
+    The app keeps Brandon's tweaks -- "1 tbsp not 2", a corrected step -- in
+    SwiftData as an overlay keyed by these ids, while the recipe itself is
+    immutable bundled content. So the id has to survive the recipe file being
+    revised and re-committed.
+
+    It is NAME-based with an occurrence number, deliberately not positional.
+    A positional id silently re-points his override onto a different
+    ingredient when a line is inserted above it; a name-based one lapses
+    visibly when the ingredient it named is gone, which is exactly when it
+    should. This recipe is why the occurrence number exists: butter appears in
+    two components, so it is butter-1 and butter-2.
+    """
+    seen = {}
+    for comp in out["components"]:
+        for line in comp["lines"]:
+            stem = slug(line["name"]) or "line"
+            seen[stem] = seen.get(stem, 0) + 1
+            line["lineID"] = f"{stem}-{seen[stem]}"
+
+    seen_steps = {}
+    for step in out["steps"]:
+        stem = slug(step["title"] or "") or f"step-{step['order']}"
+        seen_steps[stem] = seen_steps.get(stem, 0) + 1
+        step["stepID"] = f"{stem}-{seen_steps[stem]}"
+
+
+def flatten_quantities(out):
+    """Turn each line's Fraction into the five flat fields the app persists.
+
+    The app stores a quantity as hasQuantity + numerator + denominator + unit +
+    dimension rather than as one Codable blob, so the unit table can change
+    without a migration that decodes every stored row. Emitting that shape here
+    means the importer and the store agree without a translation layer.
+    """
+    for comp in out["components"]:
+        for line in comp["lines"]:
+            f = line.pop("quantity", None)
+            line["hasQuantity"] = f is not None
+            line["amountNumerator"] = f.numerator if f is not None else 0
+            line["amountDenominator"] = f.denominator if f is not None else 1
+            line["display"] = format_fraction(f) if f is not None else (line.get("qualifier") or "")
+
+
 def parse(text):
     lines = text.splitlines()
     out = {
-        "title": None, "description": None,
-        "yieldText": None, "yieldQuantity": None, "yieldUnitLabel": None, "servings": None,
+        "schemaVersion": 1, "id": None,
+        "title": None, "summary": None,
+        "yieldText": None, "yieldAmount": None, "yieldUnitLabel": None, "servings": None,
         "activeMinutes": None, "totalMinutes": None,
         "components": [], "steps": [], "notes": [], "warnings": [],
     }
@@ -216,15 +275,16 @@ def parse(text):
     head = [l.strip() for l in lines if l.strip()]
     if head:
         out["title"] = head[0]
+        out["id"] = slug(head[0])
     if len(head) > 1 and not head[1].lower().startswith(("makes", "ingredients")):
-        out["description"] = head[1]
+        out["summary"] = head[1]
 
     body = "\n".join(lines)
 
     # --- yields and times ---
     m = re.search(r"^\s*(\d+)\s+(\S+)\s*\(serves\s+(\d+)\)", body, re.M)
     if m:
-        out["yieldQuantity"] = int(m.group(1))
+        out["yieldAmount"] = int(m.group(1))
         out["yieldUnitLabel"] = m.group(2)
         out["servings"] = int(m.group(3))
         out["yieldText"] = m.group(0).strip()
@@ -294,10 +354,6 @@ def parse(text):
                 q["unit"] = inferred
         line = {"name": name, "preparation": prep, "raw": raw.strip()}
         line.update(q)
-        if line.get("quantity") is not None:
-            f = line["quantity"]
-            line["quantity"] = {"numerator": f.numerator, "denominator": f.denominator,
-                                "display": format_fraction(f)}
         current["lines"].append(line)
     if current["lines"] or current["name"]:
         out["components"].append(current)
@@ -346,6 +402,11 @@ def parse(text):
                     if l["name"].lower() == k) > 1]
     if dupes:
         out["aggregatesWithinRecipe"] = sorted(dupes)
+
+    # Order matters: ids are assigned from names, and the tally above still
+    # needs `quantity` as a Fraction, so flattening comes last.
+    assign_ids(out)
+    flatten_quantities(out)
 
     return out
 

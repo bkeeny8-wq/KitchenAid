@@ -29,6 +29,20 @@ back to the aisle default; the aliases field is optional.
 import json
 import os
 
+# The order a shopping list is read in, which is the order you walk the store:
+# perimeter first, then the centre aisles, and FROZEN LAST so it is not sitting
+# in the cart going soft while you pick out spices.
+#
+# This is exported into ingredients.json as `aisleOrder`. It lives here as the
+# single source of truth because the app has no other way to know it --
+# ingredients.json is sorted alphabetically by aisle, which is not a walk
+# order, and a spec that hand-copies this list will drift from it silently.
+AISLE_WALK_ORDER = [
+    "Produce", "Bakery", "Butcher", "Seafood", "Dairy",
+    "Dry goods", "Canned", "Condiments", "Spices", "Baking",
+    "Nuts", "Beverages", "Frozen",
+]
+
 # (dimension, unit) assumed for an aisle when an item does not say otherwise.
 AISLE_DEFAULTS = {
     "Produce":     ("count", "each"),
@@ -555,6 +569,18 @@ def build():
     # otherwise sit there doing nothing, silently. The whole point of these
     # tables is that the app can convert; an entry spelled "bread four" fails
     # by simply never applying.
+    # The walk order must name every aisle and invent none, or the shopping
+    # list either drops a section or sorts by an aisle nothing is in.
+    if set(AISLE_WALK_ORDER) != set(AISLE_DEFAULTS):
+        missing = set(AISLE_DEFAULTS) - set(AISLE_WALK_ORDER)
+        extra = set(AISLE_WALK_ORDER) - set(AISLE_DEFAULTS)
+        if missing:
+            collisions.append(f'AISLE_WALK_ORDER is missing: {sorted(missing)}')
+        if extra:
+            collisions.append(f'AISLE_WALK_ORDER names non-existent aisles: {sorted(extra)}')
+    if len(AISLE_WALK_ORDER) != len(set(AISLE_WALK_ORDER)):
+        collisions.append("AISLE_WALK_ORDER has a duplicate")
+
     names = set(seen_names)
     for key in DENSITY_G_PER_CUP:
         if key.lower() not in names:
@@ -584,7 +610,8 @@ def main():
     out = os.path.join(root, "KitchenAid", "Resources", "ingredients.json")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w", encoding="utf-8") as fh:
-        json.dump({"version": 1, "items": items}, fh, indent=1, ensure_ascii=False)
+        json.dump({"version": 1, "aisleOrder": AISLE_WALK_ORDER, "items": items},
+                  fh, indent=1, ensure_ascii=False)
         fh.write("\n")
 
     staples = sum(1 for i in items if i["staple"])
