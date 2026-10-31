@@ -6,6 +6,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -14,6 +16,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "french bread"
@@ -24,6 +28,8 @@
    "aisle": "Bakery",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 108,
    "staple": false,
    "aliases": []
   },
@@ -32,6 +38,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "loaf",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -40,6 +48,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "loaf",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -48,6 +58,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -56,6 +68,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "loaf",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -64,6 +78,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -72,6 +88,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -80,6 +98,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "tortilla"
@@ -90,6 +110,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -98,6 +120,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -106,6 +130,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -114,6 +140,8 @@
    "aisle": "Bakery",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 50,
    "staple": false,
    "aliases": [
     "panko breadcrumbs"
@@ -124,6 +152,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -132,6 +162,8 @@
    "aisle": "Bakery",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -140,6 +172,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "sheet",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -148,6 +182,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "loaf",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -156,6 +192,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "loaf",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "white bread"
@@ -166,6 +204,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "loaf",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -174,6 +214,8 @@
    "aisle": "Bakery",
    "dimension": "count",
    "unit": "loaf",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -182,6 +224,8 @@
    "aisle": "Baking",
    "dimension": "count",
    "unit": "packet",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -190,6 +234,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 96,
    "staple": false,
    "aliases": []
   },
@@ -198,6 +244,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -206,6 +254,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -214,6 +264,8 @@
    "aisle": "Baking",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": "g",
+   "gramsPerCup": 170,
    "staple": false,
    "aliases": []
   },
@@ -222,6 +274,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 213,
    "staple": true,
    "aliases": [
     "light brown sugar"
@@ -232,6 +286,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 85,
    "staple": false,
    "aliases": [
     "unsweetened cocoa powder"
@@ -242,6 +298,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 120,
    "staple": true,
    "aliases": [
     "corn flour"
@@ -252,6 +310,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -260,6 +320,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 213,
    "staple": false,
    "aliases": []
   },
@@ -268,6 +330,8 @@
    "aisle": "Baking",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": "g",
+   "gramsPerCup": 170,
    "staple": false,
    "aliases": []
   },
@@ -276,6 +340,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 85,
    "staple": false,
    "aliases": []
   },
@@ -284,6 +350,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -292,6 +360,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 200,
    "staple": true,
    "aliases": [
     "sugar",
@@ -303,6 +373,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -311,6 +383,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 50,
    "staple": false,
    "aliases": []
   },
@@ -319,6 +393,8 @@
    "aisle": "Baking",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -327,6 +403,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 113,
    "staple": false,
    "aliases": [
     "confectioners sugar",
@@ -338,6 +416,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 170,
    "staple": false,
    "aliases": [
     "chocolate chips"
@@ -348,6 +428,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 205,
    "staple": false,
    "aliases": []
   },
@@ -356,6 +438,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -364,6 +448,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 93,
    "staple": false,
    "aliases": []
   },
@@ -372,6 +458,8 @@
    "aisle": "Baking",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": "g",
+   "gramsPerCup": 200,
    "staple": false,
    "aliases": [
     "raw sugar"
@@ -382,6 +470,8 @@
    "aisle": "Baking",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": "g",
+   "gramsPerCup": 170,
    "staple": false,
    "aliases": []
   },
@@ -390,6 +480,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -398,6 +490,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -406,6 +500,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -414,6 +510,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "cognac"
@@ -424,6 +522,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -432,6 +532,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -440,6 +542,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -448,6 +552,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -456,6 +562,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -464,6 +572,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -472,6 +582,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -480,6 +592,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -488,6 +602,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -496,6 +612,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -504,6 +622,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -512,6 +632,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -520,6 +642,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "dry red wine"
@@ -530,6 +654,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -538,6 +664,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -546,6 +674,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -554,6 +684,8 @@
    "aisle": "Beverages",
    "dimension": "count",
    "unit": "bag",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -562,6 +694,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -570,6 +704,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -578,7 +714,19 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "water",
+   "aisle": "Beverages",
+   "dimension": "volume",
+   "unit": "cup",
+   "bakingUnit": "ml",
+   "gramsPerCup": 237,
+   "staple": true,
    "aliases": []
   },
   {
@@ -586,6 +734,8 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -594,16 +744,72 @@
    "aisle": "Beverages",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "dry white wine"
    ]
   },
   {
+   "name": "andouille",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "baby back ribs",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "bacon",
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "beef bones",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": [
+    "marrow bones"
+   ]
+  },
+  {
+   "name": "beef cheek",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "beef ribs",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -612,6 +818,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -620,6 +828,48 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "bone marrow",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "bratwurst",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "breakfast sausage",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "bresaola",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -628,6 +878,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -636,16 +888,40 @@
    "aisle": "Butcher",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "boneless skinless chicken breast"
    ]
   },
   {
+   "name": "chicken carcass",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "chicken drumstick",
    "aisle": "Butcher",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "chicken liver",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -654,6 +930,8 @@
    "aisle": "Butcher",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "chicken thighs"
@@ -664,6 +942,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -672,6 +952,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -680,6 +962,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -688,6 +972,28 @@
    "aisle": "Butcher",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "duck fat",
+   "aisle": "Butcher",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "duck leg",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -696,6 +1002,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "beef tenderloin"
@@ -706,6 +1014,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -714,6 +1024,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -722,6 +1034,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "hamburger"
@@ -732,6 +1046,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -740,6 +1056,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -748,6 +1066,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -756,6 +1076,18 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "guanciale",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -764,6 +1096,18 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ham hock",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -772,6 +1116,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -780,6 +1126,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -788,6 +1136,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -796,6 +1146,18 @@
    "aisle": "Butcher",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lamb shank",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -804,6 +1166,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -812,6 +1176,28 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "merguez",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "mortadella",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -820,6 +1206,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "new york strip",
@@ -827,10 +1215,22 @@
    ]
   },
   {
+   "name": "osso buco",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "oxtail",
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -839,6 +1239,18 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "picanha",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -847,6 +1259,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -855,6 +1269,8 @@
    "aisle": "Butcher",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -863,6 +1279,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "pork butt"
@@ -873,6 +1291,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -881,6 +1301,38 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "quail",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "rabbit",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "rack of lamb",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -889,16 +1341,40 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "ribeye steak"
    ]
   },
   {
+   "name": "salami",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "salt pork",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "sausage",
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -907,6 +1383,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -915,6 +1393,8 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "top sirloin"
@@ -925,6 +1405,38 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "soppressata",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "spare ribs",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tri-tip",
+   "aisle": "Butcher",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -933,6 +1445,18 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "turkey wings",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -941,6 +1465,18 @@
    "aisle": "Butcher",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "veal chop",
+   "aisle": "Butcher",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -949,6 +1485,8 @@
    "aisle": "Butcher",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -957,6 +1495,8 @@
    "aisle": "Canned",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -965,6 +1505,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "jar",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -973,6 +1515,8 @@
    "aisle": "Canned",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "beef broth"
@@ -983,6 +1527,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -991,6 +1537,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -999,6 +1547,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1007,6 +1557,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "tinned tomatoes"
@@ -1017,6 +1569,8 @@
    "aisle": "Canned",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1025,6 +1579,8 @@
    "aisle": "Canned",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "chicken broth"
@@ -1035,6 +1591,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1043,6 +1601,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1051,6 +1611,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1059,6 +1621,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1067,6 +1631,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1075,6 +1641,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1083,6 +1651,8 @@
    "aisle": "Canned",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1091,6 +1661,8 @@
    "aisle": "Canned",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1099,6 +1671,8 @@
    "aisle": "Canned",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1107,6 +1681,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1115,6 +1691,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "jar",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1123,6 +1701,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1131,6 +1711,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1139,6 +1721,8 @@
    "aisle": "Canned",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1147,6 +1731,8 @@
    "aisle": "Canned",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 262,
    "staple": false,
    "aliases": []
   },
@@ -1155,6 +1741,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1163,6 +1751,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "canned tuna"
@@ -1173,6 +1763,8 @@
    "aisle": "Canned",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "vegetable broth"
@@ -1183,6 +1775,8 @@
    "aisle": "Canned",
    "dimension": "count",
    "unit": "can",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1191,6 +1785,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 256,
    "staple": false,
    "aliases": []
   },
@@ -1199,6 +1795,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 239,
    "staple": true,
    "aliases": []
   },
@@ -1207,6 +1805,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 218,
    "staple": false,
    "aliases": []
   },
@@ -1215,6 +1815,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 255,
    "staple": true,
    "aliases": []
   },
@@ -1223,17 +1825,53 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "barbecue sauce"
    ]
   },
   {
+   "name": "black vinegar",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": [
+    "chinkiang vinegar"
+   ]
+  },
+  {
+   "name": "calabrian chili paste",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "canola oil",
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 218,
    "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "chili crisp",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
    "aliases": []
   },
   {
@@ -1241,6 +1879,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1249,6 +1889,18 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 218,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "date syrup",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1257,6 +1909,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 249,
    "staple": true,
    "aliases": [
     "dijon"
@@ -1267,7 +1921,39 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 239,
    "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "doubanjiang",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "duck sauce",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dukkah",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
    "aliases": []
   },
   {
@@ -1275,6 +1961,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 216,
    "staple": true,
    "aliases": []
   },
@@ -1283,6 +1971,18 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 250,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "furikake",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1291,6 +1991,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1299,6 +2001,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 218,
    "staple": false,
    "aliases": []
   },
@@ -1307,6 +2011,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1315,6 +2021,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 290,
    "staple": false,
    "aliases": []
   },
@@ -1323,6 +2031,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": "g",
+   "gramsPerCup": 340,
    "staple": true,
    "aliases": []
   },
@@ -1331,6 +2041,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1339,6 +2051,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "preserves"
@@ -1349,6 +2063,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 273,
    "staple": true,
    "aliases": []
   },
@@ -1357,6 +2073,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1365,6 +2083,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": "g",
+   "gramsPerCup": 322,
    "staple": false,
    "aliases": []
   },
@@ -1373,16 +2093,30 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 230,
    "staple": true,
    "aliases": [
     "mayo"
    ]
   },
   {
+   "name": "mirin",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "miso paste",
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 275,
    "staple": false,
    "aliases": [
     "miso"
@@ -1393,6 +2127,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": "g",
+   "gramsPerCup": 328,
    "staple": false,
    "aliases": []
   },
@@ -1401,6 +2137,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 249,
    "staple": false,
    "aliases": []
   },
@@ -1409,6 +2147,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 216,
    "staple": true,
    "aliases": []
   },
@@ -1417,6 +2157,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1425,6 +2167,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 258,
    "staple": false,
    "aliases": []
   },
@@ -1433,6 +2177,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 218,
    "staple": false,
    "aliases": []
   },
@@ -1441,6 +2187,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1449,6 +2197,28 @@
    "aisle": "Condiments",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pomegranate molasses",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ponzu",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1457,16 +2227,30 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "horseradish"
    ]
   },
   {
+   "name": "preserved lemon",
+   "aisle": "Condiments",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "red wine vinegar",
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 239,
    "staple": true,
    "aliases": []
   },
@@ -1475,6 +2259,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1483,7 +2269,19 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 239,
    "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "sake",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
    "aliases": []
   },
   {
@@ -1491,6 +2289,18 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sambal oelek",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1499,6 +2309,18 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": 218,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "shaoxing wine",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1507,6 +2329,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1515,6 +2339,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 255,
    "staple": true,
    "aliases": []
   },
@@ -1523,6 +2349,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1531,6 +2359,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1539,6 +2369,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 240,
    "staple": false,
    "aliases": []
   },
@@ -1547,6 +2379,28 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tamarind paste",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "truffle oil",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1555,7 +2409,19 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 218,
    "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "verjus",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
    "aliases": []
   },
   {
@@ -1563,6 +2429,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 239,
    "staple": true,
    "aliases": []
   },
@@ -1571,6 +2439,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1579,6 +2449,8 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -1587,6 +2459,38 @@
    "aisle": "Condiments",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "yuzu kosho",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "zhoug",
+   "aisle": "Condiments",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "asiago",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1595,6 +2499,8 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1603,6 +2509,8 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1611,6 +2519,8 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1619,6 +2529,8 @@
    "aisle": "Dairy",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": "g",
+   "gramsPerCup": 227,
    "staple": false,
    "aliases": [
     "unsalted butter",
@@ -1629,7 +2541,19 @@
    "name": "buttermilk",
    "aisle": "Dairy",
    "dimension": "volume",
-   "unit": "ml",
+   "unit": "cup",
+   "bakingUnit": "ml",
+   "gramsPerCup": 245,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "camembert",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1638,16 +2562,52 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "sharp cheddar"
    ]
   },
   {
+   "name": "clotted cream",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "comte",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": [
+    "comté"
+   ]
+  },
+  {
+   "name": "cotija",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "cottage cheese",
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": 226,
    "staple": false,
    "aliases": []
   },
@@ -1656,6 +2616,8 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": "g",
+   "gramsPerCup": 232,
    "staple": false,
    "aliases": []
   },
@@ -1664,16 +2626,40 @@
    "aisle": "Dairy",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 230,
    "staple": false,
    "aliases": [
     "crème fraîche"
    ]
   },
   {
+   "name": "cultured butter",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "duck egg",
+   "aisle": "Dairy",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "egg whites",
    "aisle": "Dairy",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1682,6 +2668,8 @@
    "aisle": "Dairy",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1690,16 +2678,40 @@
    "aisle": "Dairy",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "egg"
    ]
   },
   {
+   "name": "emmental",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "feta",
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "fontina",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1708,6 +2720,18 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ghee",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1716,6 +2740,8 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "chevre"
@@ -1726,6 +2752,18 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "grana padano",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1733,7 +2771,9 @@
    "name": "greek yogurt",
    "aisle": "Dairy",
    "dimension": "volume",
-   "unit": "ml",
+   "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 255,
    "staple": false,
    "aliases": []
   },
@@ -1742,6 +2782,8 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "gruyère"
@@ -1751,7 +2793,19 @@
    "name": "half and half",
    "aisle": "Dairy",
    "dimension": "volume",
-   "unit": "ml",
+   "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 242,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "halloumi",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1759,17 +2813,41 @@
    "name": "heavy cream",
    "aisle": "Dairy",
    "dimension": "volume",
-   "unit": "ml",
+   "unit": "cup",
+   "bakingUnit": "ml",
+   "gramsPerCup": 238,
    "staple": false,
    "aliases": [
     "heavy whipping cream"
    ]
   },
   {
+   "name": "kefir",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "labneh",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "manchego",
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1778,6 +2856,8 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1785,7 +2865,9 @@
    "name": "milk",
    "aisle": "Dairy",
    "dimension": "volume",
-   "unit": "ml",
+   "unit": "cup",
+   "bakingUnit": "ml",
+   "gramsPerCup": 245,
    "staple": false,
    "aliases": [
     "whole milk"
@@ -1796,6 +2878,8 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1804,6 +2888,28 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "oaxaca cheese",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "paneer",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1812,6 +2918,8 @@
    "aisle": "Dairy",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 100,
    "staple": false,
    "aliases": [
     "parmigiano reggiano",
@@ -1823,6 +2931,8 @@
    "aisle": "Dairy",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 100,
    "staple": false,
    "aliases": [
     "pecorino romano"
@@ -1833,6 +2943,48 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "quail egg",
+   "aisle": "Dairy",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "quark",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "queso fresco",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "raclette",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1841,6 +2993,28 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": "g",
+   "gramsPerCup": 246,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "roquefort",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "skyr",
+   "aisle": "Dairy",
+   "dimension": "volume",
+   "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1849,6 +3023,18 @@
    "aisle": "Dairy",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 230,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "stilton",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1857,6 +3043,18 @@
    "aisle": "Dairy",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "taleggio",
+   "aisle": "Dairy",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1864,7 +3062,9 @@
    "name": "yogurt",
    "aisle": "Dairy",
    "dimension": "volume",
-   "unit": "ml",
+   "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 245,
    "staple": false,
    "aliases": []
   },
@@ -1873,6 +3073,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 120,
    "staple": true,
    "aliases": [
     "plain flour",
@@ -1884,6 +3086,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 200,
    "staple": false,
    "aliases": []
   },
@@ -1892,6 +3096,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 200,
    "staple": false,
    "aliases": [
     "pearl barley"
@@ -1902,6 +3108,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 185,
    "staple": false,
    "aliases": []
   },
@@ -1910,6 +3118,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 194,
    "staple": false,
    "aliases": []
   },
@@ -1918,6 +3128,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 120,
    "staple": false,
    "aliases": []
   },
@@ -1926,6 +3138,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 190,
    "staple": false,
    "aliases": []
   },
@@ -1934,6 +3148,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1942,6 +3158,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 140,
    "staple": false,
    "aliases": []
   },
@@ -1950,6 +3168,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 113,
    "staple": false,
    "aliases": []
   },
@@ -1958,6 +3178,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 194,
    "staple": false,
    "aliases": []
   },
@@ -1966,6 +3188,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 200,
    "staple": false,
    "aliases": [
     "garbanzo beans"
@@ -1976,6 +3200,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -1984,6 +3210,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 138,
    "staple": false,
    "aliases": []
   },
@@ -1992,14 +3220,30 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 173,
    "staple": false,
    "aliases": []
+  },
+  {
+   "name": "dried shiitake",
+   "aisle": "Dry goods",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": [
+    "dried shiitake mushrooms"
+   ]
   },
   {
    "name": "egg noodles",
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2008,6 +3252,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 190,
    "staple": false,
    "aliases": []
   },
@@ -2016,6 +3262,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2024,6 +3272,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2032,6 +3282,8 @@
    "aisle": "Dry goods",
    "dimension": "count",
    "unit": "packet",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2040,6 +3292,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 185,
    "staple": false,
    "aliases": []
   },
@@ -2048,6 +3302,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 194,
    "staple": false,
    "aliases": []
   },
@@ -2056,6 +3312,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2064,6 +3322,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 192,
    "staple": false,
    "aliases": []
   },
@@ -2072,6 +3332,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2080,6 +3342,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 90,
    "staple": false,
    "aliases": [
     "rolled oats"
@@ -2090,6 +3354,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2098,6 +3364,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2106,6 +3374,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2114,6 +3384,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 194,
    "staple": false,
    "aliases": []
   },
@@ -2122,6 +3394,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2130,6 +3404,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 170,
    "staple": false,
    "aliases": []
   },
@@ -2138,6 +3414,8 @@
    "aisle": "Dry goods",
    "dimension": "count",
    "unit": "package",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2146,6 +3424,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 192,
    "staple": false,
    "aliases": []
   },
@@ -2154,6 +3434,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 185,
    "staple": false,
    "aliases": [
     "white rice"
@@ -2164,6 +3446,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2172,6 +3456,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2180,6 +3466,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 167,
    "staple": false,
    "aliases": []
   },
@@ -2188,6 +3476,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2196,6 +3486,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2204,6 +3496,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 196,
    "staple": false,
    "aliases": []
   },
@@ -2212,6 +3506,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 180,
    "staple": false,
    "aliases": []
   },
@@ -2220,6 +3516,8 @@
    "aisle": "Dry goods",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2228,6 +3526,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 113,
    "staple": false,
    "aliases": []
   },
@@ -2236,6 +3536,8 @@
    "aisle": "Dry goods",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2244,6 +3546,8 @@
    "aisle": "Frozen",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2252,6 +3556,8 @@
    "aisle": "Frozen",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2260,6 +3566,8 @@
    "aisle": "Frozen",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2268,6 +3576,8 @@
    "aisle": "Frozen",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2276,6 +3586,8 @@
    "aisle": "Frozen",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2284,6 +3596,8 @@
    "aisle": "Frozen",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2292,6 +3606,8 @@
    "aisle": "Frozen",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2300,6 +3616,8 @@
    "aisle": "Frozen",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2308,6 +3626,8 @@
    "aisle": "Frozen",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2316,6 +3636,8 @@
    "aisle": "Frozen",
    "dimension": "volume",
    "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2324,6 +3646,8 @@
    "aisle": "Frozen",
    "dimension": "count",
    "unit": "package",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2332,6 +3656,8 @@
    "aisle": "Frozen",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2340,6 +3666,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 143,
    "staple": false,
    "aliases": []
   },
@@ -2348,6 +3676,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 137,
    "staple": false,
    "aliases": []
   },
@@ -2356,6 +3686,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 170,
    "staple": false,
    "aliases": []
   },
@@ -2364,6 +3696,8 @@
    "aisle": "Nuts",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2372,6 +3706,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 130,
    "staple": false,
    "aliases": []
   },
@@ -2380,6 +3716,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 120,
    "staple": false,
    "aliases": []
   },
@@ -2388,6 +3726,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 150,
    "staple": false,
    "aliases": [
     "flaxseed"
@@ -2398,6 +3738,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 135,
    "staple": false,
    "aliases": []
   },
@@ -2406,6 +3748,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 134,
    "staple": false,
    "aliases": []
   },
@@ -2414,6 +3758,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 146,
    "staple": false,
    "aliases": []
   },
@@ -2422,6 +3768,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 99,
    "staple": false,
    "aliases": []
   },
@@ -2430,6 +3778,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 135,
    "staple": false,
    "aliases": [
     "pignoli"
@@ -2440,6 +3790,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 123,
    "staple": false,
    "aliases": []
   },
@@ -2448,6 +3800,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 129,
    "staple": false,
    "aliases": [
     "pepitas"
@@ -2458,6 +3812,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 145,
    "staple": false,
    "aliases": []
   },
@@ -2466,6 +3822,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 85,
    "staple": false,
    "aliases": []
   },
@@ -2474,6 +3832,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": 92,
    "staple": false,
    "aliases": []
   },
@@ -2482,6 +3842,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 140,
    "staple": false,
    "aliases": []
   },
@@ -2490,6 +3852,8 @@
    "aisle": "Nuts",
    "dimension": "volume",
    "unit": "cup",
+   "bakingUnit": "g",
+   "gramsPerCup": 117,
    "staple": false,
    "aliases": []
   },
@@ -2498,6 +3862,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "anaheim pepper",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2506,6 +3882,28 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "apricot",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "artichoke",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2514,6 +3912,8 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "rocket"
@@ -2524,6 +3924,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2532,6 +3934,28 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "baby artichoke",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "baby bok choy",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2540,6 +3964,8 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "spinach"
@@ -2550,6 +3976,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "banana pepper",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2558,6 +3996,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "fresh basil"
@@ -2568,6 +4008,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2576,6 +4018,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2584,6 +4028,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2592,34 +4038,74 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "blackberries"
    ]
   },
   {
+   "name": "blood orange",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "blueberry",
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "blueberries"
    ]
   },
   {
+   "name": "bok choy",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "broccoli",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
+  },
+  {
+   "name": "broccoli rabe",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": [
+    "rapini"
+   ]
   },
   {
    "name": "broccolini",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2628,6 +4114,8 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2636,6 +4124,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2644,6 +4134,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2652,6 +4144,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2660,6 +4154,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2668,6 +4164,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2676,6 +4174,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2684,6 +4184,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "stalk",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "celery leaves",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2692,16 +4204,30 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "celeriac"
    ]
   },
   {
+   "name": "chayote",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "cherry",
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "cherries"
@@ -2712,6 +4238,18 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "chervil",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2720,6 +4258,8 @@
    "aisle": "Produce",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "fresh chives"
@@ -2730,16 +4270,30 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "fresh coriander"
    ]
   },
   {
+   "name": "cipollini onion",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "clementine",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2748,6 +4302,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2756,9 +4312,23 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "ear",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "corn on the cob"
+   ]
+  },
+  {
+   "name": "cranberry",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": [
+    "cranberries"
    ]
   },
   {
@@ -2766,16 +4336,80 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "baby bella"
    ]
   },
   {
+   "name": "cubanelle pepper",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "cucumber",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "currants",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "curry leaves",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "sprig",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "daikon",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dandelion greens",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "delicata squash",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2784,6 +4418,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "fresh dill"
@@ -2794,16 +4430,50 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "aubergine"
    ]
   },
   {
+   "name": "endive",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "english cucumber",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "epazote",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "escarole",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2812,6 +4482,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bulb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2820,36 +4492,84 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "figs"
    ]
   },
   {
+   "name": "frisee",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "galangal",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "garlic",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "clove",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "garlic cloves"
    ]
   },
   {
+   "name": "garlic scapes",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "ginger",
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "fresh ginger"
    ]
   },
   {
+   "name": "gooseberry",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "granny smith apple",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2858,6 +4578,8 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "grapes"
@@ -2868,6 +4590,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2876,6 +4600,8 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "haricot vert"
@@ -2886,6 +4612,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2894,6 +4622,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "heirloom tomato",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2902,6 +4642,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "horseradish root",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2910,6 +4662,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2918,16 +4672,80 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "jalapeño"
    ]
   },
   {
+   "name": "jicama",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "kabocha squash",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "kaffir lime leaves",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "kale",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "key lime",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "kohlrabi",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "kumquat",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2936,6 +4754,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2944,6 +4764,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lemongrass",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "stalk",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2952,6 +4784,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2960,6 +4794,28 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lovage",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "lychee",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2968,6 +4824,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2976,6 +4834,28 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "meyer lemon",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "microgreens",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -2984,6 +4864,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "fresh mint"
@@ -2994,16 +4876,30 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "mushrooms"
    ]
   },
   {
+   "name": "mustard greens",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "napa cabbage",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3012,6 +4908,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "okra",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3020,6 +4928,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3028,6 +4938,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3036,6 +4948,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "fresh oregano"
@@ -3046,6 +4960,28 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "padron pepper",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "papaya",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3054,6 +4990,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "flat-leaf parsley",
@@ -3065,6 +5003,28 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "passion fruit",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pea shoots",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3073,6 +5033,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3081,6 +5043,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pearl onion",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3089,6 +5063,18 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "persimmon",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3097,6 +5083,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "plantain",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3105,6 +5103,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3113,6 +5113,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3121,6 +5123,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3129,6 +5133,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3137,6 +5143,38 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pumpkin",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "quince",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "radicchio",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3145,6 +5183,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "ramps",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3153,6 +5203,8 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "raspberries"
@@ -3163,6 +5215,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3171,6 +5225,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3179,6 +5235,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3187,6 +5245,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "rhubarb",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "stalk",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3195,6 +5265,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "plum tomato"
@@ -3205,6 +5277,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "romanesco",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3213,6 +5297,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "fresh rosemary"
@@ -3223,6 +5309,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3231,6 +5319,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3239,16 +5329,40 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "fresh sage"
    ]
   },
   {
+   "name": "savory",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "savoy cabbage",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "head",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "scallion",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "green onion",
@@ -3260,6 +5374,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3268,6 +5384,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3276,6 +5394,28 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "shishito pepper",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "shiso",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3284,6 +5424,8 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "sugar snap peas"
@@ -3294,6 +5436,18 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sorrel",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3302,6 +5456,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "spring garlic",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3310,6 +5476,8 @@
    "aisle": "Produce",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "strawberries"
@@ -3320,6 +5488,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3328,6 +5498,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3336,6 +5508,28 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "tangerine",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "taro",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3344,26 +5538,62 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "fresh tarragon"
    ]
   },
   {
+   "name": "thai chili",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "thyme",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "fresh thyme"
    ]
   },
   {
+   "name": "tomatillo",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "tomato",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "turmeric root",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3372,6 +5602,18 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "watercress",
+   "aisle": "Produce",
+   "dimension": "count",
+   "unit": "bunch",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3380,6 +5622,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3388,6 +5632,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3396,6 +5642,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3404,6 +5652,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3412,14 +5662,30 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
+  },
+  {
+   "name": "yuca",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": [
+    "cassava"
+   ]
   },
   {
    "name": "yukon gold potato",
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3428,6 +5694,8 @@
    "aisle": "Produce",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "courgette"
@@ -3438,9 +5706,43 @@
    "aisle": "Seafood",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "anchovies"
+   ]
+  },
+  {
+   "name": "arctic char",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "bay scallop",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "bonito flakes",
+   "aisle": "Seafood",
+   "dimension": "volume",
+   "unit": "cup",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": [
+    "katsuobushi"
    ]
   },
   {
@@ -3448,6 +5750,8 @@
    "aisle": "Seafood",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3456,16 +5760,30 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "squid"
    ]
   },
   {
+   "name": "caviar",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "clams",
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3474,6 +5792,8 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3482,6 +5802,38 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "crawfish",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "cuttlefish",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "dried shrimp",
+   "aisle": "Seafood",
+   "dimension": "volume",
+   "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3490,6 +5842,38 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "king crab",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "kombu",
+   "aisle": "Seafood",
+   "dimension": "count",
+   "unit": "sheet",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "langoustine",
+   "aisle": "Seafood",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3498,6 +5882,8 @@
    "aisle": "Seafood",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3506,6 +5892,18 @@
    "aisle": "Seafood",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "mackerel",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3514,6 +5912,18 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "monkfish",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3522,6 +5932,28 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "nori",
+   "aisle": "Seafood",
+   "dimension": "count",
+   "unit": "sheet",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "octopus",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3530,6 +5962,28 @@
    "aisle": "Seafood",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "razor clam",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "roe",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3538,6 +5992,8 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "salmon fillet"
@@ -3548,6 +6004,8 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3556,24 +6014,52 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
+  },
+  {
+   "name": "sea urchin",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": [
+    "uni"
+   ]
   },
   {
    "name": "shrimp",
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "prawns"
    ]
   },
   {
+   "name": "skate",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "smoked salmon",
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "lox"
@@ -3584,6 +6070,28 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "snow crab",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "lb",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "soft shell crab",
+   "aisle": "Seafood",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3592,6 +6100,18 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sturgeon",
+   "aisle": "Seafood",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3600,6 +6120,8 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3608,6 +6130,8 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": []
   },
@@ -3616,16 +6140,50 @@
    "aisle": "Seafood",
    "dimension": "mass",
    "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": false,
    "aliases": [
     "tuna steak"
    ]
   },
   {
+   "name": "adobo seasoning",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "ajwain",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "aleppo pepper",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
    "name": "allspice",
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3634,7 +6192,19 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "ancho chile",
+   "aisle": "Spices",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
    "aliases": []
   },
   {
@@ -3642,6 +6212,40 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "annatto",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "asafoetida",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": [
+    "hing"
+   ]
+  },
+  {
+   "name": "baharat",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3650,16 +6254,30 @@
    "aisle": "Spices",
    "dimension": "count",
    "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "bay leaf"
    ]
   },
   {
+   "name": "berbere",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
    "name": "black pepper",
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "freshly ground black pepper",
@@ -3671,6 +6289,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3679,6 +6299,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3687,6 +6309,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "cayenne pepper"
@@ -3697,7 +6321,19 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "chile de arbol",
+   "aisle": "Spices",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
    "aliases": []
   },
   {
@@ -3705,6 +6341,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3713,6 +6351,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3721,6 +6361,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "ground cinnamon"
@@ -3731,6 +6373,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "ground cloves"
@@ -3741,6 +6385,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "ground coriander"
@@ -3751,6 +6397,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "ground cumin"
@@ -3761,6 +6409,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3769,6 +6419,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3777,6 +6429,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3785,6 +6439,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3793,6 +6449,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3801,6 +6459,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3809,6 +6469,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3817,6 +6479,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3825,6 +6489,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3833,6 +6499,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "maldon",
@@ -3844,6 +6512,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3852,6 +6522,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3860,16 +6532,60 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "ground ginger"
    ]
   },
   {
+   "name": "gochugaru",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "grains of paradise",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "green peppercorns",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "guajillo chile",
+   "aisle": "Spices",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
    "name": "herbes de provence",
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3878,7 +6594,29 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "jerk seasoning",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "juniper berries",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
    "aliases": []
   },
   {
@@ -3886,6 +6624,18 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "mace",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3894,16 +6644,30 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "dry mustard"
    ]
   },
   {
+   "name": "nigella seeds",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
    "name": "nutmeg",
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "ground nutmeg"
@@ -3914,6 +6678,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3922,6 +6688,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3930,7 +6698,29 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "pasilla chile",
+   "aisle": "Spices",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "pink peppercorns",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
    "aliases": []
   },
   {
@@ -3938,6 +6728,18 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "ras el hanout",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3946,6 +6748,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "crushed red pepper"
@@ -3956,6 +6760,18 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sazon",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3964,6 +6780,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3972,6 +6790,28 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tbsp",
+   "bakingUnit": null,
+   "gramsPerCup": 144,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "shichimi togarashi",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "sichuan peppercorns",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3980,6 +6820,28 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "star anise",
+   "aisle": "Spices",
+   "dimension": "count",
+   "unit": "each",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": []
+  },
+  {
+   "name": "sumac",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -3988,16 +6850,40 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": [
     "salt"
    ]
   },
   {
+   "name": "tellicherry peppercorns",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
    "name": "turmeric",
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": true,
+   "aliases": []
+  },
+  {
+   "name": "urfa biber",
+   "aisle": "Spices",
+   "dimension": "volume",
+   "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -4006,6 +6892,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -4014,6 +6902,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   },
@@ -4022,6 +6912,8 @@
    "aisle": "Spices",
    "dimension": "volume",
    "unit": "tsp",
+   "bakingUnit": null,
+   "gramsPerCup": null,
    "staple": true,
    "aliases": []
   }

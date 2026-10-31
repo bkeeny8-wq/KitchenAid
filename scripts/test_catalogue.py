@@ -49,7 +49,8 @@ VALID_AISLES = {
 }
 
 for i in items:
-    for key in ("name", "aisle", "dimension", "unit", "staple", "aliases"):
+    for key in ("name", "aisle", "dimension", "unit", "bakingUnit",
+                "gramsPerCup", "staple", "aliases"):
         if key not in i:
             fail(f'{i.get("name", "?")} is missing "{key}"')
     if i["dimension"] not in VALID_DIMS:
@@ -96,6 +97,53 @@ check("baguette is counted, not sliced", by_name["baguette"]["dimension"], "coun
 # --- scallion / green onion is one purchase ---
 check("green onion is the same row as scallion", index.get("green onion"), "scallion")
 check("spring onion too", index.get("spring onion"), "scallion")
+
+# --- cooking units vs baking units ---
+# "its not uniform across application between cooking and baking" -- a quarter
+# cup of milk is how you cook; 300 g of bread flour is how you bake.
+check("milk is cups when cooking", by_name["milk"]["unit"], "cup")
+check("milk is ml when baking", by_name["milk"]["bakingUnit"], "ml")
+check("bread flour is cups when cooking", by_name["bread flour"]["unit"], "cup")
+check("bread flour is grams when baking", by_name["bread flour"]["bakingUnit"], "g")
+check("butter is grams when baking", by_name["butter"]["bakingUnit"], "g")
+check("sugar is grams when baking", by_name["granulated sugar"]["bakingUnit"], "g")
+# Things that have no business having a baking unit
+for name in ("ny strip steak", "baby spinach", "shallot", "prepared horseradish"):
+    if by_name[name]["bakingUnit"] is not None:
+        fail(f'{name} has a bakingUnit, which makes no sense for it')
+# Leaveners stay in spoons even when baking: 5 g of baking powder is not how
+# anyone writes a recipe.
+for name in ("baking powder", "baking soda", "vanilla extract"):
+    if by_name[name]["bakingUnit"] is not None:
+        fail(f"{name} should stay in spoons when baking")
+
+# --- densities, and the invariant that makes them usable ---
+check("all-purpose flour density", by_name["all-purpose flour"]["gramsPerCup"], 120)
+check("butter density (1 cup = 2 sticks)", by_name["butter"]["gramsPerCup"], 227)
+check("granulated sugar density", by_name["granulated sugar"]["gramsPerCup"], 200)
+check("honey is heavier than water", by_name["honey"]["gramsPerCup"] > 237, True)
+
+# Kosher salt is deliberately absent: Diamond Crystal is ~142 g/cup and Morton
+# ~288, a factor of two from the same words on the box.
+check("kosher salt has NO density", by_name["kosher salt"]["gramsPerCup"], None)
+
+# If an ingredient bakes in grams, it MUST have a density, or the app cannot
+# turn a cup measurement into that unit and the baking unit is useless.
+for i in items:
+    if i["bakingUnit"] == "g" and i["gramsPerCup"] is None:
+        fail(f'{i["name"]} bakes in grams but has no density, so it cannot convert')
+
+# --- water must never reach a shopping list ---
+check("water is in the catalogue", "water" in by_name, True)
+check("water is a staple, so it is never shopped for", by_name["water"]["staple"], True)
+
+# --- spices that are purchases, not cupboard staples ---
+for name in ("saffron", "ancho chile", "star anise"):
+    if by_name[name]["staple"]:
+        fail(f"{name} is bought deliberately for a dish; it should not be a staple")
+for name in ("cumin", "paprika", "garlic powder", "dried oregano"):
+    if not by_name[name]["staple"]:
+        fail(f"{name} lives in the cupboard and should be a staple")
 
 # --- THE ONE THAT MATTERS: the first real recipe must be fully covered ---
 FIXTURE_INGREDIENTS = [
