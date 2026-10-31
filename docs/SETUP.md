@@ -1,16 +1,16 @@
-# Kitchen — setup on your Mac
+# KitchenAid — setup on your Mac
 
 ## Opening the project
 
 ```
-git clone https://github.com/bkeeny8-wq/Kitchen.git
-cd Kitchen
-open Kitchen.xcodeproj
+git clone https://github.com/bkeeny8-wq/KitchenAid.git
+cd KitchenAid
+open KitchenAid.xcodeproj
 ```
 
 Build target is **iOS 17.0**, Swift 5, universal (iPhone + iPad). Signing is
 pre-set to `DEVELOPMENT_TEAM = HHSFT2GD2H` and bundle id
-`com.brandonkeeny.Kitchen`, matching your CFAL3 setup, so it should sign
+`com.brandonkeeny.KitchenAid`, matching your CFAL3 setup, so it should sign
 without you touching the Signing & Capabilities tab.
 
 ## Getting it onto family phones

@@ -8,7 +8,7 @@ build/
 
 # Xcode's per-user scheme management. The shared scheme in xcshareddata/ IS
 # tracked so a fresh clone opens with a runnable scheme instead of none.
-!Kitchen.xcodeproj/xcshareddata/
+!KitchenAid.xcodeproj/xcshareddata/
 
 # Swift Package Manager
 .swiftpm/
@@ -22,8 +22,8 @@ Config/*.local.xcconfig
 # The FOLDER stays tracked via .gitkeep because the Xcode project holds a
 # reference to it — ignoring the directory itself would leave a clone with a
 # dangling folder reference.
-Kitchen/Resources/RecipePhotos/*
-!Kitchen/Resources/RecipePhotos/.gitkeep
+KitchenAid/Resources/RecipePhotos/*
+!KitchenAid/Resources/RecipePhotos/.gitkeep
 
 # Python bytecode from recipe import/parsing scripts
 __pycache__/
