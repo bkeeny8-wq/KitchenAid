@@ -18,13 +18,6 @@ build/
 # cannot build.
 Config/*.local.xcconfig
 
-# Recipe photos are camera-roll imports: large, binary, and re-importable.
-# The FOLDER stays tracked via .gitkeep because the Xcode project holds a
-# reference to it — ignoring the directory itself would leave a clone with a
-# dangling folder reference.
-KitchenAid/Resources/RecipePhotos/*
-!KitchenAid/Resources/RecipePhotos/.gitkeep
-
 # Python bytecode from recipe import/parsing scripts
 __pycache__/
 *.pyc

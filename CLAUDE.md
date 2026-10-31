@@ -8,6 +8,43 @@ This is a **long-running project**. Recipes and features get added continuously
 as he cooks, usually one session at a time. Read this file and
 `docs/ARCHITECTURE.md` before changing the model layer.
 
+## Decisions Brandon has made
+
+These came from him directly. Do not quietly redesign around them; if one looks
+wrong, say so and ask.
+
+| | |
+|---|---|
+| **Opens on** | **Today** — what's planned for today with a Cook button, falling back to recent recipes when the plan is empty. Not the library, not the week. |
+| **Cooking history** | **Last-made date only.** No journal, no ratings, no "how did it go". He was offered a full journal and declined it. |
+| **In-app editing** | **Notes and tweaks only.** Adjust a quantity, fix a step, add a note after cooking. No authoring UI — recipes are written before they arrive. |
+| **Household** | **Named people with a full or half portion.** No allergy or dietary data; he declined it. Attendance drives scaling. |
+| **Photos** | **None, anywhere.** Not on recipes, not on steps. Do not add `PhotosUI`, an asset folder, or an image property "for later". |
+| **Units** | Per-ingredient, per-context. See the catalogue section. |
+
+### Where recipes come from, and why it shapes the schema
+
+His pipeline, in his words: *"I have claude create the pdf and drop to you to
+add."* So a recipe is authored in conversation, he edits it, and the PDF is
+dropped into a Claude Code session, where `scripts/import_recipe.py` parses it
+and the result is committed as a bundled resource.
+
+That makes recipes **immutable bundled content**, not user-entered rows — the
+same split as his CFAL3 repo, which separates `Models/Content/` (JSON loaded at
+launch) from `Models/Persistence/` (SwiftData):
+
+- **Recipes live in `KitchenAid/Resources/Recipes/*.json`**, loaded at launch by
+  a `RecipeLoader` service. They are read-only at runtime.
+- **Everything the user does lives in SwiftData**: the meal plan, who ate,
+  the pantry, shopping lists, last-made dates, and his tweaks and notes.
+- **Tweaks are an overlay**, keyed by recipe id, exactly as `LOSStudyStatus`
+  overlays `LOS` content in CFAL3. A tweak never mutates the bundled recipe.
+
+The cost, which is real and he has been told: **a new recipe needs a rebuild**,
+and family phones do not get it until they reinstall. The model is deliberately
+arranged so a runtime importer (paste, or open a file) can be added later
+without reshaping anything — it would load into the same in-memory recipe type.
+
 ## Read this first: nothing here was ever compiled
 
 Most of this codebase was written in a **Linux cloud container with no Apple
@@ -163,11 +200,21 @@ speculative:
 
 ## Deliberately not in v1
 
-CloudKit sync · photo/OCR recipe import (receipts yes, recipes not yet) ·
-nutrition data · unit conversion by ingredient density (so volume↔mass is
-refused, not guessed — same-dimension conversion like tbsp↔ml does work) ·
-purchase-unit rounding ("1 baguette" instead of "12 slices") · leftovers
-tracking.
+CloudKit sync · runtime recipe import (paste or open a file — designed for, not
+built) · purchase-unit rounding ("1 baguette" instead of "12 slices") ·
+leftovers tracking · nutrition data · a recipe authoring UI.
 
 Several of these are *designed for* without being built. Check
 `docs/ARCHITECTURE.md` before assuming one needs a migration.
+
+## Declined, not deferred
+
+Brandon was offered these and said no. Do not build them, and do not leave
+hooks for them:
+
+- **Photos** of any kind.
+- **A cooking journal** — ratings, notes-per-cook, "how did it go". Only the
+  last-made date is kept.
+- **Dietary restrictions and allergy warnings** per household member.
+- **Web-link recipe import** and **cookbook-photo OCR**. Receipt OCR for the
+  pantry is still wanted; recipe OCR is not.
