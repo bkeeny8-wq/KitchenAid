@@ -330,7 +330,11 @@ CATALOGUE = {
         "duck egg|count|each", "quail egg|count|each",
     ],
     "Bakery": [
-        "baguette|count|each|french bread", "sourdough|count|loaf",
+        # A baguette is bought as a loaf, not as an "each". Recipes still ask
+        # for it in slices; turning 12 slices into 1 loaf is purchase-unit
+        # rounding, which is deferred (see CLAUDE.md), so for now the unit is
+        # just the honest one for adding a baguette to the pantry by hand.
+        "baguette|count|loaf|french bread", "sourdough|count|loaf",
         "ciabatta|count|loaf", "country loaf|count|loaf",
         "sandwich bread|count|loaf|white bread", "whole wheat bread|count|loaf",
         "rye bread|count|loaf", "brioche|count|loaf",

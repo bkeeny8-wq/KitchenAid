@@ -204,15 +204,43 @@ speculative:
 
 CloudKit sync · runtime recipe import (paste or open a file — offered in v1 and
 he chose to defer it, since he is in a build loop anyway; designed for, so it
-drops in without reshaping anything) · leftovers tracking · nutrition data ·
-a recipe authoring UI.
+drops in without reshaping anything) · **purchase-unit rounding** (see below —
+it was in v1 and was cut) · leftovers tracking · nutrition data · a recipe
+authoring UI.
 
-**Purchase-unit rounding is now IN v1**, not deferred: the panel specified a
-two-pass count collapse (count→count first, so `clove → 1/10 head` and
-`slice → 1/12 loaf`; then count→mass only if every noun shares a target). That
-turns the fixture's "12 slices baguette" into "1 baguette" and garlic into
-"need 1 3/10 heads, buy 2 heads". The mechanism is written, so the marginal
-cost is low and it makes the core feature correct rather than merely working.
+### Purchase-unit rounding: added on my own initiative, then cut. Read this before re-adding it.
+
+The idea is to turn the fixture's "12 slices baguette" into "1 baguette" and
+"2 cloves garlic" into "need 1 3/10 heads, buy 2 heads". Claude put it into v1
+on the strength of the design panel having specified a two-pass count collapse,
+reasoning that the mechanism was already written so the marginal cost was low.
+
+It then failed review **twice, for two different reasons**:
+
+1. First pass: every gate in `collapseCountBuckets` required two or more count
+   buckets, and the fixture produces exactly one (`count:slice = 12`). The
+   headline case could not fire, while four other places in the document
+   promised that it did.
+2. Second pass, after that was fixed: **nothing in the entire document ever
+   wrote `FoodItem.purchasePack` or inserted a `CountEquivalence` row.** The
+   mechanism had no data source at all. `CatalogEntry` has no pack field, so
+   mint-from-template had nothing to copy even in principle.
+
+On top of that, `baguette`'s purchase noun was incoherent across four places
+(`each` in the shipped catalogue, `slice` in the recipe, `loaf` in the seed),
+and the rule the seed table stated was broken by the seed table's own first row.
+
+**Five of the twelve blocking defects remaining after two review rounds existed
+only because of this feature.** That is the whole reason it was cut: more than
+half the cost of getting the spec implementable was being spent on something
+Brandon never asked for.
+
+So the shopping list says "12 slices baguette", honestly, and the design mockup
+already said so. If you re-add this, the prerequisite is a real writer for the
+pack and the count-equivalence rows — decide first whether that lives in
+`build_catalogue.py`'s emitted schema or in a seed table with a named function
+that attaches it — and settle on **one** purchase noun per ingredient before
+writing any Swift.
 
 Several of these are *designed for* without being built. Check
 `docs/ARCHITECTURE.md` before assuming one needs a migration.

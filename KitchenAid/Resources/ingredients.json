@@ -30,7 +30,7 @@
    "name": "baguette",
    "aisle": "Bakery",
    "dimension": "count",
-   "unit": "each",
+   "unit": "loaf",
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,

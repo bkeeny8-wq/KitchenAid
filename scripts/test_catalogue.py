@@ -104,6 +104,10 @@ check("butter defaults to volume, as recipes write it", by_name["butter"]["dimen
 check("butter's default unit", by_name["butter"]["unit"], "tbsp")
 check("garlic is counted in cloves", by_name["garlic"]["unit"], "clove")
 check("baguette is counted, not sliced", by_name["baguette"]["dimension"], "count")
+# A baguette is bought by the loaf. Recipes ask for slices; reconciling the two
+# is purchase-unit rounding, which is deferred -- so this just has to be the
+# honest unit for adding one to the pantry.
+check("baguette is bought by the loaf", by_name["baguette"]["unit"], "loaf")
 
 # --- scallion / green onion is one purchase ---
 check("green onion is the same row as scallion", index.get("green onion"), "scallion")
