@@ -23,7 +23,13 @@ out = subprocess.run(
     [sys.executable, "-I", os.path.join(HERE, "import_recipe.py"), FIXTURE],
     capture_output=True, text=True, check=True,
 )
-d = json.loads(out.stdout)
+doc = json.loads(out.stdout)
+
+# The importer emits a DOCUMENT envelope now, because recipe 02 is four recipes
+# in one PDF. A single-recipe document still comes back as one entry.
+assert doc["schemaVersion"] == 1, doc.get("schemaVersion")
+assert len(doc["recipes"]) == 1, f'recipe 01 is one recipe, got {len(doc["recipes"])}'
+d = doc["recipes"][0]
 
 failures = []
 
@@ -193,3 +199,168 @@ if failures:
     sys.exit(1)
 print(f"PASS  all assertions ok  ({total_lines} ingredient lines, "
       f"{len(d['components'])} components, {len(d['steps'])} steps, {len(d['notes'])} notes)")
+
+
+# =============================================================================
+# Recipe 02 — docs/fixture-recipe-02.txt
+#
+# Four recipes in ONE document: a pancake batter and three compotes, one per
+# page. Parsed by the recipe-01 rules it produced a single recipe with one
+# component, sixteen merged steps and a total time of three minutes lifted from
+# "about 3 minutes" in a whipping instruction — and reported NO warnings while
+# doing it. The silence was the worst part; everything below exists so that
+# shape of failure is loud next time.
+# =============================================================================
+
+FIXTURE2 = os.path.join(ROOT, "docs", "fixture-recipe-02.txt")
+out2 = subprocess.run(
+    [sys.executable, "-I", os.path.join(HERE, "import_recipe.py"), FIXTURE2],
+    capture_output=True, text=True, check=True,
+)
+doc2 = json.loads(out2.stdout)
+
+
+def line2(recipe, ingredient_name):
+    for c in recipe["components"]:
+        for l in c["lines"]:
+            if l["name"] == ingredient_name:
+                return l
+    return None
+
+
+# R14 -- one document, four recipes, split on the page footer
+check("R14 four recipes", len(doc2["recipes"]), 4)
+check("R14 document title", doc2["documentTitle"],
+      "Fluffy Whipped Egg White Pancakes and Compotes")
+check("R14 titles in order",
+      [r["title"] for r in doc2["recipes"]],
+      ["Fluffy Whipped Egg White Pancakes", "Blueberry Compote",
+       "Mixed Berry Compote", "Apple Compote"])
+check("R14 each gets its own id",
+      len({r["id"] for r in doc2["recipes"]}), 4)
+
+pancake, blueberry, mixed, apple = doc2["recipes"]
+
+# R15 -- steps belong to their own recipe, not to the first one
+check("R15 pancake steps", len(pancake["steps"]), 7)
+check("R15 blueberry steps", len(blueberry["steps"]), 3)
+check("R15 apple steps", len(apple["steps"]), 3)
+
+# R16 -- a yield written into the description, not tabulated
+check("R16 yieldAmount", pancake["yieldAmount"], 8)
+check("R16 yieldUnitLabel", pancake["yieldUnitLabel"], "pancakes")
+check("R16 servings", pancake["servings"], 4)
+
+# R17 -- times are read from the header ONLY
+# "about 3 minutes" appears in step 3 and must not become the recipe's time.
+check("R17 no false total time", pancake["totalMinutes"], None)
+check("R17 no false active time", pancake["activeMinutes"], None)
+check("R17 and it SAYS so", "no active or total time found" in pancake["warnings"], True)
+
+# R18 -- ingredient groups with no "Ingredients" header at all
+check("R18 pancake groups",
+      [c["name"] for c in pancake["components"]],
+      ["Pancake Batter", "Spice Mix-Ins (add to the dry ingredients)"])
+check("R18 the Makes/serves row is not an ingredient",
+      any("Makes" in (l["raw"] or "") for c in pancake["components"] for l in c["lines"]),
+      False)
+
+# R19 -- an ALTERNATIVES group, where the first column names a choice and the
+# amount is in the second. Forced into the ingredient shape this produced an
+# ingredient called "Cinnamon" with no quantity.
+spices = pancake["components"][1]["lines"]
+check("R19 three options", len(spices), 3)
+check("R19 all marked as options", all(l["isOption"] for l in spices), True)
+check("R19 option labels", [l["name"] for l in spices], ["Cinnamon", "Nutmeg", "Both"])
+check("R19 the amount is kept as the option's text",
+      spices[0]["optionText"], "1/2 tsp, good with the apple compote")
+check("R19 an option has no quantity", spices[0]["hasQuantity"], False)
+
+# R20 -- quantity RANGES. Read as one number this became quantity 2 with the
+# unit "to 3 tbsp".
+syrup = line2(blueberry, "maple syrup")
+check("R20 is a range", syrup["isRange"], True)
+check("R20 low", (syrup["amountNumerator"], syrup["amountDenominator"]), (2, 1))
+check("R20 high", (syrup["amountMaxNumerator"], syrup["amountMaxDenominator"]), (3, 1))
+check("R20 unit", syrup["unit"], "tbsp")
+check("R20 display keeps both", syrup["display"], "2 to 3")
+
+# R21 -- the recipe's OWN second measurement, which is the volume-and-weight
+# pair Brandon asked for, handed over by the document itself.
+flour = line2(pancake, "all-purpose flour")
+check("R21 flour volume", (flour["amountNumerator"], flour["amountDenominator"]), (3, 2))
+check("R21 flour volume unit", flour["unit"], "cup")
+check("R21 flour weight too", flour["hasAltAmount"], True)
+check("R21 flour grams", flour["altAmountNumerator"], 190)
+check("R21 flour alt unit", flour["altUnit"], "g")
+check("R21 and the prep survived", flour["preparation"], "spooned and leveled, not scooped")
+check("R21 berries grams", line2(blueberry, "blueberries")["altAmountNumerator"], 300)
+# "about 1 lb or 450g" offers two; the metric one is taken.
+check("R21 apples take the metric of two", line2(apple, "apples")["altAmountNumerator"], 450)
+check("R21 apples alt unit", line2(apple, "apples")["altUnit"], "g")
+
+# R22 -- a parenthetical with no number is commentary and belongs in prep.
+# Left in the name, "baking powder (do not skip)" matches no catalogue entry,
+# and "cream of tartar (optional, helps the whites hold)" was cut at the comma
+# INSIDE the brackets, producing an ingredient called "cream of tartar (optional".
+check("R22 baking powder name", line2(pancake, "baking powder") is not None, True)
+check("R22 baking powder prep", line2(pancake, "baking powder")["preparation"], "do not skip")
+check("R22 cream of tartar name", line2(pancake, "cream of tartar") is not None, True)
+check("R22 cream of tartar prep",
+      line2(pancake, "cream of tartar")["preparation"], "optional, helps the whites hold")
+
+# R23 -- a clause after a COLON, not a comma
+berries = line2(mixed, "mixed berries")
+check("R23 name stops at the colon", berries is not None, True)
+check("R23 the clause became prep",
+      berries["preparation"].startswith("any mix of strawberries"), True)
+
+# R24 -- a size word is not a unit: "3 medium apples" stays countable apples
+apples = line2(apple, "apples")
+check("R24 dimension", apples["dimension"], "count")
+check("R24 no bogus unit", apples["unit"], None)
+check("R24 size kept as prep", apples["preparation"].startswith("medium"), True)
+
+# R25 -- an either/or with no comma: "1/4 cup water or apple cider"
+water = line2(apple, "water")
+check("R25 name is the first option", water is not None, True)
+check("R25 alternative kept", water["preparation"], "or apple cider")
+
+# R26 -- "1 pinch" is a counted pinch, distinct from recipe 01's bare "Pinch"
+pinch = line2(blueberry, "kosher salt")
+check("R26 has a number", pinch["hasQuantity"], True)
+check("R26 unit is the pinch", pinch["unit"], "pinch")
+
+# R27 -- notes are LABELLED paragraphs here, not bullets
+check("R27 pancake note count", len(pancake["notes"]), 1)
+check("R27 the fluff checklist survived",
+      pancake["notes"][0].startswith("Fluff checklist:"), True)
+check("R27 and it is whole",
+      pancake["notes"][0].rstrip().endswith("after flipping."), True)
+check("R27 each compote keeps its tip", len(blueberry["notes"]), 1)
+check("R27 tip text", blueberry["notes"][0].startswith("Tip: mash a few berries"), True)
+# The labelled paragraph must NOT be swallowed into the final step.
+check("R27 the tip is not inside the last step",
+      "Tip:" in blueberry["steps"][-1]["body"], False)
+
+# R28 -- what the document genuinely does not say is REPORTED, not guessed
+for compote in (blueberry, mixed, apple):
+    t = compote["title"]
+    check(f"R28 {t} has no servings", compote["servings"], None)
+    if "no serving count found; meal-plan scaling needs one" not in compote["warnings"]:
+        fail(f"R28 {t} is missing servings and does not say so")
+    if "no yield found (how much it makes)" not in compote["warnings"]:
+        fail(f"R28 {t} has no yield and does not say so")
+check("R28 the pancake has no unread-quantity warnings",
+      [w for w in pancake["warnings"] if "could not read a quantity" in w], [])
+
+if failures:
+    print(f"FAIL  {len(failures)} assertion(s):\n")
+    for f in failures:
+        print(f"  ✗ {f}\n")
+    sys.exit(1)
+
+print(f"PASS  recipe 02: {len(doc2['recipes'])} recipes from one document, "
+      f"{sum(len(c['lines']) for r in doc2['recipes'] for c in r['components'])} lines, "
+      f"{sum(len(r['steps']) for r in doc2['recipes'])} steps, "
+      f"{sum(len(r['warnings']) for r in doc2['recipes'])} honest warnings")

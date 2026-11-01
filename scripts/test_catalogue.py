@@ -160,6 +160,18 @@ for name in ("cumin", "paprika", "garlic powder", "dried oregano"):
     if not by_name[name]["staple"]:
         fail(f"{name} lives in the cupboard and should be a staple")
 
+# --- derived regular plurals, because recipes write plurals ---
+# "3 apples" failed to resolve against an entry called "apple". Regular plurals
+# are derived; irregular ones must still be written by hand, since guessing is
+# how "loaf" becomes "loafs".
+check("apples resolves to apple", index.get("apples"), "apple")
+check("tomatoes resolves to tomato", index.get("tomatoes"), "tomato")
+check("cherries was already explicit", index.get("cherries"), "cherry")
+# -f/-fe words are deliberately skipped rather than guessed
+if "loafs" in index:
+    fail("a regular plural was derived for an irregular -f word")
+check("mixed berries is its own entry", index.get("mixed berries"), "mixed berries")
+
 # --- THE ONE THAT MATTERS: the first real recipe must be fully covered ---
 FIXTURE_INGREDIENTS = [
     "baguette", "olive oil", "NY strip steak", "kosher salt", "black pepper",

@@ -208,6 +208,36 @@ for name in sorted(unknown):
     where = ", ".join(sorted(unknown[name]))
     warnings.append(f"`{name}` used but declared nowhere in this tree ({where})")
 
+# --- 6. every key the importer emits is read by the Swift --------------------
+# Recipe 02 added nine fields -- ranges, the recipe's own gram equivalents, and
+# choice rows -- and the Swift silently dropped all nine on decode. The file was
+# right, the app was wrong, and nothing said so. A JSON key the content types
+# never mention is the one failure this project cannot see any other way.
+import glob
+
+RECIPES = sorted(glob.glob(os.path.join(SRC, "Resources", "Recipes", "*.json")))
+if RECIPES:
+    import json as _json
+    content = "\n".join(t for p, t in FILES.items() if "/Models/Content/" in p)
+    buckets = {"recipe": set(), "component": set(), "line": set(), "step": set()}
+    for path in RECIPES:
+        d = _json.load(open(path, encoding="utf-8"))
+        buckets["recipe"] |= set(d)
+        for comp in d.get("components", []):
+            buckets["component"] |= set(comp)
+            for line in comp.get("lines", []):
+                buckets["line"] |= set(line)
+        for step in d.get("steps", []):
+            buckets["step"] |= set(step)
+    # Keys the importer emits for its own diagnostics, never for the app.
+    IGNORED = {"warnings", "aggregatesWithinRecipe", "raw", "display"}
+    for kind, keys in buckets.items():
+        for key in sorted(keys - IGNORED):
+            if not re.search(rf"\b{re.escape(key)}\b", content):
+                problems.append(
+                    f"the importer emits {kind} key `{key}` and nothing in "
+                    "Models/Content reads it -- it is dropped on decode")
+
 # --- report ------------------------------------------------------------------
 print(f"{len(FILES)} Swift files, "
       f"{sum(len(t.splitlines()) for t in FILES.values())} lines, "

@@ -17,6 +17,7 @@ multiples.
 """
 
 import json
+import os
 import re
 import sys
 from fractions import Fraction
@@ -174,13 +175,31 @@ def split_name_and_prep(text):
     text = text.strip().rstrip(".")
     prep_parts = []
 
-    # trailing clause after a comma
-    if "," in text:
-        head, tail = text.split(",", 1)
-        text, prep_parts = head.strip(), [tail.strip()]
+    # Trailing clause after a comma OR a colon. The mixed-berry line uses a
+    # colon — "mixed berries: any mix of strawberries, blueberries..." — and
+    # splitting only on commas left the whole clause inside the name, so it
+    # could never match the catalogue.
+    cut = min([i for i in (text.find(","), text.find(":")) if i >= 0], default=-1)
+    if cut >= 0:
+        text, prep_parts = text[:cut].strip(), [text[cut + 1:].strip()]
+    else:
+        # An either/or with no comma: "water or apple cider". The first is the
+        # one the recipe assumes, so it becomes the name and the alternative
+        # becomes preparation. Left whole, "water or apple cider" matches
+        # nothing in the catalogue and reaches the shopping list unresolved.
+        alt = re.search(r"\s+or\s+", text)
+        if alt:
+            prep_parts = ["or " + text[alt.end():].strip()]
+            text = text[:alt.start()].strip()
+
+    # A leading SIZE word describes the specimen, not the product: "large eggs"
+    # is bought as eggs, and leaving the word on the name keeps it from matching
+    # the catalogue's "eggs".
+    words = text.split()
+    while words and words[0].lower() in SIZE_WORDS:
+        prep_parts.insert(0, words.pop(0).lower())
 
     # leading preparation adjectives, but not ones that change the product
-    words = text.split()
     while words and words[0].lower() in PREP_PREFIXES and words[0].lower() not in IDENTITY_PREFIXES:
         prep_parts.insert(0, words.pop(0).lower())
 
@@ -260,8 +279,169 @@ def flatten_quantities(out):
             line["amountDenominator"] = f.denominator if f is not None else 1
             line["display"] = format_fraction(f) if f is not None else (line.get("qualifier") or "")
 
+            # A range, as three of the compotes write maple syrup. The shopping
+            # list buys the MAX because arriving short is worse than a spoonful
+            # over; the display keeps both so the cook still has the latitude
+            # the recipe gave them.
+            hi = line.pop("quantityMax", None)
+            line["isRange"] = hi is not None
+            line["amountMaxNumerator"] = hi.numerator if hi is not None else 0
+            line["amountMaxDenominator"] = hi.denominator if hi is not None else 1
+            if hi is not None and f is not None:
+                line["display"] = f"{format_fraction(f)} to {format_fraction(hi)}"
+
+            # The recipe's own second measurement: "all-purpose flour (190g)".
+            # This is the volume-and-weight pair Brandon asked for, handed over
+            # by the document, so it is kept rather than discarded with the
+            # parentheses.
+            alt = line.pop("altAmount", None)
+            line["hasAltAmount"] = alt is not None
+            line["altAmountNumerator"] = alt.numerator if alt is not None else 0
+            line["altAmountDenominator"] = alt.denominator if alt is not None else 1
+            line.setdefault("altUnit", None)
+            line.setdefault("isOption", False)
+            line.setdefault("optionText", None)
+
+
+# Words that sit in the unit column but size the ingredient rather than measure
+# it: "3 medium apples". Treating them as units gives a `count:medium` bucket
+# that never merges with plain apples.
+SIZE_WORDS = {"small", "medium", "large", "extra-large", "x-large", "jumbo"}
+
+# The repeated page footer a multi-recipe document carries: the document's own
+# title, a wide gutter, then "Page N".
+PAGE_FOOTER = re.compile(r"^\s*(?P<doc>\S.*?)\s{2,}Page\s+\d+\s*$", re.M)
+
+SECTION_HEADS = r"Ingredients|Instructions|Method|Directions|Notes|Tips"
+
+
+def split_pages(text):
+    """Split a document into one chunk per recipe, plus the document's title.
+
+    Recipe 02 is four recipes in one PDF -- a pancake batter and three compotes,
+    one per page. Parsed as a single recipe it produced one component, sixteen
+    merged steps and a total time of three minutes lifted out of "about 3
+    minutes" in a whipping instruction. And it reported no warnings at all,
+    which was the worst part of it.
+
+    The page footer is the split: every page ends with the document title, a
+    wide gutter and "Page N". A single-recipe document has no footer, so it
+    comes back as one chunk and nothing changes for recipe 01.
+    """
+    doc_title = None
+    chunks, last = [], 0
+    for m in PAGE_FOOTER.finditer(text):
+        doc_title = doc_title or m.group("doc").strip()
+        chunk = text[last:m.start()]
+        if chunk.strip():
+            chunks.append(chunk)
+        last = m.end()
+    tail = text[last:]
+    if tail.strip():
+        chunks.append(tail)
+    return (chunks or [text]), doc_title
+
+
+def split_range(cell):
+    """'2 to 3 tbsp' -> (Fraction(2), Fraction(3), 'tbsp'). Otherwise (None, None, None).
+
+    Three of the four recipes in document 02 write maple syrup as "2 to 3 tbsp,
+    adjusted to the sweetness of the berries". Read as a single number it became
+    quantity 2 with the unit "to 3 tbsp".
+    """
+    m = re.fullmatch(rf"({NUM})\s+(?:to|-|–)\s+({NUM})\s*(.*)", cell.strip())
+    if not m:
+        return None, None, None
+    lo = parse_number(m.group(1))
+    hi = parse_number(m.group(2))
+    if lo is None or hi is None:
+        return None, None, None
+    return lo, hi, (m.group(3).strip() or None)
+
+
+def extract_alt_measure(text):
+    """Pull a parenthetical equivalent out of an ingredient name.
+
+    Document 02 gives both measures throughout: "all-purpose flour (190g),
+    spooned and leveled", "blueberries (300g)", "apples (about 1 lb or 450g)".
+    That is exactly the dual measurement Brandon asked for -- volume for
+    cooking, grams for baking -- handed over by the recipe itself, so throwing
+    it away would be perverse.
+
+    Returns (text without the parenthetical, amount, unit). Where a
+    parenthetical offers two ("about 1 lb or 450g") the LAST is taken, because
+    these documents put the metric second and grams are the useful one.
+    """
+    best = None
+    for m in re.finditer(r"\(([^)]*)\)", text):
+        inner = m.group(1)
+        found = None
+        for q in re.finditer(rf"({NUM})\s*([A-Za-z]+)", inner):
+            unit = q.group(2).lower()
+            if unit in UNITS:
+                found = (m.span(), parse_number(q.group(1)), UNITS[unit][0])
+        if found:
+            best = found
+    if best is None:
+        return text, None, None
+    (lo, hi), amount, unit = best
+    cleaned = (text[:lo] + text[hi:]).replace("  ", " ")
+    # Removing "(300g)" from "mixed berries (300g): any mix of..." leaves a space
+    # before the colon, and the orphaned punctuation ends up inside the name.
+    cleaned = re.sub(r"\s+([,:;])", r"\1", cleaned).strip().strip(",").strip()
+    return cleaned, amount, unit
+
+
+def strip_parentheticals(text):
+    """Move any remaining bracketed aside out of the name and into preparation.
+
+    After the measured parentheticals are taken out, what is left is commentary:
+    "baking powder (do not skip)", "cream of tartar (optional, helps the whites
+    hold)". Left in the name, the first never matches the catalogue's "baking
+    powder" — and the second was worse, because `split_name_and_prep` cut it at
+    the comma INSIDE the brackets and produced an ingredient literally called
+    "cream of tartar (optional".
+    """
+    notes = []
+
+    def take(m):
+        notes.append(m.group(1).strip())
+        return " "
+
+    cleaned = re.sub(r"\(([^)]*)\)", take, text)
+    cleaned = re.sub(r"\s+([,:;])", r"\1", cleaned)
+    cleaned = re.sub(r"\s{2,}", " ", cleaned).strip().strip(",").strip()
+    return cleaned, [n for n in notes if n]
+
+
+def looks_like_option_label(cell):
+    """True for a first column that names a CHOICE rather than an amount.
+
+    The pancake's "Spice Mix-Ins" group is three alternatives, not three
+    ingredients: `Cinnamon | 1/2 tsp, good with the apple compote`,
+    `Nutmeg | 1/4 tsp`, `Both | 1/4 tsp cinnamon plus 1/8 tsp nutmeg`. The
+    amount is in the SECOND column and the first holds the option's name, so
+    every quantity parser reads the row backwards.
+    """
+    c = cell.strip().lower().rstrip(".")
+    if not c or c in QUALIFIERS:
+        return False
+    return not re.search(r"\d", c)
+
 
 def parse(text):
+    """Parse a document of one or more recipes into the bundled envelope."""
+    chunks, doc_title = split_pages(text)
+    recipes = [parse_one(c) for c in chunks]
+    recipes = [r for r in recipes if r["components"] or r["steps"]]
+    return {
+        "schemaVersion": 1,
+        "documentTitle": doc_title,
+        "recipes": recipes,
+    }
+
+
+def parse_one(text):
     lines = text.splitlines()
     out = {
         "schemaVersion": 1, "id": None,
@@ -281,7 +461,16 @@ def parse(text):
 
     body = "\n".join(lines)
 
-    # --- yields and times ---
+    # The first six non-empty lines: title, description, and the Makes/Active/
+    # Total table when there is one. Times are read ONLY from here, because
+    # searching the whole body picked "about 3 minutes" out of the pancake's
+    # egg-white step and reported it as the recipe's total time.
+    nonempty = [i for i, l in enumerate(lines) if l.strip()]
+    header_region = "\n".join(lines[i] for i in nonempty[:6])
+
+    # --- yields ---
+    # Recipe 01 tabulates it ("12 crostini (serves 4)"); recipe 02 writes it
+    # into the description ("Makes about 8 pancakes, serves 4.").
     m = re.search(r"^\s*(\d+)\s+(\S+)\s*\(serves\s+(\d+)\)", body, re.M)
     if m:
         out["yieldAmount"] = int(m.group(1))
@@ -289,15 +478,27 @@ def parse(text):
         out["servings"] = int(m.group(3))
         out["yieldText"] = m.group(0).strip()
     else:
-        m = re.search(r"serves\s+(\d+)", body, re.I)
+        m = re.search(r"Makes\s+(?:about\s+)?(\d+)\s+([A-Za-z]+)[^.]*?serves\s+(\d+)",
+                      body, re.I)
         if m:
-            out["servings"] = int(m.group(1))
+            out["yieldAmount"] = int(m.group(1))
+            out["yieldUnitLabel"] = m.group(2)
+            out["servings"] = int(m.group(3))
+            out["yieldText"] = m.group(0).strip()
         else:
-            out["warnings"].append("no serving count found; meal-plan scaling needs one")
+            m = re.search(r"serves\s+(\d+)", body, re.I)
+            if m:
+                out["servings"] = int(m.group(1))
+            else:
+                out["warnings"].append(
+                    "no serving count found; meal-plan scaling needs one")
+    if out["yieldAmount"] is None:
+        out["warnings"].append("no yield found (how much it makes)")
 
     # Active and Total both render as "About <n> minutes" / "About 1 hour 10
     # minutes" in one -layout table row, in that order.
-    times = re.findall(r"About\s+((?:\d+\s*hour[s]?)?\s*(?:\d+\s*minutes?)?)", body, re.I)
+    raw_times = re.findall(
+        r"About\s+((?:\d+\s*hour[s]?)?\s*(?:\d+\s*minutes?)?)", header_region, re.I)
 
     def to_min(s):
         h = re.search(r"(\d+)\s*hour", s, re.I)
@@ -305,11 +506,16 @@ def parse(text):
         total = (int(h.group(1)) * 60 if h else 0) + (int(mi.group(1)) if mi else 0)
         return total or None
 
+    # "Makes about 8 pancakes" matches the pattern with an EMPTY group, so an
+    # unfiltered list made a timeless recipe look timed.
+    times = [t for t in raw_times if to_min(t)]
     if len(times) >= 2:
         out["activeMinutes"] = to_min(times[0])
         out["totalMinutes"] = to_min(times[1])
     elif len(times) == 1:
         out["totalMinutes"] = to_min(times[0])
+    else:
+        out["warnings"].append("no active or total time found")
 
     # --- sections ---
     def section(name, nxt):
@@ -320,13 +526,48 @@ def parse(text):
         return m.group(1) if m else ""
 
     ing_block = section("Ingredients", "Instructions|Method|Directions")
+    if not ing_block.strip():
+        # The pancake has NO "Ingredients" header: its groups ("Pancake Batter",
+        # "Spice Mix-Ins (add to the dry ingredients)") sit straight under the
+        # description. Requiring the header found the blueberry compote's
+        # section four pages later and attributed it to the pancake.
+        method_idx = next(
+            (i for i, l in enumerate(lines)
+             if re.fullmatch(r"\s*(?:Instructions|Method|Directions)\s*", l)), None)
+        start = nonempty[2] if len(nonempty) > 2 else 0
+        ing_block = "\n".join(lines[start:method_idx] if method_idx else lines[start:])
+
     step_block = section("Instructions|Method|Directions", "Notes|Tips")
     note_block = section("Notes|Tips", "$")
 
+    # Recipe 02 has no "Notes" header. It closes each recipe with a LABELLED
+    # PARAGRAPH instead -- "Tip: mash a few berries against the side of the
+    # pan", "Fluff checklist: use fresh baking powder, weigh or spoon the
+    # flour...". Those are notes by any other name, and because they sit after
+    # the numbered method with no header between, the step parser was
+    # swallowing each one into the body of the final step.
+    NOTE_LABEL = re.compile(r"^\s*(?:Tips?|Notes?|[A-Z][a-z]+ checklist)\s*:", re.M)
+    if not note_block.strip() and step_block:
+        cut = NOTE_LABEL.search(step_block)
+        if cut:
+            note_block = step_block[cut.start():]
+            step_block = step_block[:cut.start()]
+
     # --- ingredients, grouped ---
+    # Rows that belong to the header block rather than to an ingredient group.
+    # Without this the Makes/Active/Total table arrived as two ingredients.
+    def is_header_row(line):
+        if re.fullmatch(r"\s*Ingredients\s*", line):
+            return True
+        if re.search(r"\bMakes\b|\bActive time\b|\bTotal time\b", line):
+            return True
+        if "(serves" in line or re.search(r"About\s+\d+\s*(?:hour|minute)", line, re.I):
+            return True
+        return False
+
     current = {"name": None, "lines": []}
     for raw in ing_block.splitlines():
-        if not raw.strip():
+        if not raw.strip() or is_header_row(raw):
             continue
         cells = re.split(r"\s{2,}", raw.strip())
         indented = len(raw) - len(raw.lstrip()) >= 4
@@ -338,25 +579,78 @@ def parse(text):
             current = {"name": cells[0], "lines": []}
             continue
         if len(cells) == 1:
-            # indented single cell: an ingredient with no quantity at all
-            name, prep = split_name_and_prep(cells[0])
+            cell = cells[0]
+            # A deeply indented continuation of the row above, not a new
+            # ingredient. The mixed-berry line wraps: "...raspberries, and" /
+            # "blackberries, with strawberries hulled and quartered". Judged by
+            # the lowercase start, since a wrapped clause continues a sentence
+            # while an ingredient row does not.
+            if current["lines"] and (cell[:1].islower()
+                                     or current["lines"][-1]["raw"].rstrip().endswith((",", ":"))):
+                prev = current["lines"][-1]
+                prev["raw"] = prev["raw"] + " " + cell
+                prev["preparation"] = ((prev.get("preparation") or "") + " " + cell).strip()
+                continue
+            name, prep = split_name_and_prep(cell)
             current["lines"].append({"name": name, "preparation": prep, "raw": raw.strip(),
                                      "qualifier": None, "quantity": None, "unit": None,
                                      "dimension": None})
             continue
 
         qty_cell, name_cell = cells[0], " ".join(cells[1:])
+
+        # An alternatives group: the first column names the choice and the
+        # amount is in the second. Carried as an option rather than forced into
+        # the ingredient shape, where it would have become an ingredient called
+        # "Cinnamon" with no quantity and a quantity called "Cinnamon".
+        if looks_like_option_label(qty_cell):
+            current["lines"].append({
+                "name": qty_cell.strip(), "preparation": None, "raw": raw.strip(),
+                "isOption": True, "optionText": name_cell.strip(),
+                "qualifier": None, "quantity": None, "unit": None, "dimension": None,
+            })
+            continue
+
+        name_cell, alt_amount, alt_unit = extract_alt_measure(name_cell)
+        name_cell, paren_notes = strip_parentheticals(name_cell)
         name, prep = split_name_and_prep(name_cell)
-        q = split_quantity_cell(qty_cell, name)
+        if paren_notes:
+            prep = ", ".join([p for p in ([prep] + paren_notes) if p])
+
+        lo, hi, range_unit = split_range(qty_cell)
+        if lo is not None:
+            q = split_quantity_cell(f"{lo} {range_unit or ''}".strip(), name)
+            q["quantity"] = lo
+            q["quantityMax"] = hi
+        else:
+            q = split_quantity_cell(qty_cell, name)
+
+        # A size word is not a unit: "3 medium apples" must stay countable
+        # apples, or it lands in a `count:medium` bucket of its own.
+        if q.get("unit") in SIZE_WORDS:
+            prep = ", ".join([p for p in (q["unit"], prep) if p])
+            q["unit"] = None
+            q["dimension"] = "count"
+            q.pop("unitUnrecognized", None)
+
         if q.get("unit") is None and q.get("quantity") is not None:
             name, inferred = extract_count_noun(name)
             if inferred:
                 q["unit"] = inferred
+
         line = {"name": name, "preparation": prep, "raw": raw.strip()}
         line.update(q)
+        if alt_amount is not None:
+            line["altAmount"] = alt_amount
+            line["altUnit"] = alt_unit
+        if q.get("quantity") is None and not q.get("qualifier"):
+            out["warnings"].append(
+                f"could not read a quantity from {qty_cell.strip()!r} for {name!r}")
         current["lines"].append(line)
     if current["lines"] or current["name"]:
         out["components"].append(current)
+    if len(out["components"]) > 1 and any(c["name"] is None for c in out["components"]):
+        out["warnings"].append("an ingredient group has no heading")
 
     # --- steps: "N. Title (7 to 8 min). Body" ---
     chunks = re.split(r"^\s*(\d+)\.\s+", step_block, flags=re.M)[1:]
@@ -376,7 +670,10 @@ def parse(text):
                 step["title"], step["body"] = m.group(1).strip(), m.group(2).strip()
         out["steps"].append(step)
 
-    # --- notes: bulleted, with wrapped continuations ---
+    # --- notes: a bullet or a label starts one; anything else continues it ---
+    # Recipe 01 bullets them; recipe 02 labels them. Requiring a bullet lost
+    # every note in recipe 02 silently, including the pancake's whole fluff
+    # checklist, which is the most useful paragraph in the document.
     cur = None
     for raw in note_block.splitlines():
         s = raw.strip()
@@ -386,6 +683,10 @@ def parse(text):
             if cur:
                 out["notes"].append(cur)
             cur = s.lstrip("•-* ").strip()
+        elif NOTE_LABEL.match(raw):
+            if cur:
+                out["notes"].append(cur)
+            cur = s
         elif cur:
             cur += " " + s
     if cur:
@@ -423,9 +724,34 @@ def format_fraction(f):
 
 
 def main():
-    src = sys.argv[1] if len(sys.argv) > 1 else "-"
+    args = [a for a in sys.argv[1:]]
+    out_dir = None
+    if "--out-dir" in args:
+        i = args.index("--out-dir")
+        out_dir = args[i + 1]
+        del args[i:i + 2]
+    src = args[0] if args else "-"
     text = sys.stdin.read() if src == "-" else open(src, encoding="utf-8").read()
-    print(json.dumps(parse(text), indent=2))
+    doc = parse(text)
+
+    if out_dir is None:
+        print(json.dumps(doc, indent=2))
+        return
+
+    # One file per recipe, named by its id -- which is what the app loads. A
+    # document holding four recipes becomes four bundled files, because the app
+    # has no concept of "page 3 of a PDF".
+    os.makedirs(out_dir, exist_ok=True)
+    for recipe in doc["recipes"]:
+        path = os.path.join(out_dir, f"{recipe['id']}.json")
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(recipe, fh, indent=1, ensure_ascii=False)
+            fh.write("\n")
+        warn = f"  ({len(recipe['warnings'])} warning(s))" if recipe["warnings"] else ""
+        print(f"wrote {path}{warn}")
+    for recipe in doc["recipes"]:
+        for w in recipe["warnings"]:
+            print(f"  ! {recipe['id']}: {w}")
 
 
 if __name__ == "__main__":

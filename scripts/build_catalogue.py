@@ -72,6 +72,14 @@ EXTRA_STAPLES = {
     "water",
 }
 
+# Words ending in -o whose plural takes -es. English does not decide this by
+# rule: tomato and potato take -oes while avocado, tomatillo, jalapeno and
+# burrito take -os. So the ones that need -es are listed, and everything else
+# gets a plain -s. Deriving it either way round would produce "tomatos" or
+# "avocadoes", and a wrong alias is worse than a missing one because it matches
+# nothing while looking handled.
+OES_PLURALS = {"tomato", "potato", "mango", "hero"}
+
 # Everything in the Spices aisle is a staple by default, but these are not.
 # A whole dried chile or a pinch of saffron is something you go out and buy for
 # a particular dish, so it belongs on the shopping list with a quantity rather
@@ -208,6 +216,7 @@ CATALOGUE = {
         "raspberry|mass|oz|raspberries", "blackberry|mass|oz|blackberries",
         "grape|mass|oz|grapes", "pineapple", "mango", "peach", "nectarine",
         "plum", "cherry|mass|oz|cherries", "watermelon", "cantaloupe",
+        "mixed berries|mass|oz|berries,mixed berry",
         "honeydew", "pomegranate", "fig|count|each|figs",
         # herbs
         "parsley|count|bunch|flat-leaf parsley,italian parsley",
@@ -598,6 +607,36 @@ def build():
     for key in NON_STAPLE_SPICES:
         if key.lower() not in names:
             collisions.append(f'NON_STAPLE_SPICES has "{key}", which is not an ingredient')
+
+    # Recipes write plurals and this catalogue is written in the singular, so
+    # "3 apples" failed to resolve against an entry called "apple". Rather than
+    # hand-write a plural alias per row, derive the regular one and let the
+    # collision check above reject anything ambiguous.
+    #
+    # Only REGULAR plurals: an irregular one ("leaf" -> "leaves") must be
+    # written by hand, because guessing it is how "loaf" became "loafs".
+    taken = set(seen_names) | set(alias_owner)
+    for item in items:
+        name = item["name"]
+        if name.endswith("s") or " " in name and name.split()[-1].endswith("s"):
+            continue
+        last = name.split()[-1]
+        if last.endswith(("ch", "sh", "x", "z")):
+            plural = name + "es"
+        elif last.endswith("y") and len(last) > 1 and last[-2] not in "aeiou":
+            plural = name[:-1] + "ies"
+        elif last.endswith(("f", "fe")):
+            continue  # leaf/loaf/knife -- irregular, must be explicit
+        elif last in OES_PLURALS:
+            plural = name + "es"
+        else:
+            plural = name + "s"
+        key = plural.lower()
+        if key in taken:
+            continue
+        taken.add(key)
+        item["aliases"].append(plural)
+        alias_owner[key] = name
 
     items.sort(key=lambda i: (i["aisle"], i["name"]))
     return items, collisions

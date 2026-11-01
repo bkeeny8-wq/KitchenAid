@@ -24,7 +24,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bagels"
+   ]
   },
   {
    "name": "baguette",
@@ -35,7 +37,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "french bread"
+    "french bread",
+    "baguettes"
    ]
   },
   {
@@ -56,7 +59,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "brioches"
+   ]
   },
   {
    "name": "ciabatta",
@@ -66,7 +71,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ciabattas"
+   ]
   },
   {
    "name": "corn tortilla",
@@ -76,7 +83,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "corn tortillas"
+   ]
   },
   {
    "name": "country loaf",
@@ -96,7 +105,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "croissants"
+   ]
   },
   {
    "name": "english muffin",
@@ -106,7 +117,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "english muffins"
+   ]
   },
   {
    "name": "flour tortilla",
@@ -117,7 +130,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "tortilla"
+    "tortilla",
+    "flour tortillas"
    ]
   },
   {
@@ -128,7 +142,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "hamburger buns"
+   ]
   },
   {
    "name": "hot dog bun",
@@ -138,7 +154,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "hot dog buns"
+   ]
   },
   {
    "name": "naan",
@@ -148,7 +166,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "naans"
+   ]
   },
   {
    "name": "panko",
@@ -159,7 +179,8 @@
    "gramsPerCup": 50,
    "staple": false,
    "aliases": [
-    "panko breadcrumbs"
+    "panko breadcrumbs",
+    "pankos"
    ]
   },
   {
@@ -170,7 +191,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pitas"
+   ]
   },
   {
    "name": "pizza dough",
@@ -180,7 +203,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pizza doughs"
+   ]
   },
   {
    "name": "puff pastry",
@@ -190,7 +215,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "puff pastries"
+   ]
   },
   {
    "name": "rye bread",
@@ -200,7 +227,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "rye breads"
+   ]
   },
   {
    "name": "sandwich bread",
@@ -211,7 +240,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "white bread"
+    "white bread",
+    "sandwich breads"
    ]
   },
   {
@@ -222,7 +252,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sourdoughs"
+   ]
   },
   {
    "name": "whole wheat bread",
@@ -232,7 +264,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "whole wheat breads"
+   ]
   },
   {
    "name": "active dry yeast",
@@ -242,7 +276,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "active dry yeasts"
+   ]
   },
   {
    "name": "almond flour",
@@ -252,7 +288,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 96,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "almond flours"
+   ]
   },
   {
    "name": "baking powder",
@@ -262,7 +300,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "baking powders"
+   ]
   },
   {
    "name": "baking soda",
@@ -272,7 +312,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "baking sodas"
+   ]
   },
   {
    "name": "bittersweet chocolate",
@@ -282,7 +324,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 170,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bittersweet chocolates"
+   ]
   },
   {
    "name": "brown sugar",
@@ -293,7 +337,8 @@
    "gramsPerCup": 213,
    "staple": true,
    "aliases": [
-    "light brown sugar"
+    "light brown sugar",
+    "brown sugars"
    ]
   },
   {
@@ -305,7 +350,8 @@
    "gramsPerCup": 85,
    "staple": false,
    "aliases": [
-    "unsweetened cocoa powder"
+    "unsweetened cocoa powder",
+    "cocoa powders"
    ]
   },
   {
@@ -317,7 +363,8 @@
    "gramsPerCup": 120,
    "staple": true,
    "aliases": [
-    "corn flour"
+    "corn flour",
+    "cornstarches"
    ]
   },
   {
@@ -328,7 +375,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cream of tartars"
+   ]
   },
   {
    "name": "dark brown sugar",
@@ -338,7 +387,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 213,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "dark brown sugars"
+   ]
   },
   {
    "name": "dark chocolate",
@@ -348,7 +399,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 170,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "dark chocolates"
+   ]
   },
   {
    "name": "dutch process cocoa",
@@ -358,7 +411,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 85,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "dutch process cocoas"
+   ]
   },
   {
    "name": "food coloring",
@@ -368,7 +423,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "food colorings"
+   ]
   },
   {
    "name": "granulated sugar",
@@ -380,7 +437,8 @@
    "staple": true,
    "aliases": [
     "sugar",
-    "white sugar"
+    "white sugar",
+    "granulated sugars"
    ]
   },
   {
@@ -391,7 +449,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "instant yeasts"
+   ]
   },
   {
    "name": "marshmallows",
@@ -411,7 +471,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "milk chocolates"
+   ]
   },
   {
    "name": "powdered sugar",
@@ -423,7 +485,8 @@
    "staple": false,
    "aliases": [
     "confectioners sugar",
-    "icing sugar"
+    "icing sugar",
+    "powdered sugars"
    ]
   },
   {
@@ -446,7 +509,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 205,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "shortenings"
+   ]
   },
   {
    "name": "sprinkles",
@@ -466,7 +531,9 @@
    "bakingUnit": null,
    "gramsPerCup": 93,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sweetened shredded coconuts"
+   ]
   },
   {
    "name": "turbinado sugar",
@@ -477,7 +544,8 @@
    "gramsPerCup": 200,
    "staple": false,
    "aliases": [
-    "raw sugar"
+    "raw sugar",
+    "turbinado sugars"
    ]
   },
   {
@@ -488,7 +556,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 170,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "white chocolates"
+   ]
   },
   {
    "name": "apple juice",
@@ -498,7 +568,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "apple juices"
+   ]
   },
   {
    "name": "beer",
@@ -508,7 +580,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "beers"
+   ]
   },
   {
    "name": "bourbon",
@@ -518,7 +592,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bourbons"
+   ]
   },
   {
    "name": "brandy",
@@ -529,7 +605,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "cognac"
+    "cognac",
+    "brandies"
    ]
   },
   {
@@ -540,7 +617,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "club sodas"
+   ]
   },
   {
    "name": "coffee",
@@ -550,7 +629,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "coffees"
+   ]
   },
   {
    "name": "cola",
@@ -560,7 +641,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "colas"
+   ]
   },
   {
    "name": "cranberry juice",
@@ -570,7 +653,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cranberry juices"
+   ]
   },
   {
    "name": "dry vermouth",
@@ -580,7 +665,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "dry vermouths"
+   ]
   },
   {
    "name": "espresso",
@@ -590,7 +677,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "espressos"
+   ]
   },
   {
    "name": "gin",
@@ -600,7 +689,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "gins"
+   ]
   },
   {
    "name": "lemon juice",
@@ -610,7 +701,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "lemon juices"
+   ]
   },
   {
    "name": "lime juice",
@@ -620,7 +713,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "lime juices"
+   ]
   },
   {
    "name": "marsala",
@@ -630,7 +725,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "marsalas"
+   ]
   },
   {
    "name": "orange juice",
@@ -640,7 +737,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "orange juices"
+   ]
   },
   {
    "name": "port",
@@ -650,7 +749,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ports"
+   ]
   },
   {
    "name": "red wine",
@@ -661,7 +762,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "dry red wine"
+    "dry red wine",
+    "red wines"
    ]
   },
   {
@@ -672,7 +774,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "rums"
+   ]
   },
   {
    "name": "sherry",
@@ -682,7 +786,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sherries"
+   ]
   },
   {
    "name": "sparkling water",
@@ -692,7 +798,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sparkling waters"
+   ]
   },
   {
    "name": "tea",
@@ -702,7 +810,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "teas"
+   ]
   },
   {
    "name": "tequila",
@@ -712,7 +822,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tequilas"
+   ]
   },
   {
    "name": "tonic water",
@@ -722,7 +834,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tonic waters"
+   ]
   },
   {
    "name": "vodka",
@@ -732,7 +846,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "vodkas"
+   ]
   },
   {
    "name": "water",
@@ -742,7 +858,9 @@
    "bakingUnit": "ml",
    "gramsPerCup": 237,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "waters"
+   ]
   },
   {
    "name": "whiskey",
@@ -752,7 +870,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "whiskeys"
+   ]
   },
   {
    "name": "white wine",
@@ -763,7 +883,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "dry white wine"
+    "dry white wine",
+    "white wines"
    ]
   },
   {
@@ -774,7 +895,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "andouilles"
+   ]
   },
   {
    "name": "baby back ribs",
@@ -794,7 +917,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bacons"
+   ]
   },
   {
    "name": "beef bones",
@@ -816,7 +941,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "beef cheeks"
+   ]
   },
   {
    "name": "beef ribs",
@@ -836,7 +963,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "beef shanks"
+   ]
   },
   {
    "name": "beef stew meat",
@@ -846,7 +975,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "beef stew meats"
+   ]
   },
   {
    "name": "bone marrow",
@@ -856,7 +987,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bone marrows"
+   ]
   },
   {
    "name": "bratwurst",
@@ -866,7 +999,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bratwursts"
+   ]
   },
   {
    "name": "breakfast sausage",
@@ -876,7 +1011,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "breakfast sausages"
+   ]
   },
   {
    "name": "bresaola",
@@ -886,7 +1023,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bresaolas"
+   ]
   },
   {
    "name": "brisket",
@@ -896,7 +1035,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "briskets"
+   ]
   },
   {
    "name": "chicken breast",
@@ -907,7 +1048,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "boneless skinless chicken breast"
+    "boneless skinless chicken breast",
+    "chicken breasts"
    ]
   },
   {
@@ -928,7 +1070,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "chicken drumsticks"
+   ]
   },
   {
    "name": "chicken liver",
@@ -938,7 +1082,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "chicken livers"
+   ]
   },
   {
    "name": "chicken thigh",
@@ -970,7 +1116,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "chorizos"
+   ]
   },
   {
    "name": "chuck roast",
@@ -980,7 +1128,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "chuck roasts"
+   ]
   },
   {
    "name": "duck breast",
@@ -990,7 +1140,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "duck breasts"
+   ]
   },
   {
    "name": "duck fat",
@@ -1000,7 +1152,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "duck fats"
+   ]
   },
   {
    "name": "duck leg",
@@ -1010,7 +1164,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "duck legs"
+   ]
   },
   {
    "name": "filet mignon",
@@ -1021,7 +1177,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "beef tenderloin"
+    "beef tenderloin",
+    "filet mignons"
    ]
   },
   {
@@ -1032,7 +1189,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "flank steaks"
+   ]
   },
   {
    "name": "flat iron steak",
@@ -1042,7 +1201,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "flat iron steaks"
+   ]
   },
   {
    "name": "ground beef",
@@ -1064,7 +1225,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ground chickens"
+   ]
   },
   {
    "name": "ground lamb",
@@ -1074,7 +1237,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ground lambs"
+   ]
   },
   {
    "name": "ground pork",
@@ -1084,7 +1249,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ground porks"
+   ]
   },
   {
    "name": "ground turkey",
@@ -1094,7 +1261,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ground turkeys"
+   ]
   },
   {
    "name": "guanciale",
@@ -1104,7 +1273,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "guanciales"
+   ]
   },
   {
    "name": "ham",
@@ -1114,7 +1285,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "hams"
+   ]
   },
   {
    "name": "ham hock",
@@ -1124,7 +1297,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ham hocks"
+   ]
   },
   {
    "name": "hanger steak",
@@ -1134,7 +1309,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "hanger steaks"
+   ]
   },
   {
    "name": "italian sausage",
@@ -1144,7 +1321,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "italian sausages"
+   ]
   },
   {
    "name": "kielbasa",
@@ -1154,7 +1333,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "kielbasas"
+   ]
   },
   {
    "name": "lamb chop",
@@ -1164,7 +1345,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "lamb chops"
+   ]
   },
   {
    "name": "lamb shank",
@@ -1174,7 +1357,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "lamb shanks"
+   ]
   },
   {
    "name": "lamb shoulder",
@@ -1184,7 +1369,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "lamb shoulders"
+   ]
   },
   {
    "name": "leg of lamb",
@@ -1194,7 +1381,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "leg of lambs"
+   ]
   },
   {
    "name": "merguez",
@@ -1204,7 +1393,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "merguezes"
+   ]
   },
   {
    "name": "mortadella",
@@ -1214,7 +1405,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "mortadellas"
+   ]
   },
   {
    "name": "ny strip steak",
@@ -1226,7 +1419,8 @@
    "staple": false,
    "aliases": [
     "new york strip",
-    "strip steak"
+    "strip steak",
+    "ny strip steaks"
    ]
   },
   {
@@ -1237,7 +1431,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "osso bucos"
+   ]
   },
   {
    "name": "oxtail",
@@ -1247,7 +1443,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "oxtails"
+   ]
   },
   {
    "name": "pancetta",
@@ -1257,7 +1455,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pancettas"
+   ]
   },
   {
    "name": "picanha",
@@ -1267,7 +1467,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "picanhas"
+   ]
   },
   {
    "name": "pork belly",
@@ -1277,7 +1479,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pork bellies"
+   ]
   },
   {
    "name": "pork chop",
@@ -1287,7 +1491,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pork chops"
+   ]
   },
   {
    "name": "pork shoulder",
@@ -1298,7 +1504,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "pork butt"
+    "pork butt",
+    "pork shoulders"
    ]
   },
   {
@@ -1309,7 +1516,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pork tenderloins"
+   ]
   },
   {
    "name": "prosciutto",
@@ -1319,7 +1528,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "prosciuttos"
+   ]
   },
   {
    "name": "quail",
@@ -1329,7 +1540,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "quails"
+   ]
   },
   {
    "name": "rabbit",
@@ -1339,7 +1552,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "rabbits"
+   ]
   },
   {
    "name": "rack of lamb",
@@ -1349,7 +1564,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "rack of lambs"
+   ]
   },
   {
    "name": "ribeye",
@@ -1360,7 +1577,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "ribeye steak"
+    "ribeye steak",
+    "ribeyes"
    ]
   },
   {
@@ -1371,7 +1589,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "salamis"
+   ]
   },
   {
    "name": "salt pork",
@@ -1381,7 +1601,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "salt porks"
+   ]
   },
   {
    "name": "sausage",
@@ -1391,7 +1613,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sausages"
+   ]
   },
   {
    "name": "short ribs",
@@ -1412,7 +1636,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "top sirloin"
+    "top sirloin",
+    "sirloins"
    ]
   },
   {
@@ -1423,7 +1648,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "skirt steaks"
+   ]
   },
   {
    "name": "soppressata",
@@ -1433,7 +1660,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "soppressatas"
+   ]
   },
   {
    "name": "spare ribs",
@@ -1453,7 +1682,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tri-tips"
+   ]
   },
   {
    "name": "turkey breast",
@@ -1463,7 +1694,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "turkey breasts"
+   ]
   },
   {
    "name": "turkey wings",
@@ -1483,7 +1716,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "veals"
+   ]
   },
   {
    "name": "veal chop",
@@ -1493,7 +1728,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "veal chops"
+   ]
   },
   {
    "name": "whole chicken",
@@ -1503,7 +1740,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "whole chickens"
+   ]
   },
   {
    "name": "anchovy paste",
@@ -1513,7 +1752,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "anchovy pastes"
+   ]
   },
   {
    "name": "artichoke hearts",
@@ -1534,7 +1775,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "beef broth"
+    "beef broth",
+    "beef stocks"
    ]
   },
   {
@@ -1565,7 +1807,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "canned corns"
+   ]
   },
   {
    "name": "canned tomatoes",
@@ -1598,7 +1842,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "chicken broth"
+    "chicken broth",
+    "chicken stocks"
    ]
   },
   {
@@ -1609,7 +1854,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "coconut creams"
+   ]
   },
   {
    "name": "coconut milk",
@@ -1619,7 +1866,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "coconut milks"
+   ]
   },
   {
    "name": "condensed milk",
@@ -1629,7 +1878,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "condensed milks"
+   ]
   },
   {
    "name": "crushed tomatoes",
@@ -1659,7 +1910,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "evaporated milks"
+   ]
   },
   {
    "name": "green olives",
@@ -1699,7 +1952,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pumpkin purees"
+   ]
   },
   {
    "name": "roasted red peppers",
@@ -1749,7 +2004,9 @@
    "bakingUnit": null,
    "gramsPerCup": 262,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tomato pastes"
+   ]
   },
   {
    "name": "tomato sauce",
@@ -1759,7 +2016,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tomato sauces"
+   ]
   },
   {
    "name": "tuna in oil",
@@ -1770,7 +2029,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "canned tuna"
+    "canned tuna",
+    "tuna in oils"
    ]
   },
   {
@@ -1782,7 +2042,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "vegetable broth"
+    "vegetable broth",
+    "vegetable stocks"
    ]
   },
   {
@@ -1803,7 +2064,9 @@
    "bakingUnit": null,
    "gramsPerCup": 256,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "almond butters"
+   ]
   },
   {
    "name": "apple cider vinegar",
@@ -1813,7 +2076,9 @@
    "bakingUnit": null,
    "gramsPerCup": 239,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "apple cider vinegars"
+   ]
   },
   {
    "name": "avocado oil",
@@ -1823,7 +2088,9 @@
    "bakingUnit": null,
    "gramsPerCup": 218,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "avocado oils"
+   ]
   },
   {
    "name": "balsamic vinegar",
@@ -1833,7 +2100,9 @@
    "bakingUnit": null,
    "gramsPerCup": 255,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "balsamic vinegars"
+   ]
   },
   {
    "name": "bbq sauce",
@@ -1844,7 +2113,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "barbecue sauce"
+    "barbecue sauce",
+    "bbq sauces"
    ]
   },
   {
@@ -1856,7 +2126,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "chinkiang vinegar"
+    "chinkiang vinegar",
+    "black vinegars"
    ]
   },
   {
@@ -1867,7 +2138,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "calabrian chili pastes"
+   ]
   },
   {
    "name": "canola oil",
@@ -1877,7 +2150,9 @@
    "bakingUnit": null,
    "gramsPerCup": 218,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "canola oils"
+   ]
   },
   {
    "name": "chili crisp",
@@ -1887,7 +2162,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "chili crisps"
+   ]
   },
   {
    "name": "chili oil",
@@ -1897,7 +2174,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "chili oils"
+   ]
   },
   {
    "name": "coconut oil",
@@ -1907,7 +2186,9 @@
    "bakingUnit": null,
    "gramsPerCup": 218,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "coconut oils"
+   ]
   },
   {
    "name": "date syrup",
@@ -1917,7 +2198,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "date syrups"
+   ]
   },
   {
    "name": "dijon mustard",
@@ -1928,7 +2211,8 @@
    "gramsPerCup": 249,
    "staple": true,
    "aliases": [
-    "dijon"
+    "dijon",
+    "dijon mustards"
    ]
   },
   {
@@ -1939,7 +2223,9 @@
    "bakingUnit": null,
    "gramsPerCup": 239,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "distilled white vinegars"
+   ]
   },
   {
    "name": "doubanjiang",
@@ -1949,7 +2235,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "doubanjiangs"
+   ]
   },
   {
    "name": "duck sauce",
@@ -1959,7 +2247,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "duck sauces"
+   ]
   },
   {
    "name": "dukkah",
@@ -1969,7 +2259,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "dukkahs"
+   ]
   },
   {
    "name": "extra virgin olive oil",
@@ -1979,7 +2271,9 @@
    "bakingUnit": null,
    "gramsPerCup": 216,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "extra virgin olive oils"
+   ]
   },
   {
    "name": "fish sauce",
@@ -1989,7 +2283,9 @@
    "bakingUnit": null,
    "gramsPerCup": 250,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "fish sauces"
+   ]
   },
   {
    "name": "furikake",
@@ -1999,7 +2295,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "furikakes"
+   ]
   },
   {
    "name": "gochujang",
@@ -2009,7 +2307,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "gochujangs"
+   ]
   },
   {
    "name": "grapeseed oil",
@@ -2019,7 +2319,9 @@
    "bakingUnit": null,
    "gramsPerCup": 218,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "grapeseed oils"
+   ]
   },
   {
    "name": "harissa",
@@ -2029,7 +2331,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "harissas"
+   ]
   },
   {
    "name": "hoisin sauce",
@@ -2039,7 +2343,9 @@
    "bakingUnit": null,
    "gramsPerCup": 290,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "hoisin sauces"
+   ]
   },
   {
    "name": "honey",
@@ -2049,7 +2355,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 340,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "honeys"
+   ]
   },
   {
    "name": "hot sauce",
@@ -2059,7 +2367,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "hot sauces"
+   ]
   },
   {
    "name": "jam",
@@ -2070,7 +2380,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "preserves"
+    "preserves",
+    "jams"
    ]
   },
   {
@@ -2081,7 +2392,9 @@
    "bakingUnit": null,
    "gramsPerCup": 273,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "ketchups"
+   ]
   },
   {
    "name": "malt vinegar",
@@ -2091,7 +2404,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "malt vinegars"
+   ]
   },
   {
    "name": "maple syrup",
@@ -2101,7 +2416,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 322,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "maple syrups"
+   ]
   },
   {
    "name": "mayonnaise",
@@ -2112,7 +2429,8 @@
    "gramsPerCup": 230,
    "staple": true,
    "aliases": [
-    "mayo"
+    "mayo",
+    "mayonnaises"
    ]
   },
   {
@@ -2123,7 +2441,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "mirins"
+   ]
   },
   {
    "name": "miso paste",
@@ -2134,7 +2454,8 @@
    "gramsPerCup": 275,
    "staple": false,
    "aliases": [
-    "miso"
+    "miso",
+    "miso pastes"
    ]
   },
   {
@@ -2155,7 +2476,9 @@
    "bakingUnit": null,
    "gramsPerCup": 249,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "mustards"
+   ]
   },
   {
    "name": "olive oil",
@@ -2165,7 +2488,9 @@
    "bakingUnit": null,
    "gramsPerCup": 216,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "olive oils"
+   ]
   },
   {
    "name": "oyster sauce",
@@ -2175,7 +2500,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "oyster sauces"
+   ]
   },
   {
    "name": "peanut butter",
@@ -2185,7 +2512,9 @@
    "bakingUnit": null,
    "gramsPerCup": 258,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "peanut butters"
+   ]
   },
   {
    "name": "peanut oil",
@@ -2195,7 +2524,9 @@
    "bakingUnit": null,
    "gramsPerCup": 218,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "peanut oils"
+   ]
   },
   {
    "name": "pesto",
@@ -2205,7 +2536,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pestos"
+   ]
   },
   {
    "name": "pickles",
@@ -2235,7 +2568,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ponzus"
+   ]
   },
   {
    "name": "prepared horseradish",
@@ -2246,7 +2581,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "horseradish"
+    "horseradish",
+    "prepared horseradishes"
    ]
   },
   {
@@ -2257,7 +2593,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "preserved lemons"
+   ]
   },
   {
    "name": "red wine vinegar",
@@ -2267,7 +2605,9 @@
    "bakingUnit": null,
    "gramsPerCup": 239,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "red wine vinegars"
+   ]
   },
   {
    "name": "relish",
@@ -2277,7 +2617,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "relishes"
+   ]
   },
   {
    "name": "rice vinegar",
@@ -2287,7 +2629,9 @@
    "bakingUnit": null,
    "gramsPerCup": 239,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "rice vinegars"
+   ]
   },
   {
    "name": "sake",
@@ -2297,7 +2641,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sakes"
+   ]
   },
   {
    "name": "salsa",
@@ -2307,7 +2653,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "salsas"
+   ]
   },
   {
    "name": "sambal oelek",
@@ -2317,7 +2665,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sambal oeleks"
+   ]
   },
   {
    "name": "sesame oil",
@@ -2327,7 +2677,9 @@
    "bakingUnit": null,
    "gramsPerCup": 218,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sesame oils"
+   ]
   },
   {
    "name": "shaoxing wine",
@@ -2337,7 +2689,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "shaoxing wines"
+   ]
   },
   {
    "name": "sherry vinegar",
@@ -2347,7 +2701,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sherry vinegars"
+   ]
   },
   {
    "name": "soy sauce",
@@ -2357,7 +2713,9 @@
    "bakingUnit": null,
    "gramsPerCup": 255,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "soy sauces"
+   ]
   },
   {
    "name": "sriracha",
@@ -2367,7 +2725,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "srirachas"
+   ]
   },
   {
    "name": "tabasco",
@@ -2377,7 +2737,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tabascos"
+   ]
   },
   {
    "name": "tahini",
@@ -2387,7 +2749,9 @@
    "bakingUnit": null,
    "gramsPerCup": 240,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tahinis"
+   ]
   },
   {
    "name": "tamari",
@@ -2397,7 +2761,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tamaris"
+   ]
   },
   {
    "name": "tamarind paste",
@@ -2407,7 +2773,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tamarind pastes"
+   ]
   },
   {
    "name": "truffle oil",
@@ -2417,7 +2785,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "truffle oils"
+   ]
   },
   {
    "name": "vegetable oil",
@@ -2427,7 +2797,9 @@
    "bakingUnit": null,
    "gramsPerCup": 218,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "vegetable oils"
+   ]
   },
   {
    "name": "verjus",
@@ -2447,7 +2819,9 @@
    "bakingUnit": null,
    "gramsPerCup": 239,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "white wine vinegars"
+   ]
   },
   {
    "name": "whole grain mustard",
@@ -2457,7 +2831,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "whole grain mustards"
+   ]
   },
   {
    "name": "worcestershire sauce",
@@ -2467,7 +2843,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "worcestershire sauces"
+   ]
   },
   {
    "name": "yellow mustard",
@@ -2477,7 +2855,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "yellow mustards"
+   ]
   },
   {
    "name": "yuzu kosho",
@@ -2487,7 +2867,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "yuzu koshos"
+   ]
   },
   {
    "name": "zhoug",
@@ -2497,7 +2879,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "zhougs"
+   ]
   },
   {
    "name": "asiago",
@@ -2507,7 +2891,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "asiagos"
+   ]
   },
   {
    "name": "blue cheese",
@@ -2517,7 +2903,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "blue cheeses"
+   ]
   },
   {
    "name": "brie",
@@ -2527,7 +2915,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bries"
+   ]
   },
   {
    "name": "burrata",
@@ -2537,7 +2927,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "burratas"
+   ]
   },
   {
    "name": "butter",
@@ -2549,7 +2941,8 @@
    "staple": false,
    "aliases": [
     "unsalted butter",
-    "salted butter"
+    "salted butter",
+    "butters"
    ]
   },
   {
@@ -2560,7 +2953,9 @@
    "bakingUnit": "ml",
    "gramsPerCup": 245,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "buttermilks"
+   ]
   },
   {
    "name": "camembert",
@@ -2570,7 +2965,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "camemberts"
+   ]
   },
   {
    "name": "cheddar",
@@ -2581,7 +2978,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "sharp cheddar"
+    "sharp cheddar",
+    "cheddars"
    ]
   },
   {
@@ -2592,7 +2990,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "clotted creams"
+   ]
   },
   {
    "name": "comte",
@@ -2603,7 +3003,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "comté"
+    "comté",
+    "comtes"
    ]
   },
   {
@@ -2614,7 +3015,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cotijas"
+   ]
   },
   {
    "name": "cottage cheese",
@@ -2624,7 +3027,9 @@
    "bakingUnit": null,
    "gramsPerCup": 226,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cottage cheeses"
+   ]
   },
   {
    "name": "cream cheese",
@@ -2634,7 +3039,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 232,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cream cheeses"
+   ]
   },
   {
    "name": "creme fraiche",
@@ -2645,7 +3052,8 @@
    "gramsPerCup": 230,
    "staple": false,
    "aliases": [
-    "crème fraîche"
+    "crème fraîche",
+    "creme fraiches"
    ]
   },
   {
@@ -2656,7 +3064,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cultured butters"
+   ]
   },
   {
    "name": "duck egg",
@@ -2666,7 +3076,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "duck eggs"
+   ]
   },
   {
    "name": "egg whites",
@@ -2708,7 +3120,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "emmentals"
+   ]
   },
   {
    "name": "feta",
@@ -2718,7 +3132,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "fetas"
+   ]
   },
   {
    "name": "fontina",
@@ -2728,7 +3144,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "fontinas"
+   ]
   },
   {
    "name": "fresh mozzarella",
@@ -2738,7 +3156,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "fresh mozzarellas"
+   ]
   },
   {
    "name": "ghee",
@@ -2748,7 +3168,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ghees"
+   ]
   },
   {
    "name": "goat cheese",
@@ -2759,7 +3181,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "chevre"
+    "chevre",
+    "goat cheeses"
    ]
   },
   {
@@ -2770,7 +3193,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "gorgonzolas"
+   ]
   },
   {
    "name": "grana padano",
@@ -2780,7 +3205,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "grana padanos"
+   ]
   },
   {
    "name": "greek yogurt",
@@ -2790,7 +3217,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 255,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "greek yogurts"
+   ]
   },
   {
    "name": "gruyere",
@@ -2801,7 +3230,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "gruyère"
+    "gruyère",
+    "gruyeres"
    ]
   },
   {
@@ -2822,7 +3252,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "halloumis"
+   ]
   },
   {
    "name": "heavy cream",
@@ -2833,7 +3265,8 @@
    "gramsPerCup": 238,
    "staple": false,
    "aliases": [
-    "heavy whipping cream"
+    "heavy whipping cream",
+    "heavy creams"
    ]
   },
   {
@@ -2844,7 +3277,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "kefirs"
+   ]
   },
   {
    "name": "labneh",
@@ -2854,7 +3289,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "labnehs"
+   ]
   },
   {
    "name": "manchego",
@@ -2864,7 +3301,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "manchegos"
+   ]
   },
   {
    "name": "mascarpone",
@@ -2874,7 +3313,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "mascarpones"
+   ]
   },
   {
    "name": "milk",
@@ -2885,7 +3326,8 @@
    "gramsPerCup": 245,
    "staple": false,
    "aliases": [
-    "whole milk"
+    "whole milk",
+    "milks"
    ]
   },
   {
@@ -2896,7 +3338,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "monterey jacks"
+   ]
   },
   {
    "name": "mozzarella",
@@ -2906,7 +3350,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "mozzarellas"
+   ]
   },
   {
    "name": "oaxaca cheese",
@@ -2916,7 +3362,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "oaxaca cheeses"
+   ]
   },
   {
    "name": "paneer",
@@ -2926,7 +3374,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "paneers"
+   ]
   },
   {
    "name": "parmesan",
@@ -2938,7 +3388,8 @@
    "staple": false,
    "aliases": [
     "parmigiano reggiano",
-    "grated parmesan"
+    "grated parmesan",
+    "parmesans"
    ]
   },
   {
@@ -2950,7 +3401,8 @@
    "gramsPerCup": 100,
    "staple": false,
    "aliases": [
-    "pecorino romano"
+    "pecorino romano",
+    "pecorinos"
    ]
   },
   {
@@ -2961,7 +3413,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "provolones"
+   ]
   },
   {
    "name": "quail egg",
@@ -2971,7 +3425,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "quail eggs"
+   ]
   },
   {
    "name": "quark",
@@ -2981,7 +3437,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "quarks"
+   ]
   },
   {
    "name": "queso fresco",
@@ -2991,7 +3449,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "queso frescos"
+   ]
   },
   {
    "name": "raclette",
@@ -3001,7 +3461,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "raclettes"
+   ]
   },
   {
    "name": "ricotta",
@@ -3011,7 +3473,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 246,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ricottas"
+   ]
   },
   {
    "name": "roquefort",
@@ -3021,7 +3485,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "roqueforts"
+   ]
   },
   {
    "name": "skyr",
@@ -3031,7 +3497,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "skyrs"
+   ]
   },
   {
    "name": "sour cream",
@@ -3041,7 +3509,9 @@
    "bakingUnit": null,
    "gramsPerCup": 230,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sour creams"
+   ]
   },
   {
    "name": "stilton",
@@ -3051,7 +3521,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "stiltons"
+   ]
   },
   {
    "name": "swiss cheese",
@@ -3061,7 +3533,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "swiss cheeses"
+   ]
   },
   {
    "name": "taleggio",
@@ -3071,7 +3545,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "taleggios"
+   ]
   },
   {
    "name": "yogurt",
@@ -3081,7 +3557,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 245,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "yogurts"
+   ]
   },
   {
    "name": "all-purpose flour",
@@ -3093,7 +3571,8 @@
    "staple": true,
    "aliases": [
     "plain flour",
-    "flour"
+    "flour",
+    "all-purpose flours"
    ]
   },
   {
@@ -3104,7 +3583,9 @@
    "bakingUnit": null,
    "gramsPerCup": 200,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "arborio rices"
+   ]
   },
   {
    "name": "barley",
@@ -3115,7 +3596,8 @@
    "gramsPerCup": 200,
    "staple": false,
    "aliases": [
-    "pearl barley"
+    "pearl barley",
+    "barleys"
    ]
   },
   {
@@ -3126,7 +3608,9 @@
    "bakingUnit": null,
    "gramsPerCup": 185,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "basmati rices"
+   ]
   },
   {
    "name": "black beans",
@@ -3146,7 +3630,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 120,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bread flours"
+   ]
   },
   {
    "name": "brown rice",
@@ -3156,7 +3642,9 @@
    "bakingUnit": null,
    "gramsPerCup": 190,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "brown rices"
+   ]
   },
   {
    "name": "bucatini",
@@ -3166,7 +3654,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bucatinis"
+   ]
   },
   {
    "name": "bulgur",
@@ -3176,7 +3666,9 @@
    "bakingUnit": null,
    "gramsPerCup": 140,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bulgurs"
+   ]
   },
   {
    "name": "cake flour",
@@ -3186,7 +3678,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 113,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cake flours"
+   ]
   },
   {
    "name": "cannellini beans",
@@ -3228,7 +3722,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 138,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cornmeals"
+   ]
   },
   {
    "name": "couscous",
@@ -3249,7 +3745,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "dried shiitake mushrooms"
+    "dried shiitake mushrooms",
+    "dried shiitakes"
    ]
   },
   {
@@ -3270,7 +3767,9 @@
    "bakingUnit": null,
    "gramsPerCup": 190,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "farros"
+   ]
   },
   {
    "name": "fettuccine",
@@ -3280,7 +3779,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "fettuccines"
+   ]
   },
   {
    "name": "fusilli",
@@ -3290,7 +3791,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "fusillis"
+   ]
   },
   {
    "name": "gelatin",
@@ -3300,7 +3803,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "gelatins"
+   ]
   },
   {
    "name": "jasmine rice",
@@ -3310,7 +3815,9 @@
    "bakingUnit": null,
    "gramsPerCup": 185,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "jasmine rices"
+   ]
   },
   {
    "name": "kidney beans",
@@ -3350,7 +3857,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "linguines"
+   ]
   },
   {
    "name": "oats",
@@ -3372,7 +3881,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "orzos"
+   ]
   },
   {
    "name": "pasta",
@@ -3382,7 +3893,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pastas"
+   ]
   },
   {
    "name": "penne",
@@ -3392,7 +3905,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pennes"
+   ]
   },
   {
    "name": "pinto beans",
@@ -3412,7 +3927,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "polentas"
+   ]
   },
   {
    "name": "quinoa",
@@ -3422,7 +3939,9 @@
    "bakingUnit": null,
    "gramsPerCup": 170,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "quinoas"
+   ]
   },
   {
    "name": "ramen noodles",
@@ -3453,7 +3972,8 @@
    "gramsPerCup": 185,
    "staple": false,
    "aliases": [
-    "white rice"
+    "white rice",
+    "rices"
    ]
   },
   {
@@ -3474,7 +3994,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "rigatonis"
+   ]
   },
   {
    "name": "semolina",
@@ -3484,7 +4006,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 167,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "semolinas"
+   ]
   },
   {
    "name": "soba noodles",
@@ -3504,7 +4028,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "spaghettis"
+   ]
   },
   {
    "name": "split peas",
@@ -3534,7 +4060,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "udons"
+   ]
   },
   {
    "name": "whole wheat flour",
@@ -3544,7 +4072,9 @@
    "bakingUnit": "g",
    "gramsPerCup": 113,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "whole wheat flours"
+   ]
   },
   {
    "name": "wild rice",
@@ -3554,7 +4084,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "wild rices"
+   ]
   },
   {
    "name": "frozen berries",
@@ -3574,7 +4106,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "frozen broccolis"
+   ]
   },
   {
    "name": "frozen corn",
@@ -3584,7 +4118,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "frozen corns"
+   ]
   },
   {
    "name": "frozen edamame",
@@ -3594,7 +4130,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "frozen edamames"
+   ]
   },
   {
    "name": "frozen french fries",
@@ -3624,7 +4162,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "frozen pizzas"
+   ]
   },
   {
    "name": "frozen shrimp",
@@ -3634,7 +4174,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "frozen shrimps"
+   ]
   },
   {
    "name": "frozen spinach",
@@ -3644,7 +4186,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "frozen spinaches"
+   ]
   },
   {
    "name": "ice cream",
@@ -3654,7 +4198,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ice creams"
+   ]
   },
   {
    "name": "phyllo dough",
@@ -3664,7 +4210,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "phyllo doughs"
+   ]
   },
   {
    "name": "pie crust",
@@ -3674,7 +4222,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pie crusts"
+   ]
   },
   {
    "name": "almonds",
@@ -3840,7 +4390,9 @@
    "bakingUnit": null,
    "gramsPerCup": 85,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "shredded coconuts"
+   ]
   },
   {
    "name": "sliced almonds",
@@ -3880,7 +4432,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "acorn squashes"
+   ]
   },
   {
    "name": "anaheim pepper",
@@ -3890,7 +4444,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "anaheim peppers"
+   ]
   },
   {
    "name": "apple",
@@ -3900,7 +4456,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "apples"
+   ]
   },
   {
    "name": "apricot",
@@ -3910,7 +4468,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "apricots"
+   ]
   },
   {
    "name": "artichoke",
@@ -3920,7 +4480,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "artichokes"
+   ]
   },
   {
    "name": "arugula",
@@ -3931,7 +4493,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "rocket"
+    "rocket",
+    "arugulas"
    ]
   },
   {
@@ -3952,7 +4515,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "avocados"
+   ]
   },
   {
    "name": "baby artichoke",
@@ -3962,7 +4527,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "baby artichokes"
+   ]
   },
   {
    "name": "baby bok choy",
@@ -3972,7 +4539,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "baby bok choys"
+   ]
   },
   {
    "name": "baby spinach",
@@ -3983,7 +4552,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "spinach"
+    "spinach",
+    "baby spinaches"
    ]
   },
   {
@@ -3994,7 +4564,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bananas"
+   ]
   },
   {
    "name": "banana pepper",
@@ -4004,7 +4576,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "banana peppers"
+   ]
   },
   {
    "name": "basil",
@@ -4015,7 +4589,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "fresh basil"
+    "fresh basil",
+    "basils"
    ]
   },
   {
@@ -4026,7 +4601,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "beefsteak tomatoes"
+   ]
   },
   {
    "name": "beet",
@@ -4036,7 +4613,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "beets"
+   ]
   },
   {
    "name": "bell pepper",
@@ -4046,7 +4625,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bell peppers"
+   ]
   },
   {
    "name": "blackberry",
@@ -4068,7 +4649,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "blood oranges"
+   ]
   },
   {
    "name": "blueberry",
@@ -4090,7 +4673,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bok choys"
+   ]
   },
   {
    "name": "broccoli",
@@ -4100,7 +4685,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "broccolis"
+   ]
   },
   {
    "name": "broccoli rabe",
@@ -4111,7 +4698,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "rapini"
+    "rapini",
+    "broccoli rabes"
    ]
   },
   {
@@ -4122,7 +4710,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "broccolinis"
+   ]
   },
   {
    "name": "brussels sprouts",
@@ -4142,7 +4732,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "butter lettuces"
+   ]
   },
   {
    "name": "butternut squash",
@@ -4152,7 +4744,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "butternut squashes"
+   ]
   },
   {
    "name": "cabbage",
@@ -4162,7 +4756,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cabbages"
+   ]
   },
   {
    "name": "cantaloupe",
@@ -4172,7 +4768,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cantaloupes"
+   ]
   },
   {
    "name": "carrot",
@@ -4182,7 +4780,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "carrots"
+   ]
   },
   {
    "name": "cauliflower",
@@ -4192,7 +4792,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cauliflowers"
+   ]
   },
   {
    "name": "celery",
@@ -4202,7 +4804,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "celeries"
+   ]
   },
   {
    "name": "celery leaves",
@@ -4223,7 +4827,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "celeriac"
+    "celeriac",
+    "celery roots"
    ]
   },
   {
@@ -4234,7 +4839,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "chayotes"
+   ]
   },
   {
    "name": "cherry",
@@ -4256,7 +4863,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cherry tomatoes"
+   ]
   },
   {
    "name": "chervil",
@@ -4266,7 +4875,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "chervils"
+   ]
   },
   {
    "name": "chives",
@@ -4289,7 +4900,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "fresh coriander"
+    "fresh coriander",
+    "cilantros"
    ]
   },
   {
@@ -4300,7 +4912,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cipollini onions"
+   ]
   },
   {
    "name": "clementine",
@@ -4310,7 +4924,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "clementines"
+   ]
   },
   {
    "name": "collard greens",
@@ -4331,7 +4947,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "corn on the cob"
+    "corn on the cob",
+    "corns"
    ]
   },
   {
@@ -4355,7 +4972,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "baby bella"
+    "baby bella",
+    "cremini mushrooms"
    ]
   },
   {
@@ -4366,7 +4984,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cubanelle peppers"
+   ]
   },
   {
    "name": "cucumber",
@@ -4376,7 +4996,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cucumbers"
+   ]
   },
   {
    "name": "currants",
@@ -4406,7 +5028,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "daikons"
+   ]
   },
   {
    "name": "dandelion greens",
@@ -4426,7 +5050,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "delicata squashes"
+   ]
   },
   {
    "name": "dill",
@@ -4437,7 +5063,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "fresh dill"
+    "fresh dill",
+    "dills"
    ]
   },
   {
@@ -4449,7 +5076,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "aubergine"
+    "aubergine",
+    "eggplants"
    ]
   },
   {
@@ -4460,7 +5088,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "endives"
+   ]
   },
   {
    "name": "english cucumber",
@@ -4470,7 +5100,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "english cucumbers"
+   ]
   },
   {
    "name": "epazote",
@@ -4480,7 +5112,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "epazotes"
+   ]
   },
   {
    "name": "escarole",
@@ -4490,7 +5124,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "escaroles"
+   ]
   },
   {
    "name": "fennel",
@@ -4500,7 +5136,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "fennels"
+   ]
   },
   {
    "name": "fig",
@@ -4522,7 +5160,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "frisees"
+   ]
   },
   {
    "name": "galangal",
@@ -4532,7 +5172,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "galangals"
+   ]
   },
   {
    "name": "garlic",
@@ -4543,7 +5185,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "garlic cloves"
+    "garlic cloves",
+    "garlics"
    ]
   },
   {
@@ -4565,7 +5208,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "fresh ginger"
+    "fresh ginger",
+    "gingers"
    ]
   },
   {
@@ -4576,7 +5220,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "gooseberries"
+   ]
   },
   {
    "name": "granny smith apple",
@@ -4586,7 +5232,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "granny smith apples"
+   ]
   },
   {
    "name": "grape",
@@ -4608,7 +5256,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "grapefruits"
+   ]
   },
   {
    "name": "green beans",
@@ -4630,7 +5280,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "green bell peppers"
+   ]
   },
   {
    "name": "habanero",
@@ -4640,7 +5292,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "habaneros"
+   ]
   },
   {
    "name": "heirloom tomato",
@@ -4650,7 +5304,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "heirloom tomatoes"
+   ]
   },
   {
    "name": "honeydew",
@@ -4660,7 +5316,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "honeydews"
+   ]
   },
   {
    "name": "horseradish root",
@@ -4670,7 +5328,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "horseradish roots"
+   ]
   },
   {
    "name": "iceberg lettuce",
@@ -4680,7 +5340,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "iceberg lettuces"
+   ]
   },
   {
    "name": "jalapeno",
@@ -4691,7 +5353,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "jalapeño"
+    "jalapeño",
+    "jalapenos"
    ]
   },
   {
@@ -4702,7 +5365,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "jicamas"
+   ]
   },
   {
    "name": "kabocha squash",
@@ -4712,7 +5377,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "kabocha squashes"
+   ]
   },
   {
    "name": "kaffir lime leaves",
@@ -4732,7 +5399,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "kales"
+   ]
   },
   {
    "name": "key lime",
@@ -4742,7 +5411,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "key limes"
+   ]
   },
   {
    "name": "kohlrabi",
@@ -4752,7 +5423,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "kohlrabis"
+   ]
   },
   {
    "name": "kumquat",
@@ -4762,7 +5435,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "kumquats"
+   ]
   },
   {
    "name": "leek",
@@ -4772,7 +5447,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "leeks"
+   ]
   },
   {
    "name": "lemon",
@@ -4782,7 +5459,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "lemons"
+   ]
   },
   {
    "name": "lemongrass",
@@ -4802,7 +5481,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "lettuces"
+   ]
   },
   {
    "name": "lime",
@@ -4812,7 +5493,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "limes"
+   ]
   },
   {
    "name": "lovage",
@@ -4822,7 +5505,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "lovages"
+   ]
   },
   {
    "name": "lychee",
@@ -4832,7 +5517,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "lychees"
+   ]
   },
   {
    "name": "mango",
@@ -4842,7 +5529,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "mangoes"
+   ]
   },
   {
    "name": "marjoram",
@@ -4852,7 +5541,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "marjorams"
+   ]
   },
   {
    "name": "meyer lemon",
@@ -4862,7 +5553,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "meyer lemons"
+   ]
   },
   {
    "name": "microgreens",
@@ -4883,7 +5576,21 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "fresh mint"
+    "fresh mint",
+    "mints"
+   ]
+  },
+  {
+   "name": "mixed berries",
+   "aisle": "Produce",
+   "dimension": "mass",
+   "unit": "oz",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": [
+    "berries",
+    "mixed berry"
    ]
   },
   {
@@ -4916,7 +5623,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "napa cabbages"
+   ]
   },
   {
    "name": "nectarine",
@@ -4926,7 +5635,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "nectarines"
+   ]
   },
   {
    "name": "okra",
@@ -4936,7 +5647,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "okras"
+   ]
   },
   {
    "name": "onion",
@@ -4946,7 +5659,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "onions"
+   ]
   },
   {
    "name": "orange",
@@ -4956,7 +5671,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "oranges"
+   ]
   },
   {
    "name": "oregano",
@@ -4967,7 +5684,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "fresh oregano"
+    "fresh oregano",
+    "oreganos"
    ]
   },
   {
@@ -4978,7 +5696,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "oyster mushrooms"
+   ]
   },
   {
    "name": "padron pepper",
@@ -4988,7 +5708,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "padron peppers"
+   ]
   },
   {
    "name": "papaya",
@@ -4998,7 +5720,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "papayas"
+   ]
   },
   {
    "name": "parsley",
@@ -5010,7 +5734,8 @@
    "staple": false,
    "aliases": [
     "flat-leaf parsley",
-    "italian parsley"
+    "italian parsley",
+    "parsleys"
    ]
   },
   {
@@ -5021,7 +5746,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "parsnips"
+   ]
   },
   {
    "name": "passion fruit",
@@ -5031,7 +5758,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "passion fruits"
+   ]
   },
   {
    "name": "pea shoots",
@@ -5051,7 +5780,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "peaches"
+   ]
   },
   {
    "name": "pear",
@@ -5061,7 +5792,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pears"
+   ]
   },
   {
    "name": "pearl onion",
@@ -5071,7 +5804,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pearl onions"
+   ]
   },
   {
    "name": "peas",
@@ -5091,7 +5826,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "persimmons"
+   ]
   },
   {
    "name": "pineapple",
@@ -5101,7 +5838,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pineapples"
+   ]
   },
   {
    "name": "plantain",
@@ -5111,7 +5850,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "plantains"
+   ]
   },
   {
    "name": "plum",
@@ -5121,7 +5862,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "plums"
+   ]
   },
   {
    "name": "poblano pepper",
@@ -5131,7 +5874,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "poblano peppers"
+   ]
   },
   {
    "name": "pomegranate",
@@ -5141,7 +5886,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pomegranates"
+   ]
   },
   {
    "name": "portobello mushroom",
@@ -5151,7 +5898,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "portobello mushrooms"
+   ]
   },
   {
    "name": "potato",
@@ -5161,7 +5910,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "potatoes"
+   ]
   },
   {
    "name": "pumpkin",
@@ -5171,7 +5922,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pumpkins"
+   ]
   },
   {
    "name": "quince",
@@ -5181,7 +5934,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "quinces"
+   ]
   },
   {
    "name": "radicchio",
@@ -5191,7 +5946,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "radicchios"
+   ]
   },
   {
    "name": "radish",
@@ -5201,7 +5958,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "radishes"
+   ]
   },
   {
    "name": "ramps",
@@ -5233,7 +5992,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "red bell peppers"
+   ]
   },
   {
    "name": "red cabbage",
@@ -5243,7 +6004,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "red cabbages"
+   ]
   },
   {
    "name": "red onion",
@@ -5253,7 +6016,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "red onions"
+   ]
   },
   {
    "name": "red potato",
@@ -5263,7 +6028,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "red potatoes"
+   ]
   },
   {
    "name": "rhubarb",
@@ -5273,7 +6040,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "rhubarbs"
+   ]
   },
   {
    "name": "roma tomato",
@@ -5284,7 +6053,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "plum tomato"
+    "plum tomato",
+    "roma tomatoes"
    ]
   },
   {
@@ -5295,7 +6065,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "romaines"
+   ]
   },
   {
    "name": "romanesco",
@@ -5305,7 +6077,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "romanescos"
+   ]
   },
   {
    "name": "rosemary",
@@ -5316,7 +6090,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "fresh rosemary"
+    "fresh rosemary",
+    "rosemaries"
    ]
   },
   {
@@ -5327,7 +6102,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "russet potatoes"
+   ]
   },
   {
    "name": "rutabaga",
@@ -5337,7 +6114,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "rutabagas"
+   ]
   },
   {
    "name": "sage",
@@ -5348,7 +6127,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "fresh sage"
+    "fresh sage",
+    "sages"
    ]
   },
   {
@@ -5359,7 +6139,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "savories"
+   ]
   },
   {
    "name": "savoy cabbage",
@@ -5369,7 +6151,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "savoy cabbages"
+   ]
   },
   {
    "name": "scallion",
@@ -5381,7 +6165,8 @@
    "staple": false,
    "aliases": [
     "green onion",
-    "spring onion"
+    "spring onion",
+    "scallions"
    ]
   },
   {
@@ -5392,7 +6177,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "serrano peppers"
+   ]
   },
   {
    "name": "shallot",
@@ -5402,7 +6189,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "shallots"
+   ]
   },
   {
    "name": "shiitake mushroom",
@@ -5412,7 +6201,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "shiitake mushrooms"
+   ]
   },
   {
    "name": "shishito pepper",
@@ -5422,7 +6213,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "shishito peppers"
+   ]
   },
   {
    "name": "shiso",
@@ -5432,7 +6225,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "shisos"
+   ]
   },
   {
    "name": "snap peas",
@@ -5464,7 +6259,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sorrels"
+   ]
   },
   {
    "name": "spaghetti squash",
@@ -5474,7 +6271,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "spaghetti squashes"
+   ]
   },
   {
    "name": "spring garlic",
@@ -5484,7 +6283,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "spring garlics"
+   ]
   },
   {
    "name": "strawberry",
@@ -5506,7 +6307,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sweet onions"
+   ]
   },
   {
    "name": "sweet potato",
@@ -5516,7 +6319,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sweet potatoes"
+   ]
   },
   {
    "name": "swiss chard",
@@ -5526,7 +6331,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "swiss chards"
+   ]
   },
   {
    "name": "tangerine",
@@ -5536,7 +6343,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tangerines"
+   ]
   },
   {
    "name": "taro",
@@ -5546,7 +6355,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "taros"
+   ]
   },
   {
    "name": "tarragon",
@@ -5557,7 +6368,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "fresh tarragon"
+    "fresh tarragon",
+    "tarragons"
    ]
   },
   {
@@ -5568,7 +6380,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "thai chilis"
+   ]
   },
   {
    "name": "thyme",
@@ -5579,7 +6393,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "fresh thyme"
+    "fresh thyme",
+    "thymes"
    ]
   },
   {
@@ -5590,7 +6405,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tomatillos"
+   ]
   },
   {
    "name": "tomato",
@@ -5600,7 +6417,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "tomatoes"
+   ]
   },
   {
    "name": "turmeric root",
@@ -5610,7 +6429,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "turmeric roots"
+   ]
   },
   {
    "name": "turnip",
@@ -5620,7 +6441,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "turnips"
+   ]
   },
   {
    "name": "watercress",
@@ -5640,7 +6463,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "watermelons"
+   ]
   },
   {
    "name": "white onion",
@@ -5650,7 +6475,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "white onions"
+   ]
   },
   {
    "name": "yellow bell pepper",
@@ -5660,7 +6487,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "yellow bell peppers"
+   ]
   },
   {
    "name": "yellow onion",
@@ -5670,7 +6499,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "yellow onions"
+   ]
   },
   {
    "name": "yellow squash",
@@ -5680,7 +6511,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "yellow squashes"
+   ]
   },
   {
    "name": "yuca",
@@ -5691,7 +6524,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "cassava"
+    "cassava",
+    "yucas"
    ]
   },
   {
@@ -5702,7 +6536,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "yukon gold potatoes"
+   ]
   },
   {
    "name": "zucchini",
@@ -5713,7 +6549,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "courgette"
+    "courgette",
+    "zucchinis"
    ]
   },
   {
@@ -5736,7 +6573,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "arctic chars"
+   ]
   },
   {
    "name": "bay scallop",
@@ -5746,7 +6585,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "bay scallops"
+   ]
   },
   {
    "name": "bonito flakes",
@@ -5768,7 +6609,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "branzinos"
+   ]
   },
   {
    "name": "calamari",
@@ -5779,7 +6622,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "squid"
+    "squid",
+    "calamaris"
    ]
   },
   {
@@ -5790,7 +6634,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "caviars"
+   ]
   },
   {
    "name": "clams",
@@ -5810,7 +6656,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cods"
+   ]
   },
   {
    "name": "crab",
@@ -5820,7 +6668,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "crabs"
+   ]
   },
   {
    "name": "crawfish",
@@ -5830,7 +6680,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "crawfishes"
+   ]
   },
   {
    "name": "cuttlefish",
@@ -5840,7 +6692,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "cuttlefishes"
+   ]
   },
   {
    "name": "dried shrimp",
@@ -5850,7 +6704,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "dried shrimps"
+   ]
   },
   {
    "name": "halibut",
@@ -5860,7 +6716,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "halibuts"
+   ]
   },
   {
    "name": "king crab",
@@ -5870,7 +6728,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "king crabs"
+   ]
   },
   {
    "name": "kombu",
@@ -5880,7 +6740,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "kombus"
+   ]
   },
   {
    "name": "langoustine",
@@ -5890,7 +6752,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "langoustines"
+   ]
   },
   {
    "name": "lobster",
@@ -5900,7 +6764,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "lobsters"
+   ]
   },
   {
    "name": "lobster tail",
@@ -5910,7 +6776,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "lobster tails"
+   ]
   },
   {
    "name": "mackerel",
@@ -5920,7 +6788,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "mackerels"
+   ]
   },
   {
    "name": "mahi mahi",
@@ -5930,7 +6800,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "mahi mahis"
+   ]
   },
   {
    "name": "monkfish",
@@ -5940,7 +6812,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "monkfishes"
+   ]
   },
   {
    "name": "mussels",
@@ -5960,7 +6834,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "noris"
+   ]
   },
   {
    "name": "octopus",
@@ -5990,7 +6866,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "razor clams"
+   ]
   },
   {
    "name": "roe",
@@ -6000,7 +6878,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "roes"
+   ]
   },
   {
    "name": "salmon",
@@ -6011,7 +6891,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "salmon fillet"
+    "salmon fillet",
+    "salmons"
    ]
   },
   {
@@ -6043,7 +6924,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "uni"
+    "uni",
+    "sea urchins"
    ]
   },
   {
@@ -6055,7 +6937,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "prawns"
+    "prawns",
+    "shrimps"
    ]
   },
   {
@@ -6066,7 +6949,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "skates"
+   ]
   },
   {
    "name": "smoked salmon",
@@ -6077,7 +6962,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "lox"
+    "lox",
+    "smoked salmons"
    ]
   },
   {
@@ -6088,7 +6974,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "snappers"
+   ]
   },
   {
    "name": "snow crab",
@@ -6098,7 +6986,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "snow crabs"
+   ]
   },
   {
    "name": "soft shell crab",
@@ -6108,7 +6998,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "soft shell crabs"
+   ]
   },
   {
    "name": "sole",
@@ -6118,7 +7010,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "soles"
+   ]
   },
   {
    "name": "sturgeon",
@@ -6128,7 +7022,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "sturgeons"
+   ]
   },
   {
    "name": "swordfish",
@@ -6138,7 +7034,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "swordfishes"
+   ]
   },
   {
    "name": "trout",
@@ -6148,7 +7046,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "trouts"
+   ]
   },
   {
    "name": "tuna",
@@ -6159,7 +7059,8 @@
    "gramsPerCup": null,
    "staple": false,
    "aliases": [
-    "tuna steak"
+    "tuna steak",
+    "tunas"
    ]
   },
   {
@@ -6170,7 +7071,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "adobo seasonings"
+   ]
   },
   {
    "name": "ajwain",
@@ -6180,7 +7083,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "ajwains"
+   ]
   },
   {
    "name": "aleppo pepper",
@@ -6190,7 +7095,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "aleppo peppers"
+   ]
   },
   {
    "name": "allspice",
@@ -6200,7 +7107,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "allspices"
+   ]
   },
   {
    "name": "almond extract",
@@ -6210,7 +7119,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "almond extracts"
+   ]
   },
   {
    "name": "ancho chile",
@@ -6220,7 +7131,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "ancho chiles"
+   ]
   },
   {
    "name": "ancho chili powder",
@@ -6230,7 +7143,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "ancho chili powders"
+   ]
   },
   {
    "name": "annatto",
@@ -6240,7 +7155,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "annattos"
+   ]
   },
   {
    "name": "asafoetida",
@@ -6251,7 +7168,8 @@
    "gramsPerCup": null,
    "staple": true,
    "aliases": [
-    "hing"
+    "hing",
+    "asafoetidas"
    ]
   },
   {
@@ -6262,7 +7180,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "baharats"
+   ]
   },
   {
    "name": "bay leaves",
@@ -6284,7 +7204,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "berberes"
+   ]
   },
   {
    "name": "black pepper",
@@ -6296,7 +7218,8 @@
    "staple": true,
    "aliases": [
     "freshly ground black pepper",
-    "pepper"
+    "pepper",
+    "black peppers"
    ]
   },
   {
@@ -6317,7 +7240,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "cardamoms"
+   ]
   },
   {
    "name": "cayenne",
@@ -6328,7 +7253,8 @@
    "gramsPerCup": null,
    "staple": true,
    "aliases": [
-    "cayenne pepper"
+    "cayenne pepper",
+    "cayennes"
    ]
   },
   {
@@ -6339,7 +7265,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "celery seeds"
+   ]
   },
   {
    "name": "chile de arbol",
@@ -6349,7 +7277,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "chile de arbols"
+   ]
   },
   {
    "name": "chili powder",
@@ -6359,7 +7289,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "chili powders"
+   ]
   },
   {
    "name": "chipotle powder",
@@ -6369,7 +7301,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "chipotle powders"
+   ]
   },
   {
    "name": "cinnamon",
@@ -6380,7 +7314,8 @@
    "gramsPerCup": null,
    "staple": true,
    "aliases": [
-    "ground cinnamon"
+    "ground cinnamon",
+    "cinnamons"
    ]
   },
   {
@@ -6404,7 +7339,8 @@
    "gramsPerCup": null,
    "staple": true,
    "aliases": [
-    "ground coriander"
+    "ground coriander",
+    "corianders"
    ]
   },
   {
@@ -6416,7 +7352,8 @@
    "gramsPerCup": null,
    "staple": true,
    "aliases": [
-    "ground cumin"
+    "ground cumin",
+    "cumins"
    ]
   },
   {
@@ -6427,7 +7364,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "curry powders"
+   ]
   },
   {
    "name": "dried basil",
@@ -6437,7 +7376,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "dried basils"
+   ]
   },
   {
    "name": "dried dill",
@@ -6447,7 +7388,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "dried dills"
+   ]
   },
   {
    "name": "dried oregano",
@@ -6457,7 +7400,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "dried oreganos"
+   ]
   },
   {
    "name": "dried rosemary",
@@ -6467,7 +7412,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "dried rosemaries"
+   ]
   },
   {
    "name": "dried thyme",
@@ -6477,7 +7424,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "dried thymes"
+   ]
   },
   {
    "name": "everything bagel seasoning",
@@ -6487,7 +7436,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "everything bagel seasonings"
+   ]
   },
   {
    "name": "fennel seeds",
@@ -6507,7 +7458,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "five spice powders"
+   ]
   },
   {
    "name": "flaky salt",
@@ -6519,7 +7472,8 @@
    "staple": true,
    "aliases": [
     "maldon",
-    "flaky sea salt"
+    "flaky sea salt",
+    "flaky salts"
    ]
   },
   {
@@ -6530,7 +7484,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "garam masalas"
+   ]
   },
   {
    "name": "garlic powder",
@@ -6540,7 +7496,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "garlic powders"
+   ]
   },
   {
    "name": "ginger powder",
@@ -6551,7 +7509,8 @@
    "gramsPerCup": null,
    "staple": true,
    "aliases": [
-    "ground ginger"
+    "ground ginger",
+    "ginger powders"
    ]
   },
   {
@@ -6562,7 +7521,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "gochugarus"
+   ]
   },
   {
    "name": "grains of paradise",
@@ -6572,7 +7533,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "grains of paradises"
+   ]
   },
   {
    "name": "green peppercorns",
@@ -6592,7 +7555,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "guajillo chiles"
+   ]
   },
   {
    "name": "herbes de provence",
@@ -6602,7 +7567,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "herbes de provences"
+   ]
   },
   {
    "name": "italian seasoning",
@@ -6612,7 +7579,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "italian seasonings"
+   ]
   },
   {
    "name": "jerk seasoning",
@@ -6622,7 +7591,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "jerk seasonings"
+   ]
   },
   {
    "name": "juniper berries",
@@ -6642,7 +7613,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "kosher salts"
+   ]
   },
   {
    "name": "mace",
@@ -6652,7 +7625,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "maces"
+   ]
   },
   {
    "name": "mustard powder",
@@ -6663,7 +7638,8 @@
    "gramsPerCup": null,
    "staple": true,
    "aliases": [
-    "dry mustard"
+    "dry mustard",
+    "mustard powders"
    ]
   },
   {
@@ -6685,7 +7661,8 @@
    "gramsPerCup": null,
    "staple": true,
    "aliases": [
-    "ground nutmeg"
+    "ground nutmeg",
+    "nutmegs"
    ]
   },
   {
@@ -6696,7 +7673,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "old bays"
+   ]
   },
   {
    "name": "onion powder",
@@ -6706,7 +7685,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "onion powders"
+   ]
   },
   {
    "name": "paprika",
@@ -6716,7 +7697,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "paprikas"
+   ]
   },
   {
    "name": "pasilla chile",
@@ -6726,7 +7709,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "pasilla chiles"
+   ]
   },
   {
    "name": "pink peppercorns",
@@ -6756,7 +7741,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "ras el hanouts"
+   ]
   },
   {
    "name": "red pepper flakes",
@@ -6778,7 +7765,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "saffrons"
+   ]
   },
   {
    "name": "sazon",
@@ -6788,7 +7777,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "sazons"
+   ]
   },
   {
    "name": "sea salt",
@@ -6798,7 +7789,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "sea salts"
+   ]
   },
   {
    "name": "sesame seeds",
@@ -6818,7 +7811,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "shichimi togarashis"
+   ]
   },
   {
    "name": "sichuan peppercorns",
@@ -6838,7 +7833,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "smoked paprikas"
+   ]
   },
   {
    "name": "star anise",
@@ -6848,7 +7845,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": false,
-   "aliases": []
+   "aliases": [
+    "star anises"
+   ]
   },
   {
    "name": "sumac",
@@ -6858,7 +7857,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "sumacs"
+   ]
   },
   {
    "name": "table salt",
@@ -6869,7 +7870,8 @@
    "gramsPerCup": null,
    "staple": true,
    "aliases": [
-    "salt"
+    "salt",
+    "table salts"
    ]
   },
   {
@@ -6890,7 +7892,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "turmerics"
+   ]
   },
   {
    "name": "urfa biber",
@@ -6900,7 +7904,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "urfa bibers"
+   ]
   },
   {
    "name": "vanilla extract",
@@ -6910,7 +7916,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "vanilla extracts"
+   ]
   },
   {
    "name": "white pepper",
@@ -6920,7 +7928,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "white peppers"
+   ]
   },
   {
    "name": "za'atar",
@@ -6930,7 +7940,9 @@
    "bakingUnit": null,
    "gramsPerCup": null,
    "staple": true,
-   "aliases": []
+   "aliases": [
+    "za'atars"
+   ]
   }
  ]
 }

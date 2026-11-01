@@ -85,6 +85,44 @@ struct IngredientLine: Codable, Identifiable, Hashable, Sendable {
     /// frozen onto the list so regenerating is reproducible.
     var subRecipePolicy: SubRecipePolicy = .treatAsItem
 
+    // MARK: - Things recipe 02 brought that recipe 01 did not have
+    //
+    // All three were already in the importer's output and were being dropped
+    // silently on decode, which is the worst way to lose data: the file is
+    // right, the app is wrong, and nothing says so.
+
+    /// The upper end of a range. Three of the compotes ask for "2 to 3 tbsp"
+    /// maple syrup, "adjusted to the sweetness of the berries".
+    ///
+    /// `amount` holds the low end, so a recipe that ignores ranges still reads
+    /// correctly. The shopping list should use the HIGH end — arriving a
+    /// spoonful short is worse than a spoonful over — while the cook sees both,
+    /// because the latitude is the point of writing it as a range.
+    var amountMax: Rational? = nil
+
+    /// The recipe's OWN second measurement of the same ingredient:
+    /// "1 1/2 cups all-purpose flour (190g)", "2 cups blueberries (300g)",
+    /// "3 medium apples (about 1 lb or 450g)".
+    ///
+    /// This is the volume-and-weight pair the catalogue's `gramsPerCup` exists
+    /// to approximate — except here it is exact, and written by whoever wrote
+    /// the recipe. When it is present it should be preferred over any density
+    /// conversion, and for a baking recipe it is the measurement to show.
+    var altAmount: Rational? = nil
+    var altUnitCode: String = ""
+
+    /// An alternative within a choice group, not an ingredient in its own
+    /// right. The pancake's "Spice Mix-Ins" group offers Cinnamon, Nutmeg, or
+    /// Both; the first column names the choice and the amount sits in the
+    /// second, so these rows have no quantity of their own.
+    ///
+    /// Deliberately NOT `isOptional`, which already means something else on
+    /// this type — that an ingredient may be left out. A choice row is not an
+    /// optional ingredient; it is one of several ways to make the recipe, and
+    /// it must never reach a shopping list as a line.
+    var isChoice: Bool = false
+    var choiceText: String = ""
+
     /// One-to-one with the stored properties. Review 03 finding 1 found seven extraneous
     /// cases here, which is where the derived conformance failed hardest; they are all in
     /// `ImporterKeys` below. See the note on `Recipe.CodingKeys`.
@@ -92,6 +130,7 @@ struct IngredientLine: Codable, Identifiable, Hashable, Sendable {
         case lineID, amount, unitCode, dimension, dimensionConfirmed, unmeasuredNote
         case displayName, preparation, note, rawText, catalogName, subRecipeID
         case isOptional, isGarnish, excludeFromShopping, scalingRule, subRecipePolicy
+        case amountMax, altAmount, altUnitCode, isChoice, choiceText
     }
 
     /// The importer's spellings.
@@ -111,6 +150,9 @@ struct IngredientLine: Codable, Identifiable, Hashable, Sendable {
         case name, raw, qualifier, unit
         case hasQuantity, amountNumerator, amountDenominator
         case unitUnrecognized
+        case isRange, amountMaxNumerator, amountMaxDenominator
+        case hasAltAmount, altAmountNumerator, altAmountDenominator, altUnit
+        case isOption, optionText
     }
 
     init(from decoder: Decoder) throws {
@@ -174,6 +216,35 @@ struct IngredientLine: Codable, Identifiable, Hashable, Sendable {
         self.subRecipePolicy = c.decodeRawValue(
             SubRecipePolicy.self, forKey: .subRecipePolicy, fallback: .treatAsItem
         )
+
+        // The range's high end. Gated on `isRange` rather than on the numerator
+        // being non-zero, because the importer writes 0/1 for "no maximum" and
+        // a zero maximum would otherwise read as a real upper bound of nothing.
+        if let canonical = try c.decodeIfPresent(Rational.self, forKey: .amountMax) {
+            self.amountMax = canonical
+        } else if try importer.decodeIfPresent(Bool.self, forKey: .isRange) == true,
+                  let n = try importer.decodeIfPresent(Int.self, forKey: .amountMaxNumerator) {
+            let d = try importer.decodeIfPresent(Int.self, forKey: .amountMaxDenominator) ?? 1
+            self.amountMax = Rational(n, d == 0 ? 1 : d)
+        }
+
+        if let canonical = try c.decodeIfPresent(Rational.self, forKey: .altAmount) {
+            self.altAmount = canonical
+        } else if try importer.decodeIfPresent(Bool.self, forKey: .hasAltAmount) == true,
+                  let n = try importer.decodeIfPresent(Int.self, forKey: .altAmountNumerator) {
+            let d = try importer.decodeIfPresent(Int.self, forKey: .altAmountDenominator) ?? 1
+            self.altAmount = Rational(n, d == 0 ? 1 : d)
+        }
+        self.altUnitCode = try c.decodeIfPresent(String.self, forKey: .altUnitCode)
+            ?? importer.decodeIfPresent(String.self, forKey: .altUnit)
+            ?? ""
+
+        self.isChoice = try c.decodeIfPresent(Bool.self, forKey: .isChoice)
+            ?? importer.decodeIfPresent(Bool.self, forKey: .isOption)
+            ?? false
+        self.choiceText = try c.decodeIfPresent(String.self, forKey: .choiceText)
+            ?? importer.decodeIfPresent(String.self, forKey: .optionText)
+            ?? ""
     }
 
     init(lineID: String, displayName: String) {
@@ -192,7 +263,35 @@ extension IngredientLine {
         return Quantity(amount: amount, unit: unit)
     }
 
-    var quantityDisplay: String { quantity?.displayString() ?? unmeasuredNote }
+    var quantityDisplay: String {
+        guard let q = quantity else { return unmeasuredNote }
+        guard let hi = amountMax,
+              let unit = UnitCatalog.unit(code: unitCode, fallbackDimension: dimension) else {
+            return q.displayString()
+        }
+        return "\(q.amount.humanDescription) to \(Quantity(amount: hi, unit: unit).displayString())"
+    }
+
+    /// True when the recipe gave a range rather than a single amount.
+    var isRange: Bool { amountMax != nil }
+
+    /// What to BUY for this line: the top of a range, or the only amount there
+    /// is. A range exists because the cook may use either end, and a shopping
+    /// list that bought the bottom would leave them unable to.
+    var shoppingAmount: Rational? { amountMax ?? amount }
+
+    /// The recipe's own second measurement, when it gave one.
+    var altQuantity: Quantity? {
+        guard let a = altAmount,
+              let unit = UnitCatalog.resolve(altUnitCode) else { return nil }
+        return Quantity(amount: a, unit: unit)
+    }
+
+    /// A choice row contributes nothing to a shopping list: it is one of
+    /// several ways to make the recipe, not a thing to buy.
+    var contributesToShopping: Bool {
+        !isChoice && !excludeFromShopping && quantity != nil
+    }
 
     /// What the cook reads. Always prefers the verbatim line when there is one, because the
     /// parse is advisory.
