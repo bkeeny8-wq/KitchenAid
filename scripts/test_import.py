@@ -369,3 +369,143 @@ print(f"PASS  recipe 02: {len(doc2['recipes'])} recipes from one document, "
       f"{sum(len(c['lines']) for r in doc2['recipes'] for c in r['components'])} lines, "
       f"{sum(len(r['steps']) for r in doc2['recipes'])} steps, "
       f"{sum(len(r['warnings']) for r in doc2['recipes'])} honest warnings")
+
+
+# =============================================================================
+# Recipes 03 and 04 — the roast turkey and its gravy
+#
+# A third document shape. These invert the column order: the ingredient is in
+# the FIRST column and the amount in the second, which is the opposite of
+# recipes 01 and 02. Parsed by the old rules the turkey produced TWO recipes
+# (the second called "Instructions", because a page break was treated as a
+# recipe break), fourteen ingredient groups (because every prose paragraph
+# became a heading), an "option" row for every single ingredient, and it LOST
+# both of the all-caps lines the whole recipe depends on.
+# =============================================================================
+
+TURKEY_SRC = os.path.join(ROOT, "docs", "fixture-recipe-03-turkey.txt")
+GRAVY_SRC = os.path.join(ROOT, "docs", "fixture-recipe-04-gravy.txt")
+
+
+def load(path):
+    r = subprocess.run(
+        [sys.executable, "-I", os.path.join(HERE, "import_recipe.py"), path],
+        capture_output=True, text=True, check=True,
+    )
+    return json.loads(r.stdout)
+
+
+turkey_doc = load(TURKEY_SRC)
+gravy_doc = load(GRAVY_SRC)
+
+# R30 -- a page break is NOT a recipe break
+check("R30 the turkey is ONE recipe", len(turkey_doc["recipes"]), 1)
+turkey = turkey_doc["recipes"][0]
+check("R30 title", turkey["title"], "Roast Turkey")
+# Its method is on page 2. Splitting on the footer left the turkey with none.
+check("R30 all ten steps survived the page break", len(turkey["steps"]), 10)
+check("R30 and the compotes are still four",
+      len(load(os.path.join(ROOT, "docs", "fixture-recipe-02.txt"))["recipes"]), 4)
+
+# R31 -- the ingredient is in the FIRST column here, the amount in the second
+shopping = turkey["components"][0]["lines"]
+butter = next(l for l in shopping if l["name"] == "Butter")
+check("R31 butter amount", (butter["amountNumerator"], butter["amountDenominator"]), (2, 1))
+check("R31 butter unit", butter["unit"], "stick")
+check("R31 and the rest of the cell became prep", butter["preparation"], "UNSALTED")
+check("R31 nothing here is a choice row",
+      any(l["isOption"] for c in turkey["components"] for l in c["lines"]), False)
+# The pancake's alternatives group must STILL be read as alternatives, which is
+# the case this orientation detection could most easily have broken.
+pancake2 = load(os.path.join(ROOT, "docs", "fixture-recipe-02.txt"))["recipes"][0]
+check("R31 the spice mix-ins are still choices",
+      all(l["isOption"] for l in pancake2["components"][1]["lines"]), True)
+
+# R32 -- a unit two words into the amount cell: "1 whole head, cut in half"
+garlic = next(l for c in turkey["components"] for l in c["lines"] if l["name"] == "Garlic")
+check("R32 garlic unit", garlic["unit"], "head")
+check("R32 garlic prep", garlic["preparation"], "cut in half")
+celery = next(l for c in turkey["components"] for l in c["lines"] if l["name"] == "Celery")
+check("R32 celery unit", celery["unit"], "stalk")
+
+# R33 -- prose is prose, not a heading
+check("R33 four groups, not fourteen", len(turkey["components"]), 4)
+check("R33 group names",
+      [c["name"] for c in turkey["components"]],
+      [None, "Bed of Vegetables", "Butter Mixture", "In the Cavity"])
+bed = turkey["components"][1]
+check("R33 the paragraph became the group's prose",
+      bed.get("description", "").startswith("The bottom of the roasting pan"), True)
+check("R33 and the group kept its rows", len(bed["lines"]), 5)
+# Two groups are prose only and have no rows at all.
+check("R33 Butter Mixture is prose with no rows", len(turkey["components"][2]["lines"]), 0)
+check("R33 and it has prose",
+      turkey["components"][2].get("description", "").startswith("1.5 to 2 sticks"), True)
+
+# R34 -- THE ALL-CAPS LINES. These were lost entirely, not mangled.
+# The turkey, its butter and its gravy are all deliberately unsalted so the
+# cook salts once at the end; losing these loses the recipe's whole point.
+check("R34 DO. NOT. SALT. survived", "DO. NOT. SALT." in turkey["notes"], True)
+check("R34 and the butter warning", "DO NOT USE SALTED BUTTER." in turkey["notes"], True)
+
+# R35 -- timing by weight, not by the clock
+check("R35 minutes per pound", turkey["minutesPerPound"], 13)
+check("R35 oven temperature", turkey["ovenTempF"], 350)
+check("R35 no fixed total time", turkey["totalMinutes"], None)
+# A rate IS the timing, so warning about a missing duration would be noise.
+check("R35 and it does not warn about the missing duration",
+      "no active or total time found" in turkey["warnings"], False)
+
+# R36 -- a printed lookup table stays a table
+check("R36 one table", len(turkey["tables"]), 1)
+times = turkey["tables"][0]
+check("R36 name", times["name"], "Cooking Times")
+check("R36 headers", times["headers"],
+      ["Turkey weight", "Total time", "Covered (first 2/3)", "Uncovered (last 1/3)"])
+check("R36 eight weights", len(times["rows"]), 8)
+check("R36 first row", times["rows"][0], ["10 lb", "2 hr 10 min", "1 hr 27 min", "43 min"])
+check("R36 last row", times["rows"][-1], ["24 lb", "5 hr 12 min", "3 hr 28 min", "1 hr 44 min"])
+# And it is no longer inside the final step's body.
+check("R36 the table left the last step alone",
+      "10 lb" in turkey["steps"][-1]["body"], False)
+
+# R37 -- the gravy
+check("R37 one recipe", len(gravy_doc["recipes"]), 1)
+gravy = gravy_doc["recipes"][0]
+check("R37 title", gravy["title"], "Turkey Gravy")
+check("R37 nine steps", len(gravy["steps"]), 9)
+# "Makes about 4 cups" -- a yield with no serving count at all.
+check("R37 yield amount", gravy["yieldAmount"], 4)
+check("R37 yield unit", gravy["yieldUnitLabel"], "cups")
+
+glines = {l["name"]: l for c in gravy["components"] for l in c["lines"]}
+check("R37 flour is a quarter cup",
+      (glines["Flour"]["amountNumerator"], glines["Flour"]["amountDenominator"]), (1, 4))
+check("R37 flour unit", glines["Flour"]["unit"], "cup")
+check("R37 stock is four cups", glines["Stock"]["amountNumerator"], 4)
+# An ingredient whose amount is a sentence, because that IS the amount.
+check("R37 the pan base has no number", glines["Pan base"]["hasQuantity"], False)
+check("R37 and its amount is kept as written",
+      glines["Pan base"]["qualifier"].startswith("all the roasted vegetables"), True)
+# A wrapped amount cell: "...topped up with / UNSALTED butter if short".
+check("R37 the wrapped amount rejoined",
+      "UNSALTED butter if short" in (glines["Fat"]["preparation"] or ""), True)
+check("R37 and it did not become an ingredient", "UNSALTED butter if short" in glines, False)
+
+# R38 -- a recognised wording is not warned about, an unknown one is
+check("R38 'lots' is flagged for his eye",
+      any("'Pepper'" in w and "lots" in w for w in turkey["warnings"]), True)
+# "Pinch" in recipe 01 is understood and carried deliberately, so it is silent.
+check("R38 but recipe 01's Pinch is not flagged",
+      [w for w in d["warnings"] if "worded amount" in w], [])
+
+if failures:
+    print(f"FAIL  {len(failures)} assertion(s):\n")
+    for f in failures:
+        print(f"  ✗ {f}\n")
+    sys.exit(1)
+
+print(f"PASS  recipes 03-04: turkey is 1 recipe over 2 pages with "
+      f"{len(turkey['components'])} groups, {len(turkey['steps'])} steps, "
+      f"a {len(times['rows'])}-row table and {len(turkey['notes'])} notes; "
+      f"gravy makes {gravy['yieldAmount']} {gravy['yieldUnitLabel']}")

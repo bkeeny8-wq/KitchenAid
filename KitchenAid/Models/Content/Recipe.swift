@@ -56,6 +56,24 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
     /// should not render a guess he gave in passing with the same confidence as
     /// "12 crostini (serves 4)", which the document actually claims.
     var servingsApproximate: Bool = false
+
+    // MARK: - Timing that is a rate, not a duration
+
+    /// Minutes per pound, where the recipe times by weight instead of by the
+    /// clock. The roast turkey is "350 F, 13 minutes per pound" and has no
+    /// total time at all, because a 10 lb bird and a 24 lb bird share the
+    /// recipe and nothing else.
+    ///
+    /// When this is set, a missing `totalMinutes` is not an omission — it is
+    /// the correct answer, and the importer stops warning about it.
+    var minutesPerPound: Rational? = nil
+
+    /// Oven temperature in Fahrenheit, where the recipe states one up front.
+    var ovenTempF: Int? = nil
+
+    /// Lookup tables the document prints. See `RecipeTable` for why these stay
+    /// as strings.
+    var tables: [RecipeTable] = []
     var yieldAmount: Rational? = nil
     var yieldUnitLabel: String = ""
     /// Verbatim, e.g. "12 crostini (serves 4)". Kept so a reparse is always possible.
@@ -122,6 +140,7 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
     enum CodingKeys: String, CodingKey {
         case id, title, subtitle, summary
         case servingsNumerator, servingsDenominator, servingsApproximate
+        case minutesPerPound, ovenTempF, tables
         case yieldAmount, yieldUnitLabel, yieldText
         case activeMinutes, totalMinutes, timesAreApproximate
         case batchGranularity, course, difficulty, cuisine, sourceName
@@ -165,6 +184,9 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
         }
         self.servingsApproximate =
             try c.decodeIfPresent(Bool.self, forKey: .servingsApproximate) ?? false
+        self.minutesPerPound = try c.decodeIfPresent(Rational.self, forKey: .minutesPerPound)
+        self.ovenTempF = try c.decodeIfPresent(Int.self, forKey: .ovenTempF)
+        self.tables = try c.decodeIfPresent([RecipeTable].self, forKey: .tables) ?? []
 
         self.yieldAmount = try c.decodeIfPresent(Rational.self, forKey: .yieldAmount)
         self.yieldUnitLabel = try c.decodeIfPresent(String.self, forKey: .yieldUnitLabel) ?? ""

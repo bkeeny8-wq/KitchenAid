@@ -1,0 +1,220 @@
+{
+ "schemaVersion": 1,
+ "id": "turkey-gravy",
+ "title": "Turkey Gravy",
+ "summary": "Made from the vegetable bed and drippings in the roasting pan. Makes about 4 cups.",
+ "yieldText": "Makes about 4 cups",
+ "yieldAmount": 4,
+ "yieldUnitLabel": "cups",
+ "servings": null,
+ "servingsApproximate": false,
+ "activeMinutes": null,
+ "totalMinutes": null,
+ "minutesPerPound": null,
+ "ovenTempF": null,
+ "tables": [],
+ "components": [
+  {
+   "name": null,
+   "lines": [
+    {
+     "name": "Pan base",
+     "preparation": null,
+     "raw": "Pan base  all the roasted vegetables and drippings from the bottom of the roasting pan",
+     "qualifier": "all the roasted vegetables and drippings from the bottom of the roasting pan",
+     "unit": null,
+     "dimension": null,
+     "lineID": "pan-base-1",
+     "hasQuantity": false,
+     "amountNumerator": 0,
+     "amountDenominator": 1,
+     "display": "all the roasted vegetables and drippings from the bottom of the roasting pan",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Fat",
+     "preparation": "skimmed turkey fat from the drippings, topped up with UNSALTED butter if short",
+     "raw": "Fat  1/4 cup (4 tbsp) skimmed turkey fat from the drippings, topped up with UNSALTED butter if short",
+     "qualifier": null,
+     "unit": "cup",
+     "dimension": "volume",
+     "altUnit": "tbsp",
+     "lineID": "fat-1",
+     "hasQuantity": true,
+     "amountNumerator": 1,
+     "amountDenominator": 4,
+     "display": "1/4",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": true,
+     "altAmountNumerator": 4,
+     "altAmountDenominator": 1,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Flour",
+     "preparation": "all-purpose",
+     "raw": "Flour  1/4 cup all-purpose",
+     "qualifier": null,
+     "unit": "cup",
+     "dimension": "volume",
+     "lineID": "flour-1",
+     "hasQuantity": true,
+     "amountNumerator": 1,
+     "amountDenominator": 4,
+     "display": "1/4",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Stock",
+     "preparation": "UNSALTED turkey or chicken stock, warmed",
+     "raw": "Stock  4 cups UNSALTED turkey or chicken stock, warmed",
+     "qualifier": null,
+     "unit": "cup",
+     "dimension": "volume",
+     "lineID": "stock-1",
+     "hasQuantity": true,
+     "amountNumerator": 4,
+     "amountDenominator": 1,
+     "display": "4",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Pepper",
+     "preparation": "to taste",
+     "raw": "Pepper  freshly ground, to taste",
+     "qualifier": "freshly ground",
+     "unit": null,
+     "dimension": null,
+     "lineID": "pepper-1",
+     "hasQuantity": false,
+     "amountNumerator": 0,
+     "amountDenominator": 1,
+     "display": "freshly ground",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    }
+   ]
+  }
+ ],
+ "steps": [
+  {
+   "order": 1,
+   "title": null,
+   "body": "After the turkey comes out to rest, pour the vegetables and drippings from the roasting pan into a bowl or fat separator. Scrape up the browned bits from the pan and add them too.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-1-1"
+  },
+  {
+   "order": 2,
+   "title": "Skim the fat off the top and set aside",
+   "body": "Keep the dark juices with the vegetables.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "skim-the-fat-off-the-top-and-set-aside-1"
+  },
+  {
+   "order": 3,
+   "title": null,
+   "body": "Warm the stock in a saucepan so it goes into the gravy hot.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-3-1"
+  },
+  {
+   "order": 4,
+   "title": null,
+   "body": "In a large saucepan over medium heat, add 1/4 cup of the skimmed fat, topped up with unsalted butter if you are short. Whisk in the flour and cook, whisking, for 2 minutes until it smells toasty.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-4-1"
+  },
+  {
+   "order": 5,
+   "title": null,
+   "body": "Slowly whisk in the warm stock, then the juices from the roasting pan. Keep whisking until smooth.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-5-1"
+  },
+  {
+   "order": 6,
+   "title": null,
+   "body": "Simmer 10 to 15 minutes, stirring often, until the gravy coats the back of a spoon.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-6-1"
+  },
+  {
+   "order": 7,
+   "title": null,
+   "body": "Press the roasted vegetables through a fine strainer into the gravy, squeezing the roasted garlic out of its skins and scraping the underside of the strainer. Discard the leftover solids.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-7-1"
+  },
+  {
+   "order": 8,
+   "title": "Add pepper, then taste",
+   "body": "Thin with a splash of stock if too thick, or simmer a few more minutes if too thin.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "add-pepper-then-taste-1"
+  },
+  {
+   "order": 9,
+   "title": null,
+   "body": "Keep warm over low heat and serve with the turkey.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-9-1"
+  }
+ ],
+ "notes": [
+  "Note: the butter and stock are both unsalted, so nothing in here is salted. Taste at the very end and decide for yourself before adding anything.",
+  "Tip: for a smoother gravy, blend the vegetables with a ladle of the gravy using an immersion blender, then stir it all back in."
+ ],
+ "warnings": [
+  "no serving count found; meal-plan scaling needs one",
+  "no active or total time found",
+  "'Pan base' has a worded amount, not a number: 'all the roasted vegetables and drippings'",
+  "'Pepper' has a worded amount, not a number: 'freshly ground'",
+  "'Pan base' matches nothing in the ingredient catalogue, so it will not aggregate or match the pantry",
+  "'Fat' matches nothing in the ingredient catalogue, so it will not aggregate or match the pantry",
+  "'Stock' matches nothing in the ingredient catalogue, so it will not aggregate or match the pantry"
+ ]
+}

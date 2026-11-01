@@ -23,15 +23,27 @@ struct RecipeComponent: Codable, Hashable, Sendable {
     var makeAheadNote: String = ""
     var lines: [IngredientLine] = []
 
+    /// The group's own prose, where the document explains the component rather
+    /// than tabulating it.
+    ///
+    /// The turkey needs this badly: "Bed of Vegetables" has a paragraph AND a
+    /// table, while "Butter Mixture" and "In the Cavity" are prose only and
+    /// carry no rows at all. With nowhere to put it, each paragraph was read as
+    /// another group heading — which is how one recipe produced fourteen groups.
+    var summary: String = ""
+
     /// One-to-one with the stored properties; the importer's `name` is in `ImporterKeys`.
     /// Review 03 finding 1 — see the note on `Recipe.CodingKeys`.
     enum CodingKeys: String, CodingKey {
         case title, note, kind, isOptional, sourceRecipeID, sourceScale, makeAheadNote, lines
+        case summary
     }
 
     private enum ImporterKeys: String, CodingKey {
         /// The importer's spelling for `title`.
         case name
+        /// The importer's spelling for `summary`.
+        case description
     }
 
     init(from decoder: Decoder) throws {
@@ -42,6 +54,9 @@ struct RecipeComponent: Codable, Hashable, Sendable {
             ?? importer.decodeIfPresent(String.self, forKey: .name)
             ?? ""
         self.note = try c.decodeIfPresent(String.self, forKey: .note) ?? ""
+        self.summary = try c.decodeIfPresent(String.self, forKey: .summary)
+            ?? importer.decodeIfPresent(String.self, forKey: .description)
+            ?? ""
         self.kind = c.decodeRawValue(ComponentKind.self, forKey: .kind, fallback: .other)
         self.isOptional = try c.decodeIfPresent(Bool.self, forKey: .isOptional) ?? false
         self.sourceRecipeID = try c.decodeIfPresent(String.self, forKey: .sourceRecipeID)

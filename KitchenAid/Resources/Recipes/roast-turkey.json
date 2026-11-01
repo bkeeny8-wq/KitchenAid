@@ -1,0 +1,435 @@
+{
+ "schemaVersion": 1,
+ "id": "roast-turkey",
+ "title": "Roast Turkey",
+ "summary": "Herb butter turkey on a bed of vegetables. 350 F, 13 minutes per pound.",
+ "yieldText": null,
+ "yieldAmount": null,
+ "yieldUnitLabel": null,
+ "servings": null,
+ "servingsApproximate": false,
+ "activeMinutes": null,
+ "totalMinutes": null,
+ "minutesPerPound": 13,
+ "ovenTempF": 350,
+ "tables": [
+  {
+   "name": "Cooking Times",
+   "headers": [
+    "Turkey weight",
+    "Total time",
+    "Covered (first 2/3)",
+    "Uncovered (last 1/3)"
+   ],
+   "rows": [
+    [
+     "10 lb",
+     "2 hr 10 min",
+     "1 hr 27 min",
+     "43 min"
+    ],
+    [
+     "12 lb",
+     "2 hr 36 min",
+     "1 hr 44 min",
+     "52 min"
+    ],
+    [
+     "14 lb",
+     "3 hr 02 min",
+     "2 hr 01 min",
+     "1 hr 01 min"
+    ],
+    [
+     "16 lb",
+     "3 hr 28 min",
+     "2 hr 19 min",
+     "1 hr 09 min"
+    ],
+    [
+     "18 lb",
+     "3 hr 54 min",
+     "2 hr 36 min",
+     "1 hr 18 min"
+    ],
+    [
+     "20 lb",
+     "4 hr 20 min",
+     "2 hr 53 min",
+     "1 hr 27 min"
+    ],
+    [
+     "22 lb",
+     "4 hr 46 min",
+     "3 hr 11 min",
+     "1 hr 35 min"
+    ],
+    [
+     "24 lb",
+     "5 hr 12 min",
+     "3 hr 28 min",
+     "1 hr 44 min"
+    ]
+   ]
+  }
+ ],
+ "components": [
+  {
+   "name": null,
+   "lines": [
+    {
+     "name": "Butter",
+     "preparation": "UNSALTED",
+     "raw": "Butter  2 sticks, UNSALTED",
+     "qualifier": null,
+     "unit": "stick",
+     "dimension": "count",
+     "lineID": "butter-1",
+     "hasQuantity": true,
+     "amountNumerator": 2,
+     "amountDenominator": 1,
+     "display": "2",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Pepper",
+     "preparation": "best if freshly ground, with larger portions of peppercorns",
+     "raw": "Pepper  lots, best if freshly ground, with larger portions of peppercorns",
+     "qualifier": "lots",
+     "unit": null,
+     "dimension": null,
+     "lineID": "pepper-1",
+     "hasQuantity": false,
+     "amountNumerator": 0,
+     "amountDenominator": 1,
+     "display": "lots",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Fresh thyme",
+     "preparation": null,
+     "raw": "Fresh thyme  1 packet",
+     "qualifier": null,
+     "unit": "packet",
+     "dimension": "count",
+     "lineID": "fresh-thyme-1",
+     "hasQuantity": true,
+     "amountNumerator": 1,
+     "amountDenominator": 1,
+     "display": "1",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Lemon",
+     "preparation": null,
+     "raw": "Lemon  1",
+     "qualifier": null,
+     "unit": null,
+     "dimension": "count",
+     "lineID": "lemon-1",
+     "hasQuantity": true,
+     "amountNumerator": 1,
+     "amountDenominator": 1,
+     "display": "1",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "White onion",
+     "preparation": "for the cavity. Yellow can be a backup. Do not use red.",
+     "raw": "White onion  1 for the cavity. Yellow can be a backup. Do not use red.",
+     "qualifier": null,
+     "unit": null,
+     "dimension": "count",
+     "lineID": "white-onion-1",
+     "hasQuantity": true,
+     "amountNumerator": 1,
+     "amountDenominator": 1,
+     "display": "1",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Vegetable bed",
+     "preparation": "leek, garlic, carrots, and celery (see below)",
+     "raw": "Vegetable bed  onion, leek, garlic, carrots, and celery (see below)",
+     "qualifier": "onion",
+     "unit": null,
+     "dimension": null,
+     "lineID": "vegetable-bed-1",
+     "hasQuantity": false,
+     "amountNumerator": 0,
+     "amountDenominator": 1,
+     "display": "onion",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    }
+   ]
+  },
+  {
+   "name": "Bed of Vegetables",
+   "lines": [
+    {
+     "name": "Onion",
+     "preparation": "cut into large pieces",
+     "raw": "Onion  2, cut into large pieces",
+     "qualifier": null,
+     "unit": null,
+     "dimension": "count",
+     "lineID": "onion-1",
+     "hasQuantity": true,
+     "amountNumerator": 2,
+     "amountDenominator": 1,
+     "display": "2",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Leek",
+     "preparation": "cleaned well and cut into large pieces",
+     "raw": "Leek  2, cleaned well and cut into large pieces",
+     "qualifier": null,
+     "unit": null,
+     "dimension": "count",
+     "lineID": "leek-1",
+     "hasQuantity": true,
+     "amountNumerator": 2,
+     "amountDenominator": 1,
+     "display": "2",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Garlic",
+     "preparation": "cut in half",
+     "raw": "Garlic  1 whole head, cut in half",
+     "qualifier": null,
+     "unit": "head",
+     "dimension": "count",
+     "lineID": "garlic-1",
+     "hasQuantity": true,
+     "amountNumerator": 1,
+     "amountDenominator": 1,
+     "display": "1",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Carrots",
+     "preparation": "cut into large chunks",
+     "raw": "Carrots  4, cut into large chunks",
+     "qualifier": null,
+     "unit": null,
+     "dimension": "count",
+     "lineID": "carrots-1",
+     "hasQuantity": true,
+     "amountNumerator": 4,
+     "amountDenominator": 1,
+     "display": "4",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    },
+    {
+     "name": "Celery",
+     "preparation": "cut into large pieces",
+     "raw": "Celery  4 stalks, cut into large pieces",
+     "qualifier": null,
+     "unit": "stalk",
+     "dimension": "count",
+     "lineID": "celery-1",
+     "hasQuantity": true,
+     "amountNumerator": 4,
+     "amountDenominator": 1,
+     "display": "4",
+     "isRange": false,
+     "amountMaxNumerator": 0,
+     "amountMaxDenominator": 1,
+     "hasAltAmount": false,
+     "altAmountNumerator": 0,
+     "altAmountDenominator": 1,
+     "altUnit": null,
+     "isOption": false,
+     "optionText": null
+    }
+   ],
+   "description": "The bottom of the roasting pan is a bed of onion, leek, garlic, carrots, and celery. The turkey sits on top of it. Save the vegetables and drippings, they are the base for the gravy (separate page)."
+  },
+  {
+   "name": "Butter Mixture",
+   "lines": [],
+   "description": "1.5 to 2 sticks of softened UNSALTED butter. Add lots of pepper and 3/4 of a pack of fresh thyme and mix well. It should be well speckled. Spread onto the entire turkey. Under the skin on the breasts will yield the best result."
+  },
+  {
+   "name": "In the Cavity",
+   "lines": [],
+   "description": "Slice the lemon in half and push one half in first. Cut large chunks off a quartered onion. Do not chop fine, you want big pieces, and insert as much as you can. Add the remaining sprigs of thyme and close up the end with the other half of the lemon."
+  }
+ ],
+ "steps": [
+  {
+   "order": 1,
+   "title": "Make sure the turkey is fully thawed",
+   "body": "Heat the oven to 350 F.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "make-sure-the-turkey-is-fully-thawed-1"
+  },
+  {
+   "order": 2,
+   "title": null,
+   "body": "Make the bed: spread the onion, leek, garlic, carrots, and celery over the bottom of the roasting pan.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-2-1"
+  },
+  {
+   "order": 3,
+   "title": null,
+   "body": "Make the butter mixture: mix the softened UNSALTED butter with lots of pepper and 3/4 of the fresh thyme until well speckled.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-3-1"
+  },
+  {
+   "order": 4,
+   "title": null,
+   "body": "Spread the butter mixture over the entire turkey, getting it under the skin on the breasts for the best result.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-4-1"
+  },
+  {
+   "order": 5,
+   "title": null,
+   "body": "Fill the cavity: lemon half first, big chunks of onion packed in as tightly as you can, the remaining thyme sprigs, then close up the end with the other lemon half.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-5-1"
+  },
+  {
+   "order": 6,
+   "title": "Set the turkey on the bed of vegetables",
+   "body": "Do not salt anything.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "set-the-turkey-on-the-bed-of-vegetables-1"
+  },
+  {
+   "order": 7,
+   "title": null,
+   "body": "Cover and roast at 350 F for the first 2/3 of the total time (13 minutes per pound).",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-7-1"
+  },
+  {
+   "order": 8,
+   "title": null,
+   "body": "Uncover and roast for the last 1/3 of the time, until golden.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "step-8-1"
+  },
+  {
+   "order": 9,
+   "title": "Check that the thickest part of the thigh reads 165 F",
+   "body": "Ovens vary, so start checking a little before the time is up.",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "check-that-the-thickest-part-of-the-thigh-reads-165-f-1"
+  },
+  {
+   "order": 10,
+   "title": "Move the turkey to a board to rest",
+   "body": "Keep the vegetables and drippings in the pan for the gravy (separate page).",
+   "minMinutes": null,
+   "maxMinutes": null,
+   "stepID": "move-the-turkey-to-a-board-to-rest-1"
+  }
+ ],
+ "notes": [
+  "DO. NOT. SALT.",
+  "DO NOT USE SALTED BUTTER.",
+  "Note: these amounts are a starting point. Scale them to fill the bottom of your pan. Do not salt the vegetables either."
+ ],
+ "warnings": [
+  "no serving count found; meal-plan scaling needs one",
+  "no yield found (how much it makes)",
+  "'Pepper' has a worded amount, not a number: 'lots'",
+  "'Vegetable bed' has a worded amount, not a number: 'onion'",
+  "'Vegetable bed' matches nothing in the ingredient catalogue, so it will not aggregate or match the pantry"
+ ]
+}
