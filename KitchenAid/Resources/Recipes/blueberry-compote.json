@@ -6,7 +6,8 @@
  "yieldText": null,
  "yieldAmount": null,
  "yieldUnitLabel": null,
- "servings": null,
+ "servings": 4,
+ "servingsApproximate": true,
  "activeMinutes": null,
  "totalMinutes": null,
  "components": [
@@ -157,8 +158,14 @@
   "Tip: mash a few berries against the side of the pan for a thicker, jammier sauce."
  ],
  "warnings": [
-  "no serving count found; meal-plan scaling needs one",
   "no yield found (how much it makes)",
   "no active or total time found"
- ]
+ ],
+ "overrides": {
+  "fields": [
+   "servings",
+   "servingsApproximate"
+  ],
+  "why": "Brandon, 2026-11-01: 'they serve approx 4'. The document gives no serving count for any of the three compotes, so the meal planner had nothing to scale by."
+ }
 }

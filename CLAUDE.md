@@ -178,6 +178,24 @@ python3 -I scripts/test_import.py
 The test asserts all twelve requirements against the fixture. **It runs
 anywhere, including cloud sessions** — so if you touch the importer, run it.
 
+### Facts the document does not state
+
+`docs/recipe-overrides.json` holds anything Brandon tells us that his source
+document omits, keyed by recipe id and applied on every import. The bundled
+files under `KitchenAid/Resources/Recipes/` are **generated**, so editing one by
+hand is lost the next time its document is re-imported — the same trap as
+hand-editing `ingredients.json`.
+
+First case: the three compotes state no serving count, and the meal planner
+divides by servings, so they could not be scaled at all until he said "they
+serve approx 4". The value is applied, `servingsApproximate` is set so the UI
+does not render a number he gave in passing as confidently as one the document
+claims, and the warning it answers is cleared while everything still missing
+keeps warning.
+
+**Keep `why` on every entry.** In six months the useful question is not what the
+value is but who decided it and whether they are still right.
+
 ## The Swift checker
 
 ```bash

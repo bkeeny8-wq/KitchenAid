@@ -46,6 +46,16 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
     // pair.
     var servingsNumerator: Int = 4
     var servingsDenominator: Int = 1
+
+    /// True when the serving count is a stated approximation rather than a
+    /// number the recipe commits to.
+    ///
+    /// The three compotes state no servings at all; Brandon supplied "approx 4"
+    /// and it is recorded in `docs/recipe-overrides.json`. Scaling uses the
+    /// value either way — the planner has to divide by something — but the UI
+    /// should not render a guess he gave in passing with the same confidence as
+    /// "12 crostini (serves 4)", which the document actually claims.
+    var servingsApproximate: Bool = false
     var yieldAmount: Rational? = nil
     var yieldUnitLabel: String = ""
     /// Verbatim, e.g. "12 crostini (serves 4)". Kept so a reparse is always possible.
@@ -111,7 +121,7 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
     /// instead, read through their own container, which keeps `encode(to:)` synthesized.
     enum CodingKeys: String, CodingKey {
         case id, title, subtitle, summary
-        case servingsNumerator, servingsDenominator
+        case servingsNumerator, servingsDenominator, servingsApproximate
         case yieldAmount, yieldUnitLabel, yieldText
         case activeMinutes, totalMinutes, timesAreApproximate
         case batchGranularity, course, difficulty, cuisine, sourceName
@@ -153,6 +163,8 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
             self.servingsNumerator = try c.decodeIfPresent(Int.self, forKey: .servingsNumerator) ?? 4
             self.servingsDenominator = try c.decodeIfPresent(Int.self, forKey: .servingsDenominator) ?? 1
         }
+        self.servingsApproximate =
+            try c.decodeIfPresent(Bool.self, forKey: .servingsApproximate) ?? false
 
         self.yieldAmount = try c.decodeIfPresent(Rational.self, forKey: .yieldAmount)
         self.yieldUnitLabel = try c.decodeIfPresent(String.self, forKey: .yieldUnitLabel) ?? ""

@@ -429,11 +429,64 @@ def looks_like_option_label(cell):
     return not re.search(r"\d", c)
 
 
+OVERRIDES_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "docs", "recipe-overrides.json")
+
+# Which warning an override answers, so a fact Brandon supplied stops the
+# importer complaining about it on every run.
+WARNING_SATISFIED_BY = {
+    "servings": "no serving count found; meal-plan scaling needs one",
+    "yieldAmount": "no yield found (how much it makes)",
+    "totalMinutes": "no active or total time found",
+    "activeMinutes": "no active or total time found",
+}
+
+
+def load_overrides():
+    """Facts the source document does not state, supplied by Brandon.
+
+    The bundled files are generated, so editing one by hand is lost the next
+    time its document is re-imported -- the same trap as hand-editing
+    ingredients.json. The three compotes are the first case: the document gives
+    no serving count for any of them, and the meal planner divides by servings,
+    so until he said "they serve approx 4" they could not be scaled at all.
+    """
+    if not os.path.exists(OVERRIDES_PATH):
+        return {}
+    with open(OVERRIDES_PATH, encoding="utf-8") as fh:
+        raw = json.load(fh)
+    return {k: v for k, v in raw.items() if not k.startswith("_")}
+
+
+def apply_overrides(recipe, overrides):
+    entry = overrides.get(recipe["id"])
+    if not entry:
+        return
+    applied = {}
+    for key, value in entry.items():
+        if key in ("why", "_comment"):
+            continue
+        recipe[key] = value
+        applied[key] = value
+        # The warning was true of the document and is no longer true of the
+        # recipe, so it goes -- but the provenance below records that the value
+        # did not come from the page.
+        gone = WARNING_SATISFIED_BY.get(key)
+        if gone and gone in recipe["warnings"]:
+            recipe["warnings"].remove(gone)
+    if applied:
+        recipe["overrides"] = {"fields": sorted(applied), "why": entry.get("why", "")}
+
+
 def parse(text):
     """Parse a document of one or more recipes into the bundled envelope."""
     chunks, doc_title = split_pages(text)
     recipes = [parse_one(c) for c in chunks]
     recipes = [r for r in recipes if r["components"] or r["steps"]]
+    overrides = load_overrides()
+    for recipe in recipes:
+        apply_overrides(recipe, overrides)
     return {
         "schemaVersion": 1,
         "documentTitle": doc_title,
@@ -447,6 +500,10 @@ def parse_one(text):
         "schemaVersion": 1, "id": None,
         "title": None, "summary": None,
         "yieldText": None, "yieldAmount": None, "yieldUnitLabel": None, "servings": None,
+        # True when the serving count is a stated approximation rather than a
+        # count the recipe commits to. "Serves approx 4" should not render as
+        # the same confident "4" that "12 crostini (serves 4)" earns.
+        "servingsApproximate": False,
         "activeMinutes": None, "totalMinutes": None,
         "components": [], "steps": [], "notes": [], "warnings": [],
     }

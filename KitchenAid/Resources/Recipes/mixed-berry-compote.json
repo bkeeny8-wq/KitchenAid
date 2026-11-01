@@ -6,7 +6,8 @@
  "yieldText": null,
  "yieldAmount": null,
  "yieldUnitLabel": null,
- "servings": null,
+ "servings": 4,
+ "servingsApproximate": true,
  "activeMinutes": null,
  "totalMinutes": null,
  "components": [
@@ -179,8 +180,14 @@
   "Tip: add raspberries in the last 2 minutes since they break down fastest, and stop before everything turns to mush if you want visible pieces."
  ],
  "warnings": [
-  "no serving count found; meal-plan scaling needs one",
   "no yield found (how much it makes)",
   "no active or total time found"
- ]
+ ],
+ "overrides": {
+  "fields": [
+   "servings",
+   "servingsApproximate"
+  ],
+  "why": "Brandon, 2026-11-01: 'they serve approx 4'."
+ }
 }

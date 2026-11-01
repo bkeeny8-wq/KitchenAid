@@ -230,7 +230,11 @@ if RECIPES:
         for step in d.get("steps", []):
             buckets["step"] |= set(step)
     # Keys the importer emits for its own diagnostics, never for the app.
-    IGNORED = {"warnings", "aggregatesWithinRecipe", "raw", "display"}
+    # Build provenance, not app data: `warnings` and `overrides` describe how
+    # the file was produced. `raw` and `display` are the importer's own
+    # renderings, which the Swift reproduces rather than stores.
+    IGNORED = {"warnings", "aggregatesWithinRecipe", "raw", "display",
+               "overrides", "why"}
     for kind, keys in buckets.items():
         for key in sorted(keys - IGNORED):
             if not re.search(rf"\b{re.escape(key)}\b", content):

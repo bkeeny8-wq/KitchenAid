@@ -39,6 +39,10 @@ def check(label, got, want):
         failures.append(f"{label}\n      got:  {got!r}\n      want: {want!r}")
 
 
+def fail(label):
+    failures.append(label)
+
+
 def line(component_name, ingredient_name):
     for c in d["components"]:
         if c["name"] == component_name:
@@ -344,13 +348,14 @@ check("R27 the tip is not inside the last step",
       "Tip:" in blueberry["steps"][-1]["body"], False)
 
 # R28 -- what the document genuinely does not say is REPORTED, not guessed
+# The serving count the DOCUMENT gives is still nothing -- R29 covers the
+# override that supplies one, and that it is marked as not coming from the page.
 for compote in (blueberry, mixed, apple):
     t = compote["title"]
-    check(f"R28 {t} has no servings", compote["servings"], None)
-    if "no serving count found; meal-plan scaling needs one" not in compote["warnings"]:
-        fail(f"R28 {t} is missing servings and does not say so")
     if "no yield found (how much it makes)" not in compote["warnings"]:
         fail(f"R28 {t} has no yield and does not say so")
+    if "no active or total time found" not in compote["warnings"]:
+        fail(f"R28 {t} has no times and does not say so")
 check("R28 the pancake has no unread-quantity warnings",
       [w for w in pancake["warnings"] if "could not read a quantity" in w], [])
 

@@ -6,7 +6,8 @@
  "yieldText": null,
  "yieldAmount": null,
  "yieldUnitLabel": null,
- "servings": null,
+ "servings": 4,
+ "servingsApproximate": true,
  "activeMinutes": null,
  "totalMinutes": null,
  "components": [
@@ -224,8 +225,14 @@
   "Tip: firm apples like Honeycrisp, Granny Smith, or Braeburn hold their shape best."
  ],
  "warnings": [
-  "no serving count found; meal-plan scaling needs one",
   "no yield found (how much it makes)",
   "no active or total time found"
- ]
+ ],
+ "overrides": {
+  "fields": [
+   "servings",
+   "servingsApproximate"
+  ],
+  "why": "Brandon, 2026-11-01: 'they serve approx 4'."
+ }
 }
