@@ -354,14 +354,28 @@ def split_pages(text):
     # A page CONTINUES the previous recipe when it opens with a section header
     # ("Instructions", "Cooking Times"). It starts a new one when it opens with
     # anything else, which is a title.
+    # A page starts a NEW recipe only when it opens with something that looks
+    # like a title. Everything else continues the page before it.
+    #
+    # Recognising only section headers was not enough: a long recipe spills
+    # mid-method, and a generated mashed-potato recipe whose page 2 opened at
+    # "6. Mash (5 min)." was split into two recipes -- the first with five
+    # steps, the second with four, and every note lost into the second.
     chunks = [pages[0]]
     for page in pages[1:]:
-        first = next((l.strip() for l in page.splitlines() if l.strip()), "")
-        continues = bool(re.fullmatch(rf"(?:{SECTION_HEADS})", first, re.I))
-        if continues:
-            chunks[-1] = chunks[-1] + "\n" + page
+        # pdftotext marks the page break with a form feed on the first line.
+        first = next((l.strip().lstrip("\x0c").strip()
+                      for l in page.splitlines() if l.strip().strip("\x0c")), "")
+        if re.fullmatch(rf"(?:{SECTION_HEADS})", first, re.I):
+            new_recipe = False          # a section header continues the recipe
+        elif re.match(r"\d+[.)]\s", first) or first[:1] in ("•", "-", "*"):
+            new_recipe = False          # a numbered step or a bullet, mid-list
         else:
+            new_recipe = is_subhead(first)   # short and unterminated: a title
+        if new_recipe:
             chunks.append(page)
+        else:
+            chunks[-1] = chunks[-1] + "\n" + page
     return chunks, doc_title
 
 
