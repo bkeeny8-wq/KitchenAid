@@ -421,9 +421,14 @@ struct CookView: View {
 
                 let name = line.catalogName.isEmpty ? line.displayName : line.catalogName
                 guard !name.isEmpty else { continue }
-                guard let found = try? resolver.findOrCreate(
+                // ONE binding, not two. `findOrCreate` is `throws -> FoodItem?`, and
+                // SE-0230 (in effect at SWIFT_VERSION 5.0) flattens `try?` rather than
+                // nesting it, so this expression is `FoodItem?` and a second `let` on the
+                // result would not compile. The two sibling call sites --
+                // ShoppingListGeneration and AddStockSheet -- get this right.
+                guard let item = try? resolver.findOrCreate(
                     name: name, createIfMissing: false, in: modelContext
-                ), let item = found else { continue }
+                ) else { continue }
 
                 let factor = line.scalingRule == .fixed ? Rational.one : effectiveScale
                 requirements.append(InventoryLedger.CookRequirement(
