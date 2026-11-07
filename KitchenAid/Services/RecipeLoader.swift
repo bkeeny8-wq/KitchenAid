@@ -90,7 +90,7 @@ final class RecipeLoader {
                 // the whole point: these files are hand-edited between imports, and a
                 // trailing comma in the eighth must not take the other seven down.
                 found.append(ContentDiagnostic(
-                    kind: .decodeFailed, fileName: fileName, detail: Self.describe(error)
+                    kind: .decodeFailed, fileName: fileName, detail: describe(error)
                 ))
             }
         }
@@ -121,7 +121,8 @@ final class RecipeLoader {
     /// The passes that need every file loaded before they can run.
     private func integrityDiagnostics() -> [ContentDiagnostic] {
         var out: [ContentDiagnostic] = []
-        for recipe in byID.values.sorted(by: Self.byTitle) {
+        let ordered = byID.values.sorted { byTitle($0, $1) }
+        for recipe in ordered {
             let fileName = fileNameByID[recipe.id] ?? "\(recipe.id).json"
 
             if recipe.isEmpty {
@@ -169,12 +170,12 @@ final class RecipeLoader {
 
     /// What the library shows: not archived, title-sorted.
     var all: [Recipe] {
-        byID.values.filter { !$0.isArchived }.sorted(by: Self.byTitle)
+        byID.values.filter { !$0.isArchived }.sorted { byTitle($0, $1) }
     }
 
     /// What a stored `recipeID` resolves against, archived included.
     var allIncludingArchived: [Recipe] {
-        byID.values.sorted(by: Self.byTitle)
+        byID.values.sorted { byTitle($0, $1) }
     }
 
     /// Distinct tags across everything bundled, archived included, so a filter chip does
@@ -218,14 +219,14 @@ final class RecipeLoader {
         guard !recipeID.isEmpty else { return [] }
         return byID.values
             .filter { $0.id != recipeID && $0.referencedRecipeIDs.contains(recipeID) }
-            .sorted(by: Self.byTitle)
+            .sorted { byTitle($0, $1) }
     }
 
     /// Recipes he has never cooked are surfaced by title; ties fall back to the id so the
     /// order is total. `localizedStandardCompare` rather than `<`, because raw `String <`
     /// is Unicode-scalar ordering and sorts "NY Strip" above every lowercase neighbour —
     /// the same defect SPEC_REVIEW_03 finding 9 raised against the shopping list.
-    private static func byTitle(_ a: Recipe, _ b: Recipe) -> Bool {
+    private func byTitle(_ a: Recipe, _ b: Recipe) -> Bool {
         let result = a.title.localizedStandardCompare(b.title)
         if result == .orderedSame { return a.id < b.id }
         return result == .orderedAscending
@@ -242,23 +243,23 @@ final class RecipeLoader {
     /// A decode failure is reported with the key and the path, not just "could not be
     /// read": the file is hand-edited, and a diagnostic that does not say WHERE costs a
     /// re-read of a 400-line JSON file to find a renamed key.
-    private static func describe(_ error: Error) -> String {
+    private func describe(_ error: Error) -> String {
         guard let decoding = error as? DecodingError else { return error.localizedDescription }
         switch decoding {
         case .keyNotFound(let key, let context):
-            return "missing key \"\(key.stringValue)\"\(path(context))"
+            return "missing key \"\(key.stringValue)\"\(pathText(context))"
         case .typeMismatch(let type, let context):
-            return "wrong type where \(type) was expected\(path(context))"
+            return "wrong type where \(type) was expected\(pathText(context))"
         case .valueNotFound(let type, let context):
-            return "null where \(type) was required\(path(context))"
+            return "null where \(type) was required\(pathText(context))"
         case .dataCorrupted(let context):
-            return "malformed JSON\(path(context))"
+            return "malformed JSON\(pathText(context))"
         @unknown default:
             return error.localizedDescription
         }
     }
 
-    private static func path(_ context: DecodingError.Context) -> String {
+    private func pathText(_ context: DecodingError.Context) -> String {
         let parts = context.codingPath.map { $0.stringValue }.filter { !$0.isEmpty }
         return parts.isEmpty ? "" : " at \(parts.joined(separator: " / "))"
     }
