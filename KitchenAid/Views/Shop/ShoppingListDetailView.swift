@@ -28,6 +28,13 @@ struct ShoppingListDetailView: View {
     // declared here and used nowhere is a crash this screen could take for a sheet's benefit.
     @Environment(\.modelContext) private var context
     @Environment(\.storeUnavailable) private var storeUnavailable
+    /// The exception to the rule above, and the reason the rule is stated as "what this
+    /// screen writes" rather than "no services": putting the shop away IS a write this
+    /// screen makes. `InventoryLedger.receive(_:in:)` had no caller anywhere in the app --
+    /// the whole trip-home path was written, commented and referenced in three other files'
+    /// prose, and invoked by nothing. A checked-off list that never reaches the pantry makes
+    /// the comparison on every future list wrong in the same direction, for ever.
+    @Environment(InventoryLedger.self) private var ledger: InventoryLedger?
 
     @State private var isAdding = false
     @State private var isRebuilding = false
@@ -38,6 +45,10 @@ struct ShoppingListDetailView: View {
     @State private var showCovered = false
     @State private var showStaples = false
     @State private var confirmArchive = false
+    @State private var confirmReceive = false
+    /// The ledger's own sentence, not one written here. `LedgerError.alreadyReceived` names
+    /// the list, and a second wording of it is a second thing that can drift.
+    @State private var receiveFailure: String? = nil
 
     var body: some View {
         List {
@@ -65,6 +76,25 @@ struct ShoppingListDetailView: View {
         } message: {
             Text("It stays under Past lists, with everything you checked off. Nothing is "
                + "deleted and the pantry is not changed.")
+        }
+        .alert("Put \(checkedCount) item\(checkedCount == 1 ? "" : "s") in the pantry?",
+               isPresented: $confirmReceive) {
+            Button("Put it away") { receive() }
+            Button("Not yet", role: .cancel) { }
+        } message: {
+            Text("Only what you checked off. Each one becomes a lot with today's date, and "
+               + "a staple is just marked present. Anything you walked past is left alone.")
+        }
+        .alert(
+            "That did not go in",
+            isPresented: Binding(
+                get: { receiveFailure != nil },
+                set: { if !$0 { receiveFailure = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) { receiveFailure = nil }
+        } message: {
+            Text(receiveFailure ?? "")
         }
     }
 
@@ -98,6 +128,16 @@ struct ShoppingListDetailView: View {
                 // Export is NOT in here: it is a toolbar button of its own, because it is
                 // the one feature whose output leaves the device and burying it two taps
                 // down is how a share-sheet feature stops being used.
+                Divider()
+                Button {
+                    confirmReceive = true
+                } label: {
+                    Label(
+                        isReceived ? "Already put away" : "Put the shop away",
+                        systemImage: isReceived ? "checkmark.circle" : "shippingbox"
+                    )
+                }
+                .disabled(isReceived || checkedCount == 0)
                 Divider()
                 Button {
                     confirmArchive = true
@@ -368,6 +408,28 @@ struct ShoppingListDetailView: View {
         // plan still asks for it. A line he added by hand does not, and that is also honest.
         context.delete(line)
     }
+
+    /// Posted ONCE per list, and the ledger is what enforces that rather than this screen:
+    /// it refuses a list that already has `receivedTransactions` and names it in the error.
+    /// A guard here as well would be a second owner of the rule, and the one that gets
+    /// forgotten when a second caller appears.
+    private func receive() {
+        guard let ledger = ledger else {
+            // Reachable in the window before the launch task runs, and on a device whose
+            // store fell back to memory. Saying so beats a tap that does nothing.
+            receiveFailure = "The pantry is still starting up. Try again in a moment."
+            return
+        }
+        do {
+            try ledger.receive(list, in: context)
+        } catch let error as LedgerError {
+            receiveFailure = error.message
+        } catch {
+            receiveFailure = error.localizedDescription
+        }
+    }
+
+    private var isReceived: Bool { !(list.receivedTransactions ?? []).isEmpty }
 
     private func archive() {
         list.isArchived = true

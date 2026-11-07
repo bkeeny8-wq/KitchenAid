@@ -48,6 +48,11 @@ struct CookView: View {
     /// opening this screen a crash rather than a missing overlay. See
     /// `tweakStore` below for what stands in meanwhile.
     @Environment(TweakStore.self) private var injectedTweakStore: TweakStore?
+    /// Both for the pantry depletion below, and both read the same way as the tweak store
+    /// above: the ledger optional because the launch task may not have run, the catalogue
+    /// non-optional because the App injects it unconditionally.
+    @Environment(InventoryLedger.self) private var injectedLedger: InventoryLedger?
+    @Environment(IngredientCatalog.self) private var catalog
 
     @State private var stepIndex = 0
     @State private var completedStepIDs: Set<String> = []
@@ -172,6 +177,11 @@ struct CookView: View {
             isPresented: $confirmFinish,
             titleVisibility: .visible
         ) {
+            Button("Made it, and take it out of the pantry") {
+                tweakStore.markMade(resolved.id)
+                depleteFromPantry(resolved)
+                dismiss()
+            }
             Button("Mark as made today") {
                 tweakStore.markMade(resolved.id)
                 dismiss()
@@ -179,7 +189,9 @@ struct CookView: View {
             Button("Close without recording") { dismiss() }
             Button("Keep cooking", role: .cancel) { }
         } message: {
-            Text("The date is the only thing kept -- there is no cooking journal.")
+            Text("The date is the only thing kept -- there is no cooking journal. Taking it "
+               + "out of the pantry writes one depletion per ingredient, which is what makes "
+               + "the next shopping list right.")
         }
         .onAppear {
             keepScreenAwake(true)
@@ -357,6 +369,75 @@ struct CookView: View {
             lines.append("\(label): \(chosen.displayName)")
         }
         return lines
+    }
+
+    // MARK: - The pantry
+
+    /// Cooking takes food out of the house, and until this existed nothing in the app said
+    /// so: `InventoryLedger.depleteForCook` was written, commented and called by nobody, so
+    /// every level drifted upward for ever and the pantry comparison on each new shopping
+    /// list was wrong in the same direction.
+    ///
+    /// It is a SEPARATE button from "Mark as made today" rather than a side effect of it.
+    /// Changing what the house is recorded as holding is not something to do silently on a
+    /// screen he opened to read the method.
+    ///
+    /// Four decisions about which lines count, each of which can be wrong in a way he would
+    /// have to unpick by hand:
+    ///
+    /// 1. **A pick-one group deplete only what he picked.** `choices` is already tracked for
+    ///    the spice mix-ins; without consulting it, cooking one variation would take all of
+    ///    them out of the pantry.
+    /// 2. **Optional and garnish lines are skipped**, matching `includeOptionalLines: false`
+    ///    on the shopping side. He may not have used them, and the cost of guessing wrong
+    ///    here is silent: a level that is too low asks him to buy what is already in the
+    ///    cupboard.
+    /// 3. **`createIfMissing: false`.** Cooking must not mint pantry rows. The four column
+    ///    labels the turkey document carries ("Fat", "Stock") would otherwise become items
+    ///    the first time he cooks it.
+    /// 4. **`.fixed` lines do not scale**, the same rule `CookQuantity.text` applies -- a
+    ///    triple batch does not use three bay leaves.
+    ///
+    /// Known limitation, stated rather than papered over: a line whose `subRecipePolicy` is
+    /// `.expandToIngredients` is depleted AS ITSELF, not as the ingredients it expands to.
+    /// Expanding needs `RecipeGraph.flatten` and a full `Options`, which this screen has no
+    /// reason to hold. The ledger records the stock, not the stock's onions.
+    @MainActor
+    private func depleteFromPantry(_ resolved: ResolvedRecipe) {
+        guard let ledger = injectedLedger else { return }
+        let resolver = FoodItemResolver(catalog: catalog)
+
+        var requirements: [InventoryLedger.CookRequirement] = []
+        for (index, component) in resolved.components.enumerated() {
+            // A component offering a choice contributes exactly one line, or none when he
+            // walked past the question.
+            let chosenID = choices[index]
+            let offersChoice = component.lines.contains { $0.isChoice }
+
+            for line in component.lines {
+                if offersChoice, line.isChoice, line.lineID != chosenID { continue }
+                if line.isOptional || line.isGarnish { continue }
+                if line.excludeFromShopping { continue }
+
+                let name = line.catalogName.isEmpty ? line.displayName : line.catalogName
+                guard !name.isEmpty else { continue }
+                guard let found = try? resolver.findOrCreate(
+                    name: name, createIfMissing: false, in: modelContext
+                ), let item = found else { continue }
+
+                let factor = line.scalingRule == .fixed ? Rational.one : effectiveScale
+                requirements.append(InventoryLedger.CookRequirement(
+                    item: item,
+                    needed: line.quantity?.scaled(by: factor),
+                    recipeID: resolved.id,
+                    recipeTitle: resolved.title,
+                    note: line.unmeasuredNote
+                ))
+            }
+        }
+
+        guard !requirements.isEmpty else { return }
+        ledger.depleteForCook(requirements, in: modelContext)
     }
 
     @ViewBuilder
