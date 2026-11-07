@@ -483,7 +483,7 @@ enum ShoppingListBuilder {
             let stapleDiverted = isStapleDiverted(
                 item: item,
                 hasParShortfall: parIdentities.contains(identity),
-                options: options
+                includeStaples: options.includeStaples
             )
 
             let lineStatus = status(
@@ -631,13 +631,18 @@ enum ShoppingListBuilder {
     ///
     /// Three things take a staple off the footer and onto the list proper: he asked for staples
     /// this time, he said this one was running low, or a par level says it is short.
+    ///
+    /// It takes `includeStaples` and not the whole `Options`, because that is the only field it
+    /// reads and `ShoppingListStore` has to call this too when a dropped meal changes a line —
+    /// off the list's FROZEN `includeStaples` rather than off a rebuilt `Options` it would have
+    /// to invent a date range for. One rule, two callers, no copy.
     static func isStapleDiverted(
         item: FoodItem?,
         hasParShortfall: Bool,
-        options: Options
+        includeStaples: Bool
     ) -> Bool {
         guard let item = item, item.trackingMode == .staple else { return false }
-        if options.includeStaples || item.isRunningLow || hasParShortfall { return false }
+        if includeStaples || item.isRunningLow || hasParShortfall { return false }
         return true
     }
 

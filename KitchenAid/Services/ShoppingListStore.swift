@@ -254,7 +254,12 @@ final class ShoppingListStore {
             for source in doomed { context.delete(source) }
             let survivors = sources.filter { $0.plannedMeal?.id != mealID }
 
-            if survivors.isEmpty && !line.isManual {
+            // Nothing gives a manual line a meal source, so this is unreachable today — and it
+            // is written anyway, because if it ever is reached his numbers are not ours to
+            // recompute and the ladder below would overwrite `.manual`.
+            if line.isManual { continue }
+
+            if survivors.isEmpty {
                 context.delete(line)
                 continue
             }
@@ -265,9 +270,11 @@ final class ShoppingListStore {
     /// Re-sums a line from the sources it has left, re-subtracts what the stored `have` rows
     /// say, and rewrites `requested` / `toBuy` / `purchase`.
     ///
-    /// `.unresolvedItem` and `.staple` are read back off the line rather than re-derived: both
-    /// are facts about the ITEM that dropping a meal cannot change, and re-deriving them here
-    /// would be a second writer of the thing `ShoppingListBuilder.status` owns.
+    /// The two facts the ladder needs that are not arithmetic — is it unmatched, and is it a
+    /// diverted staple — are derived from the ITEM and the list's FROZEN options, through the
+    /// builder's own `isStapleDiverted`. Reading the stored status back instead loses the
+    /// diversion whenever the status was something that outranks it: a staple pinned for a
+    /// bridge would come back as an ordinary needed line once the bridge cleared.
     private func recompute(
         _ line: ShoppingListLine,
         from survivors: [ShoppingListSource],
@@ -298,9 +305,13 @@ final class ShoppingListStore {
 
         var toBuy = result.toBuy
         let newStatus = ShoppingListBuilder.status(
-            isUnresolved: line.status == .unresolvedItem,
+            isUnresolved: item == nil || flags.contains(.unresolvedItem),
             needsBridge: flags.contains(.needsBridge),
-            isStapleDiverted: line.status == .staple,
+            isStapleDiverted: ShoppingListBuilder.isStapleDiverted(
+                item: item,
+                hasParShortfall: survivors.contains { $0.kind == .parLevel },
+                includeStaples: line.list?.includeStaples ?? false
+            ),
             nothingLeftToBuy: nothingLeftToBuy,
             didReduce: result.didReduce
         )
