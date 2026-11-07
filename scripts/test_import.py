@@ -509,3 +509,55 @@ print(f"PASS  recipes 03-04: turkey is 1 recipe over 2 pages with "
       f"{len(turkey['components'])} groups, {len(turkey['steps'])} steps, "
       f"a {len(times['rows'])}-row table and {len(turkey['notes'])} notes; "
       f"gravy makes {gravy['yieldAmount']} {gravy['yieldUnitLabel']}")
+
+
+# =============================================================================
+# Recipe 05 — the authored one, round-tripped
+#
+# This is the only recipe in the stack that Claude wrote rather than parsed, so
+# it is the only one that tests the WHOLE pipeline: authored JSON ->
+# make_recipe_pdf.py -> pdftotext -layout -> import_recipe.py. The x positions
+# in the generator have to survive text extraction as separable columns, and
+# this is what catches it when they stop doing so.
+#
+# Writing it already caught a page-splitting bug the other four documents could
+# not: its page 2 opens at "6. Mash (5 min)." rather than at a section header,
+# so it was being split into two recipes with every note lost into the second.
+# =============================================================================
+
+POTATOES_SRC = os.path.join(ROOT, "docs", "fixture-recipe-05-mashed-potatoes.txt")
+spuds_doc = load(POTATOES_SRC)
+
+check("R39 one recipe, not two pages of one", len(spuds_doc["recipes"]), 1)
+spuds = spuds_doc["recipes"][0]
+check("R39 title", spuds["title"], "Roasted Garlic and Gruyere Mashed Potatoes")
+check("R39 all nine steps", len(spuds["steps"]), 9)
+check("R39 and all five notes", len(spuds["notes"]), 5)
+check("R39 three groups", len(spuds["components"]), 3)
+check("R39 yield", (spuds["yieldAmount"], spuds["yieldUnitLabel"], spuds["servings"]),
+      (6, "cups", 4))
+check("R39 times", (spuds["activeMinutes"], spuds["totalMinutes"]), (35, 85))
+
+# A generated PDF should need no warnings at all: anything it warns about is
+# something the generator wrote badly, not something a document did oddly.
+check("R39 no warnings", spuds["warnings"], [])
+
+# The garlic goes in as whole heads and is squeezed into the bowl.
+spud_lines = {l["name"]: l for c in spuds["components"] for l in c["lines"]}
+check("R39 two heads of garlic",
+      (spud_lines["garlic"]["amountNumerator"], spud_lines["garlic"]["unit"]), (2, "head"))
+check("R39 left whole", spud_lines["garlic"]["preparation"], "left whole")
+check("R39 squeezed from the root end",
+      "squeeze each head from the root end" in spuds["steps"][0]["body"], True)
+
+# Standing preference: no nutmeg in anything authored for him.
+check("R39 no nutmeg anywhere", "nutmeg" in json.dumps(spuds).lower(), False)
+
+if failures:
+    print(f"FAIL  {len(failures)} assertion(s):\n")
+    for f in failures:
+        print(f"  ✗ {f}\n")
+    sys.exit(1)
+
+print(f"PASS  recipe 05: authored -> PDF -> text -> imported, "
+      f"{len(spuds['steps'])} steps, {len(spuds['notes'])} notes, no warnings")

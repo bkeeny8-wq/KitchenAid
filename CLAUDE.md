@@ -42,6 +42,23 @@ wrong, say so and ask.
 | **Photos** | **None, anywhere.** Not on recipes, not on steps. Do not add `PhotosUI`, an asset folder, or an image property "for later". |
 | **Units** | Per-ingredient, per-context. See the catalogue section. |
 
+### Standing preferences
+
+Things Brandon has said about his own cooking, which apply to every recipe
+written for him from here on. These are not per-recipe notes; do not put them in
+`recipe-overrides.json`.
+
+- **No nutmeg.** "I dont do nutmeg." Never include it in an authored recipe,
+  including as an optional pinch at the end.
+
+Two of his own imported documents do contain it — the Apple Compote asks for a
+pinch, and the pancake offers Nutmeg as one of its three spice mix-ins. Those
+are **his** documents, imported verbatim, so they have been left alone rather
+than quietly edited. The pancake's is only ever one of three alternatives, so it
+costs nothing; the compote's is a real ingredient line and he may want it
+dropped. Ask before changing either: editing a source document is different from
+authoring a new one.
+
 ### Where recipes come from, and why it shapes the schema
 
 His pipeline, in his words: *"I have claude create the pdf and drop to you to
