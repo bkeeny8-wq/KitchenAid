@@ -200,6 +200,9 @@ KNOWN = {
     "ImageRenderer", "PDFDocument", "PDFPage", "UIImage", "CGSize", "CGRect",
     "CGFloat", "AnyView", "EmptyView", "Namespace", "FocusState",
     "AppStorage", "SceneStorage", "Query", "ModelActor", "MainActor",
+    # The grid the attendance screen lays eaters out in, and the idle timer the
+    # cook screen disables so the phone does not lock mid-step.
+    "GridItem", "LazyVGrid", "UIApplication", "UIDevice",
     # CoreGraphics / CoreFoundation, for the PDF writer's CGContext path
     "CGContext", "CGDataConsumer", "CGPoint", "CFURL", "CFData", "CFDictionary",
     "ProposedViewSize", "RoundedRectangle", "Rectangle", "Capsule", "Circle",
