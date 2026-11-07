@@ -188,6 +188,14 @@ KNOWN = {
     # SwiftUI / Observation
     "View", "Text", "Image", "Observable", "State", "Environment", "Binding",
     "EnvironmentKey", "EnvironmentValues",
+    "App", "Scene", "WindowGroup", "TabView", "NavigationStack", "NavigationLink",
+    "List", "Section", "Label", "Color", "Font", "ViewBuilder", "Picker",
+    "VStack", "HStack", "ZStack", "Spacer", "Divider", "Group", "ForEach",
+    "ScrollView", "LazyVStack", "Button", "Toggle", "TextField", "Stepper",
+    "ShareLink", "ToolbarItem", "ToolbarItemPlacement", "Alignment", "Edge",
+    "ImageRenderer", "PDFDocument", "PDFPage", "UIImage", "CGSize", "CGRect",
+    "CGFloat", "AnyView", "EmptyView", "Namespace", "FocusState",
+    "AppStorage", "SceneStorage", "Query", "ModelActor", "MainActor",
 }
 
 used = set()
