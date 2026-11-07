@@ -172,6 +172,10 @@ KNOWN = {
     "Encodable", "CodingKey", "CodingKeys", "Identifiable", "Sendable",
     "CustomStringConvertible", "CustomDebugStringConvertible", "RawRepresentable",
     "CaseIterable", "Numeric", "SignedInteger", "BinaryInteger", "Never",
+    # `Self` is a keyword, not a type anyone declares. It appears capitalized in
+    # `Self.helper(...)` -- how an instance method of a final class reaches its own
+    # static members -- and ShoppingListStore is the first file here to need it.
+    "Self",
     "Decoder", "Encoder", "KeyedDecodingContainer", "KeyedEncodingContainer",
     "DecodingError", "EncodingError", "JSONDecoder", "JSONEncoder",
     # Foundation
