@@ -208,6 +208,13 @@ KNOWN = {
     "ProposedViewSize", "RoundedRectangle", "Rectangle", "Capsule", "Circle",
     "LocalizedError",
     "DynamicTypeSize", "ColorScheme", "UnsafePointer",
+    # The Shop tab and the export control. Added when they were first used rather
+    # than when the heuristic first complained: it only looks at a type POSITION,
+    # so a view type that is only ever constructed is invisible to it until
+    # somebody writes one down as a return type and gets a warning for an Apple
+    # type that was there all along.
+    "DisclosureGroup", "ProgressView", "Menu", "LabeledContent", "DatePicker",
+    "ToolbarContent", "ToolbarContentBuilder",
 }
 
 used = set()

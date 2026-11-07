@@ -30,25 +30,11 @@ struct RootTabView: View {
         case .recipes:
             RecipeListView()
         case .plan:
-            UnbuiltFeatureView(
-                title: "Plan",
-                detail: "The calendar, who is eating each meal, and the scaling that "
-                      + "follows from it. The data model for all of it is written; the "
-                      + "screens are not."
-            )
+            PlanWeekView()
         case .shop:
-            UnbuiltFeatureView(
-                title: "Shop",
-                detail: "A list built from the week's plan, merged across recipes, with "
-                      + "what you already have subtracted. The arithmetic exists and is "
-                      + "under test; this screen does not."
-            )
+            ShopView()
         case .pantry:
-            UnbuiltFeatureView(
-                title: "Pantry",
-                detail: "What the house has, as lots with dates and a transaction for "
-                      + "every change. The ledger is written; this screen is not."
-            )
+            PantryView()
         }
     }
 
