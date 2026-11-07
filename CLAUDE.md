@@ -44,20 +44,22 @@ wrong, say so and ask.
 
 ### Standing preferences
 
-Things Brandon has said about his own cooking, which apply to every recipe
-written for him from here on. These are not per-recipe notes; do not put them in
-`recipe-overrides.json`.
+Things Brandon has said about his own cooking that apply beyond the one recipe
+he said them about. Record one here only when he has made it general; a
+preference about a single dish belongs in that dish, not here.
 
-- **No nutmeg.** "I dont do nutmeg." Never include it in an authored recipe,
-  including as an optional pinch at the end.
+*(None yet.)*
 
-Two of his own imported documents do contain it — the Apple Compote asks for a
-pinch, and the pancake offers Nutmeg as one of its three spice mix-ins. Those
-are **his** documents, imported verbatim, so they have been left alone rather
-than quietly edited. The pancake's is only ever one of three alternatives, so it
-costs nothing; the compote's is a real ingredient line and he may want it
-dropped. Ask before changing either: editing a source document is different from
-authoring a new one.
+**A worked example of getting this wrong.** He said "I dont do nutmeg" while
+reviewing the mashed potatoes, and that was written up here as a blanket rule:
+never nutmeg, in anything. He corrected it immediately — "nutmeg is fine there,
+no need for it in the potatoes." Two of his own documents use nutmeg quite
+happily, which was visible at the time and should have been the clue.
+
+So: he was answering about the dish in front of him, not legislating. A single
+"I don't do X" is about that recipe until he says otherwise, and the cost of
+guessing wrong is that every future recipe is silently missing something he
+likes. When a remark *could* be general, ask rather than promote it.
 
 ### Where recipes come from, and why it shapes the schema
 
