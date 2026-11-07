@@ -236,10 +236,6 @@ final class RecipeLoader {
 
     var hasDiagnostics: Bool { !diagnostics.isEmpty }
 
-    func diagnostics(of kind: ContentDiagnostic.Kind) -> [ContentDiagnostic] {
-        diagnostics.filter { $0.kind == kind }
-    }
-
     /// A decode failure is reported with the key and the path, not just "could not be
     /// read": the file is hand-edited, and a diagnostic that does not say WHERE costs a
     /// re-read of a 400-line JSON file to find a renamed key.

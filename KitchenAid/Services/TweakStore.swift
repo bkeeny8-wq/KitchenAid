@@ -93,7 +93,7 @@ final class TweakStore {
     /// back on the next build.
     func effectiveRecipe(id recipeID: String) -> ResolvedRecipe? {
         guard let original = loader.recipe(id: recipeID) else { return nil }
-        guard let tweak = tweakIfExists(for: recipeID) else {
+        guard let tweakRow = tweakIfExists(for: recipeID) else {
             return ResolvedRecipe(recipe: original, original: original)
         }
 
@@ -102,7 +102,7 @@ final class TweakStore {
         var overriddenStepIDs: Set<String> = []
 
         var lineRows: [String: IngredientOverride] = [:]
-        for row in tweak.orderedIngredientOverrides where !row.lineID.isEmpty {
+        for row in tweakRow.orderedIngredientOverrides where !row.lineID.isEmpty {
             // First row wins for a given key. Two rows for one line should not exist, but
             // `orderedIngredientOverrides` is sorted, so if they do the same one applies
             // on every launch rather than whichever the array happened to hand back first.
@@ -120,7 +120,7 @@ final class TweakStore {
         }
 
         var stepRows: [String: StepOverride] = [:]
-        for row in tweak.orderedStepOverrides where !row.stepID.isEmpty {
+        for row in tweakRow.orderedStepOverrides where !row.stepID.isEmpty {
             if stepRows[row.stepID] == nil { stepRows[row.stepID] = row }
         }
         if !stepRows.isEmpty {
@@ -137,10 +137,10 @@ final class TweakStore {
             original: original,
             overriddenLineIDs: overriddenLineIDs,
             overriddenStepIDs: overriddenStepIDs,
-            lastMadeAt: tweak.lastMadeAt,
-            userNotes: tweak.notes,
-            isFavorite: tweak.isFavorite,
-            lapsedOverrides: lapses(for: tweak, in: original)
+            lastMadeAt: tweakRow.lastMadeAt,
+            userNotes: tweakRow.notes,
+            isFavorite: tweakRow.isFavorite,
+            lapsedOverrides: lapses(for: tweakRow, in: original)
         )
     }
 
@@ -330,21 +330,21 @@ final class TweakStore {
 
     func setNotes(_ text: String, for recipeID: String) {
         guard !recipeID.isEmpty else { return }
-        let tweak = tweak(for: recipeID, in: context)
-        tweak.notes = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        tweak.touch()
+        let tweakRow = tweak(for: recipeID, in: context)
+        tweakRow.notes = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        tweakRow.touch()
         save()
-        pruneIfEmpty(tweak, in: context)
+        pruneIfEmpty(tweakRow, in: context)
         save()
     }
 
     func setFavorite(_ value: Bool, for recipeID: String) {
         guard !recipeID.isEmpty else { return }
-        let tweak = tweak(for: recipeID, in: context)
-        tweak.isFavorite = value
-        tweak.touch()
+        let tweakRow = tweak(for: recipeID, in: context)
+        tweakRow.isFavorite = value
+        tweakRow.touch()
         save()
-        pruneIfEmpty(tweak, in: context)
+        pruneIfEmpty(tweakRow, in: context)
         save()
     }
 
@@ -352,32 +352,32 @@ final class TweakStore {
     /// journal with ratings and per-cook notes and declined it.
     func markMade(_ recipeID: String, at date: Date = .now) {
         guard !recipeID.isEmpty else { return }
-        let tweak = tweak(for: recipeID, in: context)
-        tweak.lastMadeAt = date
-        tweak.touch(at: date)
+        let tweakRow = tweak(for: recipeID, in: context)
+        tweakRow.lastMadeAt = date
+        tweakRow.touch(at: date)
         save()
     }
 
     func clearIngredientOverride(lineID: String, in recipeID: String) {
-        guard let tweak = tweakIfExists(for: recipeID),
-              let row = tweak.ingredientOverride(lineID: lineID) else { return }
+        guard let tweakRow = tweakIfExists(for: recipeID),
+              let row = tweakRow.ingredientOverride(lineID: lineID) else { return }
         context.delete(row)
-        tweak.touch()
+        tweakRow.touch()
         // SAVED BEFORE PRUNING, and the order is the point: until the delete is saved the
         // relationship array still holds the row, so `RecipeTweak.isEmpty` would answer
         // "no" and the now-empty row would survive as residue.
         save()
-        pruneIfEmpty(tweak, in: context)
+        pruneIfEmpty(tweakRow, in: context)
         save()
     }
 
     func clearStepOverride(stepID: String, in recipeID: String) {
-        guard let tweak = tweakIfExists(for: recipeID),
-              let row = tweak.stepOverride(stepID: stepID) else { return }
+        guard let tweakRow = tweakIfExists(for: recipeID),
+              let row = tweakRow.stepOverride(stepID: stepID) else { return }
         context.delete(row)
-        tweak.touch()
+        tweakRow.touch()
         save()
-        pruneIfEmpty(tweak, in: context)
+        pruneIfEmpty(tweakRow, in: context)
         save()
     }
 
@@ -411,8 +411,8 @@ final class TweakStore {
     /// launch as him having deleted the 2 tbsp — an edit to one field silently erasing
     /// another. Seeding makes `hasQuantity == false` mean only what it says.
     private func ingredientOverride(forLine lineID: String, in recipeID: String) -> IngredientOverride {
-        let tweak = tweak(for: recipeID, in: context)
-        if let existing = tweak.ingredientOverride(lineID: lineID) { return existing }
+        let tweakRow = tweak(for: recipeID, in: context)
+        if let existing = tweakRow.ingredientOverride(lineID: lineID) { return existing }
 
         var seedQuantity: Quantity? = nil
         var snapshot = ""
@@ -427,13 +427,13 @@ final class TweakStore {
         // The to-one side is assigned and the array is left alone: `inverse:` is declared
         // on `RecipeTweak.ingredientOverrides`, so SwiftData maintains the other end.
         // Writing both would risk the row appearing twice.
-        row.tweak = tweak
+        row.tweak = tweakRow
         return row
     }
 
     private func stepOverride(forStep stepID: String, in recipeID: String) -> StepOverride {
-        let tweak = tweak(for: recipeID, in: context)
-        if let existing = tweak.stepOverride(stepID: stepID) { return existing }
+        let tweakRow = tweak(for: recipeID, in: context)
+        if let existing = tweakRow.stepOverride(stepID: stepID) { return existing }
 
         var snapshot = ""
         if let bundledStep = loader.recipe(id: recipeID)?.step(id: stepID) {
@@ -442,7 +442,7 @@ final class TweakStore {
 
         let row = StepOverride(stepID: stepID, stepTitleSnapshot: snapshot)
         context.insert(row)
-        row.tweak = tweak
+        row.tweak = tweakRow
         return row
     }
 
@@ -450,8 +450,8 @@ final class TweakStore {
     /// site that forgets `touch()` is invisible until duplicate-folding picks the wrong
     /// survivor — a bug that surfaces months later on a second device.
     private func finishIngredient(_ row: IngredientOverride, forLine lineID: String, in recipeID: String) {
-        let tweak = tweak(for: recipeID, in: context)
-        tweak.touch()
+        let tweakRow = tweak(for: recipeID, in: context)
+        tweakRow.touch()
 
         // A row whose quantity matches the content and whose text fields are empty is not
         // an override, it is a row he undid. Keeping it would mark the line as tweaked in
@@ -465,13 +465,13 @@ final class TweakStore {
         }
 
         save()
-        pruneIfEmpty(tweak, in: context)
+        pruneIfEmpty(tweakRow, in: context)
         save()
     }
 
     private func finishStep(_ row: StepOverride, in recipeID: String) {
-        let tweak = tweak(for: recipeID, in: context)
-        tweak.touch()
+        let tweakRow = tweak(for: recipeID, in: context)
+        tweakRow.touch()
 
         if row.titleOverride.isEmpty, row.bodyOverride.isEmpty, row.note.isEmpty,
            !row.hasMinutesOverride {
@@ -479,7 +479,7 @@ final class TweakStore {
         }
 
         save()
-        pruneIfEmpty(tweak, in: context)
+        pruneIfEmpty(tweakRow, in: context)
         save()
     }
 
