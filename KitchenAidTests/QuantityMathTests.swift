@@ -91,13 +91,39 @@ final class QuantityMathTests: XCTestCase {
 
     /// With a density, volume and mass collapse onto one bucket rather than
     /// showing the cook two numbers for one ingredient.
+    ///
+    /// `sum` runs that collapse itself, so there is already ONE bucket by the
+    /// time it returns. This asserted 2, with the message "sum keeps the
+    /// buckets; collapsing is a separate pass" — a description of a `sum` that
+    /// does not exist, and the test would have failed on the first run on a Mac.
+    /// Two callers depend on the real one: `ShoppingListBuilder` raises
+    /// `.needsBridge` from `hasVolume && hasMass` on `sum`'s OUTPUT and
+    /// `ShoppingListStore` re-sums the same way, and both are only correct
+    /// because the density has already merged the pair.
     func testVolumeAndMassCollapseWhenADensityExists() {
         let mixed = QuantityMath.sum(
             [q(.one, UnitCatalog.cup), q(Rational(200), UnitCatalog.gram)],
             using: flour
         )
-        XCTAssertEqual(mixed.count, 2, "sum keeps the buckets; collapsing is a separate pass")
-        let collapsed = QuantityMath.collapseAcrossDimensions(mixed, using: flour, system: .us)
+        XCTAssertEqual(mixed.count, 1, "sum collapses on the density itself")
+        // 200 g at 120 g per cup is 5/3 cup, so this is 8/3 cup in all.
+        XCTAssertEqual(mixed[0].base, Rational(8, 3) * UnitCatalog.cup.baseFactor)
+        XCTAssertFalse(mixed[0].conversionNote.isEmpty,
+                       "a bucket merged on a density must carry the density it was merged on")
+
+        // And `collapseAcrossDimensions` called DIRECTLY, on an array that
+        // genuinely holds two buckets. Summing with salt's missing density is
+        // what produces one: handing it the already-collapsed array above
+        // asserted nothing, because it returns early when either dimension is
+        // absent — so the old line passed without the function doing any work.
+        let twoBuckets = QuantityMath.sum(
+            [q(.one, UnitCatalog.cup), q(Rational(200), UnitCatalog.gram)],
+            using: salt
+        )
+        XCTAssertEqual(twoBuckets.count, 2)
+        let collapsed = QuantityMath.collapseAcrossDimensions(
+            twoBuckets, using: flour, system: .us
+        )
         XCTAssertEqual(collapsed.count, 1, "1 cup + 200 g of flour is one amount, not two")
     }
 
@@ -210,17 +236,41 @@ final class QuantityMathTests: XCTestCase {
     /// No user-facing string may carry an exact rational with an absurd
     /// denominator. A by-hand trace of the butter bridge produced
     /// "23 1111/1135 tsp", which is correct and useless.
+    ///
+    /// Pointed at the CONVERSION NOTE, which is where that string actually came
+    /// from. This test previously drove `subtract` and looped over `toBuy`, and
+    /// asserted nothing at all: 4 oz of butter is 113 2/5 g, which fully covers a
+    /// 2 tbsp requirement, so `toBuy` was empty and the loop body never ran. It
+    /// passed vacuously in both directions, which left the worst display bug this
+    /// project has had with no regression guard whatsoever.
+    ///
+    /// The real path: `bridgeHave` moves 567/5 g toward volume, giving 27216/1135
+    /// tsp — the denominator in the bug — and the note it writes has to render
+    /// that through the display ladder rather than exactly.
     func testNoDisplayStringLeaksAnAbsurdFraction() {
-        let requested = QuantityMath.sum([q(Rational(2), UnitCatalog.tablespoon)], using: butter)
         let have = [subtotal(Rational(4) * UnitCatalog.ounce.baseFactor, UnitCatalog.ounce)]
-        let result = QuantityMath.subtract(requested: requested, have: have, item: butter)
-        for bucket in result.toBuy {
-            let text = bucket.quantity?.displayString() ?? ""
+        let bridged = QuantityMath.bridgeHave(
+            have,
+            toward: [MeasureDimension.volume.rawValue],
+            using: butter
+        )
+        XCTAssertEqual(bridged.bridged.count, 1, "4 oz of butter bridges to a volume")
+        XCTAssertTrue(bridged.unbridgeable.isEmpty)
+
+        // Both the note and the rendered amount, because either one printing the
+        // exact rational reproduces the bug.
+        let note = bridged.bridged[0].conversionNote
+        let amount = bridged.bridged[0].quantity?.displayString() ?? ""
+        XCTAssertFalse(note.isEmpty, "a bridged subtotal must say how it was bridged")
+        for text in [note, amount] {
             XCTAssertFalse(text.contains("/1135"), text)
             // Nothing a kitchen reads has a three-digit denominator.
-            if let slash = text.firstIndex(of: "/") {
-                let denominator = text[text.index(after: slash)...].prefix { $0.isNumber }
+            var rest = Substring(text)
+            while let slash = rest.firstIndex(of: "/") {
+                let after = rest.index(after: slash)
+                let denominator = rest[after...].prefix { $0.isNumber }
                 XCTAssertLessThanOrEqual(denominator.count, 2, "denominator in \(text)")
+                rest = rest[after...]
             }
         }
     }

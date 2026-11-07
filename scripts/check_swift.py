@@ -14,9 +14,11 @@ that actually happened here, and none of them pretends to type-check Swift.
   2. Braces, parens and brackets balance in every file.
   3. No @Attribute(.unique) -- CloudKit-backed stores reject it (CLAUDE.md).
   4. No symbol from a declined feature has crept back in.
-  5. Type names used but declared nowhere in the tree. This is a heuristic with
-     an allowlist, and it is the check that found CalendarKey and RecipeLoader
-     being referenced by files that compiled against nothing.
+  5. Type names used but declared nowhere in the tree -- in a type position, or
+     as a constructor. This is a heuristic with an allowlist, and it is the
+     check that found CalendarKey and RecipeLoader being referenced by files
+     that compiled against nothing. It FAILS rather than warns, for the reason
+     recorded at the check itself.
 """
 
 import os
@@ -27,7 +29,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "KitchenAid")
 
 problems = []
-warnings = []
 
 
 def swift_files():
@@ -200,9 +201,13 @@ KNOWN = {
     "ImageRenderer", "PDFDocument", "PDFPage", "UIImage", "CGSize", "CGRect",
     "CGFloat", "AnyView", "EmptyView", "Namespace", "FocusState",
     "AppStorage", "SceneStorage", "Query", "ModelActor", "MainActor",
-    # The grid the attendance screen lays eaters out in, and the idle timer the
-    # cook screen disables so the phone does not lock mid-step.
-    "GridItem", "LazyVGrid", "UIApplication", "UIDevice",
+    # The grid the attendance screen lays eaters out in, the idle timer the cook
+    # screen disables so the phone does not lock mid-step, and the clock
+    # `CookTimerBar` redraws its elapsed time from. `TimelineView` is the one
+    # name the constructor scan below found missing from this list, which is
+    # what that scan costs: it is only ever constructed, so nothing before it
+    # looked.
+    "GridItem", "LazyVGrid", "UIApplication", "UIDevice", "TimelineView",
     # CoreGraphics / CoreFoundation, for the PDF writer's CGContext path
     "CGContext", "CGDataConsumer", "CGPoint", "CFURL", "CFData", "CFDictionary",
     "ProposedViewSize", "RoundedRectangle", "Rectangle", "Capsule", "Circle",
@@ -225,15 +230,43 @@ for p, code in CODE.items():
         used.add((m.group(1), p))
     for m in re.finditer(r"\b([A-Z]\w+)\.(?:self|init|shared|current)\b", code):
         used.add((m.group(1), p))
+    # ...and a capitalized identifier being CONSTRUCTED. Four view types shipped
+    # used-and-declared-nowhere while this script printed PASS, because a
+    # SwiftUI view that is only ever built -- `CookTimerBar(step: step)` in
+    # Views/Cook/CookView.swift -- sits in no type position whatsoever: not
+    # after a `:`, not after a `->`, never with `.self`. Nothing above could
+    # reach it, so the one check written to catch exactly this missed all four.
+    #
+    # Scanning CODE and not FILES is what keeps prose out. Nine capitalized
+    # words here live only in comments and strings -- Crostini, Rung, Staples,
+    # EDGE, RANGE among them -- and every one would be reported off the raw
+    # text. The lookbehind drops `foo.Bar(`, which is a member access and not a
+    # type.
+    #
+    # Still invisible, and worth knowing: a type used ONLY with a trailing
+    # closure and no parentheses, `MyWrapper { ... }`, matches nothing here.
+    for m in re.finditer(r"(?<![\w.])([A-Z]\w+)\s*\(", code):
+        used.add((m.group(1), p))
 
 unknown = {}
 for name, p in used:
     if name in declared or name in KNOWN:
         continue
     unknown.setdefault(name, set()).add(rel(p))
+# A PROBLEM, not a warning. These were warnings, and the four missing views are
+# what that cost: the script listed them and then printed PASS, which is the
+# word anybody reads. A name here is one of exactly two things -- a declaration
+# this tree does not have, or a framework type missing from KNOWN -- and both
+# want doing before a build, so neither is something to note and walk past.
+#
+# The price is that a newly used Apple type fails this script until it is added
+# to KNOWN above. That is a one-line edit, and it is the cheaper half of the
+# trade.
 for name in sorted(unknown):
     where = ", ".join(sorted(unknown[name]))
-    warnings.append(f"`{name}` used but declared nowhere in this tree ({where})")
+    problems.append(f"`{name}` used but declared nowhere in this tree ({where}) -- "
+                    "either its declaration is missing, or it is a framework type "
+                    "to add to KNOWN in this script")
 
 # --- 6. every key the importer emits is read by the Swift --------------------
 # Recipe 02 added nine fields -- ranges, the recipe's own gram equivalents, and
@@ -276,12 +309,6 @@ if RECIPES:
 print(f"{len(FILES)} Swift files, "
       f"{sum(len(t.splitlines()) for t in FILES.values())} lines, "
       f"{len(models)} @Model classes, {len(listed)} schema entries")
-
-if warnings:
-    print(f"\n{len(warnings)} warning(s) -- a type here is either an unbuilt file, or a "
-          f"framework type to add to KNOWN in this script:")
-    for w in warnings:
-        print("  ?", w)
 
 if problems:
     print(f"\nFAIL  {len(problems)} problem(s):")

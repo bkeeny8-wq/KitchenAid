@@ -10,8 +10,10 @@ import SwiftUI
 /// table, timing as a rate rather than a duration, and all-caps instructions
 /// that matter more than anything else on the page.
 ///
-/// It is READ-ONLY for now. Tweaks and notes are a later screen; showing an
-/// edit affordance that does nothing would be worse than showing none.
+/// It does not EDIT the recipe. Tweaks and notes are a later screen; showing an
+/// edit affordance that does nothing would be worse than showing none. The one
+/// action on it is Cook, which is the reason the screen gets opened at all and
+/// which had no entry point anywhere in the app until now.
 struct RecipeDetailView: View {
     let recipeID: String
 
@@ -30,6 +32,7 @@ struct RecipeDetailView: View {
         List {
             header(recipe)
             emphasis(recipe)
+            cook(recipe)
             ingredients(recipe)
             method(recipe)
             tables(recipe)
@@ -125,6 +128,35 @@ struct RecipeDetailView: View {
     private func isShouted(_ text: String) -> Bool {
         let letters = text.filter { $0.isLetter }
         return letters.count > 3 && letters.allSatisfy { $0.isUppercase }
+    }
+
+    // MARK: - Cook
+
+    /// Into cook mode, at ×1.
+    ///
+    /// `.one` is the honest scale here and not a placeholder: a recipe opened from the
+    /// library has no meal behind it, so there is no attendance to divide by servings.
+    /// The plan's scale comes from `MealScaling` on the Today screen, where a
+    /// `MealRecipe` exists to derive it from — a dish cooked off a plan must reach the
+    /// stove at the scale it was planned at.
+    ///
+    /// Below the shouted notes on purpose. `DO NOT USE SALTED BUTTER.` is the kind of
+    /// instruction that is useless after the fact, so it stays above the button that
+    /// starts the cooking — the same reason `CookView` shows the shouts before its
+    /// first step.
+    @ViewBuilder
+    private func cook(_ recipe: Recipe) -> some View {
+        Section {
+            NavigationLink {
+                CookView(recipeID: recipe.id, scale: .one)
+            } label: {
+                Label("Cook this", systemImage: "flame.fill")
+                    .font(.body.weight(.medium))
+            }
+        } footer: {
+            Text("One step at a time, in type you can read from the stove. Finishing "
+                 + "records the date and nothing else.")
+        }
     }
 
     // MARK: - Ingredients

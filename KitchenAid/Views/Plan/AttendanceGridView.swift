@@ -17,7 +17,10 @@ import SwiftData
 /// - **No head count is hardcoded.** The grid is whatever the roster is: right for one
 ///   person and right for nine.
 ///
-/// It renders several `Section`s and must be placed inside a `List` or `Form`.
+/// It renders several `Section`s, so it must be placed inside a `List` or `Form`, and it
+/// pushes `HouseholdView`, so that has to be inside a `NavigationStack`. Its one caller,
+/// `MealEditorView`, is reached by a `NavigationLink` from all three plan screens, so both
+/// hold.
 struct AttendanceGridView: View {
     let meal: PlannedMeal
     let roster: [Eater]
@@ -52,6 +55,18 @@ struct AttendanceGridView: View {
                     }
                     .frame(minHeight: 44)
                 }
+
+                // The roster, from the screen where attendance is actually edited.
+                // `missing` can only ever offer people who already exist, so with an empty
+                // roster it is empty too — and before this row there was nothing anywhere
+                // in the app that led to a screen where somebody could be added.
+                NavigationLink {
+                    HouseholdView()
+                } label: {
+                    Label(rosterLinkTitle, systemImage: "person.2")
+                        .font(.subheadline)
+                }
+                .frame(minHeight: 44)
 
                 PortionSummary(meal: meal)
                     .padding(.vertical, 2)
@@ -123,6 +138,12 @@ struct AttendanceGridView: View {
 
     private var missing: [Eater] {
         PlanEditor.rosterMissing(from: meal, roster: roster)
+    }
+
+    /// Says what the link is FOR when there is nobody to add. "Household" on its own reads
+    /// as a settings screen rather than as the answer to "there is nobody in the list".
+    private var rosterLinkTitle: String {
+        roster.isEmpty ? "Add someone to the household" : "Household"
     }
 
     private var consuming: [MealAttendance] {

@@ -37,8 +37,8 @@ enum QuantityMath {
     /// exactly in it.
     ///
     /// (a) If the HINT unit — the unit the most source lines were written in, ties broken
-    ///     toward the FINER unit — yields an amount in [1/4, 64), use it. If every recipe
-    ///     says tbsp, he wants tbsp.
+    ///     toward the FINER unit — yields an amount in [1/4, 64) AND no COARSER candidate
+    ///     renders the value cleanly, use it. If every recipe says tbsp, he wants tbsp.
     /// (b) Otherwise take the COARSEST candidate where base/factor >= 1. If that amount's
     ///     reduced denominator exceeds 8, step ONE unit finer and retry.
     /// (c) If nothing yields a denominator <= 8, keep the coarsest with amount >= 1, keep the
@@ -50,7 +50,8 @@ enum QuantityMath {
     ///     and not as "0 tbsp".
     ///
     /// `fl oz`, `gallon` and (in US mode) `kg`/`L` are not candidates at all, which is what
-    /// guarantees 18 tsp of butter renders "6 tbsp" and never "3 fl oz".
+    /// rules "3 fl oz" out for 18 tsp of butter; rung (a)'s coarser-unit test is what makes
+    /// the same 18 tsp read "6 tbsp" rather than "18 tsp".
     ///
     /// The returned flag is about the STORED value, not about the characters printed:
     /// `Rational.kitchenRounded` decides those, and rounds whether or not this flag is set.
@@ -65,9 +66,45 @@ enum QuantityMath {
         guard let finest = candidates.last else { return (UnitCatalog.each, false) }
 
         // (a)
-        if let h = hint, h.isHouseholdCommon, candidates.contains(h), h.baseFactor != .zero {
+        if let h = hint, h.isHouseholdCommon, h.baseFactor != .zero,
+           let hIndex = candidates.firstIndex(of: h) {
+            // The window on its own was not enough. 18 one-tsp contributions of butter give
+            // a base of 18 tsp and a hint of tsp (18 of 18 lines written in tsp); 18 sits
+            // inside [1/4, 64); so this rung returned "18 tsp" — while the ladder above and
+            // `QuantityMathTests.testFluidOuncesNeverAppear` both say "6 tbsp". Rung (b) had
+            // the right answer all along (18/3 = 6, denominator 1) and never got to run.
+            //
+            // So the hint now steps aside where a COARSER candidate renders the value as a
+            // WHOLE number — which is exactly the 18-tsp case (18/3 = 6) and almost nothing
+            // else. `candidates` is COARSEST FIRST, so "coarser than h" is every index
+            // before `hIndex`.
+            //
+            // `denominator == 1` and not rung (b)'s own `<= 8`, which was the first attempt
+            // here and was too wide by a long way. Swept over the realistic (amount, written
+            // unit) pairs, `<= 8` changed 44 displays and made 12 of them strictly worse by
+            // trading an exact reading for an inexact one: 4 tsp became "1 1/3 tbsp", 18 oz
+            // became "1 1/8 lb", and the test file's own flour case — 1 cup + 200 g, which
+            // collapses to 128 tsp — became "1 1/3 pints". No kitchen has a 1/3-tbsp measure
+            // and no scale reads 1 1/8 lb, while 4 tsp and 18 oz are both exactly
+            // measurable. A whole number is the only thing worth leaving the written unit
+            // for.
+            //
+            // Still open, and deliberately NOT fixed here: `pint` and `quart` are volume
+            // display candidates at all (UnitCatalog.displayCandidates), so 2 cups renders
+            // "1 pint" under every version of this rung. Nobody measures flour in pints.
+            // That is a candidate-list question, not a ladder question, and changing it
+            // moves displays this file has no assertions over.
+            var coarserRendersWhole = false
+            for coarser in candidates[..<hIndex] where coarser.baseFactor != .zero {
+                let coarseAmount = base / coarser.baseFactor
+                if coarseAmount >= .one && coarseAmount.denominator == 1 {
+                    coarserRendersWhole = true
+                    break
+                }
+            }
             let amount = base / h.baseFactor
-            if amount >= Rational(1, 4) && amount < Rational(64) { return (h, false) }
+            if !coarserRendersWhole,
+               amount >= Rational(1, 4) && amount < Rational(64) { return (h, false) }
         }
 
         // (b) and (c)

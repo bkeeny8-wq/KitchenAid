@@ -10,15 +10,21 @@ import SwiftData
 ///
 /// **No dietary or allergy data.** Brandon was offered per-person restrictions and warnings
 /// and declined them, so there is no field, no section and no hook for one.
+///
+/// Reached by pushing, from the Plan tab — the toolbar on `PlanWeekView` and a row in
+/// `AttendanceGridView`'s "Who is eating". For a while it was reached from nowhere at all:
+/// the only references to this type were its own declaration and the two views it pushes,
+/// which made the add-person sheet and the per-eater editor both unreachable and the
+/// household permanently whatever `KitchenAidSeed.seedHousehold` wrote.
 struct HouseholdView: View {
     @Environment(\.modelContext) private var context
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.storeUnavailable) private var storeUnavailable
 
     @Query private var allEaters: [Eater]
 
     @State private var isAddingPerson = false
     @State private var pendingRemoval: Eater?
+    @State private var refusal: RosterRefusal?
 
     var body: some View {
         List {
@@ -71,11 +77,9 @@ struct HouseholdView: View {
         }
         .listStyle(.insetGrouped)
         .navigationTitle("Household")
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Done") { dismiss() }
-            }
-        }
+        // No Done button. There was one, from when this was going to be a sheet, and in a
+        // pushed screen a trailing "Done" beside a back chevron claims there is something
+        // to commit. There is not: every edit here writes straight through to the row.
         .sheet(isPresented: $isAddingPerson) {
             NavigationStack {
                 AddPersonSheet(roster: ordered)
@@ -103,6 +107,25 @@ struct HouseholdView: View {
         } message: {
             Text(removalMessage)
         }
+        .alert(
+            "Cannot remove them",
+            isPresented: isShowingRefusal,
+            presenting: refusal
+        ) { blocked in
+            // The suggestion is a BUTTON, not a sentence. A refusal whose alternative is
+            // only described is a dead end, and "mark them inactive instead" is one tap
+            // away — `HouseholdEditor.setActive` is the same call the confirmation offers
+            // beside Remove.
+            if blocked.eater.isActive {
+                Button(blocked.refusal.suggestion) {
+                    HouseholdEditor.setActive(blocked.eater, isActive: false)
+                    refusal = nil
+                }
+            }
+            Button("OK", role: .cancel) { refusal = nil }
+        } message: { blocked in
+            Text(refusalMessage(blocked))
+        }
     }
 
     // MARK: - Rows
@@ -124,7 +147,7 @@ struct HouseholdView: View {
         }
         .swipeActions(edge: .trailing) {
             Button(role: .destructive) {
-                pendingRemoval = eater
+                attemptRemoval(eater)
             } label: {
                 Label("Remove", systemImage: "trash")
             }
@@ -173,8 +196,10 @@ struct HouseholdView: View {
             + "between them. Recipes scale by the portions, not the heads."
     }
 
-    /// The store is seeded with two, so this is only reached if he removes everybody. It
-    /// says what that means rather than looking broken.
+    /// Not reachable by removing everybody any more — `HouseholdEditor.canRemove` refuses
+    /// the last person — so what is left is a store that arrived empty: the seed did not
+    /// run, or it ran on a device whose rows came from somewhere else. It says what that
+    /// means rather than looking broken, and the Add button below it is the way out.
     private var emptyRoster: some View {
         EmptyStateView(
             kind: .nothingYet,
@@ -188,6 +213,35 @@ struct HouseholdView: View {
     }
 
     // MARK: - Removal
+
+    /// Asks before it offers. The last person is refused outright, because an empty roster
+    /// is the one state here that nothing in the app can walk back from: every meal falls
+    /// back to `defaultDinerCount` with a `.noAttendance` note, so the amounts stop coming
+    /// from anybody without anything on screen saying so.
+    private func attemptRemoval(_ eater: Eater) {
+        switch HouseholdEditor.canRemove(eater, of: ordered) {
+        case .success:
+            pendingRemoval = eater
+        case .failure(let reason):
+            refusal = RosterRefusal(eater: eater, refusal: reason)
+        }
+    }
+
+    private var isShowingRefusal: Binding<Bool> {
+        Binding(get: { refusal != nil }, set: { if !$0 { refusal = nil } })
+    }
+
+    /// The refusal's own words, so this and the pantry refuse alike.
+    ///
+    /// The second sentence covers the one dead end `DeleteRefusal` cannot know about: they
+    /// are the last person AND already not being included, so "mark them inactive instead"
+    /// is already done and offering it as a button would change nothing.
+    private func refusalMessage(_ blocked: RosterRefusal) -> String {
+        if blocked.eater.isActive { return blocked.refusal.message }
+        return blocked.refusal.message
+            + " They are already left off new meals, so there is nothing else to do with "
+            + "them until somebody else is here."
+    }
 
     private var isConfirmingRemoval: Binding<Bool> {
         Binding(
@@ -234,6 +288,16 @@ struct HouseholdView: View {
         )
         return sentences.joined(separator: " ")
     }
+}
+
+/// A refusal and the person it is about, in one value.
+///
+/// Two `@State`s — a `DeleteRefusal?` beside an `Eater?` — can disagree, and the button
+/// that marks somebody inactive has to act on the person the message names. One optional
+/// cannot get that wrong.
+struct RosterRefusal {
+    let eater: Eater
+    let refusal: DeleteRefusal
 }
 
 /// Adding a person. A sheet with a draft rather than an inserted blank row, because an

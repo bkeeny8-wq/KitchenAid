@@ -21,8 +21,12 @@
 		DB3DA5F3FB8719501F9E2F75 /* CatalogFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FA5C9C78E1C7306256C0A5 /* CatalogFile.swift */; };
 		3EB92985B020C7991A4D1441 /* CatalogPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA779B8EEC9E7331E894174A /* CatalogPickerView.swift */; };
 		9828532B0C68FBC1A9AE0202 /* ContentDiagnostic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8971D6254D761F5B5062C1A1 /* ContentDiagnostic.swift */; };
+		F768D57E2A88802B84191ED5 /* CookIngredientsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00A19B4F09DF84A4151D958 /* CookIngredientsSheet.swift */; };
 		219734E26FE15E2042CE10F2 /* CookReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B652CF2BDB6ABEBB6ECFCD7 /* CookReading.swift */; };
+		9B700B1B4415575BE460C18A /* CookShoutedSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801E5C4525AC4F1150EA7331 /* CookShoutedSheet.swift */; };
 		F470BACF0145FC4364FEEB33 /* CookStepCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C8DC5F38FE07E4C31E4F8E /* CookStepCard.swift */; };
+		15E2EAE89C5FABE2DA5DBFA0 /* CookTimerBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521E28E674B9CF08C2655E66 /* CookTimerBar.swift */; };
+		51E642CF5853335D8D13C809 /* CookTimingChartSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6C8E9563B0708EFF17F22 /* CookTimingChartSheet.swift */; };
 		6281ED59538557E9F7A51688 /* CookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA20CA121AF8D2AD5AB8F19 /* CookView.swift */; };
 		28E5F0FC9DD1BE212E3D5EF6 /* DiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B157F16EF1EDB2317D8449 /* DiagnosticsView.swift */; };
 		0C6FB4FC7E3D474F58AF4987 /* Eater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96247A5CBCD2FFA2AD91522E /* Eater.swift */; };
@@ -152,8 +156,12 @@
 		A2FA5C9C78E1C7306256C0A5 /* CatalogFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogFile.swift; sourceTree = "<group>"; };
 		AA779B8EEC9E7331E894174A /* CatalogPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogPickerView.swift; sourceTree = "<group>"; };
 		8971D6254D761F5B5062C1A1 /* ContentDiagnostic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDiagnostic.swift; sourceTree = "<group>"; };
+		E00A19B4F09DF84A4151D958 /* CookIngredientsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookIngredientsSheet.swift; sourceTree = "<group>"; };
 		6B652CF2BDB6ABEBB6ECFCD7 /* CookReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookReading.swift; sourceTree = "<group>"; };
+		801E5C4525AC4F1150EA7331 /* CookShoutedSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookShoutedSheet.swift; sourceTree = "<group>"; };
 		B9C8DC5F38FE07E4C31E4F8E /* CookStepCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookStepCard.swift; sourceTree = "<group>"; };
+		521E28E674B9CF08C2655E66 /* CookTimerBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookTimerBar.swift; sourceTree = "<group>"; };
+		D0E6C8E9563B0708EFF17F22 /* CookTimingChartSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookTimingChartSheet.swift; sourceTree = "<group>"; };
 		CCA20CA121AF8D2AD5AB8F19 /* CookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookView.swift; sourceTree = "<group>"; };
 		65B157F16EF1EDB2317D8449 /* DiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsView.swift; sourceTree = "<group>"; };
 		96247A5CBCD2FFA2AD91522E /* Eater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eater.swift; sourceTree = "<group>"; };
@@ -418,8 +426,12 @@
 		84B540900C57A81123068188 /* Cook */ = {
 			isa = PBXGroup;
 			children = (
+				E00A19B4F09DF84A4151D958 /* CookIngredientsSheet.swift */,
 				6B652CF2BDB6ABEBB6ECFCD7 /* CookReading.swift */,
+				801E5C4525AC4F1150EA7331 /* CookShoutedSheet.swift */,
 				B9C8DC5F38FE07E4C31E4F8E /* CookStepCard.swift */,
+				521E28E674B9CF08C2655E66 /* CookTimerBar.swift */,
+				D0E6C8E9563B0708EFF17F22 /* CookTimingChartSheet.swift */,
 				CCA20CA121AF8D2AD5AB8F19 /* CookView.swift */,
 			);
 			path = Cook;
@@ -752,8 +764,12 @@
 				2B1E82AD376819FF01CEF424 /* PortionSummary.swift in Sources */,
 				F48A5A8F1C0F092B07575B5F /* QuantityField.swift in Sources */,
 				F0FEF417A4209DDAE546BF86 /* UnitPicker.swift in Sources */,
+				F768D57E2A88802B84191ED5 /* CookIngredientsSheet.swift in Sources */,
 				219734E26FE15E2042CE10F2 /* CookReading.swift in Sources */,
+				9B700B1B4415575BE460C18A /* CookShoutedSheet.swift in Sources */,
 				F470BACF0145FC4364FEEB33 /* CookStepCard.swift in Sources */,
+				15E2EAE89C5FABE2DA5DBFA0 /* CookTimerBar.swift in Sources */,
+				51E642CF5853335D8D13C809 /* CookTimingChartSheet.swift in Sources */,
 				6281ED59538557E9F7A51688 /* CookView.swift in Sources */,
 				CC260D7BBA7E2B7EE3B28D11 /* ExportCenterView.swift in Sources */,
 				86FD89A8F70E32D6C587846A /* PDFExportButton.swift in Sources */,

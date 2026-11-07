@@ -38,6 +38,24 @@ struct PlanWeekView: View {
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .top, spacing: 0) { weekBar }
         .toolbar {
+            // The way into the roster, and for a while there was none: `HouseholdView` was
+            // instantiated nowhere, so the add-person sheet and the per-eater editor were
+            // both unreachable and the household was permanently whatever
+            // `KitchenAidSeed.seedHousehold` wrote — not the "addable and removable at
+            // will" CLAUDE.md asks for.
+            //
+            // It hangs off the Plan tab rather than a sixth tab, because this is the tab
+            // where attendance is edited and because `AppTab` argues the count down to
+            // five in a comment that has to stay true. Declared before the plus so it sits
+            // to its left; the week bar below owns the leading edge's visual weight.
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    HouseholdView()
+                } label: {
+                    Image(systemName: "person.2")
+                }
+                .accessibilityLabel("Household")
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     addingOn = PlanSheetDay(date: startOfToday())

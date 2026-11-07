@@ -38,6 +38,19 @@ struct CookView: View {
     /// have. Defaults to 1, which is what every caller can honestly pass today.
     var scale: Rational = .one
 
+    /// The dish this cook is OF, when there is one. nil for a recipe opened from
+    /// the library, where no meal is in play.
+    ///
+    /// Carried as well as `scale` because the scale alone cannot write anything
+    /// back. Two invariants need the identity: `PlannedMeal.status` has to reach
+    /// `.cooked`, which is the one thing that stops `ShoppingListBuilder` shopping
+    /// again for a meal whose ingredients have already been deducted
+    /// (`PlannedMeal.contributesToShopping`), and `depleteForCook` takes a `meal:`
+    /// so each depletion row can name the meal that caused it -- the `.nullify`
+    /// edge on `PlannedMeal.inventoryTransactions` is permanently empty without it,
+    /// and "jump to the meal that caused this line" can never resolve.
+    var dish: MealRecipe? = nil
+
     @Environment(RecipeLoader.self) private var loader
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
@@ -180,6 +193,7 @@ struct CookView: View {
             Button("Made it, and take it out of the pantry") {
                 tweakStore.markMade(resolved.id)
                 depleteFromPantry(resolved)
+                markMealCooked()
                 dismiss()
             }
             Button("Mark as made today") {
@@ -442,7 +456,29 @@ struct CookView: View {
         }
 
         guard !requirements.isEmpty else { return }
-        ledger.depleteForCook(requirements, in: modelContext)
+        // `meal:` so each row names what caused it. Without it every depletion is
+        // an unattributed negative and "where did the cream go" has no answer.
+        ledger.depleteForCook(requirements, meal: dish?.meal, in: modelContext)
+    }
+
+    /// `.cooked` is the ONE thing that stops the week's list shopping for a meal
+    /// again after its ingredients have been deducted -- `contributesToShopping`
+    /// excludes it, and the comment there says why: "it already depleted".
+    ///
+    /// Set only on a SINGLE-DISH meal, and that restriction is the point. Tuesday
+    /// dinner is a main plus sides, each its own `MealRecipe`, and cooking the main
+    /// deducts only the main's ingredients. Marking the whole meal cooked there
+    /// would stop the sides being shopped for while nothing had been deducted for
+    /// them -- an under-buy, which is the failure he would discover at the stove
+    /// rather than in the shop. A multi-dish meal keeps its status and the manual
+    /// Status picker in `MealEditorView` stays the way to close it out.
+    ///
+    /// Deliberately NOT called by "Mark as made today": that button deducts
+    /// nothing, so claiming the meal already depleted would be false.
+    private func markMealCooked() {
+        guard let meal = dish?.meal else { return }
+        guard meal.orderedMealRecipes.count == 1 else { return }
+        meal.setStatus(.cooked)
     }
 
     @ViewBuilder

@@ -66,6 +66,33 @@ enum HouseholdEditor {
         context.delete(eater)
     }
 
+    /// Refuses the one removal that cannot be undone from inside the app: the last person.
+    ///
+    /// An empty roster does not crash and does not render a zero. It is worse than that —
+    /// every meal silently falls back to `defaultDinerCount` with a `.noAttendance` note,
+    /// so the amounts quietly stop coming from anybody and nothing on screen says the
+    /// household is what went missing.
+    ///
+    /// `DeleteRefusal.isLastEater` already existed for exactly this, with this message and
+    /// this suggestion, and was called from nowhere. Using it rather than writing a second
+    /// refusal is the point: the roster, the default store and the last storage location
+    /// refuse in the same words instead of three screens inventing three sentences.
+    ///
+    /// The test is "is anyone else left", NOT "is anyone else active", and the asymmetry is
+    /// deliberate. The refusal's own suggestion is to mark them inactive, which would be
+    /// incoherent advice if an inactive roster were the thing being refused. An inactive
+    /// person is still a row to come back to; a deleted one is not.
+    static func canRemove(_ eater: Eater, of roster: [Eater]) -> Result<Void, DeleteRefusal> {
+        guard roster.contains(where: { $0.id != eater.id }) else {
+            return .failure(DeleteRefusal(
+                reason: .isLastEater,
+                subjectName: eater.displayName,
+                affectedCount: plannedMealCount(for: eater)
+            ))
+        }
+        return .success(())
+    }
+
     /// Away at college: keep every history row, drop out of the pickers. The alternative
     /// offered beside Remove, because it is what he usually means.
     static func setActive(_ eater: Eater, isActive: Bool) {
