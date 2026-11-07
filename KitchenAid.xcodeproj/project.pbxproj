@@ -1,0 +1,743 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4449FAFF2DA24FF6AA64404B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5C7F155C7E755444E96D3D1 /* Assets.xcassets */; };
+		952E0DEF1D2B498B7D9B7A25 /* AttendanceDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B5D5E0502120030FC5A471 /* AttendanceDefault.swift */; };
+		FC03A5A541FFFB36E311AD6E /* CalendarKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649E975FF0ED2BB89BC79D74 /* CalendarKey.swift */; };
+		9B0C36F906B3D6BC1FAF3A0D /* CatalogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6167AB624F4ED65AC981BB /* CatalogEntry.swift */; };
+		DB3DA5F3FB8719501F9E2F75 /* CatalogFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FA5C9C78E1C7306256C0A5 /* CatalogFile.swift */; };
+		9828532B0C68FBC1A9AE0202 /* ContentDiagnostic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8971D6254D761F5B5062C1A1 /* ContentDiagnostic.swift */; };
+		0C6FB4FC7E3D474F58AF4987 /* Eater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96247A5CBCD2FFA2AD91522E /* Eater.swift */; };
+		B805405EDDCB9B271A8FE13B /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B9EDF6E40622122C83298 /* FoodItem.swift */; };
+		8F56EA1E4DF48E286B5891A0 /* FoodItemAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C767D35A71F0C2E8C158E09 /* FoodItemAlias.swift */; };
+		EF42B608E66D722551B79442 /* IngredientCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9D9FB29B1E5C9E440E199E /* IngredientCatalog.swift */; };
+		012CD6DECE1212ED65C92112 /* IngredientLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F6C1F10038A581029E4EF /* IngredientLine.swift */; };
+		99F6635CE909549A21EC01CB /* InventoryTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D6F754048C4A3A31EFACDE /* InventoryTransaction.swift */; };
+		0C739EB6F700847036C8FD74 /* KitchenAidEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA16A0054F9BFCA6C5A1288 /* KitchenAidEnums.swift */; };
+		8F4F6AFA26487C2EBB9277BB /* KitchenAidSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63977DA439F2E0CE08AAB50 /* KitchenAidSchema.swift */; };
+		03ADD43BDAD1DC3D28C1C66B /* KitchenAidUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E4F9512260404FA86BC1D2 /* KitchenAidUITests.swift */; };
+		DA8D63DF567495966550AE50 /* KitchenUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA843E49C2B18361E8A3E18D /* KitchenUnit.swift */; };
+		90D84EE84585365044E17D67 /* LineFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15101787E012869C9665C7 /* LineFlag.swift */; };
+		A0EEFE0A4562CE88A4431C76 /* MealAttendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4428EE9D8E4C280010B05784 /* MealAttendance.swift */; };
+		2F40F5725C432913646AE717 /* MealRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2313900CED54437CAA9B5638 /* MealRecipe.swift */; };
+		0FFE09CE482507D40539B415 /* MeasureDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2E2138CA668A325B336B8F /* MeasureDimension.swift */; };
+		3E263663A4CFB92FE8BCC7D6 /* MergeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D6D5DBBC29E547F98A45D8 /* MergeRecord.swift */; };
+		93710677A56A3FEAC18F159C /* NameNormalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C455D6D7988767AFE610FC90 /* NameNormalizer.swift */; };
+		E180DE7D2C0711C53DEB008D /* PlannedMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECFD5436C34B709CEA445EE /* PlannedMeal.swift */; };
+		DC18631C628D27A833C965B3 /* Quantity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE03063A0738E3C20EC1EA7 /* Quantity.swift */; };
+		7BE36A801071432D4C032C5F /* QuantityMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BEA194CA03E487AF3D3D4D /* QuantityMath.swift */; };
+		2C189CFADE160BCD330D07D3 /* QuantitySubtotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDCB6391CE51E144490AC9 /* QuantitySubtotal.swift */; };
+		388C936318CA915836B8DA8C /* Rational.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB8D7281C8C63B560E9275 /* Rational.swift */; };
+		CDF09863E9759E7A6322AE69 /* RationalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9F02F4FDF21BA27DA45A10 /* RationalTests.swift */; };
+		76DCED2DC87E7869D70E53CD /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5A67F8058309814CD7C4D5 /* Recipe.swift */; };
+		3D53486F36DFABE255A8483D /* RecipeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC65A4E7B8323350A342A436 /* RecipeComponent.swift */; };
+		FA6AE9DB315D48C1A35D24DE /* RecipeFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E407CD8997DAC0FFB14933 /* RecipeFile.swift */; };
+		317F0A08A0A052E039C9EEF1 /* RecipeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AC9658367EB6E31621FFC6 /* RecipeLoader.swift */; };
+		557732B5F168BE5D191E9FF1 /* RecipeNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05DDB20BC60CAEE9DC544DE /* RecipeNote.swift */; };
+		31424E0B9C74A6A48A9F0C65 /* RecipeStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF323932C119593F5540DE0A /* RecipeStep.swift */; };
+		F6E8111940031C63C23D709A /* RecipeTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629B7F789B8918A8F4E931BA /* RecipeTable.swift */; };
+		A5473D1AE14982FE49E55864 /* RecipeTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CC3B1F7B42B8F99BB2022E /* RecipeTag.swift */; };
+		F19C28195F372FD62B79B5AC /* RecipeTweak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B37621B1D5617354284038C /* RecipeTweak.swift */; };
+		CBBA105C12D5B61B2F9EF25A /* Recipes in Resources */ = {isa = PBXBuildFile; fileRef = E7E7C440C8A8475C67336FAA /* Recipes */; };
+		AD5E08B09151497F06E19AAB /* ResolvedRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F146FC6659E5437D48A582B7 /* ResolvedRecipe.swift */; };
+		CFCE5947C707EAA2E3C3D520 /* ScalingNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E80C337D7B6D169FB4E03AF /* ScalingNote.swift */; };
+		1F3E3D4653DA7676F896C6D2 /* SeedRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60670E01DB8682FAE987B92A /* SeedRecord.swift */; };
+		254CE9894A9C376B91F1087C /* ShoppingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6539AAD375FCFC943BD9A08 /* ShoppingList.swift */; };
+		E98480CA24621620330BC470 /* ShoppingListLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B882C95B33E174F7D9BE15 /* ShoppingListLine.swift */; };
+		4F04E96661790A6605206F7D /* ShoppingListLineSubtotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C507367EF009F80C234062 /* ShoppingListLineSubtotal.swift */; };
+		DD1D1888222643F7F53D7AE8 /* ShoppingListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC840A6F5109F4E394191FE /* ShoppingListSource.swift */; };
+		6AD90E48B7633CFBD3320916 /* StockLot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C95D435E9490FD451534A /* StockLot.swift */; };
+		7A650B0977E20F41973BF8D9 /* StorageLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995AFCCB5360F7D32E7A43B0 /* StorageLocation.swift */; };
+		01B0CD53CE823152B991D98A /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBFDEC85D501318B8A0C9BD /* Store.swift */; };
+		313D2D5DD4B82324A0F73CAE /* StoreSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2573509CA165C3789769F9BA /* StoreSection.swift */; };
+		EBA3C740456D6C0976235C50 /* TweakStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548D775145F1CB3D3D6EF622 /* TweakStore.swift */; };
+		481134CC8C291D026F441FF1 /* UnitCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C82359D8331D35F5CE0DE7 /* UnitCatalog.swift */; };
+		1909075F56FF6685D1DA24FD /* ingredients.json in Resources */ = {isa = PBXBuildFile; fileRef = B92BD06ED82CA550C5FBF4BB /* ingredients.json */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BB617A56752FCC636EB78BE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEC518B951DD3D1B91CF65F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F9403F75853193B7DF8D2AA1;
+			remoteInfo = KitchenAid;
+		};
+		7D356694787F468D6730D2A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEC518B951DD3D1B91CF65F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F9403F75853193B7DF8D2AA1;
+			remoteInfo = KitchenAid;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C5C7F155C7E755444E96D3D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		08B5D5E0502120030FC5A471 /* AttendanceDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceDefault.swift; sourceTree = "<group>"; };
+		649E975FF0ED2BB89BC79D74 /* CalendarKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarKey.swift; sourceTree = "<group>"; };
+		DD6167AB624F4ED65AC981BB /* CatalogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogEntry.swift; sourceTree = "<group>"; };
+		A2FA5C9C78E1C7306256C0A5 /* CatalogFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogFile.swift; sourceTree = "<group>"; };
+		8971D6254D761F5B5062C1A1 /* ContentDiagnostic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDiagnostic.swift; sourceTree = "<group>"; };
+		96247A5CBCD2FFA2AD91522E /* Eater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eater.swift; sourceTree = "<group>"; };
+		3B5B9EDF6E40622122C83298 /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
+		0C767D35A71F0C2E8C158E09 /* FoodItemAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemAlias.swift; sourceTree = "<group>"; };
+		AE9D9FB29B1E5C9E440E199E /* IngredientCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCatalog.swift; sourceTree = "<group>"; };
+		CE7F6C1F10038A581029E4EF /* IngredientLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientLine.swift; sourceTree = "<group>"; };
+		57D6F754048C4A3A31EFACDE /* InventoryTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryTransaction.swift; sourceTree = "<group>"; };
+		4EA16A0054F9BFCA6C5A1288 /* KitchenAidEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenAidEnums.swift; sourceTree = "<group>"; };
+		F63977DA439F2E0CE08AAB50 /* KitchenAidSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenAidSchema.swift; sourceTree = "<group>"; };
+		F8E4F9512260404FA86BC1D2 /* KitchenAidUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenAidUITests.swift; sourceTree = "<group>"; };
+		DA843E49C2B18361E8A3E18D /* KitchenUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenUnit.swift; sourceTree = "<group>"; };
+		CB15101787E012869C9665C7 /* LineFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineFlag.swift; sourceTree = "<group>"; };
+		4428EE9D8E4C280010B05784 /* MealAttendance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealAttendance.swift; sourceTree = "<group>"; };
+		2313900CED54437CAA9B5638 /* MealRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRecipe.swift; sourceTree = "<group>"; };
+		FD2E2138CA668A325B336B8F /* MeasureDimension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDimension.swift; sourceTree = "<group>"; };
+		C8D6D5DBBC29E547F98A45D8 /* MergeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRecord.swift; sourceTree = "<group>"; };
+		C455D6D7988767AFE610FC90 /* NameNormalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameNormalizer.swift; sourceTree = "<group>"; };
+		7ECFD5436C34B709CEA445EE /* PlannedMeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedMeal.swift; sourceTree = "<group>"; };
+		3DE03063A0738E3C20EC1EA7 /* Quantity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quantity.swift; sourceTree = "<group>"; };
+		F4BEA194CA03E487AF3D3D4D /* QuantityMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityMath.swift; sourceTree = "<group>"; };
+		83EDCB6391CE51E144490AC9 /* QuantitySubtotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitySubtotal.swift; sourceTree = "<group>"; };
+		34DB8D7281C8C63B560E9275 /* Rational.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rational.swift; sourceTree = "<group>"; };
+		4D9F02F4FDF21BA27DA45A10 /* RationalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RationalTests.swift; sourceTree = "<group>"; };
+		AF5A67F8058309814CD7C4D5 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		CC65A4E7B8323350A342A436 /* RecipeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeComponent.swift; sourceTree = "<group>"; };
+		62E407CD8997DAC0FFB14933 /* RecipeFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFile.swift; sourceTree = "<group>"; };
+		57AC9658367EB6E31621FFC6 /* RecipeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeLoader.swift; sourceTree = "<group>"; };
+		A05DDB20BC60CAEE9DC544DE /* RecipeNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeNote.swift; sourceTree = "<group>"; };
+		AF323932C119593F5540DE0A /* RecipeStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeStep.swift; sourceTree = "<group>"; };
+		629B7F789B8918A8F4E931BA /* RecipeTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTable.swift; sourceTree = "<group>"; };
+		11CC3B1F7B42B8F99BB2022E /* RecipeTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTag.swift; sourceTree = "<group>"; };
+		4B37621B1D5617354284038C /* RecipeTweak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTweak.swift; sourceTree = "<group>"; };
+		E7E7C440C8A8475C67336FAA /* Recipes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Recipes; sourceTree = "<group>"; };
+		F146FC6659E5437D48A582B7 /* ResolvedRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolvedRecipe.swift; sourceTree = "<group>"; };
+		1E80C337D7B6D169FB4E03AF /* ScalingNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalingNote.swift; sourceTree = "<group>"; };
+		60670E01DB8682FAE987B92A /* SeedRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedRecord.swift; sourceTree = "<group>"; };
+		B6539AAD375FCFC943BD9A08 /* ShoppingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingList.swift; sourceTree = "<group>"; };
+		D2B882C95B33E174F7D9BE15 /* ShoppingListLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListLine.swift; sourceTree = "<group>"; };
+		B3C507367EF009F80C234062 /* ShoppingListLineSubtotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListLineSubtotal.swift; sourceTree = "<group>"; };
+		ECC840A6F5109F4E394191FE /* ShoppingListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListSource.swift; sourceTree = "<group>"; };
+		E91C95D435E9490FD451534A /* StockLot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockLot.swift; sourceTree = "<group>"; };
+		995AFCCB5360F7D32E7A43B0 /* StorageLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageLocation.swift; sourceTree = "<group>"; };
+		BFBFDEC85D501318B8A0C9BD /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		2573509CA165C3789769F9BA /* StoreSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSection.swift; sourceTree = "<group>"; };
+		548D775145F1CB3D3D6EF622 /* TweakStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweakStore.swift; sourceTree = "<group>"; };
+		E5C82359D8331D35F5CE0DE7 /* UnitCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitCatalog.swift; sourceTree = "<group>"; };
+		B92BD06ED82CA550C5FBF4BB /* ingredients.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ingredients.json; sourceTree = "<group>"; };
+		0B2FB99BB344CC1430F0D36C /* KitchenAid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KitchenAid.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		460095A3D107D833FFA81400 /* KitchenAidTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KitchenAidTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7616B620E55E9BA308D9C4AB /* KitchenAidUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KitchenAidUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FBF90546EA1206754F8A6E2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		45B5AB577418039E1580B2AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6CDC7F67B13BE7E6B5C6BFC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8C5C970EEEA17772F5C6A3FE /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				DD6167AB624F4ED65AC981BB /* CatalogEntry.swift */,
+				A2FA5C9C78E1C7306256C0A5 /* CatalogFile.swift */,
+				8971D6254D761F5B5062C1A1 /* ContentDiagnostic.swift */,
+				CE7F6C1F10038A581029E4EF /* IngredientLine.swift */,
+				AF5A67F8058309814CD7C4D5 /* Recipe.swift */,
+				CC65A4E7B8323350A342A436 /* RecipeComponent.swift */,
+				62E407CD8997DAC0FFB14933 /* RecipeFile.swift */,
+				A05DDB20BC60CAEE9DC544DE /* RecipeNote.swift */,
+				AF323932C119593F5540DE0A /* RecipeStep.swift */,
+				629B7F789B8918A8F4E931BA /* RecipeTable.swift */,
+				11CC3B1F7B42B8F99BB2022E /* RecipeTag.swift */,
+				F146FC6659E5437D48A582B7 /* ResolvedRecipe.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		21CDCA7ED18D5C85B3843D96 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				08B5D5E0502120030FC5A471 /* AttendanceDefault.swift */,
+				96247A5CBCD2FFA2AD91522E /* Eater.swift */,
+				3B5B9EDF6E40622122C83298 /* FoodItem.swift */,
+				0C767D35A71F0C2E8C158E09 /* FoodItemAlias.swift */,
+				57D6F754048C4A3A31EFACDE /* InventoryTransaction.swift */,
+				4428EE9D8E4C280010B05784 /* MealAttendance.swift */,
+				2313900CED54437CAA9B5638 /* MealRecipe.swift */,
+				C8D6D5DBBC29E547F98A45D8 /* MergeRecord.swift */,
+				7ECFD5436C34B709CEA445EE /* PlannedMeal.swift */,
+				4B37621B1D5617354284038C /* RecipeTweak.swift */,
+				60670E01DB8682FAE987B92A /* SeedRecord.swift */,
+				B6539AAD375FCFC943BD9A08 /* ShoppingList.swift */,
+				D2B882C95B33E174F7D9BE15 /* ShoppingListLine.swift */,
+				B3C507367EF009F80C234062 /* ShoppingListLineSubtotal.swift */,
+				ECC840A6F5109F4E394191FE /* ShoppingListSource.swift */,
+				E91C95D435E9490FD451534A /* StockLot.swift */,
+				995AFCCB5360F7D32E7A43B0 /* StorageLocation.swift */,
+				BFBFDEC85D501318B8A0C9BD /* Store.swift */,
+				2573509CA165C3789769F9BA /* StoreSection.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		C26E9868A8EA5900689C292E /* Schema */ = {
+			isa = PBXGroup;
+			children = (
+				F63977DA439F2E0CE08AAB50 /* KitchenAidSchema.swift */,
+			);
+			path = Schema;
+			sourceTree = "<group>";
+		};
+		0CC0E5203CC7E610AF3DC31F /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				649E975FF0ED2BB89BC79D74 /* CalendarKey.swift */,
+				4EA16A0054F9BFCA6C5A1288 /* KitchenAidEnums.swift */,
+				DA843E49C2B18361E8A3E18D /* KitchenUnit.swift */,
+				CB15101787E012869C9665C7 /* LineFlag.swift */,
+				FD2E2138CA668A325B336B8F /* MeasureDimension.swift */,
+				C455D6D7988767AFE610FC90 /* NameNormalizer.swift */,
+				3DE03063A0738E3C20EC1EA7 /* Quantity.swift */,
+				F4BEA194CA03E487AF3D3D4D /* QuantityMath.swift */,
+				83EDCB6391CE51E144490AC9 /* QuantitySubtotal.swift */,
+				34DB8D7281C8C63B560E9275 /* Rational.swift */,
+				1E80C337D7B6D169FB4E03AF /* ScalingNote.swift */,
+				E5C82359D8331D35F5CE0DE7 /* UnitCatalog.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		6EC250789BE5A8DAD7097214 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8C5C970EEEA17772F5C6A3FE /* Content */,
+				21CDCA7ED18D5C85B3843D96 /* Persistence */,
+				C26E9868A8EA5900689C292E /* Schema */,
+				0CC0E5203CC7E610AF3DC31F /* Support */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C5638BF10FA9BEF2E3305135 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E7E7C440C8A8475C67336FAA /* Recipes */,
+				B92BD06ED82CA550C5FBF4BB /* ingredients.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AF3EE6CF1677BDC9189B6141 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AE9D9FB29B1E5C9E440E199E /* IngredientCatalog.swift */,
+				57AC9658367EB6E31621FFC6 /* RecipeLoader.swift */,
+				548D775145F1CB3D3D6EF622 /* TweakStore.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		EF2A9EE967BBD99C9E20A548 /* KitchenAid */ = {
+			isa = PBXGroup;
+			children = (
+				6EC250789BE5A8DAD7097214 /* Models */,
+				C5638BF10FA9BEF2E3305135 /* Resources */,
+				AF3EE6CF1677BDC9189B6141 /* Services */,
+				C5C7F155C7E755444E96D3D1 /* Assets.xcassets */,
+			);
+			path = KitchenAid;
+			sourceTree = "<group>";
+		};
+		EC1207B7D849278C9CE054EC /* KitchenAidTests */ = {
+			isa = PBXGroup;
+			children = (
+				4D9F02F4FDF21BA27DA45A10 /* RationalTests.swift */,
+			);
+			path = KitchenAidTests;
+			sourceTree = "<group>";
+		};
+		02ABE46A57612CEA32FCB616 /* KitchenAidUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F8E4F9512260404FA86BC1D2 /* KitchenAidUITests.swift */,
+			);
+			path = KitchenAidUITests;
+			sourceTree = "<group>";
+		};
+		9F4266668618BA4AD5907C73 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0B2FB99BB344CC1430F0D36C /* KitchenAid.app */,
+				460095A3D107D833FFA81400 /* KitchenAidTests.xctest */,
+				7616B620E55E9BA308D9C4AB /* KitchenAidUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C3B5597FA32BE9ECDFEB65C8 = {
+			isa = PBXGroup;
+			children = (
+				EF2A9EE967BBD99C9E20A548 /* KitchenAid */,
+				EC1207B7D849278C9CE054EC /* KitchenAidTests */,
+				02ABE46A57612CEA32FCB616 /* KitchenAidUITests */,
+				9F4266668618BA4AD5907C73 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F9403F75853193B7DF8D2AA1 /* KitchenAid */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FE4F4ACDFA202ED96BA2587 /* Build configuration list for PBXNativeTarget "KitchenAid" */;
+			buildPhases = (
+				60A97CDC1596A25047C90142 /* Sources */,
+				FBF90546EA1206754F8A6E2D /* Frameworks */,
+				38B8C3E03651882AC1025D1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KitchenAid;
+			productName = KitchenAid;
+			productReference = 0B2FB99BB344CC1430F0D36C /* KitchenAid.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F525A49D5CBA8ADD6A11A99B /* KitchenAidTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8DFB428F25EA5AD9EDEE99C7 /* Build configuration list for PBXNativeTarget "KitchenAidTests" */;
+			buildPhases = (
+				A621C26F4C6612D7A459534E /* Sources */,
+				45B5AB577418039E1580B2AD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1AC851AF587D56669FAFAAC5 /* PBXTargetDependency */,
+			);
+			name = KitchenAidTests;
+			productName = KitchenAidTests;
+			productReference = 460095A3D107D833FFA81400 /* KitchenAidTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		180EDCD062AA24E0572B03A1 /* KitchenAidUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6551050039DAEEC5619CF01C /* Build configuration list for PBXNativeTarget "KitchenAidUITests" */;
+			buildPhases = (
+				0E88FE8D5DD73E81AE5D4ED9 /* Sources */,
+				B6CDC7F67B13BE7E6B5C6BFC /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				97FA58C4D33E43CF9A263360 /* PBXTargetDependency */,
+			);
+			name = KitchenAidUITests;
+			productName = KitchenAidUITests;
+			productReference = 7616B620E55E9BA308D9C4AB /* KitchenAidUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EEC518B951DD3D1B91CF65F8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2700;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					F525A49D5CBA8ADD6A11A99B = {
+						TestTargetID = F9403F75853193B7DF8D2AA1;
+					};
+					180EDCD062AA24E0572B03A1 = {
+						TestTargetID = F9403F75853193B7DF8D2AA1;
+					};
+				};
+			};
+			buildConfigurationList = 77179294B424AFA075A3CD18 /* Build configuration list for PBXProject "KitchenAid" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C3B5597FA32BE9ECDFEB65C8;
+			productRefGroup = 9F4266668618BA4AD5907C73 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F9403F75853193B7DF8D2AA1 /* KitchenAid */,
+				F525A49D5CBA8ADD6A11A99B /* KitchenAidTests */,
+				180EDCD062AA24E0572B03A1 /* KitchenAidUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		38B8C3E03651882AC1025D1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1909075F56FF6685D1DA24FD /* ingredients.json in Resources */,
+				4449FAFF2DA24FF6AA64404B /* Assets.xcassets in Resources */,
+				CBBA105C12D5B61B2F9EF25A /* Recipes in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		60A97CDC1596A25047C90142 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B0C36F906B3D6BC1FAF3A0D /* CatalogEntry.swift in Sources */,
+				DB3DA5F3FB8719501F9E2F75 /* CatalogFile.swift in Sources */,
+				9828532B0C68FBC1A9AE0202 /* ContentDiagnostic.swift in Sources */,
+				012CD6DECE1212ED65C92112 /* IngredientLine.swift in Sources */,
+				76DCED2DC87E7869D70E53CD /* Recipe.swift in Sources */,
+				3D53486F36DFABE255A8483D /* RecipeComponent.swift in Sources */,
+				FA6AE9DB315D48C1A35D24DE /* RecipeFile.swift in Sources */,
+				557732B5F168BE5D191E9FF1 /* RecipeNote.swift in Sources */,
+				31424E0B9C74A6A48A9F0C65 /* RecipeStep.swift in Sources */,
+				F6E8111940031C63C23D709A /* RecipeTable.swift in Sources */,
+				A5473D1AE14982FE49E55864 /* RecipeTag.swift in Sources */,
+				AD5E08B09151497F06E19AAB /* ResolvedRecipe.swift in Sources */,
+				952E0DEF1D2B498B7D9B7A25 /* AttendanceDefault.swift in Sources */,
+				0C6FB4FC7E3D474F58AF4987 /* Eater.swift in Sources */,
+				B805405EDDCB9B271A8FE13B /* FoodItem.swift in Sources */,
+				8F56EA1E4DF48E286B5891A0 /* FoodItemAlias.swift in Sources */,
+				99F6635CE909549A21EC01CB /* InventoryTransaction.swift in Sources */,
+				A0EEFE0A4562CE88A4431C76 /* MealAttendance.swift in Sources */,
+				2F40F5725C432913646AE717 /* MealRecipe.swift in Sources */,
+				3E263663A4CFB92FE8BCC7D6 /* MergeRecord.swift in Sources */,
+				E180DE7D2C0711C53DEB008D /* PlannedMeal.swift in Sources */,
+				F19C28195F372FD62B79B5AC /* RecipeTweak.swift in Sources */,
+				1F3E3D4653DA7676F896C6D2 /* SeedRecord.swift in Sources */,
+				254CE9894A9C376B91F1087C /* ShoppingList.swift in Sources */,
+				E98480CA24621620330BC470 /* ShoppingListLine.swift in Sources */,
+				4F04E96661790A6605206F7D /* ShoppingListLineSubtotal.swift in Sources */,
+				DD1D1888222643F7F53D7AE8 /* ShoppingListSource.swift in Sources */,
+				6AD90E48B7633CFBD3320916 /* StockLot.swift in Sources */,
+				7A650B0977E20F41973BF8D9 /* StorageLocation.swift in Sources */,
+				01B0CD53CE823152B991D98A /* Store.swift in Sources */,
+				313D2D5DD4B82324A0F73CAE /* StoreSection.swift in Sources */,
+				8F4F6AFA26487C2EBB9277BB /* KitchenAidSchema.swift in Sources */,
+				FC03A5A541FFFB36E311AD6E /* CalendarKey.swift in Sources */,
+				0C739EB6F700847036C8FD74 /* KitchenAidEnums.swift in Sources */,
+				DA8D63DF567495966550AE50 /* KitchenUnit.swift in Sources */,
+				90D84EE84585365044E17D67 /* LineFlag.swift in Sources */,
+				0FFE09CE482507D40539B415 /* MeasureDimension.swift in Sources */,
+				93710677A56A3FEAC18F159C /* NameNormalizer.swift in Sources */,
+				DC18631C628D27A833C965B3 /* Quantity.swift in Sources */,
+				7BE36A801071432D4C032C5F /* QuantityMath.swift in Sources */,
+				2C189CFADE160BCD330D07D3 /* QuantitySubtotal.swift in Sources */,
+				388C936318CA915836B8DA8C /* Rational.swift in Sources */,
+				CFCE5947C707EAA2E3C3D520 /* ScalingNote.swift in Sources */,
+				481134CC8C291D026F441FF1 /* UnitCatalog.swift in Sources */,
+				EF42B608E66D722551B79442 /* IngredientCatalog.swift in Sources */,
+				317F0A08A0A052E039C9EEF1 /* RecipeLoader.swift in Sources */,
+				EBA3C740456D6C0976235C50 /* TweakStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A621C26F4C6612D7A459534E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDF09863E9759E7A6322AE69 /* RationalTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E88FE8D5DD73E81AE5D4ED9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03ADD43BDAD1DC3D28C1C66B /* KitchenAidUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1AC851AF587D56669FAFAAC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F9403F75853193B7DF8D2AA1 /* KitchenAid */;
+			targetProxy = BB617A56752FCC636EB78BE2 /* PBXContainerItemProxy */;
+		};
+		97FA58C4D33E43CF9A263360 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F9403F75853193B7DF8D2AA1 /* KitchenAid */;
+			targetProxy = 7D356694787F468D6730D2A0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		885327AE8A31D9FE1EA329B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D05008FFA8A184C88EB805AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BAB019A9A910726F269E353F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = HHSFT2GD2H;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = KitchenAid;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brandonkeeny.KitchenAid;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C82FC6FB1891B45170C3952B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = HHSFT2GD2H;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = KitchenAid;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brandonkeeny.KitchenAid;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7626861269A70E8658FE62A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KitchenAid.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KitchenAid";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HHSFT2GD2H;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brandonkeeny.KitchenAidTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D8841C59F55FB0E7EAC7E9C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KitchenAid.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KitchenAid";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HHSFT2GD2H;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brandonkeeny.KitchenAidTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3A720057C97CAC3AB32910A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HHSFT2GD2H;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brandonkeeny.KitchenAidUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = KitchenAid;
+			};
+			name = Debug;
+		};
+		C036BBE02FAFDB3D98CC6BBD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HHSFT2GD2H;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brandonkeeny.KitchenAidUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = KitchenAid;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		77179294B424AFA075A3CD18 /* Build configuration list for PBXProject "KitchenAid" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				885327AE8A31D9FE1EA329B4 /* Debug */,
+				D05008FFA8A184C88EB805AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FE4F4ACDFA202ED96BA2587 /* Build configuration list for PBXNativeTarget "KitchenAid" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BAB019A9A910726F269E353F /* Debug */,
+				C82FC6FB1891B45170C3952B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8DFB428F25EA5AD9EDEE99C7 /* Build configuration list for PBXNativeTarget "KitchenAidTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7626861269A70E8658FE62A9 /* Debug */,
+				D8841C59F55FB0E7EAC7E9C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6551050039DAEEC5619CF01C /* Build configuration list for PBXNativeTarget "KitchenAidUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A720057C97CAC3AB32910A2 /* Debug */,
+				C036BBE02FAFDB3D98CC6BBD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = EEC518B951DD3D1B91CF65F8 /* Project object */;
+}

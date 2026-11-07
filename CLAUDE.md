@@ -239,6 +239,44 @@ only what a missing compiler makes expensive to get wrong:
 It is **not a compiler**: it cannot see a type error, a wrong argument label, or
 an unsatisfied protocol conformance. Say so rather than implying otherwise.
 
+## The Xcode project
+
+```bash
+python3 -I scripts/make_xcodeproj.py   # regenerate from the file tree
+python3 -I scripts/check_xcodeproj.py  # structural checks
+```
+
+`KitchenAid.xcodeproj` is **generated**, because a project file written by hand
+in a container with no Xcode either opens or it does not, with nothing in
+between and no way to find out here. Generating it means every id is derived
+from a path rather than invented, and adding a month of Swift files is one
+command instead of two hand-edited entries per file.
+
+The format mirrors CFAL3, which is known to open: `objectVersion = 56`,
+`compatibilityVersion = "Xcode 14.0"`, one explicit file reference and build
+file per file. `Resources/Recipes` is a **folder reference** so the directory
+survives into the bundle and `subdirectory: "Recipes"` resolves;
+`ingredients.json` is an individual reference and lands flat in the bundle root,
+which is the convention CFAL3's own loader uses.
+
+**Xcode 16+ can replace all of it with a synchronized folder group**
+(`PBXFileSystemSynchronizedRootGroup`, objectVersion 77) and then no per-file
+entries exist at all. That is the better end state and is deliberately NOT used
+yet: its exact required keys could not be verified without an Xcode to try,
+and a project that will not open is a worse failure than one needing a script.
+Once it opens on Brandon's Mac, Xcode offers the conversion — take it then, and
+this script becomes unnecessary.
+
+**Once he has changed build settings in Xcode's UI, Xcode owns the file.**
+Re-running the generator would discard those edits. From that point add files in
+Xcode, or edit the pbxproj surgically.
+
+`check_xcodeproj.py` cannot tell you the project opens. It checks that every id
+referenced is defined (a dangling one reads as "corrupt"), that no id is defined
+and unreferenced (a file in the tree and in no build phase compiles nowhere),
+that every Swift file on disk has exactly one reference and one build file, and
+that the scheme points at real ids.
+
 ## Layout and style
 
 Mirrors the CFAL3 repo, which is Brandon's established convention:
