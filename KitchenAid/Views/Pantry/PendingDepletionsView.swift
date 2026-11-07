@@ -62,6 +62,11 @@ struct PendingDepletionsView: View {
                               + "is still readable. There is nothing left to take an amount "
                               + "off."
                     )
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") { resolving = nil }
+                        }
+                    }
                 }
             }
         }

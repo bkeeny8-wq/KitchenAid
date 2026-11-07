@@ -85,6 +85,11 @@ struct ExpiringSoonView: View {
                               + "still readable. Nothing can be posted against it until it "
                               + "is pointed at an item again."
                     )
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") { wasting = nil }
+                        }
+                    }
                 }
             }
         }

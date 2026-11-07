@@ -60,6 +60,11 @@ struct StockLotView: View {
                               + "still here and still readable. Nothing can be posted "
                               + "against it until it is pointed at an item again."
                     )
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") { isWasting = false }
+                        }
+                    }
                 }
             }
         }
@@ -152,7 +157,8 @@ struct StockLotView: View {
         Binding(
             get: { lot.location?.id },
             set: { newID in
-                PantryEditor.move(lot, to: locations.first { $0.id == newID }, in: context)
+                let place = locations.first(where: { $0.id == newID })
+                PantryEditor.move(lot, to: place, in: context)
             }
         )
     }
