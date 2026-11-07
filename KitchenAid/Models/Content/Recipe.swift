@@ -74,6 +74,22 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
     /// Lookup tables the document prints. See `RecipeTable` for why these stay
     /// as strings.
     var tables: [RecipeTable] = []
+
+    /// What the importer could not work out about this recipe, in its own words.
+    ///
+    /// Seven of these exist across the eight bundled files and every one is
+    /// true: the compotes state no yield, the turkey no serving count, and four
+    /// of the gravy's and turkey's ingredient names are column labels ("Fat",
+    /// "Stock", "Pan base") that match nothing in the catalogue and so will
+    /// never aggregate or meet the pantry.
+    ///
+    /// They were being dropped on decode, because this property did not exist
+    /// and `check_swift.py` had `warnings` in its ignore list as build
+    /// provenance. That was wrong: a warning about a recipe is the most useful
+    /// thing the app can tell Brandon after he adds one, since his loop is
+    /// author, import, commit, rebuild, with no console anywhere near the
+    /// phone that shows the result.
+    var warnings: [String] = []
     var yieldAmount: Rational? = nil
     var yieldUnitLabel: String = ""
     /// Verbatim, e.g. "12 crostini (serves 4)". Kept so a reparse is always possible.
@@ -140,7 +156,7 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
     enum CodingKeys: String, CodingKey {
         case id, title, subtitle, summary
         case servingsNumerator, servingsDenominator, servingsApproximate
-        case minutesPerPound, ovenTempF, tables
+        case minutesPerPound, ovenTempF, tables, warnings
         case yieldAmount, yieldUnitLabel, yieldText
         case activeMinutes, totalMinutes, timesAreApproximate
         case batchGranularity, course, difficulty, cuisine, sourceName
@@ -187,6 +203,7 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
         self.minutesPerPound = try c.decodeIfPresent(Rational.self, forKey: .minutesPerPound)
         self.ovenTempF = try c.decodeIfPresent(Int.self, forKey: .ovenTempF)
         self.tables = try c.decodeIfPresent([RecipeTable].self, forKey: .tables) ?? []
+        self.warnings = try c.decodeIfPresent([String].self, forKey: .warnings) ?? []
 
         self.yieldAmount = try c.decodeIfPresent(Rational.self, forKey: .yieldAmount)
         self.yieldUnitLabel = try c.decodeIfPresent(String.self, forKey: .yieldUnitLabel) ?? ""

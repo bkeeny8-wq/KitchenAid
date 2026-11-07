@@ -241,8 +241,11 @@ if RECIPES:
     # Build provenance, not app data: `warnings` and `overrides` describe how
     # the file was produced. `raw` and `display` are the importer's own
     # renderings, which the Swift reproduces rather than stores.
-    IGNORED = {"warnings", "aggregatesWithinRecipe", "raw", "display",
-               "overrides", "why"}
+    # `warnings` is deliberately NOT here. It was, as "build provenance", and
+    # that judgement was wrong: a warning about a recipe is the most useful
+    # thing the app can tell Brandon after he adds one. Classifying it as
+    # provenance is what let it be dropped on decode in the first place.
+    IGNORED = {"aggregatesWithinRecipe", "raw", "display", "overrides", "why"}
     for kind, keys in buckets.items():
         for key in sorted(keys - IGNORED):
             if not re.search(rf"\b{re.escape(key)}\b", content):

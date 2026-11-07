@@ -52,8 +52,26 @@ struct RootTabView: View {
         }
     }
 
+    private var warnedCount: Int {
+        loader.allIncludingArchived.reduce(0) { $0 + ($1.warnings.isEmpty ? 0 : 1) }
+    }
+
+    private var bannerTitle: String {
+        let broken = loader.diagnostics.count
+        if broken > 0 && warnedCount > 0 {
+            return "\(broken) recipe file\(broken == 1 ? "" : "s") unreadable, "
+                 + "\(warnedCount) with warnings"
+        }
+        if broken > 0 {
+            return broken == 1 ? "1 recipe file could not be read"
+                               : "\(broken) recipe files could not be read"
+        }
+        return warnedCount == 1 ? "1 recipe has a warning"
+                                : "\(warnedCount) recipes have warnings"
+    }
+
     /// Two things the user must not have to discover for themselves: that this
-    /// run is not saving anything, and that a recipe file could not be read.
+    /// run is not saving anything, and that something is wrong with a recipe.
     @ViewBuilder
     private var banners: some View {
         VStack(spacing: 0) {
@@ -66,16 +84,19 @@ struct RootTabView: View {
                           + "only. Your existing data is untouched."
                 )
             }
-            if loader.hasDiagnostics {
+            // Two different things, one banner, because to the person holding
+            // the phone they are the same question: is anything wrong with my
+            // recipes? A diagnostic means a file could not be used at all; a
+            // warning means it loaded but the importer could not work something
+            // out, which surfaces later as a quantity that will not scale.
+            if loader.hasDiagnostics || warnedCount > 0 {
                 NavigationLink {
                     DiagnosticsView()
                 } label: {
                     BannerView(
                         symbol: "doc.badge.exclamationmark",
                         tint: .orange,
-                        title: loader.diagnostics.count == 1
-                            ? "1 recipe file has a problem"
-                            : "\(loader.diagnostics.count) recipe files have problems",
+                        title: bannerTitle,
                         detail: "Tap to see which, and what is wrong with them."
                     )
                 }

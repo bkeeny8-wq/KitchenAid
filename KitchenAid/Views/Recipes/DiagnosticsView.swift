@@ -13,31 +13,66 @@ import SwiftUI
 struct DiagnosticsView: View {
     @Environment(RecipeLoader.self) private var loader
 
+    /// Recipes the importer had reservations about. Distinct from a diagnostic:
+    /// these files loaded fine and the app works, but something in them could
+    /// not be worked out, so a quantity or an ingredient will behave oddly
+    /// later. Seven exist across the eight bundled files and all seven are true.
+    private var warned: [Recipe] {
+        loader.allIncludingArchived
+            .filter { !$0.warnings.isEmpty }
+            .sorted { $0.title < $1.title }
+    }
+
     var body: some View {
         List {
-            Section {
-                Text("These files are in the app but could not be used. Everything else "
-                     + "loaded normally.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+            if loader.diagnostics.isEmpty && warned.isEmpty {
+                Section {
+                    Label("Every recipe loaded cleanly", systemImage: "checkmark.circle")
+                        .foregroundStyle(.secondary)
+                }
             }
 
-            ForEach(grouped, id: \.0) { fileName, items in
-                Section(fileName) {
-                    ForEach(items) { item in
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(item.kind.title).font(.subheadline.weight(.semibold))
-                            Text(item.detail).font(.caption).foregroundStyle(.secondary)
+            if !loader.diagnostics.isEmpty {
+                Section {
+                    Text("These files are in the app but could not be used. Everything "
+                         + "else loaded normally.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+                ForEach(grouped, id: \.0) { fileName, items in
+                    Section(fileName) {
+                        ForEach(items) { item in
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(item.kind.title).font(.subheadline.weight(.semibold))
+                                Text(item.detail).font(.caption).foregroundStyle(.secondary)
+                            }
+                            .padding(.vertical, 2)
                         }
-                        .padding(.vertical, 2)
                     }
                 }
             }
 
-            if loader.diagnostics.isEmpty {
+            if !warned.isEmpty {
                 Section {
-                    Label("Every recipe file loaded cleanly", systemImage: "checkmark.circle")
+                    Text("These loaded and work. The importer could not work something "
+                         + "out about them, which usually shows up later as a quantity "
+                         + "that will not scale or an ingredient that never reaches a "
+                         + "shopping list.")
+                        .font(.footnote)
                         .foregroundStyle(.secondary)
+                }
+                ForEach(warned) { recipe in
+                    Section(recipe.title) {
+                        ForEach(Array(recipe.warnings.enumerated()), id: \.offset) { _, warning in
+                            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                                Image(systemName: "exclamationmark.circle")
+                                    .font(.caption)
+                                    .foregroundStyle(.orange)
+                                Text(warning).font(.caption)
+                            }
+                            .padding(.vertical, 1)
+                        }
+                    }
                 }
             }
         }

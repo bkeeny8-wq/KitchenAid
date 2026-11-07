@@ -24,6 +24,7 @@
 		58B61DD1EF08C5AFBBDB73AD /* KitchenAidApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7926B77EF5CAA98481DE2D52 /* KitchenAidApp.swift */; };
 		0C739EB6F700847036C8FD74 /* KitchenAidEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA16A0054F9BFCA6C5A1288 /* KitchenAidEnums.swift */; };
 		8F4F6AFA26487C2EBB9277BB /* KitchenAidSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63977DA439F2E0CE08AAB50 /* KitchenAidSchema.swift */; };
+		0F812C88DF1A2F7600555B5D /* KitchenAidSeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66733ABB434ACDB0820C0FA2 /* KitchenAidSeed.swift */; };
 		03ADD43BDAD1DC3D28C1C66B /* KitchenAidUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E4F9512260404FA86BC1D2 /* KitchenAidUITests.swift */; };
 		DA8D63DF567495966550AE50 /* KitchenUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA843E49C2B18361E8A3E18D /* KitchenUnit.swift */; };
 		90D84EE84585365044E17D67 /* LineFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB15101787E012869C9665C7 /* LineFlag.swift */; };
@@ -104,6 +105,7 @@
 		7926B77EF5CAA98481DE2D52 /* KitchenAidApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenAidApp.swift; sourceTree = "<group>"; };
 		4EA16A0054F9BFCA6C5A1288 /* KitchenAidEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenAidEnums.swift; sourceTree = "<group>"; };
 		F63977DA439F2E0CE08AAB50 /* KitchenAidSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenAidSchema.swift; sourceTree = "<group>"; };
+		66733ABB434ACDB0820C0FA2 /* KitchenAidSeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenAidSeed.swift; sourceTree = "<group>"; };
 		F8E4F9512260404FA86BC1D2 /* KitchenAidUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenAidUITests.swift; sourceTree = "<group>"; };
 		DA843E49C2B18361E8A3E18D /* KitchenUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenUnit.swift; sourceTree = "<group>"; };
 		CB15101787E012869C9665C7 /* LineFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineFlag.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				AE9D9FB29B1E5C9E440E199E /* IngredientCatalog.swift */,
+				66733ABB434ACDB0820C0FA2 /* KitchenAidSeed.swift */,
 				57AC9658367EB6E31621FFC6 /* RecipeLoader.swift */,
 				548D775145F1CB3D3D6EF622 /* TweakStore.swift */,
 			);
@@ -528,6 +531,7 @@
 				CFCE5947C707EAA2E3C3D520 /* ScalingNote.swift in Sources */,
 				481134CC8C291D026F441FF1 /* UnitCatalog.swift in Sources */,
 				EF42B608E66D722551B79442 /* IngredientCatalog.swift in Sources */,
+				0F812C88DF1A2F7600555B5D /* KitchenAidSeed.swift in Sources */,
 				317F0A08A0A052E039C9EEF1 /* RecipeLoader.swift in Sources */,
 				EBA3C740456D6C0976235C50 /* TweakStore.swift in Sources */,
 				28E5F0FC9DD1BE212E3D5EF6 /* DiagnosticsView.swift in Sources */,
