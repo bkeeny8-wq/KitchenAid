@@ -196,6 +196,10 @@ KNOWN = {
     "ImageRenderer", "PDFDocument", "PDFPage", "UIImage", "CGSize", "CGRect",
     "CGFloat", "AnyView", "EmptyView", "Namespace", "FocusState",
     "AppStorage", "SceneStorage", "Query", "ModelActor", "MainActor",
+    # CoreGraphics / CoreFoundation, for the PDF writer's CGContext path
+    "CGContext", "CGDataConsumer", "CGPoint", "CFURL", "CFData", "CFDictionary",
+    "ProposedViewSize", "RoundedRectangle", "Rectangle", "LocalizedError",
+    "DynamicTypeSize", "ColorScheme", "UnsafePointer",
 }
 
 used = set()
