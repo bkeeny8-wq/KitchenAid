@@ -9,6 +9,19 @@ struct KitchenAidApp: App {
     @State private var loader = RecipeLoader()
     @State private var catalog = IngredientCatalog()
 
+    /// Holds `lastDiff` across a regenerate, so the sheet that explains "3 new,
+    /// 1 no longer needed" survives the sheet being dismissed and reopened.
+    /// Plain `@Observable`, no actor isolation, so it is built here.
+    @State private var shopping = ShoppingListStore()
+
+    /// Both are `@MainActor`, so they cannot be built in `init()` — see
+    /// `startServices()`. Optional until that runs, which is also how every
+    /// view reads them: an `@Environment` lookup declared non-optional traps
+    /// when the value is absent, and the window between first render and the
+    /// launch task is real, if short.
+    @State private var tweaks: TweakStore?
+    @State private var ledger: InventoryLedger?
+
     /// True when the on-disk store could not be opened and the app is running
     /// against a temporary one, so the UI can say so instead of looking as if
     /// everything vanished.
@@ -49,15 +62,46 @@ struct KitchenAidApp: App {
             RootTabView()
                 .environment(loader)
                 .environment(catalog)
+                .environment(shopping)
+                .environment(tweaks)
+                .environment(ledger)
                 .environment(\.storeUnavailable, storeFailure != nil)
                 .task {
                     guard !didLoadContent else { return }
                     didLoadContent = true
-                    loader.load()
-                    catalog.load()
+                    await startServices()
                 }
         }
         .modelContainer(container)
+    }
+
+    /// Content first, then the services that read it, then the one-time rows.
+    ///
+    /// The order is load-bearing twice over. `TweakStore` is handed the loader
+    /// it will resolve recipe ids against, and `KitchenAidSeed` reads the aisle
+    /// walk order out of the catalogue to build the store's sections — which is
+    /// why the seed deliberately holds no copy of that list, and why it cannot
+    /// run before `catalog.load()`.
+    ///
+    /// `@MainActor` rather than inline in `.task`, because that closure is
+    /// `@Sendable` and so not main-actor isolated, and both services are. A
+    /// method with the isolation stated is clearer than a `MainActor.run` block
+    /// wrapped round the same four lines.
+    @MainActor
+    private func startServices() {
+        loader.load()
+        catalog.load()
+
+        tweaks = TweakStore(container: container, loader: loader)
+        ledger = InventoryLedger(container: container)
+
+        // `try?` on purpose: a failed seed must not stop the app from opening.
+        // This runs on a device that may already be in the in-memory fallback
+        // above, where a write failing is expected rather than exceptional, and
+        // every screen it feeds has an empty state that says what is missing.
+        // The seed is itself gated by a `SeedRecord` per key, so a run that
+        // half-succeeded is retried on the next launch rather than doubled.
+        try? KitchenAidSeed.applyIfNeeded(in: container.mainContext, catalog: catalog)
     }
 }
 

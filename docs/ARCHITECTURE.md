@@ -432,7 +432,7 @@ types, 5 tabs.
 | `KitchenAid/Models/Support/Quantity.swift` | `Quantity` (`amount` + `unit`, `base`, `scaled(by:)`, `converted(to:)`, `displayString(system:)`) **and the `QuantityCarrying` protocol** that gives a model holding one quantity its five stored primitives and one computed accessor. |
 | `KitchenAid/Models/Support/QuantitySubtotal.swift` | `QuantitySubtotal` and `SubtotalRole`. One (dimension, count-noun) subtotal in base units, plus its role. **The only declaration of either** (§0.9.2). |
 | `KitchenAid/Models/Support/QuantityMath.swift` | `QuantityMath` **and its nested `Contribution`**: `hintUnit`, `displayUnit(forBase:dimensionKey:hint:system:)`, `sum`, `collapseAcrossDimensions`, `bridgeHave`, `subtract`. The arithmetic under test. |
-| `KitchenAid/Models/Support/MergeKey.swift` | `ItemIdentity` (`.cataloged(UUID)` / `.freeText(String)`) and `MergeKey`, the **subtotal** bucket `(item, dimensionKey)`. A LINE is keyed by `ItemIdentity` alone — one line per `FoodItem` per list — and `MergeKey` keys the buckets inside it, never a line (§3.7, §4.2 step 4). |
+| ~~`KitchenAid/Models/Support/MergeKey.swift`~~ | **Not written. Superseded — see §3.7.** `ItemIdentity` is nested in `ShoppingListBuilder`, which is its only caller; `MergeKey` has no reader at all, because `QuantitySubtotal.dimensionKey` *is* the bucket key within a line. |
 | `KitchenAid/Models/Support/KitchenAidEnums.swift` | `UnitSystem`, `MealSlot`, `MealEntryKind`, `AttendanceStatus`, `PlanStatus`, `CourseKind`, `Difficulty`, `ComponentKind`, `NoteKind`, `BatchGranularity`, `ScalingRule`, `SubRecipePolicy`, `StockTrackingMode`, `StorageKind`, `TransactionKind`, `ResolutionState`, `LineStatus`, `LineSourceKind`, `PlanScope`, `TagKind`. All `String`-raw-value-backed. |
 | `KitchenAid/Models/Support/ScalingNote.swift` | `ScalingNote` — `.noAttendance / .unknownYield / .snappedToBatch / .overridden / .leftoversIncluded` and their badge text. |
 | `KitchenAid/Models/Support/LineFlag.swift` | `LineFlag`, the shopping-line flag set (14 cases, **including `leftoversIncluded`** so `from(_:)` is total over `ScalingNote`), its `badge` text, and its `\|`-delimited blob encoding. |
@@ -4748,40 +4748,41 @@ enum QuantityMath {
 }
 ```
 
-### 3.7 `KitchenAid/Models/Support/MergeKey.swift`
+### 3.7 ~~`KitchenAid/Models/Support/MergeKey.swift`~~ — not written
 
-```swift
-import Foundation
+**The Swift wins (`CLAUDE.md`), and the Swift declined this file.** Both of its types went
+somewhere else or nowhere, for two different reasons. The rules below are unchanged and still
+binding; only their home moved.
 
-/// How a line is identified for aggregation.
-enum ItemIdentity: Hashable, Sendable {
-    /// `FoodItem.id`, post-reconcile so aliases have collapsed.
-    case cataloged(UUID)
-    /// A normalized name that matched no `FoodItem` and no catalogue entry. Still shoppable,
-    /// flagged `.unresolvedItem`, and fixable with one tap in the ingredient inbox.
-    case freeText(String)
-}
+**`ItemIdentity` is nested inside `ShoppingListBuilder`** (`Services/ShoppingListBuilder.swift`),
+along with the single `identity(for:displayName:)` that derives it. Nothing outside the builder
+and its store needs the type, and the derivation has to have exactly one implementation: the
+regenerate carry-over in `ShoppingListStore` matches a stored line back to a freshly built one
+on this value, so a store deriving `.freeText("kosher salt")` where the builder derived
+`.freeText("kosher-salt")` loses the match in silence and a line he already checked off comes
+back. A free function in a shared file is a second place for that rule to live.
 
-/// The SUBTOTAL bucket. **It never keys a line.**
-///
-/// A shopping LINE is keyed by `ItemIdentity` alone — one line per `FoodItem` per list
-/// (§2.25, §4.2 step 4) — and `MergeKey` keys the buckets within that line.
-///
-/// `dimensionKey` carries the count NOUN, so clove and head are separate subtotals ON ONE
-/// LINE and the output type can display exactly what the merge key separated. Putting
-/// `dimensionKey` in the LINE key instead splits one `FoodItem` asked for in two dimensions
-/// into two lines, makes `DraftLine.requested` plural for nothing, and hands
-/// `QuantityMath.sum` a group that is single-dimension by construction — which disables
-/// `collapseAcrossDimensions` on the requested side, the one place it is most needed.
-///
-/// `preparation` is deliberately NOT in the key: you buy onions, not diced-ness, so "1 cup
-/// onion, diced" and "1/2 cup onion, sliced" merge into "1 1/2 cups onion" while both cook
-/// screens still say diced and sliced.
-struct MergeKey: Hashable, Sendable {
-    let item: ItemIdentity
-    let dimensionKey: String
-}
-```
+**`MergeKey` was not written at all, because nothing reads it.** `QuantitySubtotal` already
+carries `dimensionKey`, and that *is* the bucket key within a line — the subtotals on a line
+are keyed by it, which is the whole of what `MergeKey` was for. A second type naming the same
+bucket is a second thing that can disagree with the first.
+
+The three rules this section existed to state are enforced, and each is commented where it is
+enforced rather than here:
+
+1. **A line is keyed by `ItemIdentity` alone** — one line per `FoodItem` per list. See the
+   doc comment on `ShoppingListBuilder.ItemIdentity` and `ShoppingListLine`. Grouping by item
+   *and* dimension splits flour-by-the-cup from flour-by-the-gram into two lines, and two lines
+   cannot be added to one another — only two subtotals on one line can — so it leaves
+   `collapseAcrossDimensions` with nothing to collapse on the requested side.
+2. **`dimensionKey` carries the count noun**, so clove and head stay separate subtotals on one
+   line. `QuantitySubtotal.dimensionKey`.
+3. **`preparation` is not part of any key.** You buy onions, not diced-ness: "1 cup onion,
+   diced" and "1/2 cup onion, sliced" merge into "1 1/2 cups onion" while both cook screens
+   still say diced and sliced. Enforced by `ShoppingListBuilder.identity(for:displayName:)`,
+   which derives from the `FoodItem` — or, failing that, the normalized display name — and
+   from nothing else. `RecipeGraph.FlatLine.preparation` is carried alongside, for the cook
+   screens and the provenance rows, and is never consulted when grouping.
 
 ### 3.8 `KitchenAid/Models/Support/KitchenAidEnums.swift`
 
@@ -5874,10 +5875,11 @@ unwrap is written out at the call, below.
 `FoodItem` if one exists or can be minted from a catalogue template (§0.3), and
 `identity = item.map { .cataloged($0.id) } ?? .freeText(NameNormalizer.matchKey(displayName))`.
 
-**Group the LINES by `identity` alone — never by `MergeKey`.** One line per `FoodItem` per
+**Group the LINES by `identity` alone — never by item *and* dimension.** One line per `FoodItem` per
 list (§1, §2.25), so every contribution to that item, in every dimension it was asked for,
 goes into ONE call to `QuantityMath.sum`, which partitions by `dimensionKey` internally.
-`MergeKey` is the key of those buckets inside the line and of nothing else (§3.7).
+`QuantitySubtotal.dimensionKey` is the key of those buckets inside the line and of nothing
+else — there is no separate `MergeKey` type (§3.7).
 
 Putting `dimensionKey` in the line key instead splits "1 cup flour + 200 g flour" into two
 lines, makes `DraftLine.requested: [QuantitySubtotal]` plural for nothing, contradicts step
