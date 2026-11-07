@@ -545,7 +545,13 @@ final class InventoryLedger {
             return
         }
 
-        let subtotals = QuantityMath.sum(contributions, using: lot.item, system: unitSystem)
+        // Spelled out through a local rather than passing `lot.item` straight in: the
+        // parameter is `(any DensityCarrying)?`, and erasing a concrete optional into an
+        // existential optional at the call site is the kind of conversion there is no
+        // compiler here to confirm. One assignment of a non-optional is unambiguous.
+        var density: (any DensityCarrying)? = nil
+        if let owner = lot.item { density = owner }
+        let subtotals = QuantityMath.sum(contributions, using: density, system: unitSystem)
         // A lot holds ONE quantity, so one bucket has to win. Prefer the dimension the lot was
         // bought in; otherwise take the first, which after a density collapse IS the whole lot
         // expressed in the item's preferred dimension.

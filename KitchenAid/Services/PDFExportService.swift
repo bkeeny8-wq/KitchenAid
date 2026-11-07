@@ -158,7 +158,7 @@ enum PDFExportService {
         tweaks: TweakStore,
         context: ModelContext
     ) throws -> URL {
-        let plan = try plan(for: job, loader: loader, tweaks: tweaks, context: context)
+        let plan = try documents(for: job, loader: loader, tweaks: tweaks, context: context)
 
         var pages: [Page] = []
         for document in plan.documents {
@@ -175,7 +175,7 @@ enum PDFExportService {
     }
 
     @MainActor
-    private static func plan(
+    private static func documents(
         for job: Job,
         loader: RecipeLoader,
         tweaks: TweakStore,
@@ -190,7 +190,7 @@ enum PDFExportService {
         case .shoppingList(let listID):
             return try shoppingPlan(listID: listID, context: context)
         case .weekPlan(let interval):
-            return try weekPlan(interval: interval, loader: loader, context: context)
+            return try weekPlanDocuments(interval: interval, loader: loader, context: context)
         }
     }
 
@@ -410,6 +410,27 @@ enum PDFExportService {
         return parts.joined(separator: " \u{00B7} ")
     }
 
+    /// `LineFlag.rawValue` is an identifier, and "expiringBeforeNeed" on a printed list is
+    /// a word he has to decode. Only the flags that change what he does in the shop are
+    /// printed; the rest are app-internal and say nothing useful on paper.
+    private static func flagText(_ flag: LineFlag) -> String {
+        switch flag {
+        case .needsBridge: return "could not convert units"
+        case .unresolvedItem: return "not in the catalogue"
+        case .converted: return "converted"
+        case .expiredStockIgnored: return "expired stock ignored"
+        case .expiringBeforeNeed: return "on hand but expires first"
+        case .tweaked: return "your tweak applied"
+        case .noAttendance: return "no eaters set"
+        case .unknownYield: return "yield unknown"
+        case .snappedToBatch: return "whole batch"
+        case .overridden: return "scale overridden"
+        case .leftoversIncluded: return "extra for leftovers"
+        case .parLevel: return "below par"
+        case .assumedOnHand, .manual: return ""
+        }
+    }
+
     private static func noteLabel(_ kind: NoteKind) -> String {
         switch kind {
         case .makeAhead: return "Make ahead"
@@ -560,7 +581,10 @@ enum PDFExportService {
         if !have.isEmpty { qualifiers.append("have \(have.joined(separator: " + "))") }
         if !line.noteToSelf.isEmpty { qualifiers.append(line.noteToSelf) }
         if line.isManual { qualifiers.append("added by hand") }
-        for flag in line.flags.map({ $0.rawValue }).sorted() { qualifiers.append(flag) }
+        for flag in line.flags.sorted(by: { $0.rawValue < $1.rawValue }) {
+            let text = flagText(flag)
+            if !text.isEmpty { qualifiers.append(text) }
+        }
 
         var found: [Int] = []
         for source in line.orderedSources {
@@ -584,7 +608,7 @@ enum PDFExportService {
     /// sizes — and because the head count is the page that gets texted to whoever is cooking,
     /// so it has to stand alone rather than being a column of a grid.
     @MainActor
-    private static func weekPlan(
+    private static func weekPlanDocuments(
         interval: DateInterval,
         loader: RecipeLoader,
         context: ModelContext
@@ -592,14 +616,12 @@ enum PDFExportService {
         let keys = CalendarKey.dayKeys(from: interval.start, to: interval.end)
         guard let low = keys.first, let high = keys.last else { throw ExportError.nothingToExport }
 
-        // Both bounds hoisted, for the same `#Predicate` reason as above. The query is on
-        // `dayKey` and not on a `Date` range: a half-open comparison got slightly wrong at
-        // the upper bound renders Wednesday's dinner on Tuesday, and an integer equality is
-        // not capable of that mistake.
-        let lowKey = low
-        let highKey = high
+        // `low` and `high` are plain captured locals, which is what `#Predicate` can
+        // translate. The query is on `dayKey` and not on a `Date` range: a half-open
+        // comparison got slightly wrong at the upper bound renders Wednesday's dinner on
+        // Tuesday, and an integer equality is not capable of that mistake.
         let mealDescriptor = FetchDescriptor<PlannedMeal>(
-            predicate: #Predicate<PlannedMeal> { $0.dayKey >= lowKey && $0.dayKey <= highKey },
+            predicate: #Predicate<PlannedMeal> { $0.dayKey >= low && $0.dayKey <= high },
             sortBy: [
                 SortDescriptor(\.dayKey, order: .forward),
                 SortDescriptor(\.slotSortIndex, order: .forward),
@@ -722,7 +744,7 @@ enum PDFExportService {
             ))
         }
 
-        return (fileName: "week-\(lowKey)", documents: documents)
+        return (fileName: "week-\(low)", documents: documents)
     }
 
     // MARK: - Measuring and packing
@@ -782,14 +804,14 @@ enum PDFExportService {
         var groups: [[Block]] = []
         var current: [Block] = []
         var used: CGFloat = 0
-        for block in document.blocks {
-            if !current.isEmpty, used + blockSpacing + block.height > budget {
+        for item in document.blocks {
+            if !current.isEmpty, used + blockSpacing + item.height > budget {
                 groups.append(current)
                 current = []
                 used = 0
             }
-            current.append(block)
-            used += blockSpacing + block.height
+            current.append(item)
+            used += blockSpacing + item.height
         }
         if !current.isEmpty { groups.append(current) }
 

@@ -198,7 +198,8 @@ KNOWN = {
     "AppStorage", "SceneStorage", "Query", "ModelActor", "MainActor",
     # CoreGraphics / CoreFoundation, for the PDF writer's CGContext path
     "CGContext", "CGDataConsumer", "CGPoint", "CFURL", "CFData", "CFDictionary",
-    "ProposedViewSize", "RoundedRectangle", "Rectangle", "LocalizedError",
+    "ProposedViewSize", "RoundedRectangle", "Rectangle", "Capsule", "Circle",
+    "LocalizedError",
     "DynamicTypeSize", "ColorScheme", "UnsafePointer",
 }
 
