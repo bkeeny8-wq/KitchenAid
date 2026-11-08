@@ -181,30 +181,15 @@ enum ShoppingListBuilder {
 
     // MARK: - Build
 
-    /// Steps 1–9, nothing persisted. The generation sheet calls this live as he toggles
-    /// options: "32 items across 6 sections, 4 flagged".
-    static func preview(
-        meals: [PlannedMeal],
-        resolveRecipe: (String) -> ResolvedRecipe?,
-        resolveItem: (_ catalogName: String, _ displayName: String) -> FoodItem?,
-        inventoryLevel: (FoodItem, Options) -> (subtotals: [QuantitySubtotal], flags: Set<LineFlag>),
-        parLevelShortfalls: [(FoodItem, QuantitySubtotal)],
-        aisleOrder: [String],
-        options: Options
-    ) -> Draft {
-        build(
-            meals: meals,
-            resolveRecipe: resolveRecipe,
-            resolveItem: resolveItem,
-            inventoryLevel: inventoryLevel,
-            parLevelShortfalls: parLevelShortfalls,
-            aisleOrder: aisleOrder,
-            options: options
-        )
-    }
-
-    /// Identical to `preview`, named separately so the call sites read correctly.
+    /// Steps 1-9, nothing persisted.
     ///
+    /// There WAS a `preview(...)` beside this, an identical alias existing so a call site
+    /// could read as a preview rather than as a build. Nothing ever called it: the
+    /// generation sheet's live count and its Generate button both go through
+    /// `ShoppingListGeneration.draft`, deliberately, so that what he is shown is what gets
+    /// written -- which leaves no call site for the alias to read well at. A second entry
+    /// point to the one derivation is a second thing that can drift from it, so it is gone
+    /// rather than kept for a reader who never arrived.
     /// **Three closures and two fetched values**, and that is deliberate: the builder never
     /// reaches for a `ModelContext`, a `RecipeLoader` or a `TweakStore`.
     ///

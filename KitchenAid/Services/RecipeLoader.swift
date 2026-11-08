@@ -215,6 +215,20 @@ final class RecipeLoader {
     ///
     /// Archived recipes are included: a component still used by an archived dish is still
     /// used, and hiding that would make a "nothing uses this" answer wrong.
+    /// Which other recipes name this one, through `sourceRecipeID` or `subRecipeID`.
+    ///
+    /// NO CALLER, and that is the right answer today rather than an oversight. **No
+    /// bundled recipe references another** -- checked across all eight files -- so a "used
+    /// by Turkey Gravy" row would be a screen that can never appear on real data. Building
+    /// UI for it now would be the purchase-unit-rounding mistake again: a mechanism whose
+    /// data source does not exist yet (`CLAUDE.md`).
+    ///
+    /// It is kept because sub-recipe expansion IS built and tested -- `RecipeGraph.flatten`
+    /// walks `subRecipeID` with a per-path cycle guard, and `SubRecipePolicy` decides
+    /// whether a reference expands to its ingredients or is bought as an item. The first
+    /// document that says "use the turkey gravy from page 2" makes this the thing that
+    /// answers "what breaks if I change this recipe", and the answer should not have to be
+    /// written then, under pressure, by someone reading the flattener for the first time.
     func usages(of recipeID: String) -> [Recipe] {
         guard !recipeID.isEmpty else { return [] }
         return byID.values
