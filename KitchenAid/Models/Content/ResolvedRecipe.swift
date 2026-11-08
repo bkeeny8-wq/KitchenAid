@@ -23,8 +23,15 @@ struct ResolvedRecipe: Identifiable, Sendable {
     var isFavorite: Bool = false
 
     /// Overrides whose `lineID` or `stepID` no longer exists in the bundled recipe, because
-    /// the file was revised. They are REPORTED, not discarded: `TweakSheet` lists them as
-    /// "this no longer applies — remove it?" so a lost tweak is visible rather than silent.
+    /// the file was revised. They are REPORTED, not discarded, so a lost tweak is visible
+    /// rather than silent.
+    ///
+    /// WHERE, since there is no longer a single `TweakSheet` and this comment named one for
+    /// months after it stopped existing: `DiagnosticsView` holds the full report and the
+    /// only "forget this tweak" action, reached from the orange banner at the top of any
+    /// tab; `RecipeDetailView` shows a one-line notice with a count and points at it. One
+    /// action, one screen — `TweakStore.clearLapsed` wants a single caller, not two screens
+    /// inventing two sets of words.
     var lapsedOverrides: [LapsedOverride] = []
 
     struct LapsedOverride: Identifiable, Hashable, Sendable {

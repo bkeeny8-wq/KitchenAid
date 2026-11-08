@@ -4980,6 +4980,102 @@ enum PlanScope: String, Codable, CaseIterable, Sendable {
 }
 ```
 
+### 3.8b Weight-driven scaling — a whole bird is selected, not divided
+
+**Added after the Swift was written. The Swift is the contract (`CLAUDE.md`); this records
+what it does.**
+
+§4's `MealScaling` assumes every recipe scales by `portions / servings`. A whole roast
+turkey does not. Nobody roasts 1.4 birds: you buy a bigger one and read the longer time off the
+chart the document prints. Brandon's turkey document states **no serving count at all**,
+and asked how many it serves he answered that it "was for a roughly 14lb turkey" — a
+weight, not a count. Asked whether to drive it off the chart instead: *"yes use the weight
+chart"*.
+
+So `MealScaling.scaling(for:recipe:defaultDinerCount:)` holds **two** derivations, picked
+by the recipe and never by the caller:
+
+| | |
+|---|---|
+| `Recipe.isWeightDriven` false | `portions / servings`, batch-snapped, as §4 describes |
+| `Recipe.isWeightDriven` true | `chosenWeightPounds / basisWeightPounds`, **no snapping** |
+
+- **`isWeightDriven` requires BOTH** a `basisWeightPounds` and a table whose first column
+  parses as weights, so a basis with no chart — or a chart with no basis — leaves it false
+  rather than half-enabling it.
+- **The basis arrives as an override.** The document does not state it, so it is
+  `"basisWeightPounds": 14` in `docs/recipe-overrides.json` with his words in the `why`. It
+  is deliberately NOT written into `servings`: a weight is not a serving count, and
+  `servingsStated` stays false so nothing prints an invented number (§3.8c).
+- **No batch snapping on this path**, and the weight branch returns before `snap(...)` for
+  that reason. The chart's weights *are* the real options: 9/7 of a 14 lb bird **is** an
+  18 lb bird, and rounding that to a half or whole batch would be nonsense.
+- **Exact.** 18 lb against 14 lb is `Rational(9, 7)`, so ¼ cup of butter becomes exactly
+  9/28 of a cup.
+- **Attendance does not divide**, but `Result.portions` still reports it for display. The
+  next reader will assume attendance still matters, so both the branch and
+  `Result.portions` say so in comments.
+- **It is stored on the plan**, as a numerator/denominator pair on `MealRecipe` mirroring
+  `scaleOverride` — not in the cook session. The shopping list is built from the plan, so a
+  weight picked only at the stove could never reach it.
+- **A manual `scaleOverride` still wins** over both derivations.
+- With **no weight chosen** the scale is 1 — the quantities as written for the basis — and
+  explicitly *not* a fall-through to the serving-count path, which would divide by the
+  substituted 4 this branch exists to stop using. It carries `.unknownYield`, reused rather
+  than adding a `ScalingNote` case, because `LineFlag.from` and
+  `PDFExportService.flagText` both switch over that enum exhaustively.
+
+### 3.8c `servingsStated` — three states, not two
+
+`Recipe.servings` substitutes a positive value so the planner always has a divisor, which
+makes the substitution invisible through the accessor. `servingsStated` is stored so a
+caller can tell the three cases apart, and `Recipe.servesLabel(scale:)` is the **one**
+wording of them:
+
+| | |
+|---|---|
+| stated | "Serves 4" — the document claims it |
+| `servingsApproximate` | "Serves about 4" — he gave it in passing ("they serve approx 4") |
+| `servingsStated` false | **no number at all** — nobody ever gave one |
+
+`servingsApproximate` is single-meaning and must stay so. Setting it from
+`|| !servingsStated` made the turkey print "Serves about 4" — character for character what
+the three compotes print, where the 4 is a number he actually gave — and attributing an
+approximate count to a document that has none is a claim, not a hedge.
+
+The one place that *does* print the assumed number is `MealEditorView`, deliberately:
+there it is what the app is dividing his shopping by right now, so he can argue with it.
+
+### 3.8d Per-line overrides in `docs/recipe-overrides.json`
+
+`apply_overrides` originally set top-level recipe keys only, so there was no way to correct
+a single ingredient line. A `"lines"` map keyed by `lineID` now does:
+
+```json
+"turkey-gravy": {
+  "lines": {
+    "fat-1": { "excludeFromShopping": true },
+    "stock-1": { "name": "Turkey stock" }
+  },
+  "why": "..."
+}
+```
+
+- **`LINE_OVERRIDABLE` is a whitelist** of `name`, `preparation`, `excludeFromShopping` and
+  `isOptional`. **Amounts are refused**, and the importer raises on one: an override is a
+  fact the document omitted, not a licence to rewrite it, and a quantity no page he can
+  re-read anywhere states has no answer to "where did this come from". A test asserts the
+  refusal.
+- **Keyed on `lineID`, never on position.** The ids are name-plus-occurrence
+  (`butter-1`, `butter-2`), so an override whose line is gone **lapses visibly** — the
+  importer emits a warning naming the id — rather than silently re-pointing at whatever
+  line took that slot.
+- This is what settled the four unplaceable column labels in the turkey and gravy
+  documents. They settled four different ways, which is why guessing would have been wrong
+  in three of them: `Fat` buys nothing ("it comes from the roast"), `Stock` became turkey
+  stock, and `Pan base` and `Vegetable bed` he asked to **leave flagged** rather than
+  resolve.
+
 ### 3.9 `ScalingNote.swift`, `LineFlag.swift`, `CalendarKey.swift`, `NameNormalizer.swift`
 
 ```swift
@@ -5525,6 +5621,9 @@ convention at the top of this document). The value types in them are final as wr
 function bodies are §4.2. Nothing below declares a body, which is exactly why these are not
 `swift` fences — a bodiless `func` in a concrete `enum` is a parse error, and §1–§3 are
 the only sections that promise to compile.
+
+**Two derivations now live in here, not one — see §3.8b, which was written after the Swift
+and records what it actually does.**
 
 ```text
 // KitchenAid/Services/MealScaling.swift

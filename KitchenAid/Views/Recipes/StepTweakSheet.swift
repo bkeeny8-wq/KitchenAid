@@ -39,6 +39,11 @@ struct StepTweakSheet: View {
     @State private var upperMinutes = 0
     /// The pair the step arrived with, kept so a save that changes only the text can write
     /// the timing back in the SHAPE it came in. See `sameTiming`.
+    /// His aside about this step. Seeded from the stored override and NOT from the
+    /// resolved step, because a note has no bundled value to fall back to -- unlike the
+    /// title and the body, "" here means no note rather than leave-the-document-alone, so
+    /// there is nothing for the equals-the-document mapping below to do.
+    @State private var noteText = ""
     @State private var seededMin: Int?
     @State private var seededMax: Int?
     @State private var didSeed = false
@@ -140,6 +145,22 @@ struct StepTweakSheet: View {
             // emptying a field is a revert and not a way to blank out the document's words.
             Text("Emptying either one puts the recipe's own wording back.")
         }
+
+        // KEPT SEPARATE FROM THE BODY, and that is the point of the field existing.
+        // `TweakStore.apply(_:toStep:)` never merges a note into `body`: appending his
+        // aside to the method would make it indistinguishable from the authored text the
+        // next time the document is revised, and then nobody could tell which words were
+        // his. It renders beneath the step instead, here and on the recipe screen.
+        Section {
+            TextField("Your note", text: $noteText, axis: .vertical)
+                .frame(minHeight: 66)
+                .accessibilityLabel("Your note on this step")
+        } header: {
+            Text("Your note")
+        } footer: {
+            Text("Kept beside the step, never mixed into it. One note, rewritten in "
+               + "place \u{2014} there is no cooking log.")
+        }
     }
 
     // MARK: - Timing
@@ -229,6 +250,13 @@ struct StepTweakSheet: View {
         let high = step.maxMinutes
         seededMin = low
         seededMax = high
+        // From the OVERRIDE ROW, not from `step`: the resolved step carries no note,
+        // because `apply(_:toStep:)` deliberately does not merge one in.
+        // `first(where:)` spelled out: `first` is both a property and a method on a
+        // collection, and the bare trailing-closure form is what the review flagged in
+        // `StockLotView`.
+        let rows = tweakStore.tweakIfExists(for: resolved.id)?.orderedStepOverrides ?? []
+        noteText = rows.first(where: { $0.stepID == stepID })?.note ?? ""
         isTimed = low != nil || high != nil
         minutes = low ?? high ?? 0
         upperMinutes = high ?? low ?? 0
@@ -274,6 +302,10 @@ struct StepTweakSheet: View {
             forStep: stepID,
             in: resolved.id
         )
+        // After `setStep`, because both call `finishStep`, which DELETES a row left
+        // entirely blank. Writing the note first would have it thrown away by the
+        // following call whenever the text and timing both match the document.
+        tweakStore.setStepNote(noteText, forStep: stepID, in: resolved.id)
         dismiss()
     }
 

@@ -453,6 +453,15 @@ def main():
         f"\t\t\t\tENABLE_PREVIEWS = YES;\n"
         f"\t\t\t\tGENERATE_INFOPLIST_FILE = YES;\n"
         f"\t\t\t\tINFOPLIST_KEY_CFBundleDisplayName = KitchenAid;\n"
+        # Receipt and barcode scanning need the camera, and an iOS app that
+        # touches AVCapture with no usage description does not get a permission
+        # prompt -- it is killed on the spot. With GENERATE_INFOPLIST_FILE = YES
+        # there is no Info.plist to add it to, so it has to be a build setting
+        # here. The wording is what he will actually be shown, so it says what
+        # the camera is for and what is NOT kept: no photo is ever stored by this
+        # app (CLAUDE.md, "Photos: none, anywhere") -- the frame is read for its
+        # text or its barcode and discarded.
+        f"\t\t\t\tINFOPLIST_KEY_NSCameraUsageDescription = \"Scans a receipt or a barcode to add items to your pantry. Nothing is photographed or saved -- the camera reads the text and forgets it.\";\n"
         f"\t\t\t\tINFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;\n"
         f"\t\t\t\tINFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;\n"
         f"\t\t\t\tINFOPLIST_KEY_UILaunchScreen_Generation = YES;\n"

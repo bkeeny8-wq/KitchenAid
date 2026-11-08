@@ -312,32 +312,39 @@ final class ShoppingListStore {
         // the flag here was `nothingLeftToBuy`, so the line stayed pinned under Needs
         // attention reading "needs weight per cup" for ever. (Code review 01, item 3.)
         //
-        // Nothing else may be dropped, and the honest reason is NOT that the rest are
-        // facts about the line rather than about a quantity. That is what this comment
-        // used to claim and it is wrong for six of them. `.manual`, `.parLevel` and
-        // `.unresolvedItem` really are line-or-item facts. But `.tweaked` is written per
-        // CONTRIBUTION (`ShoppingListBuilder`, `if flat.wasTweaked`), and so is every
-        // scaling note `LineFlag.from` maps — `.noAttendance`, `.unknownYield`,
-        // `.snappedToBatch`, `.overridden`, `.leftoversIncluded`. All six are facts about
-        // WHICH MEALS CONTRIBUTE, which is exactly the side this path re-sums.
+        // EVERY DERIVED FLAG IS DROPPED AND RE-DERIVED. Which ones those are is now a real
+        // distinction and not the half-truth this comment used to tell.
         //
-        // They survive anyway because `ShoppingListSource` stores no `wasTweaked` column
-        // and no scaling notes, so there is nothing here to re-derive them FROM. So they
-        // are KNOWN-STALE after a drop: lose the only meal whose line carried an override
-        // and the line keeps its "your tweak" badge; lose the only meal scaled up for
-        // leftovers and it keeps "extra for leftovers". That is a smaller lie than
-        // clearing a fact nothing can restate, and it is a lie either way — the fix is to
-        // persist those two things on the source row, and then this and
-        // `ShoppingListBuilder`'s copy below should both become one
-        // `derivedFlags(for:)`. Until then a full regenerate is the only thing that
-        // corrects them.
+        // `.needsBridge` and `.converted` fall out of the QUANTITIES, and this path re-sums
+        // those. `.tweaked` and the five scaling notes are written per CONTRIBUTION, so
+        // they fall out of WHICH MEALS SURVIVE -- which this path also decides. All seven
+        // were previously seeded from the stored set and only ever unioned, so all seven
+        // could outlive the thing they described: drop the only meal that asked for flour
+        // by the gram and the line read "needs weight per cup" for ever; drop the only meal
+        // whose line carried an override and it kept "your tweak".
         //
-        // The ledger's `.expiredStockIgnored` / `.expiringBeforeNeed` and
-        // `.assumedOnHand` are different again: they came from an inventory read this
-        // path deliberately does not redo.
+        // The six-of-seven half was unfixable until `ShoppingListSource` learned
+        // `wasTweaked` and `scalingNotesBlob`. It has them now, so they are re-derived
+        // through `ShoppingListBuilder.contributionFlags` -- the SAME function `build`
+        // calls, so a line that comes back from a dropped meal is flagged exactly as a full
+        // regenerate of the same list would flag it.
+        //
+        // What is KEPT, and why that is safe: `.manual`, `.parLevel` and `.unresolvedItem`
+        // are facts about the line or its item, not about a contribution or a quantity. The
+        // ledger's `.expiredStockIgnored`, `.expiringBeforeNeed` and `.assumedOnHand` came
+        // from an inventory read this path deliberately does not redo, and nothing here
+        // could restate them.
         var flags = line.flags
         flags.remove(.needsBridge)
         flags.remove(.converted)
+        flags.remove(.tweaked)
+        flags.subtract(LineFlag.from(ScalingNote.allCases))
+        for source in survivors {
+            flags.formUnion(ShoppingListBuilder.contributionFlags(
+                wasTweaked: source.wasTweaked,
+                notes: source.scalingNotes
+            ))
+        }
 
         // The requested-side writer of `.converted`, then writer 1 of `.needsBridge`,
         // COPIED from `ShoppingListBuilder` (its lines 421-425 and 434-438) rather than
@@ -430,6 +437,8 @@ final class ShoppingListStore {
                 originalText: draftSource.originalText,
                 scaledText: draftSource.scaledText,
                 scaleDescription: draftSource.scaleDescription,
+                wasTweaked: draftSource.wasTweaked,
+                scalingNotesBlob: ScalingNote.encode(draftSource.notes),
                 hasContribution: draftSource.contribution != nil,
                 contributionDimensionKey: draftSource.contribution?.dimensionKey ?? "",
                 contributionBaseNumerator: draftSource.contribution?.base.numerator ?? 0,

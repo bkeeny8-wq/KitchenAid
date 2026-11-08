@@ -50,6 +50,22 @@ enum ShoppingListBuilder {
         return .freeText(key.isEmpty ? displayName : key)
     }
 
+    /// The flags a single CONTRIBUTION earns, derived in one place.
+    ///
+    /// Called by `build` while it fills a bucket, and by `ShoppingListStore.recompute`
+    /// after a meal is dropped. Two spellings of this is how a line comes back from a
+    /// dropped meal flagged differently than a full regenerate of the same list would flag
+    /// it -- the same reason `identity(for:displayName:)` above is a single function.
+    ///
+    /// `.tweaked` and the five scaling notes are the flags that belong to a contribution
+    /// rather than to the line or the item, which is exactly why they can be re-derived at
+    /// all: `ShoppingListSource` stores `wasTweaked` and `scalingNotesBlob` for it.
+    static func contributionFlags(wasTweaked: Bool, notes: [ScalingNote]) -> Set<LineFlag> {
+        var flags = LineFlag.from(notes)
+        if wasTweaked { flags.insert(.tweaked) }
+        return flags
+    }
+
     // MARK: - Options
 
     /// Everything that changes what a build produces, and the whole of what `ShoppingList`
@@ -111,6 +127,11 @@ enum ShoppingListBuilder {
         /// this 2 tbsp" is answered by which of the components asked for what — and the fixture
         /// needs it on one recipe alone, where butter appears in two of them.
         var contribution: QuantitySubtotal? = nil
+        /// What this contribution EARNED, carried so `ShoppingListStore` can store it and a
+        /// later drop-a-meal can re-derive the flags instead of leaving them stale. Both are
+        /// per-contribution facts, which is why they live here and not on `DraftLine`.
+        var wasTweaked: Bool = false
+        var notes: [ScalingNote] = []
     }
 
     struct DraftLine: Sendable {
@@ -341,8 +362,9 @@ enum ShoppingListBuilder {
                 bucket.unmeasuredNotes.append(flat.unmeasuredNote)
             }
 
-            if flat.wasTweaked { bucket.flags.insert(.tweaked) }
-            bucket.flags.formUnion(LineFlag.from(flat.notes))
+            bucket.flags.formUnion(
+                contributionFlags(wasTweaked: flat.wasTweaked, notes: flat.notes)
+            )
 
             if item == nil && !bucket.flags.contains(.unresolvedItem) {
                 // Once per line and not once per contribution: butter in two components would
@@ -367,7 +389,9 @@ enum ShoppingListBuilder {
                 originalText: flat.originalText,
                 scaledText: flat.scaledText,
                 scaleDescription: flat.provenance.scaleDescription,
-                contribution: sourceContribution
+                contribution: sourceContribution,
+                wasTweaked: flat.wasTweaked,
+                notes: flat.notes
             ))
 
             buckets[lineIdentity] = bucket

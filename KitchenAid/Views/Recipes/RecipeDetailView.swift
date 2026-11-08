@@ -498,15 +498,25 @@ struct RecipeDetailView: View {
     @ViewBuilder
     private func method(_ resolved: ResolvedRecipe) -> some View {
         if !resolved.steps.isEmpty {
+            // Read ONCE for the whole section rather than inside `stepRow`. His notes
+            // live on the override rows and deliberately never merge into the resolved
+            // step, so they have to be fetched -- and the turkey has ten steps, which
+            // inside the row would be ten fetches on every body evaluation.
+            let notes = stepNotes(for: resolved.id)
             Section("Method") {
                 ForEach(resolved.steps) { step in
                     if step.stepID.isEmpty {
-                        stepRow(step, in: resolved, isEditable: false)
+                        stepRow(step, in: resolved, note: "", isEditable: false)
                     } else {
                         Button {
                             editing = RecipeTweakTarget(kind: .step, key: step.stepID)
                         } label: {
-                            stepRow(step, in: resolved, isEditable: true)
+                            stepRow(
+                                step,
+                                in: resolved,
+                                note: notes[step.stepID] ?? "",
+                                isEditable: true
+                            )
                         }
                         .buttonStyle(.plain)
                         .accessibilityHint("Fix the wording or the timing of this step")
@@ -517,9 +527,24 @@ struct RecipeDetailView: View {
     }
 
     @ViewBuilder
+    /// stepID to his note, for the steps that carry one.
+    ///
+    /// A step with no override, or one whose note is empty, is simply absent rather than
+    /// mapped to "": the caller's `?? ""` is then the one place the empty case is decided.
+    @MainActor
+    private func stepNotes(for recipeID: String) -> [String: String] {
+        var out: [String: String] = [:]
+        let rows = tweakStore.tweakIfExists(for: recipeID)?.orderedStepOverrides ?? []
+        for row in rows where !row.note.isEmpty && !row.stepID.isEmpty {
+            out[row.stepID] = row.note
+        }
+        return out
+    }
+
     private func stepRow(
         _ step: RecipeStep,
         in resolved: ResolvedRecipe,
+        note stepNote: String,
         isEditable: Bool
     ) -> some View {
         let isChanged = resolved.isOverridden(stepID: step.stepID)
@@ -556,6 +581,16 @@ struct RecipeDetailView: View {
                     }
                 }
                 Text(step.body).font(.subheadline)
+                // HIS NOTE, beneath the step and never inside it. `apply(_:toStep:)`
+                // refuses to merge it into `body` so that his aside stays
+                // distinguishable from the authored text across a re-import, and its
+                // comment promised "the recipe screen's step row renders it beneath the
+                // body" -- which was only true once the field had a writer at all.
+                if !stepNote.isEmpty {
+                    Label(stepNote, systemImage: "text.bubble")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
                 if !changedCaption.isEmpty {
                     Text(changedCaption)
                         .font(.caption)

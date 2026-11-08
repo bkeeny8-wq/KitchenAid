@@ -40,6 +40,23 @@ final class ShoppingListSource {
     // of the three components asked for what. The fixture needs it on one recipe alone:
     // butter appears as 1 tbsp in two components, and a line that reports 2 tbsp with no
     // per-source split is a line he cannot check.
+    // MARK: What this contribution EARNED, so a drop can re-derive it
+    //
+    // `ShoppingListStore.recompute` re-sums the requested side from the surviving sources
+    // after a meal is dropped, and could re-derive only the two flags that fall out of the
+    // quantities (`.needsBridge`, `.converted`). `.tweaked` and the five scaling notes are
+    // written per CONTRIBUTION by `ShoppingListBuilder`, and nothing on this row recorded
+    // them -- so they were KNOWN-STALE after a drop: lose the only meal whose line carried
+    // an override and the line kept its "your tweak" badge for ever, and the comment in
+    // `recompute` had to admit it.
+    //
+    // Stored here because this row is the only thing that outlives the draft. Two columns
+    // is the whole cost, and it turns six permanently-wrong badges into six correct ones.
+    var wasTweaked: Bool = false
+    /// `ScalingNote.encode`. A blob and not a relationship: five possible values that are
+    /// read all at once and never queried individually.
+    var scalingNotesBlob: String = ""
+
     var hasContribution: Bool = false
     var contributionDimensionKey: String = ""
     var contributionBaseNumerator: Int = 0
@@ -70,6 +87,8 @@ final class ShoppingListSource {
         originalText: String = "",
         scaledText: String = "",
         scaleDescription: String = "",
+        wasTweaked: Bool = false,
+        scalingNotesBlob: String = "",
         hasContribution: Bool = false,
         contributionDimensionKey: String = "",
         contributionBaseNumerator: Int = 0,
@@ -90,6 +109,8 @@ final class ShoppingListSource {
         self.originalText = originalText
         self.scaledText = scaledText
         self.scaleDescription = scaleDescription
+        self.wasTweaked = wasTweaked
+        self.scalingNotesBlob = scalingNotesBlob
         self.hasContribution = hasContribution
         self.contributionDimensionKey = contributionDimensionKey
         self.contributionBaseNumerator = contributionBaseNumerator
@@ -104,6 +125,9 @@ final class ShoppingListSource {
 // MARK: - Reading a source
 
 extension ShoppingListSource {
+    /// The scaling notes this contribution earned, decoded.
+    var scalingNotes: [ScalingNote] { ScalingNote.decode(scalingNotesBlob) }
+
     var kind: LineSourceKind { LineSourceKind(rawValue: kindRaw) ?? .plannedMeal }
 
     /// Nil when the slot was never snapshotted — a `.parLevel` or `.manual` source has no

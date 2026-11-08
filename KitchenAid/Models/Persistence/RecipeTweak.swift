@@ -169,8 +169,10 @@ extension RecipeTweak {
     /// positional, so a revised recipe file makes a stale override LAPSE instead of
     /// silently re-pointing at whatever ingredient now occupies that slot — a tweak that
     /// quietly moves from butter to flour is worse than one that stops applying. These are
-    /// reported, never dropped: the tweak sheet lists them as "this no longer applies —
-    /// remove it?" so a lost tweak is visible rather than silent.
+    /// reported, never dropped, so a lost tweak is visible rather than silent. The report
+    /// and its "forget this tweak" action live on `DiagnosticsView` (see
+    /// `ResolvedRecipe.lapsedOverrides`); this comment used to name a `TweakSheet`, which
+    /// was split into `IngredientTweakSheet` and `StepTweakSheet` and holds neither.
     ///
     /// The empty-set guard is not defensive noise. `liveLineIDs` is empty exactly when the
     /// recipe could not be resolved at all — removed file, failed decode — and in that case

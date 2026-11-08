@@ -185,7 +185,9 @@ final class TweakStore {
         step.maxMinutes = minutes.max
         // `StepOverride.note` deliberately does not merge into `body`: appending to the
         // method would make his aside indistinguishable from the authored text the next
-        // time the file is revised. The tweak sheet renders it beside the step instead.
+        // time the file is revised. `StepTweakSheet` edits it and `RecipeDetailView`'s step
+        // row renders it beneath the body -- which was a stale promise in this comment for
+        // as long as the field had no writer at all (see `setStepNote`).
     }
 
     // MARK: - Lapsing
@@ -287,6 +289,29 @@ final class TweakStore {
         finishIngredient(row, forLine: lineID, in: recipeID)
     }
 
+    /// His aside about a step, which is a tweak and not a journal entry.
+    ///
+    /// `StepOverride.note` was stored, applied-around by `apply(_:toStep:)` and written by
+    /// NOBODY: the comment there said "the tweak sheet renders it beside the step instead"
+    /// and no sheet did, because there was no sheet at all when it was written and no
+    /// writer after there was. A stored field with no writer is the shape of defect
+    /// `docs/CODE_REVIEW_01.md` is mostly about; this is its writer.
+    ///
+    /// In scope by CLAUDE.md's decision: "notes and tweaks only -- adjust a quantity, fix
+    /// a step, ADD A NOTE AFTER COOKING". It is deliberately symmetric with
+    /// `setIngredientNote`, and it is NOT a cooking journal: one note that belongs to the
+    /// step, rewritten in place, with no date, no rating and no per-cook history. The
+    /// journal is declined and this must not grow into one.
+    ///
+    /// `finishStep` already keeps a row whose note is non-empty and deletes one left
+    /// entirely blank, so clearing the note reverts the step on its own.
+    func setStepNote(_ text: String, forStep stepID: String, in recipeID: String) {
+        guard !recipeID.isEmpty, !stepID.isEmpty else { return }
+        let row = stepOverride(forStep: stepID, in: recipeID)
+        row.note = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        finishStep(row, in: recipeID)
+    }
+
     /// `nil` for either text field leaves the bundled text alone.
     ///
     /// The minute bounds are the sheet's full state, not a delta, so they are compared
@@ -381,9 +406,13 @@ final class TweakStore {
         save()
     }
 
-    /// Removing a lapsed override is an explicit act, offered by the tweak sheet and never
-    /// done on his behalf. It takes the report's own value so the caller can pass back
-    /// exactly what it rendered.
+    /// Removing a lapsed override is an explicit act, offered by `DiagnosticsView`'s
+    /// lapsed-tweaks section and never done on his behalf. It takes the report's own value
+    /// so the caller can pass back exactly what it rendered.
+    ///
+    /// ONE caller by design. The recipe screen shows a count and points here in words
+    /// rather than offering a second button, because two screens offering the same
+    /// destructive action is two sets of words for it that can drift apart.
     func clearLapsed(_ lapse: ResolvedRecipe.LapsedOverride, in recipeID: String) {
         switch lapse.kind {
         case .ingredient:
