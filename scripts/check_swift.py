@@ -305,6 +305,76 @@ if RECIPES:
                     f"the importer emits {kind} key `{key}` and nothing in "
                     "Models/Content reads it -- it is dropped on decode")
 
+# --- 7. a screen nobody can reach --------------------------------------------
+#
+# Check 5 answers "does this type exist". This answers the question that cost
+# more: CAN HE GET TO IT. Code review 01 found three of its ten blocking defects
+# were not broken code at all -- `CookView` and `HouseholdView` were written,
+# correct, and constructed from NOWHERE, while this repo's commit messages said
+# the tabs were done. A compiler would not have complained either: an
+# unreferenced `struct SomeView: View` is perfectly legal Swift.
+#
+# So: walk the reference graph out from the file holding `@main` and report any
+# `View` a walk never reaches.
+#
+# FILES are the nodes, not types. A namespace `enum` like `PDFExportService`
+# builds fifteen page-content views inside its own functions, and attributing
+# those construction sites to a declaring *type* leaves every one of them
+# looking orphaned. Per file is coarser and right: these files are organised one
+# feature per file, and a View sitting in a file the app demonstrably reaches is
+# not the failure this is looking for.
+#
+# An edge is any capitalised identifier followed by `(` or `.` -- construction,
+# or a static member on a namespace, which is how `PDFExportService` gets
+# reached at all. Deliberately broad. A missed orphan is a shame; a false alarm
+# would teach the next reader to ignore this check, and then it is worth
+# nothing.
+view_decl = re.compile(
+    r"^\s*(?:public\s+|private\s+|internal\s+)?struct\s+(\w+)\s*:\s*([^{]*)\{", re.M)
+any_decl = re.compile(
+    r"^\s*(?:public\s+|private\s+|internal\s+|final\s+)*"
+    r"(?:struct|class|enum|actor|protocol)\s+(\w+)", re.M)
+reference = re.compile(r"(?<![\w.])([A-Z]\w+)\s*[(.]")
+
+declared_in = {}
+views_in = {}
+edges = {}
+main_file = None
+for path, text in FILES.items():
+    for m in any_decl.finditer(text):
+        declared_in.setdefault(m.group(1), path)
+    for m in view_decl.finditer(text):
+        # `: View`, `: View, Identifiable`, `: SomeProtocol & View` -- a word
+        # boundary, so `ViewModifier` and `ViewBuilder` do not count.
+        if re.search(r"\bView\b", m.group(2)):
+            views_in[m.group(1)] = path
+    edges[path] = {m.group(1) for m in reference.finditer(CODE[path])}
+    if "@main" in CODE[path]:
+        main_file = path
+
+if main_file is None:
+    problems.append("no @main anywhere in the tree -- nothing to walk the view "
+                    "graph out from")
+else:
+    reached = set()
+    stack = [main_file]
+    while stack:
+        here = stack.pop()
+        if here in reached:
+            continue
+        reached.add(here)
+        for name in edges.get(here, ()):
+            target = declared_in.get(name)
+            if target is not None and target not in reached:
+                stack.append(target)
+
+    for name in sorted(views_in):
+        if views_in[name] not in reached:
+            problems.append(
+                f"`{name}` ({rel(views_in[name])}) is a View that nothing "
+                "reachable from @main ever builds -- it is written, it compiles, "
+                "and no tap gets to it")
+
 # --- report ------------------------------------------------------------------
 print(f"{len(FILES)} Swift files, "
       f"{sum(len(t.splitlines()) for t in FILES.values())} lines, "
