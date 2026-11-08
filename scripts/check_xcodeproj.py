@@ -117,10 +117,18 @@ build_files = re.findall(r"/\* (\S+\.swift) in Sources \*/ = \{isa = PBXBuildFil
 
 for target in ("KitchenAid", "KitchenAidTests", "KitchenAidUITests"):
     for name in swift_on_disk(target):
-        if swift_refs.count(name) == 0:
+        refs = swift_refs.count(name)
+        if refs == 0:
             fail(f"{target}/{name} is on disk with no file reference -- it will not build")
-        elif swift_refs.count(name) > 1:
-            fail(f"{name} has {swift_refs.count(name)} file references; Xcode will "
+            # And nothing more about this file. The build-file message below says "has a
+            # file reference but no build file", which is FALSE of a file that has no
+            # reference at all -- and it was reported anyway, because that was an `if` and
+            # not an `elif`, so every missing file produced two complaints, the second
+            # contradicting the first. Five files added by the scanning work hit it and
+            # the output read as ten unrelated problems.
+            continue
+        if refs > 1:
+            fail(f"{name} has {refs} file references; Xcode will "
                  "compile it twice and the linker will see duplicate symbols")
         if build_files.count(name) == 0:
             fail(f"{name} has a file reference but no build file -- it is in the "
