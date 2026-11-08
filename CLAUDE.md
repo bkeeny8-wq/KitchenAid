@@ -263,6 +263,32 @@ The checks:
 It is **not a compiler**: it cannot see a type error, a wrong argument label, or
 an unsatisfied protocol conformance. Say so rather than implying otherwise.
 
+### A sweep you chose the inputs for is a smoke test, not a verification
+
+`docs/CODE_REVIEW_02.md` records this and it is the sharpest lesson the project has
+produced, because it is about evidence that looked good.
+
+The agent that wrote the receipt matcher verified its own work the way this repo asks
+for: it ported its algorithm to Python, ran it against the real shipped 670-entry
+catalogue — not against a stand-in — swept 67 realistic receipt lines, and reported
+**zero confident-and-wrong matches**. That is execution against real data, which is the
+strongest kind of evidence available in a container with no compiler, and it was
+believed.
+
+An independent verifier ported the same functions from the Swift rather than from the
+description, swept ~190 lines, and found five confident-and-wrong matches — including
+`CHS` → **chives** and `SPRING WATER` → **sparkling water**, each the result of the
+scoring function's floor rather than of a typo.
+
+Both ran a sweep. One found nothing and one found five. The difference was not effort or
+honesty: it was **which inputs they thought to try**, and an author picks the inputs its
+own algorithm was designed around.
+
+So when you verify your own work numerically, say so in exactly those terms — "my own
+sweep, inputs chosen by me, found nothing" — and do not let the number stand in for an
+adversarial pass. If one agent writes a heuristic, a different one has to try to break
+it, and it must read the code rather than the summary.
+
 ### When you claim one of Brandon's decisions is built
 
 Name the screen it is reachable **from**, and the taps to get there. Three of the
