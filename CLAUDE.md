@@ -231,13 +231,35 @@ only what a missing compiler makes expensive to get wrong:
 - Braces, parens and brackets balance per file.
 - No `@Attribute(.unique)` and no non-optional to-many relationship.
 - No symbol from a declined or cut feature has crept back.
+- Every key the importer emits is read by something in `Models/Content`. A key
+  the Swift never reads is a key dropped on decode, which is how `warnings` went
+  missing — see `IGNORED` in the script and the comment on why that list is
+  short.
 - Type names used but declared nowhere in the tree. This heuristic is what found
   `CalendarKey` and `RecipeLoader` being referenced by files that compiled
   against nothing, and it has an allowlist of framework types — a newly used
   Apple type must be added to `KNOWN` in the script.
 
+  It originally scanned only *type positions* (after `:`, `->`, `<`, `[`, `as`,
+  `is`), which made a SwiftUI view that is only ever **constructed** invisible to
+  it. Four views were constructed in `CookView` and declared nowhere, and this
+  check reported PASS. It now scans constructor position too.
+- **A `View` that nothing reachable from `@main` ever builds.** The question that
+  cost the most was never "does this type exist" but "can he get to it":
+  `CookView` and `HouseholdView` were both written, correct, and constructed from
+  nowhere, while the commit messages said their tabs were done. An unreferenced
+  `struct SomeView: View` is legal Swift, so no compiler would have said either.
+  Check 7 walks the reference graph out from the file holding `@main`.
+
 It is **not a compiler**: it cannot see a type error, a wrong argument label, or
 an unsatisfied protocol conformance. Say so rather than implying otherwise.
+
+### When you claim one of Brandon's decisions is built
+
+Name the screen it is reachable **from**, and the taps to get there. Three of the
+ten blocking defects in `docs/CODE_REVIEW_01.md` were working screens nobody
+could open, written up as done. Check 7 now catches the total orphan; it cannot
+catch a screen reachable only from somewhere he would never look.
 
 ## The Xcode project
 
