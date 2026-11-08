@@ -56,6 +56,22 @@ struct PlanWeekView: View {
                 }
                 .accessibilityLabel("Household")
             }
+            // Printing the week belongs HERE, on the week. The `weekPlan` job existed and
+            // was reachable only from `ExportCenterView`, which hangs off the SHOP tab --
+            // so the way to put the week on paper was to leave the week, go to Shop and
+            // find an export hub. Reachable from somewhere he would never look is the one
+            // version of that defect `check_swift.py`'s reachability check cannot see,
+            // because the screen genuinely is reachable.
+            //
+            // It takes the week ON SCREEN and not the current week: he flicks forward to
+            // plan next week, and the sheet he wants on the fridge is the one he is
+            // looking at.
+            ToolbarItem(placement: .topBarTrailing) {
+                PDFExportButton(
+                    job: .weekPlan(interval: exportInterval),
+                    fileLabel: week.title
+                )
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     addingOn = PlanSheetDay(date: startOfToday())
@@ -71,6 +87,24 @@ struct PlanWeekView: View {
                 AddMealSheet(date: day.date)
             }
         }
+    }
+
+    /// The seven days on screen, as the interval the exporter takes.
+    ///
+    /// Built from `week.days` and not from `anchor`, so it is exactly the week rendered
+    /// below. The end is the LAST DAY's start plus a day less a second, the same shape
+    /// `ShoppingListGeneration.range(from:days:)` uses and for the same reason: an interval
+    /// ending at midnight excludes the last day, and the day that goes missing is Sunday
+    /// every time.
+    private var exportInterval: DateInterval {
+        let calendar = Calendar.current
+        guard let first = week.days.first, let last = week.days.last else {
+            return DateInterval(start: anchor, duration: 0)
+        }
+        let start = calendar.startOfDay(for: first)
+        let dayAfter = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: last))
+        let end = (dayAfter ?? last).addingTimeInterval(-1)
+        return DateInterval(start: start, end: max(start, end))
     }
 
     // MARK: - The week bar

@@ -101,6 +101,29 @@ struct RecipeDetailView: View {
         .listStyle(.insetGrouped)
         .navigationTitle(resolved.title)
         .navigationBarTitleDisplayMode(.inline)
+        // The recipe card, printed from the recipe. The `.recipe` job was reachable only
+        // from `ExportCenterView` on the SHOP tab, so putting the dish you are reading on
+        // paper meant leaving it and going shopping.
+        //
+        // `scale: .one` because no meal is in play here -- a card exported from the
+        // library is the recipe as written. Cooking a planned dish at x1 1/8 is the Cook
+        // screen's business, and the plan's own sheet prints through `.weekPlan`.
+        //
+        // It prints the EFFECTIVE recipe with a footnote on every line he has tweaked,
+        // which is `PDFExportService`'s own doing and the reason a card cannot silently
+        // disagree with what this screen shows.
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                PDFExportButton(
+                    job: .recipe(
+                        recipeID: recipeID,
+                        scale: .one,
+                        titleSnapshot: resolved.title
+                    ),
+                    fileLabel: resolved.title
+                )
+            }
+        }
         // The sheet is handed the resolved VALUE it was opened over, so it cannot be
         // re-resolving underneath itself while he types. Dismissing it clears `editing`,
         // which re-runs this body and re-resolves — which is how his new amount appears on
