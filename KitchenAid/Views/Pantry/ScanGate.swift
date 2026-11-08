@@ -199,8 +199,18 @@ struct ScanGate<Content: View>: View {
         }
     }
 
+    /// `#if canImport(UIKit)` to match this file's own import guard and the convention
+    /// `CookView.keepScreenAwake` sets, and `@MainActor` because
+    /// `UIApplication.openSettingsURLString` is a static on a main-actor class.
+    ///
+    /// Not a network call, which is worth saying out loud in a feature that must make none:
+    /// this is the system deep link that reopens the app's own Settings page, and it is the
+    /// only way back from a DENIED camera -- the app cannot ask a second time.
+    @MainActor
     private func openSettings() {
+        #if canImport(UIKit)
         guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
         openURL(url)
+        #endif
     }
 }

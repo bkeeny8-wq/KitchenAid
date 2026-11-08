@@ -122,6 +122,11 @@ struct ScanCamera: UIViewControllerRepresentable {
         controller.stopScanning()
     }
 
+    /// `@MainActor` for the same reason as `ScanReadiness.probe()`: the nested
+    /// `RecognizedDataType` and its `.text()` / `.barcode()` factories hang off a
+    /// main-actor `UIViewController` subclass. Read only from `makeUIViewController`, which
+    /// is already main-actor.
+    @MainActor
     private var recognizedTypes: Set<DataScannerViewController.RecognizedDataType> {
         switch subject {
         case .receiptText:
@@ -174,7 +179,34 @@ struct ScanCamera: UIViewControllerRepresentable {
             _ dataScanner: DataScannerViewController,
             becameUnavailableWithError error: DataScannerViewController.ScanningUnavailable
         ) {
-            owner.onTrouble(error.localizedDescription)
+            owner.onTrouble(Coordinator.sentence(for: error))
+        }
+
+        /// A sentence he can act on, instead of Foundation's own.
+        ///
+        /// `ScanningUnavailable` is an `Error` enum with no `LocalizedError` conformance, so
+        /// `localizedDescription` renders as "The operation couldn't be completed.
+        /// (VisionKit.DataScannerViewController.ScanningUnavailable error 1.)" -- which
+        /// tells him nothing and, worse, reads like a crash rather than like a camera he can
+        /// switch back on.
+        ///
+        /// `default` rather than `@unknown default` deliberately. The latter is the correct
+        /// spelling for a non-frozen enum from a library-evolution module and would warn
+        /// usefully when VisionKit adds a case -- but it is a compile error if the enum
+        /// turns out to be frozen, and there is no compiler here to ask. A plain `default`
+        /// builds either way, and the cost is a warning nobody gets rather than a build
+        /// nobody can do.
+        static func sentence(for error: DataScannerViewController.ScanningUnavailable) -> String {
+            switch error {
+            case .unsupportedDevice:
+                return "This device cannot scan."
+            case .cameraRestricted:
+                return "The camera is switched off for this app. Settings will let you "
+                     + "turn it back on."
+            default:
+                return "The scanner stopped and did not say why. Closing this screen and "
+                     + "opening it again usually clears it."
+            }
         }
 
         /// The one place a recognized item becomes something this app keeps, and what it keeps
@@ -240,6 +272,19 @@ enum ScanReadiness: Equatable {
     /// also false when permission was refused -- reading it first would tell him the camera
     /// was busy when the real answer is that this app is not allowed to use it, and send him
     /// to close other apps instead of to Settings.
+    /// `@MainActor` because this type is an ENUM, and that is the whole point.
+    ///
+    /// `DataScannerViewController` subclasses `UIViewController`, which UIKit annotates
+    /// `@MainActor`, and global-actor isolation covers a class's STATIC members too -- so
+    /// `isSupported` and `isAvailable` are main-actor reads. A `View` struct gets rescued
+    /// from this by the protocol's own `@MainActor` inference under Xcode 16; an enum gets
+    /// nothing, so without this the reads are main-actor reads from a nonisolated
+    /// synchronous context, which is an error and not a warning on an SDK that imports
+    /// VisionKit without `@preconcurrency`.
+    ///
+    /// Costs nothing: every caller is already on the main actor (`.onAppear`, `.onChange`,
+    /// a Button action, and `makeUIViewController`).
+    @MainActor
     static func probe() -> ScanReadiness {
         guard DataScannerViewController.isSupported else { return .unsupportedDevice }
         switch AVCaptureDevice.authorizationStatus(for: .video) {

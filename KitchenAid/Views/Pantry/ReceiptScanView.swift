@@ -129,6 +129,10 @@ struct ReceiptScanView: View {
         }
     }
 
+    /// `@MainActor`: it calls `review()`, which is main-actor isolated, from a closure
+    /// that is not `@Sendable` and so inherits this property's isolation. Same shape and
+    /// same reasoning as `BarcodeScanView.scanningStage`.
+    @MainActor
     private var scanBar: some View {
         VStack(spacing: 10) {
             if !trouble.isEmpty {

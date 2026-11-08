@@ -100,6 +100,16 @@ struct BarcodeScanView: View {
 
     // MARK: - Scanning
 
+    /// `@MainActor`, matching its marked siblings in this file.
+    ///
+    /// It calls `accept(_:symbology:)` and reads `scannedList`, both `@MainActor`, from the
+    /// `onBarcode` closure. `ScanCamera.onBarcode` is `(String, String) -> Void` and not
+    /// `@Sendable`, so the closure inherits the isolation of the context it is FORMED in --
+    /// which was nonisolated here. Under Xcode 16 the `View` protocol's own `@MainActor`
+    /// inference covers the whole struct and this is moot; on an Xcode-15-era iOS 17 SDK it
+    /// is an error. Marking it removes the SDK dependency and changes no behaviour, since
+    /// every call site is already on the main actor.
+    @MainActor
     private var scanningStage: some View {
         VStack(spacing: 0) {
             ScanGate(
