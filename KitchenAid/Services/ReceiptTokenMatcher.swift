@@ -163,9 +163,24 @@ struct ReceiptTokenMatcher {
         /// other way. The quotient is also exact arithmetic over rounded prices:
         /// `18.69 / 12.99` is 623/433 lb, a denominator no scale ever printed.
         ///
-        /// So the amount stays absent. `ReceiptScanView` already has the honest state for it —
-        /// "No amount printed on the receipt. Tap to set one" — and writes no lot until he
-        /// does, while the name is still matched, still learned, and the price still recorded.
+        /// So the amount stays absent HERE. What the screen then shows is not one state but
+        /// two, and the claim that it is always the honest one was wrong when first written:
+        ///
+        /// - For a MASS food (ground beef, salmon) `ReceiptLineDraft.startingQuantity`
+        ///   reaches zero and the row reads "No amount printed on the receipt. Tap to set
+        ///   one", writing no lot until he does.
+        /// - For a COUNT food (bananas, tomatoes, onions, apples) its rule 3 returns ONE
+        ///   EACH, so the row pre-fills "Adds 1 each" and is ready to write.
+        ///
+        /// The second is a documented, visible inference and not a silent one, and one
+        /// banana against a 2.15 lb purchase is a far better error than the 9 1/2 oz this
+        /// defect used to produce. But it is an inference, so it is written down rather than
+        /// described as an absence. An independent re-sweep found the original claim held
+        /// for 2 of its own 7 traced lines.
+        ///
+        /// Both numbers are kept (`unitPriceCents` and `priceCents`) so a screen can one day
+        /// offer the division as a suggestion he confirms. That is the right home for a
+        /// guess — in front of him, not in the ledger.
         var unitPriceCents: Int? = nil
         var unitPriceUnitCode: String = ""
 
@@ -298,11 +313,28 @@ struct ReceiptTokenMatcher {
     ///
     /// **Not 81, although 81 would have closed two of the traced defects on its own.** A
     /// candidate with 50% token coverage scores at most `(2*50 + 2*100 + 100) / 5` = 80
-    /// exactly, so raising this by one point IS the coverage rule below, stated as a
-    /// coincidence of the weights in `score` rather than as a reason — and it stops meaning
-    /// anything the day one of those weights changes. It would also have left the 66%
-    /// coverage cases (`CHOC MLK QT` at 83, `CHOC MILK GAL` at 85) exactly where they were.
-    static let confidentScore = 80
+    /// exactly — so raising this by a point was dismissed here as "the coverage rule stated
+    /// as a coincidence of the weights". **That reasoning was wrong, and 81 is the value.**
+    ///
+    /// 80 is reachable from the OTHER side too, and the coverage rule never sees it:
+    /// `score(tokenCoverage: 100, nameCoverage: 50, strength: 100)` is also exactly 80. That
+    /// is one significant word on the receipt matching one word of a TWO-word catalogue name
+    /// at full strength — full token coverage, so `confidentCoverage` passes it; a word at
+    /// 100, so `confidentWordPoints` passes it; and the only candidate, so `confidentGap`
+    /// cannot touch it. Confident by construction, from the name side, with every other
+    /// guard satisfied.
+    ///
+    /// It is not hypothetical. An independent re-sweep over the shipped catalogue found four:
+    /// `SANDWICH BAGS 100 CT` → **sandwich bread**, `FISH 2 LB` → **fish sauce**,
+    /// `HEART 1 LB` → **artichoke hearts**, `KING 12 CT` → **king crab**. None of those
+    /// foods is in the catalogue at all, which is the same root cause as the token-side
+    /// family: the only survivor wins outright instead of being asked about.
+    ///
+    /// 81 is a one-point change that makes "exactly 80" unreachable from either direction.
+    /// The six lines that must stay confident sit at 95, 97, 98, 99, 99 and 100, so it costs
+    /// them nothing. Anything that WAS at exactly 80 is in one of these two fragile families
+    /// by construction, and it now asks — which is the safe direction.
+    static let confidentScore = 81
     /// ...and be this far ahead of the runner-up.
     ///
     /// 18 and not 15, and those three points are the whole fix for two confident wrong
@@ -314,10 +346,17 @@ struct ReceiptTokenMatcher {
     /// one point wide. That is a fact about the shipped catalogue and not a principle, and if
     /// it ever closes it closes toward asking, which is the safe side.
     ///
-    /// It costs one correct answer, honestly: `TOMATO SCE` reaches `tomato sauce` 17 ahead of
-    /// `tomato` — the same shape, the same score and the same gap as the sparkling water it
-    /// has to kill, down to the per-word tiers. No threshold can separate those two, so that
-    /// line is a question now as well.
+    /// It costs AT LEAST NINE correct answers, not the one first claimed here. All nine are
+    /// the identical shape — a two-word entry at 97 whose first word is itself an entry at
+    /// 80, gap 17, full coverage, a word at 100 — which is arithmetically indistinguishable
+    /// from the `sparkling water` this threshold exists to kill: `PEANUT BTR`, `ALMOND BTR`,
+    /// `APPLE JCE`, `ORANGE JCE`, `LEMON JCE`, `LIME JCE`, `CRANBERRY JCE`, `OYSTER SCE`,
+    /// `TOMATO SCE`, and `WHL GRN MSTRD` and `CHIL CRIS` at gap 16.
+    ///
+    /// The decision stands — every one of them fails safe to a one-tap question, and the
+    /// alternative is a wrong tin of food — but the count is written down properly because
+    /// a comment that understates its own cost by an order of magnitude is worse than no
+    /// comment. Found by the re-sweep, not by the change that introduced it.
     static let confidentGap = 18
 
     /// ...and account for EVERY identity-bearing word the line printed.
@@ -508,10 +547,27 @@ struct ReceiptTokenMatcher {
             // price rule so `2.34 LB` is a weight and not a price.
             if let amount = rational(fromNumber: lower), index + 1 < words.count,
                let code = sizeUnitCodes[lowered[index + 1]] {
-                // ...unless the number is money-shaped and the line still has a total to
-                // print, in which case it is a price per unit and not a size at all. Rule 9,
-                // and `Reading.unitPriceCents` for why the weight is not divided out of it.
-                if let cents = moneyCents(lower), moneyFollows(words, after: index + 1) {
+                // ...unless the number is money-shaped, the line still has a total to
+                // print, AND the item's own name has already been read — in which case it is
+                // a price per unit and not a size at all. Rule 9, and
+                // `Reading.unitPriceCents` for why the weight is not divided out of it.
+                //
+                // `!nameWords.isEmpty` is the third clause and it is not cosmetic. Without
+                // it this rule destroyed the OTHER printed layout, which the comment on rule
+                // 2 above names as "a reading that is right today":
+                //
+                //     BANANAS 0.59 LB 1.27        price first, after the name  -> unit price
+                //     2.18 LB GROUND BEEF 10.88   weight first, before it     -> a WEIGHT
+                //
+                // Both are `N.NN <unit>` followed by a money word, so no test on the numbers
+                // can separate them — but the two stores differ in WHERE the pair sits
+                // relative to the item. Before the name it is what the scale printed; after
+                // it, it is what the shelf charged. The re-sweep found 14 weight-first lines
+                // losing their correct weight to this rule, and worse, recording a
+                // `unitPriceCents` that was false: on `2.18 LB GROUND BEEF 10.88` the real
+                // unit price is 10.88/2.18 = $4.99/lb, not $2.18.
+                if let cents = moneyCents(lower), moneyFollows(words, after: index + 1),
+                   !nameWords.isEmpty {
                     if reading.unitPriceCents == nil {
                         reading.unitPriceCents = cents
                         reading.unitPriceUnitCode = code
@@ -535,6 +591,23 @@ struct ReceiptTokenMatcher {
             // ...and written together: `8Z`, `64Z`, `16.9FZ`.
             if let glued = numberAndSuffix(lower), let code = sizeUnitCodes[glued.suffix],
                let amount = rational(fromNumber: glued.number) {
+                // THE SAME GUARD AS THE SPACED FORM, and it was missing here entirely.
+                // `0.59LB` with no space went straight into `sizeAmount`, so
+                // `BANANAS 0.59LB 1.27 F` still read a 59/100 lb size and stayed confident
+                // on banana — the original blocking defect, untouched, in the spelling a
+                // text recognizer is MOST likely to produce: spacing on a thermal receipt
+                // is the least reliable thing on the page, and this function's input is
+                // recognizer output rather than a file.
+                if let cents = moneyCents(glued.number), moneyFollows(words, after: index),
+                   !nameWords.isEmpty {
+                    if reading.unitPriceCents == nil {
+                        reading.unitPriceCents = cents
+                        reading.unitPriceUnitCode = code
+                    }
+                    dropped.append(word)
+                    index += 1
+                    continue
+                }
                 if reading.sizeAmount == nil {
                     reading.sizeAmount = amount
                     reading.sizeUnitCode = code
@@ -933,6 +1006,13 @@ struct ReceiptTokenMatcher {
     /// its own qualifier list, and the catalogue ships `whole milk` and `fresh coriander` as
     /// real aliases.
     private static let packWords: Set<String> = [
+        // `wt`, `net` and `avg` are weight MARKERS, and they belong here for two reasons.
+        // They are not ingredient words, so they cost a line's token coverage for nothing --
+        // and with `confidentCoverage` at 100 that alone turned `WT 2.18 LB GROUND BEEF`
+        // into a question. Worse, as name words they made the `2.18 LB` after them look like
+        // it came AFTER the item name, which is exactly the test the unit-price rule uses to
+        // tell a weight from a price per pound.
+        "wt", "net", "avg",
         "org", "organic", "lg", "sm", "med", "xl", "jumbo", "fam", "family",
         "prem", "premium", "select", "value", "pack", "pk", "bag", "box", "bx", "ct"
     ]

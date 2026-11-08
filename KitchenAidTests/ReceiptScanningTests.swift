@@ -568,7 +568,12 @@ final class ReceiptScanningTests: XCTestCase {
         XCTAssertEqual(ReceiptTokenMatcher.wordPoints("choc", "chocolate"), 90)
         XCTAssertEqual(ReceiptTokenMatcher.wordPoints("crm", "cream"), 85)
         XCTAssertEqual(ReceiptTokenMatcher.wordPoints("chkn", "chicken"), 70)
-        XCTAssertEqual(ReceiptTokenMatcher.wordPoints("brst", "breast"), 70)
+        // 85 and not 70: `breast` has consonants b-r-s-t, so `brst` IS its skeleton. This
+        // asserted 70 and would have failed on the Mac -- and one failing assertion fails
+        // the whole target, which CLAUDE.md names as the first thing run after the app
+        // builds. Two other places in this file and `confidentWordPoints`' own doc comment
+        // state 85 correctly, so the file contradicted itself.
+        XCTAssertEqual(ReceiptTokenMatcher.wordPoints("brst", "breast"), 85)
         XCTAssertEqual(ReceiptTokenMatcher.wordPoints("mlk", "buttermilk"), 0,
                        "a different first letter is never a match")
         XCTAssertEqual(ReceiptTokenMatcher.wordPoints("c", "cream"), 0,
