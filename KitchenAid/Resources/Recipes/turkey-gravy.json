@@ -59,7 +59,8 @@
      "altAmountNumerator": 4,
      "altAmountDenominator": 1,
      "isOption": false,
-     "optionText": null
+     "optionText": null,
+     "excludeFromShopping": true
     },
     {
      "name": "Flour",
@@ -84,7 +85,7 @@
      "optionText": null
     },
     {
-     "name": "Stock",
+     "name": "Turkey stock",
      "preparation": "UNSALTED turkey or chicken stock, warmed",
      "raw": "Stock  4 cups UNSALTED turkey or chicken stock, warmed",
      "qualifier": null,
@@ -213,8 +214,12 @@
   "no active or total time found",
   "'Pan base' has a worded amount, not a number: 'all the roasted vegetables and drippings'",
   "'Pepper' has a worded amount, not a number: 'freshly ground'",
-  "'Pan base' matches nothing in the ingredient catalogue, so it will not aggregate or match the pantry",
-  "'Fat' matches nothing in the ingredient catalogue, so it will not aggregate or match the pantry",
-  "'Stock' matches nothing in the ingredient catalogue, so it will not aggregate or match the pantry"
- ]
+  "'Pan base' matches nothing in the ingredient catalogue, so it will not aggregate or match the pantry"
+ ],
+ "overrides": {
+  "fields": [
+   "lines"
+  ],
+  "why": "Brandon, 2026-11-08, asked about the two column labels the importer could not place. On 'Fat  1/4 cup (4 tbsp) skimmed turkey fat from the drippings, topped up with UNSALTED butter if short' he said buy NOTHING -- 'it comes from the roast' -- so the line keeps its amount for the cook and is excluded from the shopping list, which is what excludeFromShopping is for. On 'Stock  4 cups UNSALTED turkey or chicken stock, warmed' he chose TURKEY over chicken, so the line is renamed to the thing he buys and 'turkey stock' was added to build_catalogue.py as its own entry. No alias onto chicken stock: the build script fails on an ambiguous lookup, and a name resolving to two purchases makes the pantry match whichever comes first."
+ }
 }

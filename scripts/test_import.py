@@ -482,7 +482,16 @@ glines = {l["name"]: l for c in gravy["components"] for l in c["lines"]}
 check("R37 flour is a quarter cup",
       (glines["Flour"]["amountNumerator"], glines["Flour"]["amountDenominator"]), (1, 4))
 check("R37 flour unit", glines["Flour"]["unit"], "cup")
-check("R37 stock is four cups", glines["Stock"]["amountNumerator"], 4)
+# "Turkey stock" and not "Stock". The document heads this row with the bare
+# label, which matches nothing in the catalogue, so the line never aggregated and
+# never met the pantry. Asked on 2026-11-08 which of "UNSALTED turkey or chicken
+# stock" he buys, Brandon said turkey, and docs/recipe-overrides.json renames the
+# line to it (see that entry's `why`). The AMOUNT is still the document's -- an
+# override may not touch a quantity, which is the whole point of LINE_OVERRIDABLE.
+check("R37 stock is four cups", glines["Turkey stock"]["amountNumerator"], 4)
+check("R37 and the bare label is gone", "Stock" in glines, False)
+check("R37 the fat line is excluded from shopping, not renamed",
+      (glines["Fat"]["name"], glines["Fat"].get("excludeFromShopping")), ("Fat", True))
 # An ingredient whose amount is a sentence, because that IS the amount.
 check("R37 the pan base has no number", glines["Pan base"]["hasQuantity"], False)
 check("R37 and its amount is kept as written",
@@ -550,8 +559,67 @@ check("R39 left whole", spud_lines["garlic"]["preparation"], "left whole")
 check("R39 squeezed from the root end",
       "squeeze each head from the root end" in spuds["steps"][0]["body"], True)
 
-# Standing preference: no nutmeg in anything authored for him.
-check("R39 no nutmeg anywhere", "nutmeg" in json.dumps(spuds).lower(), False)
+# No nutmeg in THESE POTATOES, which is what he actually said.
+#
+# The assertion was always correctly scoped to `spuds`; its label and the comment
+# above it were not. They read "no nutmeg anywhere" and "in anything authored for
+# him", which is the blanket rule CLAUDE.md records as a worked example of
+# getting this wrong: he said "I dont do nutmeg" about the mashed potatoes in
+# front of him, that was written up as never-nutmeg-in-anything, and he corrected
+# it the same day -- "nutmeg is fine there, no need for it in the potatoes."
+# Two of his own documents use nutmeg happily.
+#
+# Left as a test because the dish-level preference is real and worth keeping. The
+# wording is fixed because a future reader who widened this check on the strength
+# of that comment would be re-making the mistake, and the Standing Preferences
+# table in CLAUDE.md is deliberately still empty.
+check("R39 no nutmeg in the mashed potatoes",
+      "nutmeg" in json.dumps(spuds).lower(), False)
+
+
+# --- the line-override lapse ------------------------------------------------
+#
+# `apply_line_overrides` matches on `lineID`, and an id that matches nothing has
+# to be LOUD. The ids are name-based with an occurrence number precisely so an
+# override lapses visibly when the ingredient it named is gone, instead of
+# silently re-pointing onto whatever line took its place -- and an override that
+# quietly does nothing is one that looks applied for six months while the
+# shopping list is wrong.
+import importlib.util
+
+spec = importlib.util.spec_from_file_location(
+    "import_recipe", os.path.join(HERE, "import_recipe.py"))
+importer = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(importer)
+
+synthetic = {
+    "id": "synthetic",
+    "components": [{"name": "", "lines": [{"lineID": "butter-1", "name": "Butter"}]}],
+    "warnings": [],
+}
+importer.apply_overrides(synthetic, {"synthetic": {
+    "lines": {"butter-1": {"excludeFromShopping": True},
+              "ghost-9": {"name": "Nothing"}},
+    "why": "a test",
+}})
+check("R40 a matching line override applies",
+      synthetic["components"][0]["lines"][0].get("excludeFromShopping"), True)
+check("R40 a lapsed line override warns",
+      any("ghost-9" in w for w in synthetic["warnings"]), True)
+check("R40 and it is recorded as provenance",
+      synthetic["overrides"]["fields"], ["lines"])
+
+# An override may not touch an amount: a quantity on a shopping list that no page
+# he can re-read anywhere states is a quantity with no answer to "where did this
+# come from".
+rejected = {"id": "s2", "components": [
+    {"name": "", "lines": [{"lineID": "butter-1", "name": "Butter"}]}], "warnings": []}
+try:
+    importer.apply_overrides(rejected, {"s2": {
+        "lines": {"butter-1": {"amountNumerator": 99}}, "why": "nope"}})
+    check("R40 an amount override is refused", "no error raised", "ValueError")
+except ValueError as exc:
+    check("R40 an amount override is refused", "amountNumerator" in str(exc), True)
 
 if failures:
     print(f"FAIL  {len(failures)} assertion(s):\n")

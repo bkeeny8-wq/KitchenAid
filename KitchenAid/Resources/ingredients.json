@@ -2034,6 +2034,19 @@
    ]
   },
   {
+   "name": "turkey stock",
+   "aisle": "Canned",
+   "dimension": "volume",
+   "unit": "ml",
+   "bakingUnit": null,
+   "gramsPerCup": null,
+   "staple": false,
+   "aliases": [
+    "turkey broth",
+    "turkey stocks"
+   ]
+  },
+  {
    "name": "vegetable stock",
    "aisle": "Canned",
    "dimension": "volume",

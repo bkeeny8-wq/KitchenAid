@@ -25,5 +25,35 @@
     "servings": 4,
     "servingsApproximate": true,
     "why": "Brandon, 2026-11-01: 'they serve approx 4'."
+  },
+
+  "turkey-gravy": {
+    "lines": {
+      "fat-1": { "excludeFromShopping": true },
+      "stock-1": { "name": "Turkey stock" }
+    },
+    "why": "Brandon, 2026-11-08, asked about the two column labels the importer could not place. On 'Fat  1/4 cup (4 tbsp) skimmed turkey fat from the drippings, topped up with UNSALTED butter if short' he said buy NOTHING -- 'it comes from the roast' -- so the line keeps its amount for the cook and is excluded from the shopping list, which is what excludeFromShopping is for. On 'Stock  4 cups UNSALTED turkey or chicken stock, warmed' he chose TURKEY over chicken, so the line is renamed to the thing he buys and 'turkey stock' was added to build_catalogue.py as its own entry. No alias onto chicken stock: the build script fails on an ambiguous lookup, and a name resolving to two purchases makes the pantry match whichever comes first."
+  },
+
+  "roast-turkey": {
+    "_comment": [
+      "A NOTE-ONLY ENTRY. It sets no field, deliberately -- see why.",
+      "",
+      "Asked how many the turkey serves, Brandon answered that the recipe was",
+      "for a roughly 14 lb bird. That is the document's basis, not a serving",
+      "count, and the two are not interchangeable: the planner divides by",
+      "servings, and inventing a number from a weight would be exactly the kind",
+      "of guess this file exists to avoid. So the serving count stays UNSTATED,",
+      "its importer warning stays, and nothing here clears it.",
+      "",
+      "He also chose to KEEP 'Pan base' and 'Vegetable bed' flagged rather than",
+      "resolve or exclude them, so there is no `lines` block for them on",
+      "purpose. Do not 'fix' them: they stay pinned under Needs attention on the",
+      "shopping list, which is where he asked for them. Note that Vegetable bed",
+      "points at the second component ('leek, garlic, carrots, and celery (see",
+      "below)'), whose vegetables ARE listed separately with their own",
+      "quantities -- so resolving it to an ingredient would double-count them."
+    ],
+    "why": "Brandon, 2026-11-08: 'the turkey was for a roughly 14lb turkey', answering a question about servings. Recorded because it is the fact he gave, and kept out of `servings` because it is not one. Scaling a whole roast bird by portions is still an open question -- the document's 8-row weight chart is the honest route, and the Cook screen now has a row picker for it."
   }
 }

@@ -385,6 +385,7 @@ CATALOGUE = {
         "tomato paste|volume|tbsp", "tomato sauce|count|can",
         "coconut milk|count|can", "coconut cream|count|can",
         "chicken stock|volume|ml|chicken broth",
+        "turkey stock|volume|ml|turkey broth",
         "beef stock|volume|ml|beef broth",
         "vegetable stock|volume|ml|vegetable broth",
         "tuna in oil|count|can|canned tuna", "sardines|count|can",

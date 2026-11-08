@@ -621,12 +621,25 @@ def warn_unresolved(recipe, index):
     LABEL rather than an ingredient. "Fat", "Stock", "Pan base" and "Vegetable
     bed" are how that author heads his rows, with the real ingredient in the
     prose beside it ("UNSALTED turkey or chicken stock, warmed").
+
+    Brandon settled all four on 2026-11-08 (see docs/recipe-overrides.json) and
+    they did not settle the same way, which is why two of them still warn here:
+    "Stock" became turkey stock and resolves, "Fat" is bought not at all, and he
+    asked to KEEP "Pan base" and "Vegetable bed" flagged rather than resolve
+    them. The last two warnings are therefore correct and wanted.
+
+    A line EXCLUDED FROM SHOPPING is skipped, because the warning's own sentence
+    stops being true of it: a line that never reaches a list cannot miss one.
+    Keeping it would have left "Fat" complaining for ever about a consequence he
+    had just chosen.
     """
     if not index:
         return
     for component in recipe["components"]:
         for line in component["lines"]:
             if line.get("isOption") or not line.get("name"):
+                continue
+            if line.get("excludeFromShopping"):
                 continue
             if line["name"].lower() not in index:
                 recipe["warnings"].append(
@@ -664,13 +677,69 @@ def load_overrides():
     return {k: v for k, v in raw.items() if not k.startswith("_")}
 
 
+# What an override may change on a single ingredient LINE.
+#
+# Deliberately short, and it is a whitelist rather than a blacklist. An override
+# is a fact the document omitted, not a licence to rewrite the document: letting
+# one set an amount would mean a quantity on a shopping list that no page he can
+# re-read anywhere states, and "where did 1/4 cup come from" would have no
+# answer. Amounts stay the document's.
+#
+# `name` is here because the turkey and gravy documents use COLUMN LABELS where
+# an ingredient name belongs -- "Fat", "Stock", "Pan base", "Vegetable bed" --
+# and a label matches nothing in the catalogue, so the line never aggregates and
+# never meets the pantry. Renaming the line to the thing he actually buys is the
+# only fix that does not involve guessing which words in a sentence are the
+# ingredient, which is how a parser goes quietly wrong.
+LINE_OVERRIDABLE = {"name", "preparation", "excludeFromShopping", "isOptional"}
+
+
+def apply_line_overrides(recipe, entry):
+    """Per-`lineID` overrides, matched by id and never by position.
+
+    The ids are name-based with an occurrence number (`assign_ids`), so an
+    override keyed on one LAPSES VISIBLY when the ingredient it named is gone,
+    rather than silently re-pointing onto whatever line took its place. That is
+    the same property the in-app tweak overlay relies on, and the reason this is
+    keyed on `lineID` rather than on an index.
+    """
+    wanted = entry.get("lines") or {}
+    if not wanted:
+        return []
+    seen = []
+    for component in recipe["components"]:
+        for line in component["lines"]:
+            fields = wanted.get(line.get("lineID"))
+            if not fields:
+                continue
+            for key, value in fields.items():
+                if key not in LINE_OVERRIDABLE:
+                    raise ValueError(
+                        "recipe-overrides.json: `%s` is not an overridable line "
+                        "field (allowed: %s)" % (key, ", ".join(sorted(LINE_OVERRIDABLE))))
+                line[key] = value
+            seen.append(line["lineID"])
+    # A key that matched no line is the lapse described above, and it is LOUD
+    # rather than ignored: silently doing nothing is how an override comes to
+    # look applied for six months while the list is wrong.
+    for line_id in wanted:
+        if line_id not in seen:
+            recipe["warnings"].append(
+                "an override names line `%s`, which this document no longer has"
+                % line_id)
+    return seen
+
+
 def apply_overrides(recipe, overrides):
     entry = overrides.get(recipe["id"])
     if not entry:
         return
     applied = {}
+    touched = apply_line_overrides(recipe, entry)
+    if touched:
+        applied["lines"] = touched
     for key, value in entry.items():
-        if key in ("why", "_comment"):
+        if key in ("why", "_comment", "lines"):
             continue
         recipe[key] = value
         applied[key] = value

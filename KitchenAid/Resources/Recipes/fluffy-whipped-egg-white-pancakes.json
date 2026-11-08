@@ -10,6 +10,9 @@
  "servingsApproximate": false,
  "activeMinutes": null,
  "totalMinutes": null,
+ "minutesPerPound": null,
+ "ovenTempF": 200,
+ "tables": [],
  "components": [
   {
    "name": "Pancake Batter",
@@ -17,7 +20,7 @@
     {
      "name": "all-purpose flour",
      "preparation": "spooned and leveled, not scooped",
-     "raw": "1 1/2 cups           all-purpose flour (190g), spooned and leveled, not scooped",
+     "raw": "1 1/2 cups  all-purpose flour (190g), spooned and leveled, not scooped",
      "qualifier": null,
      "unit": "cup",
      "dimension": "volume",
@@ -39,7 +42,7 @@
     {
      "name": "sugar",
      "preparation": null,
-     "raw": "2 tbsp               sugar",
+     "raw": "2 tbsp  sugar",
      "qualifier": null,
      "unit": "tbsp",
      "dimension": "volume",
@@ -61,7 +64,7 @@
     {
      "name": "baking powder",
      "preparation": "do not skip",
-     "raw": "2 tsp                baking powder (do not skip)",
+     "raw": "2 tsp  baking powder (do not skip)",
      "qualifier": null,
      "unit": "tsp",
      "dimension": "volume",
@@ -83,7 +86,7 @@
     {
      "name": "kosher salt",
      "preparation": null,
-     "raw": "1/2 tsp              kosher salt",
+     "raw": "1/2 tsp  kosher salt",
      "qualifier": null,
      "unit": "tsp",
      "dimension": "volume",
@@ -105,7 +108,7 @@
     {
      "name": "buttermilk",
      "preparation": "or whole milk",
-     "raw": "1 1/4 cups           buttermilk, or whole milk",
+     "raw": "1 1/4 cups  buttermilk, or whole milk",
      "qualifier": null,
      "unit": "cup",
      "dimension": "volume",
@@ -127,7 +130,7 @@
     {
      "name": "eggs",
      "preparation": "large, separated",
-     "raw": "2                    large eggs, separated",
+     "raw": "2  large eggs, separated",
      "qualifier": null,
      "unit": null,
      "dimension": "count",
@@ -149,7 +152,7 @@
     {
      "name": "unsalted butter",
      "preparation": "melted, plus more for the pan",
-     "raw": "3 tbsp               unsalted butter, melted, plus more for the pan",
+     "raw": "3 tbsp  unsalted butter, melted, plus more for the pan",
      "qualifier": null,
      "unit": "tbsp",
      "dimension": "volume",
@@ -171,7 +174,7 @@
     {
      "name": "vanilla extract",
      "preparation": null,
-     "raw": "1 tsp                vanilla extract",
+     "raw": "1 tsp  vanilla extract",
      "qualifier": null,
      "unit": "tsp",
      "dimension": "volume",
@@ -193,7 +196,7 @@
     {
      "name": "cream of tartar",
      "preparation": "optional, helps the whites hold",
-     "raw": "1/4 tsp              cream of tartar (optional, helps the whites hold)",
+     "raw": "1/4 tsp  cream of tartar (optional, helps the whites hold)",
      "qualifier": null,
      "unit": "tsp",
      "dimension": "volume",
@@ -220,7 +223,7 @@
     {
      "name": "Cinnamon",
      "preparation": null,
-     "raw": "Cinnamon             1/2 tsp, good with the apple compote",
+     "raw": "Cinnamon  1/2 tsp, good with the apple compote",
      "isOption": true,
      "optionText": "1/2 tsp, good with the apple compote",
      "qualifier": null,
@@ -242,7 +245,7 @@
     {
      "name": "Nutmeg",
      "preparation": null,
-     "raw": "Nutmeg               1/4 tsp, freshly grated if possible",
+     "raw": "Nutmeg  1/4 tsp, freshly grated if possible",
      "isOption": true,
      "optionText": "1/4 tsp, freshly grated if possible",
      "qualifier": null,
@@ -264,7 +267,7 @@
     {
      "name": "Both",
      "preparation": null,
-     "raw": "Both                 1/4 tsp cinnamon plus 1/8 tsp nutmeg for a lighter touch",
+     "raw": "Both  1/4 tsp cinnamon plus 1/8 tsp nutmeg for a lighter touch",
      "isOption": true,
      "optionText": "1/4 tsp cinnamon plus 1/8 tsp nutmeg for a lighter touch",
      "qualifier": null,
