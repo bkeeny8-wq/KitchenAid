@@ -68,7 +68,12 @@ struct BarcodeAnswerSheet: View {
         .sheet(isPresented: $isPicking) {
             NavigationStack {
                 CatalogPickerView(title: "What is it?") { entry in
-                    pick(.entry(entry))
+                    // `finishing: false` on purpose. `CatalogPickerView` dismisses ITSELF in
+                    // this closure, and closing this sheet in the same event means two nested
+                    // dismissals in one tick -- which is how one of them gets lost and he is
+                    // left looking at a sheet he thought he had finished with. He taps "Use
+                    // this" here instead, having just been through a picker anyway.
+                    pick(.entry(entry), finishing: false)
                 }
             }
         }
@@ -158,16 +163,16 @@ struct BarcodeAnswerSheet: View {
     /// it by name and by HIS aliases -- what he calls a thing is a name too.
     @ViewBuilder
     private var kitchenSection: some View {
-        let rows = kitchenMatches
+        let matches = kitchenMatches
         Section {
-            if rows.isEmpty {
+            if matches.isEmpty {
                 Text(items.isEmpty
                      ? "Your pantry is empty, so pick from the catalogue below."
                      : "No pantry item matches that search.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             } else {
-                ForEach(rows) { item in
+                ForEach(matches) { item in
                     Button {
                         pick(.item(item))
                     } label: {
@@ -307,14 +312,14 @@ struct BarcodeAnswerSheet: View {
     /// measured by weight or volume is not -- only he knows whether the tub is 8 oz or 16 --
     /// so the sheet stays open on the amount rather than closing and making him come back to
     /// a row that says "no amount yet".
-    private func pick(_ newAnswer: ScanAnswer) {
+    private func pick(_ newAnswer: ScanAnswer, finishing: Bool = true) {
         let (newAmount, newUnit) = BarcodeScanRow.startingQuantity(
             for: newAnswer, catalog: catalog
         )
         answer = newAnswer
         amount = newAmount
         unit = newUnit
-        if newAnswer.isStaple || newAmount > .zero {
+        if finishing, newAnswer.isStaple || newAmount > .zero {
             finish(newAnswer, newAmount, newUnit, packages)
         }
     }

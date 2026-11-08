@@ -214,16 +214,36 @@ final class ReceiptIntake {
         return true
     }
 
-    /// His answer given as a catalogue pick: mint the row through the resolver — the only thing
-    /// allowed to create a `FoodItem` — and then remember the token against it.
+    /// A catalogue pick: mint the row through the resolver — the only thing allowed to create
+    /// a `FoodItem` — and remember the token against it **only if asked to**.
+    ///
+    /// The two halves are separable on purpose. The MINT must always happen: stock cannot go
+    /// on a catalogue entry, only on a row. The ALIAS must not, because this is also the path
+    /// a CONFIDENT match takes on confirm, and a confident match is one the matcher decided
+    /// not to ask about. Writing the receipt's wording as an alias there turned one
+    /// confident-and-wrong match ("CHS" → chives) into a permanent entry in his vocabulary:
+    /// `resolve` then answers that token from his own aliases at step 2 for ever and can
+    /// never reach the catalogue for it again, and no screen in the app could delete an
+    /// alias. Self-reinforcing and unrecoverable, from one tap he never made.
+    ///
+    /// A confident match needs no alias in any case — it already resolves through the
+    /// shipped catalogue on every receipt. The token worth remembering is the one the
+    /// catalogue could NOT place, which is exactly the one he answered by hand.
+    ///
+    /// Defaults to true so the parameter cannot be forgotten into silence by a caller that
+    /// genuinely is passing his own answer; `ReceiptScanView` passes
+    /// `draft.wasAnsweredByHand`.
     @discardableResult
     func learn(
         _ reading: ReceiptTokenMatcher.Reading,
         asCatalogEntry entry: CatalogEntry,
-        in context: ModelContext
+        in context: ModelContext,
+        rememberingToken: Bool = true
     ) throws -> FoodItem {
         let item = try resolver.findOrCreate(fromCatalog: entry, in: context)
-        learn(reading, as: item, in: context)
+        if rememberingToken {
+            learn(reading, as: item, in: context)
+        }
         return item
     }
 }

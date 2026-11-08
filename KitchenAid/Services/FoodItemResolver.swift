@@ -232,6 +232,25 @@ final class FoodItemResolver {
         reindex(item)
     }
 
+    /// Takes an alias back off, which until now nothing could do.
+    ///
+    /// `addAlias` has existed since the resolver did; removal did not, and that asymmetry
+    /// was a real trap once receipt scanning started writing aliases. A token learned
+    /// against the wrong food resolves at step 2 of `findOrCreate` — his own aliases, ahead
+    /// of the shipped catalogue — so it answers that receipt line the same wrong way for
+    /// ever, and nothing in the app could reach in and correct it. The only escape was
+    /// deleting the `FoodItem`, which takes its lots and its history with it.
+    ///
+    /// Deletes the ROW and reindexes, in that order, because `aliasBlob` is an index over
+    /// the rows and never a second source of truth — see `reindex`.
+    func removeAlias(_ alias: FoodItemAlias, in context: ModelContext) {
+        let owner = alias.item
+        context.delete(alias)
+        // The relationship array is maintained by SwiftData from the `inverse:` on
+        // `FoodItem.aliases`, so the row is already gone from it by the time this runs.
+        if let owner = owner { reindex(owner) }
+    }
+
     /// Rebuilds `aliasBlob` from the rows. The ROWS are the truth; the blob is the
     /// predicate-queryable index over them, rebuilt and never appended to — append to it
     /// directly and a CloudKit merge of two devices that each added an alias silently loses

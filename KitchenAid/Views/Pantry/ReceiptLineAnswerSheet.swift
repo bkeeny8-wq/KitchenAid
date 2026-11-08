@@ -394,6 +394,11 @@ struct ReceiptLineAnswerSheet: View {
         updated.answer = chosen
         updated.amount = chosenAmount
         updated.unit = chosenUnit
+        // THE one place this becomes true. It gates whether the receipt's own wording is
+        // remembered as an alias, and only a token he placed by hand earns that -- a
+        // confident match the matcher never asked about must not be written into his
+        // vocabulary where nothing could take it back out.
+        updated.wasAnsweredByHand = true
         onDone(updated)
         dismiss()
     }

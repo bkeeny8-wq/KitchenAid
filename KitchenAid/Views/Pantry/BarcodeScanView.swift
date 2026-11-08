@@ -213,6 +213,9 @@ struct BarcodeScanView: View {
         if row.needsAnswer {
             return "Nothing can look this up. Tap to say what it is, once."
         }
+        if row.answer.isSkipped {
+            return "Left for later. The next scan of this number asks again."
+        }
         if row.answer.isStaple {
             return "A staple \u{2014} marked as in the house, with no amount kept."
         }
@@ -344,9 +347,34 @@ struct BarcodeScanView: View {
     @MainActor
     private func adopt(_ answered: BarcodeScanRow) {
         guard let index = rows.firstIndex(where: { $0.id == answered.id }) else { return }
+        let previous = rows[index]
         var row = answered
 
-        if let registry = registry, !row.isUnreadable {
+        // Only a NEW answer is written. Re-opening a row that already filled itself in, to set
+        // its amount, is not a fact about the number -- and counting it as one would tell him
+        // he had taught the app something he had not. A `.forgotten` row always writes, because
+        // that is the re-answer that repoints it.
+        //
+        // DECIDED ON THE ANSWER KIND and not on `item?.id`, which broke the feature's
+        // headline path. `BarcodeScanRow.item` only matches `case .item`, so a `.entry`
+        // answer -- an unknown number he resolved by picking a catalogue entry, which is
+        // THE main flow -- has no `FoodItem` yet and reported `nil != nil`, false. The
+        // remember call was skipped, nothing was written to `FoodItemBarcode`, the row never
+        // collapsed to `.item` so it stayed unready, and the next scan of that tin asked
+        // again. "The first scan asks, every later one fills itself in" failed silently for
+        // every catalogue pick -- the one thing this feature cannot afford, and the thing
+        // the comment above claims to be guarding.
+        let isNewAnswer: Bool
+        switch row.answer {
+        case .entry:
+            // No item exists yet by construction; minting one IS the new fact.
+            isNewAnswer = true
+        case .item(let item):
+            isNewAnswer = previous.item?.id != item.id || previous.isForgotten
+        case .unanswered, .skipped:
+            isNewAnswer = false
+        }
+        if let registry = registry, !row.isUnreadable, isNewAnswer {
             switch row.answer {
             case .item(let item):
                 if (try? registry.remember(
@@ -409,7 +437,13 @@ struct BarcodeScanView: View {
 
         for row in rows {
             guard let item = row.item else {
-                if row.isUnreadable { tally.unreadable += 1 } else { tally.unanswered += 1 }
+                if row.isUnreadable {
+                    tally.unreadable += 1
+                } else if row.answer.isSkipped {
+                    tally.skipped += 1
+                } else {
+                    tally.unanswered += 1
+                }
                 continue
             }
             // A staple is present or absent with NO quantity (CLAUDE.md): one assignment, no
@@ -546,6 +580,7 @@ struct BarcodeSummary {
     var staples = 0
     var remembered = 0
     var unanswered = 0
+    var skipped = 0
     var noAmount = 0
     var unreadable = 0
 
@@ -571,6 +606,9 @@ struct BarcodeSummary {
         }
         if unanswered > 0 {
             out.append(unanswered == 1 ? "1 left unanswered" : "\(unanswered) left unanswered")
+        }
+        if skipped > 0 {
+            out.append(skipped == 1 ? "1 left for later" : "\(skipped) left for later")
         }
         if unreadable > 0 {
             out.append(unreadable == 1 ? "1 unreadable number, which was not stored"

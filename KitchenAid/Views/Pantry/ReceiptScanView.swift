@@ -24,6 +24,13 @@ import SwiftData
 /// question. That is the whole mechanism and there is no second one: a table of learned
 /// receipt tokens would be a second thing that can disagree about what `CRM CHS` means.
 ///
+/// It happens on **confirm**, not on the tap that answers a row, and that is a deliberate
+/// difference from `BarcodeScanView`, which remembers a number the moment he names it. A
+/// barcode answer is a standalone fact about a number; a receipt row is one line of a basket
+/// he is still reading, and half of answering a receipt is noticing that the line above was
+/// wrong. So the receipt keeps one rule -- nothing is written until he confirms -- and that
+/// includes the vocabulary.
+///
 /// ## No image, anywhere
 ///
 /// The camera hands back text (see the enforcement note on `ScanCamera`). This screen holds
@@ -443,10 +450,14 @@ struct ReceiptScanView: View {
             case .skipped:
                 tally.skipped += 1
             case .item(let item):
-                // His own row, or one of his aliases, or a row he picked by hand. `learn`
-                // returns false when there is nothing to learn (the receipt already prints the
-                // item's own name, or the alias is already there), so the count is honest.
-                if intake.learn(draft.reading, as: item, in: context) { tally.remembered += 1 }
+                // LEARNED ONLY IF HE CHOSE IT. `learn` writes a permanent `FoodItemAlias`,
+                // and a match he never disputed is not a fact he taught the app -- see
+                // `ReceiptLineDraft.wasAnsweredByHand` for what that cost. `learn` also
+                // returns false when there is nothing to learn, so the count stays honest.
+                if draft.wasAnsweredByHand,
+                   intake.learn(draft.reading, as: item, in: context) {
+                    tally.remembered += 1
+                }
                 write(draft, to: item, into: &tally)
             case .entry(let entry):
                 // The mint, and the only one on this screen: `learn(_:asCatalogEntry:)` goes
@@ -454,12 +465,17 @@ struct ReceiptScanView: View {
                 // create a `FoodItem` -- what stands in for the `@Attribute(.unique)` CloudKit
                 // forbids.
                 guard let item = try? intake.learn(
-                    draft.reading, asCatalogEntry: entry, in: context
+                    draft.reading, asCatalogEntry: entry, in: context,
+                    // The MINT always happens -- a catalogue entry has to become a row
+                    // before stock can go on it. What is gated is the ALIAS: only a token
+                    // he placed by hand is worth remembering, because a confident match
+                    // already resolves through the catalogue every time.
+                    rememberingToken: draft.wasAnsweredByHand
                 ) else {
                     tally.failed += 1
                     continue
                 }
-                tally.remembered += 1
+                if draft.wasAnsweredByHand { tally.remembered += 1 }
                 write(draft, to: item, into: &tally)
             }
         }
@@ -540,6 +556,24 @@ struct ReceiptLineDraft: Identifiable {
     var answer: ScanAnswer
     var amount: Rational
     var unit: KitchenUnit
+    /// True only when HE picked this answer in the sheet.
+    ///
+    /// It gates `learn`, and that is the whole reason it exists. A confident match is one
+    /// the matcher decided not to ask about -- and on confirm, every `.entry` answer used
+    /// to be learned as a permanent `FoodItemAlias`. So one confident-and-wrong match
+    /// ("CHS" -> chives) became an alias on the wrong food, after which
+    /// `ReceiptIntake.resolve` answered that token from HIS OWN ALIASES at step 2 for ever
+    /// and could never reach the catalogue for it again. Self-reinforcing, and with no
+    /// screen in the app that could delete an alias, unrecoverable short of deleting the
+    /// `FoodItem`.
+    ///
+    /// A confident match does not need an alias anyway: it already resolves through the
+    /// shipped catalogue on every receipt. Only a token the catalogue CANNOT place is
+    /// worth remembering, and that is exactly the one he had to answer by hand.
+    ///
+    /// Default false, set in `ReceiptLineAnswerSheet.save`, so a draft built by `make`
+    /// from `resolution.proposal` is never counted as his.
+    var wasAnsweredByHand: Bool = false
 
     var reading: ReceiptTokenMatcher.Reading { resolution.reading }
     var isItemLine: Bool { resolution.isItemLine }
@@ -601,7 +635,9 @@ struct ReceiptLineDraft: Identifiable {
             for: answer, reading: resolution.reading, catalog: catalog
         )
         return ReceiptLineDraft(
-            id: id, resolution: resolution, answer: answer, amount: amount, unit: unit
+            id: id, resolution: resolution, answer: answer, amount: amount, unit: unit,
+            // NOT his: this answer came from the matcher, confident or not.
+            wasAnsweredByHand: false
         )
     }
 

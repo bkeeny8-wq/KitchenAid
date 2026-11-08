@@ -41,6 +41,7 @@ struct FoodItemDetailView: View {
                 lotsSection
             }
             historySection
+            aliasSection
             notesSection
             actionsSection
         }
@@ -368,6 +369,49 @@ struct FoodItemDetailView: View {
     }
 
     // MARK: - Notes
+
+    /// The other names this food answers to, and the only way to take one back off.
+    ///
+    /// It exists because of a defect rather than for completeness. `addAlias` had no
+    /// counterpart: a receipt token learned against the wrong food resolves at step 2 of
+    /// `FoodItemResolver.findOrCreate` — his own aliases, AHEAD of the shipped catalogue —
+    /// so it answered that line the same wrong way on every future receipt, and nothing in
+    /// the app could reach in and correct it. The only escape was deleting the item, which
+    /// takes its lots and its whole history with it.
+    ///
+    /// The shipped catalogue's own synonyms are deliberately NOT here. They are not rows:
+    /// `IngredientCatalog` consults them in memory and `findOrCreate` mints from the
+    /// template, so "green onions" reaching scallion is content and not something he
+    /// taught the app. Only his own rows can be wrong, and only his own are removable.
+    @ViewBuilder
+    private var aliasSection: some View {
+        let aliases = item.orderedAliases
+        if !aliases.isEmpty {
+            Section {
+                ForEach(aliases) { alias in
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(alias.text)
+                        Text("Matched as \(alias.matchKey)")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            FoodItemResolver(catalog: catalog)
+                                .removeAlias(alias, in: context)
+                        } label: {
+                            Label("Forget", systemImage: "trash")
+                        }
+                    }
+                }
+            } header: {
+                Text("Also known as")
+            } footer: {
+                Text("Names learned from your receipts. Swipe to forget one — the next "
+                   + "receipt that prints it will ask again instead of guessing.")
+            }
+        }
+    }
 
     @ViewBuilder
     private var notesSection: some View {

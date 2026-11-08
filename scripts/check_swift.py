@@ -279,6 +279,13 @@ KNOWN = {
     # code that nobody declares anywhere. Check 5 reported it as undeclared, which is a
     # false positive of this script and not a defect in the view.
     "Context",
+    # `Task`, which this tree now uses in exactly one place: `ScanGate` hops the camera
+    # permission callback -- which arrives on an arbitrary queue -- back onto the main
+    # actor before writing `@State`. Listed although check 5 cannot currently see it:
+    # `Task { ... }` is a trailing closure with no parentheses, and the scan above only
+    # matches a type followed by `(`. The next person to write `Task(priority:)` would be
+    # reported, and the honest answer for them is here rather than in a fresh puzzle.
+    "Task",
     # XCTest, for the two test targets this script now walks. Listed one by one
     # rather than waved through by an `XCT` prefix rule: a typo'd assertion name
     # is exactly the kind of thing that compiles nowhere and this check exists to
