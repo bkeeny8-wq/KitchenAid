@@ -541,10 +541,28 @@ enum PDFExportService {
 
         if !meals.isEmpty {
             let rows = meals.enumerated().map { pair in
-                LabelledRow(
-                    label: "\(pair.offset + 1)",
-                    text: "\(dayText(pair.element.dayKey)) \(pair.element.slot.title) \u{00B7} \(pair.element.displayTitle)"
-                )
+                var text = "\(dayText(pair.element.dayKey)) \(pair.element.slot.title) "
+                    + "\u{00B7} \(pair.element.displayTitle)"
+                // The SCALE SENTENCE, printed here and nowhere else on the page.
+                //
+                // Without it the sheet carried the badge and not the reason. A turkey line
+                // printed "... | yield unknown" -- the badge `MealScaling` deliberately
+                // reuses rather than adding a `ScalingNote` case, on the stated grounds
+                // that "the sentence below carries what the badge cannot". That was true
+                // only of `ShoppingLineDetailView`, behind a tap into one line, so on paper
+                // the whole of the weight feature was invisible: a chosen bird never named
+                // its weight, and an unchosen one was indistinguishable from a sub-recipe
+                // with a missing yield.
+                //
+                // It goes on the numbered meal rather than on every row because each row
+                // already carries its meals' numbers -- the "why is this on my list"
+                // mechanism that exists so provenance costs one closing block instead of a
+                // line under all 23 rows. Saying it once per meal keeps that bargain.
+                let sentences = scaleSentences(for: pair.element, in: list)
+                if !sentences.isEmpty {
+                    text += " \u{2014} " + sentences.joined(separator: "; ")
+                }
+                return LabelledRow(label: "\(pair.offset + 1)", text: text)
             }
             blocks.append(try block("sources", width: width) {
                 LabelledBlock(heading: "Meals this list covers", rows: rows, width: width)
@@ -567,6 +585,28 @@ enum PDFExportService {
             blocks: blocks
         )
         return (fileName: "shopping-\(title)", documents: [document])
+    }
+
+    /// The distinct scale sentences this meal's dishes contributed, in the order they first
+    /// appear on the list.
+    ///
+    /// Deduped because a meal's every ingredient line carries a source row repeating the
+    /// same sentence, and printing "18 lb, recipe written for 14 lb" sixteen times is worse
+    /// than not printing it. Several DIFFERENT sentences are kept: a meal is a main plus
+    /// sides, the bird is selected by weight and the sides are scaled by attendance, so two
+    /// genuinely different explanations is the correct answer and not a duplicate.
+    private static func scaleSentences(
+        for meal: PlannedMeal,
+        in list: ShoppingList
+    ) -> [String] {
+        var out: [String] = []
+        for line in list.orderedLines {
+            for source in line.orderedSources
+            where source.plannedMeal?.id == meal.id && !source.scaleDescription.isEmpty {
+                if !out.contains(source.scaleDescription) { out.append(source.scaleDescription) }
+            }
+        }
+        return out
     }
 
     private static func shoppingRow(
