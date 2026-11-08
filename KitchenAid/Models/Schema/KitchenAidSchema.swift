@@ -33,6 +33,10 @@ enum KitchenAidSchemaV1: VersionedSchema {
             // StockLot — see InventoryTransaction for why that distinction is load-bearing.
             FoodItem.self,
             FoodItemAlias.self,
+            // What he told the app a barcode means. A number resolves to an item here or
+            // nowhere: there is no product database and no network call (`CLAUDE.md`), so the
+            // first scan asks and every later scan fills itself in.
+            FoodItemBarcode.self,
             StockLot.self,
             InventoryTransaction.self,
             StorageLocation.self,
