@@ -275,6 +275,11 @@ final class ShoppingListStore {
     /// builder's own `isStapleDiverted`. Reading the stored status back instead loses the
     /// diversion whenever the status was something that outranks it: a staple pinned for a
     /// bridge would come back as an ordinary needed line once the bridge cleared.
+    ///
+    /// The flags are the other half of that rule: the two that are DERIVED from the
+    /// requested side are dropped and re-derived here, because this path re-sums that side
+    /// from scratch, and everything the stored set knows that nothing here recomputes is
+    /// kept. See the comment at the drop.
     private func recompute(
         _ line: ShoppingListLine,
         from survivors: [ShoppingListSource],
@@ -298,7 +303,41 @@ final class ShoppingListStore {
             requested: requested, have: have, item: item, system: system
         )
 
+        // THE TWO DERIVED FLAGS ARE DROPPED AND RE-DERIVED; everything else on the stored
+        // set survives. Both `.needsBridge` and `.converted` are facts about the REQUESTED
+        // side, and this path re-sums it from scratch — so seeding from the stored set and
+        // only ever unioning left them describing a requirement that no longer exists.
+        // Drop the only meal that asked for flour by the gram and the requested side comes
+        // back volume-only: the bridge no longer applies, and the one thing that cleared
+        // the flag here was `nothingLeftToBuy`, so the line stayed pinned under Needs
+        // attention reading "needs weight per cup" for ever. (Code review 01, item 3.)
+        //
+        // Nothing else may be dropped, and the list is not arbitrary: `.manual`,
+        // `.parLevel`, `.unresolvedItem` and `.tweaked` are facts about the line or its
+        // item rather than about a quantity, and the ledger's `.expiredStockIgnored` /
+        // `.expiringBeforeNeed`, `.assumedOnHand` and every scaling note `LineFlag.from`
+        // maps came from an inventory read and a scale this path deliberately does not
+        // redo. Clearing one of those would silently lose a fact nothing here can restate.
         var flags = line.flags
+        flags.remove(.needsBridge)
+        flags.remove(.converted)
+
+        // The requested-side writer of `.converted`, then writer 1 of `.needsBridge`,
+        // COPIED from `ShoppingListBuilder` (its lines 421-425 and 434-438) rather than
+        // restated: a second spelling of this rule is how a line comes back from a dropped
+        // meal flagged differently than a full regenerate of the same list would flag it.
+        if requested.contains(where: { !$0.conversionNote.isEmpty }) {
+            flags.insert(.converted)
+        }
+        let volumeKey = MeasureDimension.volume.rawValue
+        let massKey = MeasureDimension.mass.rawValue
+        let hasVolume = requested.contains { $0.dimensionKey == volumeKey }
+        let hasMass = requested.contains { $0.dimensionKey == massKey }
+        if hasVolume && hasMass { flags.insert(.needsBridge) }
+
+        // Writer 2 lives inside `subtract` — stock that survived `bridgeHave` — which is
+        // why the union comes after the two writers above and in the same order as the
+        // builder's: re-deriving on top of it would discard what the have side just said.
         flags.formUnion(result.flags)
         let nothingLeftToBuy = !requested.isEmpty && result.toBuy.isEmpty
         if nothingLeftToBuy { flags.remove(.needsBridge) }

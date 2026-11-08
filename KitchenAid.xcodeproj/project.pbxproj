@@ -45,6 +45,7 @@
 		E18182B14BDABAE7C1C3498A /* HouseholdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C52F1F8EBC59C3BB7B25334 /* HouseholdView.swift */; };
 		EF42B608E66D722551B79442 /* IngredientCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9D9FB29B1E5C9E440E199E /* IngredientCatalog.swift */; };
 		012CD6DECE1212ED65C92112 /* IngredientLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F6C1F10038A581029E4EF /* IngredientLine.swift */; };
+		AC5E584C62AF0C47C6F1D295 /* IngredientTweakSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C402937EB5A16A4A78829F /* IngredientTweakSheet.swift */; };
 		D7C3BBAD9690A984E0409025 /* InventoryLedger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAB2A942D7970167A7FD87D /* InventoryLedger.swift */; };
 		99F6635CE909549A21EC01CB /* InventoryTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D6F754048C4A3A31EFACDE /* InventoryTransaction.swift */; };
 		58B61DD1EF08C5AFBBDB73AD /* KitchenAidApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7926B77EF5CAA98481DE2D52 /* KitchenAidApp.swift */; };
@@ -110,6 +111,7 @@
 		4F04E96661790A6605206F7D /* ShoppingListLineSubtotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C507367EF009F80C234062 /* ShoppingListLineSubtotal.swift */; };
 		DD1D1888222643F7F53D7AE8 /* ShoppingListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC840A6F5109F4E394191FE /* ShoppingListSource.swift */; };
 		49B9B735EC881A30E8439ECB /* ShoppingListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0617555FB8DE9D8E5FE3C3 /* ShoppingListStore.swift */; };
+		2806C4A4D449EDDEAA3AE0BE /* StepTweakSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872300234716459475CD138 /* StepTweakSheet.swift */; };
 		6AD90E48B7633CFBD3320916 /* StockLot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91C95D435E9490FD451534A /* StockLot.swift */; };
 		270C553E6A59DA80E1D71A49 /* StockLotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC427A6F6302195D3387FC9 /* StockLotView.swift */; };
 		7A650B0977E20F41973BF8D9 /* StorageLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995AFCCB5360F7D32E7A43B0 /* StorageLocation.swift */; };
@@ -180,6 +182,7 @@
 		5C52F1F8EBC59C3BB7B25334 /* HouseholdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdView.swift; sourceTree = "<group>"; };
 		AE9D9FB29B1E5C9E440E199E /* IngredientCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCatalog.swift; sourceTree = "<group>"; };
 		CE7F6C1F10038A581029E4EF /* IngredientLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientLine.swift; sourceTree = "<group>"; };
+		A5C402937EB5A16A4A78829F /* IngredientTweakSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientTweakSheet.swift; sourceTree = "<group>"; };
 		8AAB2A942D7970167A7FD87D /* InventoryLedger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryLedger.swift; sourceTree = "<group>"; };
 		57D6F754048C4A3A31EFACDE /* InventoryTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryTransaction.swift; sourceTree = "<group>"; };
 		7926B77EF5CAA98481DE2D52 /* KitchenAidApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenAidApp.swift; sourceTree = "<group>"; };
@@ -245,6 +248,7 @@
 		B3C507367EF009F80C234062 /* ShoppingListLineSubtotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListLineSubtotal.swift; sourceTree = "<group>"; };
 		ECC840A6F5109F4E394191FE /* ShoppingListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListSource.swift; sourceTree = "<group>"; };
 		5A0617555FB8DE9D8E5FE3C3 /* ShoppingListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListStore.swift; sourceTree = "<group>"; };
+		0872300234716459475CD138 /* StepTweakSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTweakSheet.swift; sourceTree = "<group>"; };
 		E91C95D435E9490FD451534A /* StockLot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockLot.swift; sourceTree = "<group>"; };
 		1CC427A6F6302195D3387FC9 /* StockLotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockLotView.swift; sourceTree = "<group>"; };
 		995AFCCB5360F7D32E7A43B0 /* StorageLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageLocation.swift; sourceTree = "<group>"; };
@@ -494,8 +498,10 @@
 			isa = PBXGroup;
 			children = (
 				65B157F16EF1EDB2317D8449 /* DiagnosticsView.swift */,
+				A5C402937EB5A16A4A78829F /* IngredientTweakSheet.swift */,
 				DCA8037BFE2932039A7C7477 /* RecipeDetailView.swift */,
 				6304636EFB7F16B012DCD7F2 /* RecipeListView.swift */,
+				0872300234716459475CD138 /* StepTweakSheet.swift */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
@@ -797,8 +803,10 @@
 				E31DD1A0721F993A6DF193C8 /* PlanMealRow.swift in Sources */,
 				0FAD7AD58A4DEF337631E094 /* PlanWeekView.swift in Sources */,
 				28E5F0FC9DD1BE212E3D5EF6 /* DiagnosticsView.swift in Sources */,
+				AC5E584C62AF0C47C6F1D295 /* IngredientTweakSheet.swift in Sources */,
 				5D430910E5E1A8F5419917B2 /* RecipeDetailView.swift in Sources */,
 				F89335681D83696F361354D5 /* RecipeListView.swift in Sources */,
+				2806C4A4D449EDDEAA3AE0BE /* StepTweakSheet.swift in Sources */,
 				22D079A22A9C41AF96E599E6 /* AddShoppingItemSheet.swift in Sources */,
 				3EB92985B020C7991A4D1441 /* CatalogPickerView.swift in Sources */,
 				FB0671BF0C831D5B21E3F3B2 /* FlagBadge.swift in Sources */,

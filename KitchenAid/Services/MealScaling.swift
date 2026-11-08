@@ -85,15 +85,38 @@ enum MealScaling {
         }
 
         let servings = recipe.servings
+
+        // Code review 01 item 4: the turkey and the gravy state no serving count, so
+        // `recipe.servings` is 4 because `Recipe`'s decoder substituted 4 — not because
+        // either document says so. Dividing by that in silence is the defect; the note is
+        // the fix, and it rides the same path every other scaling note does, onto a badge on
+        // each shopping line the dish produces.
+        //
+        // `.unknownYield` rather than a new case, for two reasons. It is already what this
+        // enum means when the divisor is not a number the recipe gave us — `MealEditorView`
+        // raises the same case for a zero serving count, and `RecipeGraph` for a sub-recipe
+        // whose yield is missing. And a new case would need matching arms in `LineFlag`,
+        // `LineFlag.from`, `ScalingNote.badge` and `PDFExportService.flagText` to earn a
+        // badge that would read the same as this one's.
+        if !recipe.servingsStated {
+            notes.append(.unknownYield)
+        }
+
         let snapped = snap(portions / servings, to: recipe.batchGranularity, notes: &notes)
 
         // `humanDescription` and never `exactDescription`: this string is read by a human on
         // every provenance row, and review 03 finding 8 traced an exact interpolation
         // rendering "23 1111/1135 tsp" — correct, and unusable.
         let eaterWord = portions == .one ? "eater" : "eaters"
+        // Whose number the divisor is. "recipe serves 4" is a claim the document makes; for
+        // the turkey the 4 was substituted here, and this sentence is where that has to be
+        // readable, because it is what he reads in the aisle when a quantity looks wrong.
+        let servesClause = recipe.servingsStated
+            ? "recipe serves \(servings.humanDescription)"
+            : "recipe gives no serving count, so \(servings.humanDescription) is assumed"
         let description = "\u{00D7}\(snapped.humanDescription) \u{2014} "
             + "\(portions.humanDescription) \(eaterWord), "
-            + "recipe serves \(servings.humanDescription)"
+            + servesClause
 
         return Result(portions: portions, scale: snapped, notes: notes, description: description)
     }

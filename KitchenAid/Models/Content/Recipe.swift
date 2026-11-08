@@ -47,15 +47,32 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
     var servingsNumerator: Int = 4
     var servingsDenominator: Int = 1
 
-    /// True when the serving count is a stated approximation rather than a
-    /// number the recipe commits to.
+    /// True when the serving count is not a number the recipe commits to.
     ///
     /// The three compotes state no servings at all; Brandon supplied "approx 4"
     /// and it is recorded in `docs/recipe-overrides.json`. Scaling uses the
     /// value either way — the planner has to divide by something — but the UI
     /// should not render a guess he gave in passing with the same confidence as
     /// "12 crostini (serves 4)", which the document actually claims.
+    ///
+    /// The decoder also sets this when NOBODY stated a count (see
+    /// `servingsStated`), because every "Serves …" label in the app reads this
+    /// one flag, and the flag's job is "do not say this confidently".
     var servingsApproximate: Bool = false
+
+    /// False when the document states no serving count at all, and the 4 in
+    /// `servingsNumerator` is this decoder's substitution rather than anybody's number.
+    ///
+    /// Code review 01 item 4: `roast-turkey.json` and `turkey-gravy.json` both carry
+    /// `"servings": null`, the decoder's `?? 4` turned that into a recipe serving four, and
+    /// the meal planner divided by the invented 4 with nothing anywhere saying it was
+    /// invented. `servings` still has to come back positive — it is a divisor — so the
+    /// honesty lives here instead: `MealScaling` raises a note and names the substitution in
+    /// the provenance sentence on every shopping line the dish produces.
+    ///
+    /// Default TRUE, so a `Recipe(id:title:)` built in code and every file that does state a
+    /// count keep meaning what they meant: a recipe that says "serves 4" said it.
+    var servingsStated: Bool = true
 
     // MARK: - Timing that is a rate, not a duration
 
@@ -155,7 +172,7 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
     /// instead, read through their own container, which keeps `encode(to:)` synthesized.
     enum CodingKeys: String, CodingKey {
         case id, title, subtitle, summary
-        case servingsNumerator, servingsDenominator, servingsApproximate
+        case servingsNumerator, servingsDenominator, servingsApproximate, servingsStated
         case minutesPerPound, ovenTempF, tables, warnings
         case yieldAmount, yieldUnitLabel, yieldText
         case activeMinutes, totalMinutes, timesAreApproximate
@@ -191,15 +208,35 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
 
         // The importer's `"servings": 4` wins when present; the explicit pair is the
         // hand-authored form for a recipe that serves 2 1/2.
+        //
+        // The third branch is code review 01 item 4. `decodeIfPresent` returns nil for a JSON
+        // null exactly as it does for an absent key, so the turkey's `"servings": null` fell
+        // through the old `?? 4` and became a recipe serving four — a number no document and
+        // no person ever gave, indistinguishable downstream from the fixture's stated
+        // "(serves 4)". The 4 is still substituted, because the planner has to divide by
+        // something; what changes is that `servingsStated` records that nobody chose it.
+        var stated = true
         if let whole = try importer.decodeIfPresent(Int.self, forKey: .servings) {
             self.servingsNumerator = whole
             self.servingsDenominator = 1
-        } else {
-            self.servingsNumerator = try c.decodeIfPresent(Int.self, forKey: .servingsNumerator) ?? 4
+        } else if let numerator = try c.decodeIfPresent(Int.self, forKey: .servingsNumerator) {
+            self.servingsNumerator = numerator
             self.servingsDenominator = try c.decodeIfPresent(Int.self, forKey: .servingsDenominator) ?? 1
+        } else {
+            stated = false
+            self.servingsNumerator = 4
+            self.servingsDenominator = 1
         }
-        self.servingsApproximate =
+        // An explicit key beats what key presence implies, so a round trip survives: the
+        // synthesized encoder writes `servingsNumerator: 4` for the turkey, which on the way
+        // back in would otherwise read as a count the file states.
+        self.servingsStated = try c.decodeIfPresent(Bool.self, forKey: .servingsStated) ?? stated
+        // A count nobody stated gets at least the hedge a count he gave in passing gets.
+        // An explicit `false` does NOT win here: `roast-turkey.json` carries exactly that,
+        // written by an importer that had no serving count to be approximate about.
+        let explicitlyApproximate =
             try c.decodeIfPresent(Bool.self, forKey: .servingsApproximate) ?? false
+        self.servingsApproximate = explicitlyApproximate || !self.servingsStated
         self.minutesPerPound = try c.decodeIfPresent(Rational.self, forKey: .minutesPerPound)
         self.ovenTempF = try c.decodeIfPresent(Int.self, forKey: .ovenTempF)
         self.tables = try c.decodeIfPresent([RecipeTable].self, forKey: .tables) ?? []
@@ -240,6 +277,9 @@ struct Recipe: Codable, Identifiable, Hashable, Sendable {
 extension Recipe {
     /// The scaling divisor. Guaranteed positive: a recipe whose servings were never set must
     /// not make `scale` explode or vanish.
+    ///
+    /// The substitution is invisible through this accessor, which is the whole reason
+    /// `servingsStated` is stored: read that before printing this number or dividing by it.
     var servings: Rational {
         let r = Rational(servingsNumerator, max(1, servingsDenominator))
         return r > .zero ? r : .one
