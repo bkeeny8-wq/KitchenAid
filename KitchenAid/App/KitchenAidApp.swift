@@ -95,6 +95,18 @@ struct KitchenAidApp: App {
         tweaks = TweakStore(container: container, loader: loader)
         ledger = InventoryLedger(container: container)
 
+        // Repairs `FoodItem.aliasBlob` from the alias ROWS, which are the truth. A CloudKit
+        // merge of two devices that each added an alias can leave the blob disagreeing with
+        // them, and then the alias `#Predicate` stops finding a row that plainly has the
+        // alias -- a lookup failure with no visible cause and nothing on screen to explain
+        // it. Idempotent, cheap, and it rewrites only rows that actually differ.
+        //
+        // This is the half of the old `FoodItemResolver.reconcile` worth running unattended.
+        // The other half merged duplicate items without being asked, which is exactly what
+        // must not happen on a launch task: `MergeDuplicatesView` shows him a group and
+        // waits. `try?` for the same reason as the seed below.
+        try? FoodItemResolver(catalog: catalog).repairAliasIndex(in: container.mainContext)
+
         // `try?` on purpose: a failed seed must not stop the app from opening.
         // This runs on a device that may already be in the in-memory fallback
         // above, where a write failing is expected rather than exceptional, and

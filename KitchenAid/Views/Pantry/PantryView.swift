@@ -347,6 +347,15 @@ struct PantryView: View {
                 )
             }
             NavigationLink {
+                MergeDuplicatesView()
+            } label: {
+                toolRow(
+                    symbol: "arrow.triangle.merge",
+                    title: "Duplicate items",
+                    detail: duplicatesDetail
+                )
+            }
+            NavigationLink {
                 ExpiringSoonView()
             } label: {
                 toolRow(
@@ -409,6 +418,31 @@ struct PantryView: View {
                  + "discarded, nothing is sent anywhere, and there is no photo library "
                  + "involved.")
         }
+    }
+
+    /// The row carries the COUNT, which is what makes this the answer to "when should the
+    /// merge screen run" and not just "where does it live".
+    ///
+    /// `FoodItemResolver.reconcile` had no caller anywhere, and CLAUDE.md's first CloudKit
+    /// rule — no `@Attribute(.unique)`, de-duplicate in code — means that function is the
+    /// whole of the de-duplication. Receipt scanning mints items in bulk from abbreviated
+    /// lines and ends on "Back to the pantry", which lands here, so a row that already says
+    /// "2 groups look like the same food" is how he finds out at the moment duplicates
+    /// actually appear. Nothing merges from this row: it opens a screen that names every
+    /// survivor and every loser first.
+    ///
+    /// Computed in `body` like the three queues above it, and for the same reason: a cached
+    /// count is a count that can disagree with the screen it sits on.
+    /// `duplicateGroups(among:)` is `static`, takes no context and writes nothing — not even
+    /// the `reindex` that `reconcile` does — which is what makes it safe here.
+    private var duplicatesDetail: String {
+        let groups = FoodItemResolver.duplicateGroups(among: items).count
+        if groups == 0 {
+            return "Nothing looks duplicated. Earlier merges are listed here."
+        }
+        return groups == 1
+            ? "1 group looks like the same food. Nothing merges until you read it."
+            : "\(groups) groups look like the same food. Nothing merges until you read them."
     }
 
     private func toolRow(symbol: String, title: String, detail: String) -> some View {

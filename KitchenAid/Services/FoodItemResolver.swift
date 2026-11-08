@@ -59,6 +59,145 @@ struct DeleteRefusal: Error, Identifiable, Sendable {
     }
 }
 
+/// Why a merge was refused, and what to offer instead.
+///
+/// The same shape as `DeleteRefusal` above, deliberately: `reason` / `message` / `suggestion`,
+/// rendered by its readers as "\(message) \(suggestion)." — so the roster, the places screen
+/// and the merge screen all refuse in one voice rather than three screens inventing three
+/// sentences. A second shape for "cannot do this, here is why" would be the third.
+///
+/// It is a separate type rather than four more cases on `DeleteRefusal` because every one of
+/// that type's `suggestion`s is an alternative to DELETING, and offering "merge into another
+/// item" as the way out of a refused merge is a loop.
+struct MergeRefusal: Error, Identifiable, Sendable {
+
+    enum Reason: String, Codable, CaseIterable, Sendable {
+        /// The container fell back to an in-memory store, so a merge would delete rows and
+        /// lose the `MergeRecord` that says it did. The duplicates come back on the next
+        /// launch with nothing to explain the gap.
+        case storeUnavailable
+        /// The rows moved between the preview and the tap. Merging now would not be the
+        /// sentence he agreed to, which is the one thing this screen exists to guarantee.
+        case changedSinceCheck
+        /// The survivor carries no quantity — a staple is present or absent by decision
+        /// (CLAUDE.md), an `.untracked` row is one he asked not to count — and a loser has
+        /// real ledger rows. `PantryLevels.level` answers "Have it" / "Not tracked" for such
+        /// a row, so the merge would file lots and transactions under something that shows
+        /// no amount: nothing is destroyed, and nothing is visible either.
+        case wouldHideALevel
+        case couldNotSave
+    }
+
+    var id = UUID()
+    var reason: Reason
+    var subjectName: String = ""
+    var affectedCount: Int = 0
+
+    var message: String {
+        switch reason {
+        case .storeUnavailable:
+            return "The database could not be opened, so a merge would be undone when the app closes."
+        case .changedSinceCheck:
+            return "The pantry changed while this was on screen, so these are no longer the rows you read."
+        case .wouldHideALevel:
+            return "\(subjectName) is tracked present or absent with no amount, and the duplicate has \(affectedCount) inventory records. Merging would file them under a row that shows no amount."
+        case .couldNotSave:
+            return "The merge could not be written to the database."
+        }
+    }
+
+    /// What the screen offers INSTEAD. A refusal with no second button is a dead end, which
+    /// is `DeleteRefusal`'s own note on the matter and the reason that type has this property.
+    var suggestion: String {
+        switch reason {
+        case .storeUnavailable: return "Close the app and open it again first"
+        case .changedSinceCheck: return "Check again and read the new list"
+        // Nothing in the app changes an item's tracking mode, so the way out is to stop the
+        // two rows matching: the alias that links them is removable on either item's screen,
+        // under "Also known as".
+        case .wouldHideALevel: return "Forget the alias that links them, on either item"
+        case .couldNotSave: return "Check again \u{2014} this screen will say what landed"
+        }
+    }
+}
+
+/// One group of rows that mean the same purchase, as a VALUE: ids, names and counts, with
+/// no `FoodItem` in it anywhere.
+///
+/// Carrying ids rather than objects for the same reason `LedgerDivergence` does, and here
+/// it is load-bearing twice over. A screen holds a preview in `@State` across renders, and
+/// the whole point of this type is that the rows it describes are about to be DELETED —
+/// reading a property of a deleted SwiftData model is not a thing to find out about on a
+/// device. So the preview is a snapshot, the commit re-derives from live rows, and
+/// `signature` is what ties the two together.
+struct DuplicateGroup: Identifiable {
+
+    /// One row that would be deleted, and everything of his that would move off it.
+    struct Absorbed: Identifiable {
+        var id: UUID
+        var name: String
+        var lotCount: Int = 0
+        var transactionCount: Int = 0
+        var shoppingLineCount: Int = 0
+        /// Lines on a list he has not finished — the one that is in his pocket in the
+        /// shop. Counted separately because the line MOVES, so a list he is reading
+        /// changes under him, and that is worth a sentence of its own.
+        var openShoppingLineCount: Int = 0
+    }
+
+    var survivorID: UUID
+    var survivorName: String
+    var absorbed: [Absorbed] = []
+
+    /// The keys two or more rows in this group share, which is the answer to "why does it
+    /// think these are the same thing". Empty is legitimate and not a bug: grouping is
+    /// transitive, so A and C can be one purchase because B shares a key with each.
+    var sharedKeys: [String] = []
+
+    var refusal: MergeRefusal?
+
+    var id: UUID { survivorID }
+
+    /// Survivor first, then the losers in merge order. Compared — never shown — so the
+    /// commit can prove it is acting on the group that was previewed.
+    var signature: String {
+        ([survivorID] + absorbed.map { $0.id }).map { $0.uuidString }.joined(separator: "|")
+    }
+
+    var lotCount: Int { absorbed.reduce(0) { $0 + $1.lotCount } }
+    var transactionCount: Int { absorbed.reduce(0) { $0 + $1.transactionCount } }
+    var shoppingLineCount: Int { absorbed.reduce(0) { $0 + $1.shoppingLineCount } }
+    var openShoppingLineCount: Int { absorbed.reduce(0) { $0 + $1.openShoppingLineCount } }
+
+    /// What `MergeRecord.repointedCount` will read, computed the same way `merge` counts
+    /// it: lots plus transactions plus shopping lines, over the losers. If these two ever
+    /// disagree, the preview was a lie.
+    var repointedCount: Int { lotCount + transactionCount + shoppingLineCount }
+
+    var absorbedNames: [String] { absorbed.map { $0.name } }
+
+    /// "3 lots, 11 transactions, 1 shopping line" — the half of the sentence he is
+    /// agreeing to that has to be the thing that happens.
+    ///
+    /// **Empty when nothing moves**, rather than the word "nothing": two rows with no
+    /// history between them is a real and common case (an item minted by a shopping list
+    /// he never put away), and only the caller knows whether it is reading "Moves:" on a
+    /// row or mid-sentence in a confirmation.
+    var movesSentence: String {
+        var parts: [String] = []
+        if lotCount > 0 { parts.append(lotCount == 1 ? "1 lot" : "\(lotCount) lots") }
+        if transactionCount > 0 {
+            parts.append(transactionCount == 1
+                ? "1 transaction" : "\(transactionCount) transactions")
+        }
+        if shoppingLineCount > 0 {
+            parts.append(shoppingLineCount == 1
+                ? "1 shopping line" : "\(shoppingLineCount) shopping lines")
+        }
+        return parts.joined(separator: ", ")
+    }
+}
+
 /// THE ONLY PLACE A `FoodItem` IS CREATED.
 ///
 /// Nothing else may call `context.insert(FoodItem(...))` — not the shopping builder, not the
@@ -214,9 +353,10 @@ final class FoodItemResolver {
     /// last-writer-wins on the WHOLE array, so one alias is silently lost — and a lost alias
     /// means two shopping lines for one purchase.
     ///
-    /// If the key he typed is already another item's identity, this still records it and
-    /// `reconcile(in:)` then merges the two rows, because they now share a key. That is the
-    /// correct outcome: he has told the app the two names mean one thing.
+    /// If the key he typed is already another item's identity, this still records it, and the
+    /// two rows then show up as one group in Pantry → Duplicate items, because they now share
+    /// a key. That is the correct outcome: he has told the app the two names mean one thing.
+    /// The merge itself waits for him to read it — `MergeDuplicatesView` on why.
     func addAlias(_ text: String, to item: FoodItem, in context: ModelContext) {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
@@ -259,7 +399,217 @@ final class FoodItemResolver {
         item.aliasBlob = item.rebuiltAliasBlob()
     }
 
+    // MARK: - What WOULD merge
+
+    /// **The dry run.** Which rows WOULD merge, writing nothing.
+    ///
+    /// The old `reconcile(in:)` could not answer this: it fetched, repaired every alias
+    /// index, merged
+    /// and saves in one breath, so the only way to learn what it would do was to let it do it.
+    /// A merge repoints lots, transactions and shopping lines and then DELETES rows, which is
+    /// not something to perform on his behalf from a tap he did not understand, and faking a
+    /// preview by merging and undoing would be worse than no preview at all — the undo is the
+    /// part with no test.
+    ///
+    /// So the grouping moved here, and `reconcile` now calls this. One grouping, two callers:
+    /// a preview computed by different code from the commit is not a preview.
+    ///
+    /// `static`, taking rows rather than a context, and writing nothing — including no
+    /// `reindex`, which `reconcile` still does and which is a WRITE. That is what makes this
+    /// safe to call from a `body` (`PantryView` does, for the row count) and from a screen
+    /// that has not been granted the right to change anything yet.
+    static func duplicateGroups(among items: [FoodItem]) -> [DuplicateGroup] {
+        groupedRows(among: items).map { describe($0) }
+    }
+
+    /// The grouping itself. Each element is survivor-first.
+    ///
+    /// **The survivor rule is a convergence requirement, not a preference**: earliest
+    /// `createdAt`, tie-broken by lowest `id.uuidString`. Never a "best row" heuristic such as
+    /// most-lots or longest-notes — two devices have to pick the SAME survivor with no
+    /// coordination, or each merges into its own choice and the merge ping-pongs forever.
+    ///
+    /// Grouping is by every key a lookup can arrive on, his alias ROWS included, and it is
+    /// transitive: if A shares a name key with B and B shares an alias key with C, all three
+    /// are one purchase. A union-find keeps that from depending on the order the rows come
+    /// back in.
+    private static func groupedRows(among items: [FoodItem]) -> [[FoodItem]] {
+        let ordered = items.sorted { a, b in
+            if a.createdAt != b.createdAt { return a.createdAt < b.createdAt }
+            return a.id.uuidString < b.id.uuidString
+        }
+        guard ordered.count > 1 else { return [] }
+
+        var parent = Array(0..<ordered.count)
+        var owner: [String: Int] = [:]
+
+        for (index, item) in ordered.enumerated() {
+            for key in identityKeys(of: item) {
+                if let existing = owner[key] {
+                    unite(index, existing, in: &parent)
+                } else {
+                    owner[key] = index
+                }
+            }
+        }
+
+        var groups: [Int: [Int]] = [:]
+        for index in ordered.indices {
+            let root = rootIndex(index, in: &parent)
+            groups[root, default: []].append(index)
+        }
+
+        var out: [[FoodItem]] = []
+        for root in groups.keys.sorted() {
+            guard let members = groups[root]?.sorted(), members.count > 1 else { continue }
+            // `ordered` is already in survivor order, so the lowest index IS the earliest
+            // `createdAt` with the uuid tie-break applied.
+            out.append(members.map { ordered[$0] })
+        }
+        return out
+    }
+
+    /// Every key a lookup can arrive on this row by. The alias ROWS, never `aliasBlob`: the
+    /// blob is a derived index that a CloudKit merge can mangle, and grouping off it would
+    /// make two rows stop looking like duplicates because their index was stale.
+    private static func identityKeys(of item: FoodItem) -> [String] {
+        var keys: [String] = []
+        if !item.matchKey.isEmpty { keys.append(item.matchKey) }
+        for alias in item.orderedAliases where !alias.matchKey.isEmpty {
+            keys.append(alias.matchKey)
+        }
+        return keys
+    }
+
+    private static func signature(of rows: [FoodItem]) -> String {
+        rows.map { $0.id.uuidString }.joined(separator: "|")
+    }
+
+    private static func describe(_ rows: [FoodItem]) -> DuplicateGroup {
+        let survivor = rows[0]
+        let losers = Array(rows.dropFirst())
+
+        let absorbed = losers.map { loser in
+            DuplicateGroup.Absorbed(
+                id: loser.id,
+                name: loser.displayName,
+                lotCount: loser.orderedLots.count,
+                transactionCount: loser.orderedTransactions.count,
+                shoppingLineCount: loser.allShoppingLines.count,
+                openShoppingLineCount: openShoppingLineCount(of: loser)
+            )
+        }
+
+        // A key held by two or more rows in the group. Counted over every row rather than
+        // intersected against the survivor's, because of the transitive case: the key that
+        // joined two LOSERS is still the reason the group has three rows in it.
+        var tally: [String: Int] = [:]
+        for row in rows {
+            for key in Set(identityKeys(of: row)) { tally[key, default: 0] += 1 }
+        }
+
+        return DuplicateGroup(
+            survivorID: survivor.id,
+            survivorName: survivor.displayName,
+            absorbed: absorbed,
+            sharedKeys: tally.filter { $0.value > 1 }.keys.sorted(),
+            refusal: refusal(survivor: survivor, losers: losers)
+        )
+    }
+
+    /// The same test `canDelete` applies to an open list, asked of one row.
+    private static func openShoppingLineCount(of item: FoodItem) -> Int {
+        item.allShoppingLines.filter { line in
+            guard let list = line.list else { return false }
+            return !list.isArchived && list.completedAt == nil
+        }.count
+    }
+
+    /// The one group this app will not merge, and it is reachable rather than theoretical.
+    ///
+    /// `kosher salt` mints from the catalogue as a `.staple` — present or absent, no amount.
+    /// NOTE ON REACHABILITY, because the story this rested on was wrong. It said "a receipt
+    /// line the matcher could not place mints a BARE row, which defaults to `.tracked`" --
+    /// and nothing in the tree mints a bare row. Both callers of `findOrCreate(name:...)`
+    /// pass `createIfMissing: false`, every other mint goes through
+    /// `findOrCreate(fromCatalog:)` and inherits the template's tracking mode, and
+    /// `AddShoppingItemSheet` adds a typed name with no item at all.
+    ///
+    /// So this refusal is UNREACHABLE on today's call sites. It is kept rather than deleted
+    /// because the condition it guards is real and the cost of being wrong is silent: a
+    /// staple carries no quantity, so folding a tracked row into one discards its level with
+    /// nothing on screen to say a number disappeared. The day anything mints a bare row --
+    /// a runtime importer, a barcode answered freehand -- this is the guard that was already
+    /// there. What it must not do is claim a reachability it does not have.
+    ///
+    /// Historically: a receipt line the matcher could not place would mint a BARE row, which
+    /// defaults to `.tracked`, and he then puts a lot on it. Teach the app that the two names mean one
+    /// thing (one tap on an unresolved line) and they are a group, with the staple surviving
+    /// if it was created first. `merge` keeps the survivor's tracking mode — correctly; it has
+    /// a value, so there is nothing absent to fill — so the lots and the purchase rows would
+    /// land on a row `PantryLevels.level` renders as "Have it".
+    ///
+    /// The ledger would still hold every row. It would just have nowhere on screen to appear,
+    /// which is the one outcome worse than two rows he can see.
+    private static func refusal(survivor: FoodItem, losers: [FoodItem]) -> MergeRefusal? {
+        guard !survivor.tracksQuantity else { return nil }
+        let history = losers
+            .filter { $0.tracksQuantity }
+            .reduce(0) { $0 + $1.orderedLots.count + $1.orderedTransactions.count }
+        guard history > 0 else { return nil }
+        return MergeRefusal(
+            reason: .wouldHideALevel,
+            subjectName: survivor.displayName,
+            affectedCount: history
+        )
+    }
+
     // MARK: - Merging
+
+    /// Commit ONE previewed group, and only if it is still the group that was previewed.
+    ///
+    /// Takes the snapshot the screen showed, re-derives the grouping from `items`, and merges
+    /// the group whose `signature` matches. That is the guard, and it belongs here rather than
+    /// only in the screen: this is the thing that deletes rows, and a guard that lives only at
+    /// one call site is not a guard — `canDelete`'s own comment makes the same point.
+    ///
+    /// `items` is every `FoodItem` in the store, which is what the caller's `@Query` already
+    /// holds. Re-deriving from a subset would invent duplicates that are not there.
+    @discardableResult
+    func mergeDuplicate(
+        _ planned: DuplicateGroup,
+        among items: [FoodItem],
+        in context: ModelContext
+    ) throws -> MergeRecord {
+        guard let rows = Self.groupedRows(among: items)
+            .first(where: { Self.signature(of: $0) == planned.signature })
+        else {
+            throw MergeRefusal(reason: .changedSinceCheck, subjectName: planned.survivorName)
+        }
+        let survivor = rows[0]
+        let losers = Array(rows.dropFirst())
+        if let refused = Self.refusal(survivor: survivor, losers: losers) { throw refused }
+
+        let record = try merge(losers, into: survivor, in: context)
+        do {
+            try context.save()
+        } catch {
+            // ROLLED BACK, which `MergeRefusal.couldNotSave`'s message already promised and
+            // nothing delivered. By the time the save runs, `merge` has repointed every lot,
+            // transaction and shopping line onto the survivor, inserted the `MergeRecord` and
+            // deleted every loser -- all of it unsaved but all of it live in the context. The
+            // message said "the merge could not be written"; without this the merge was
+            // written to memory and left there, and this app relies on SwiftData AUTOSAVE, so
+            // the next unrelated write would have committed a half-done merge nobody chose.
+            //
+            // Discarding the whole context is heavier than discarding the merge, and it is
+            // the only thing a `ModelContext` offers. Acceptable here and only here: this
+            // screen opens, previews and merges, so there is nothing else of his in flight.
+            context.rollback()
+            throw MergeRefusal(reason: .couldNotSave, subjectName: planned.survivorName)
+        }
+        return record
+    }
 
     /// Fold `losers` into `survivor`, moving every referrer, and write the audit row Settings
     /// renders.
@@ -358,71 +708,37 @@ final class FoodItemResolver {
         return record
     }
 
-    /// The deterministic de-dup pass, run on launch.
+    /// Repairs the alias INDEX, and no longer merges anything.
     ///
-    /// **The survivor rule is a convergence requirement, not a preference**: earliest
-    /// `createdAt`, tie-broken by lowest `id.uuidString`. Never a "best row" heuristic such as
-    /// most-lots or longest-notes — two devices have to pick the SAME survivor with no
-    /// coordination, or each merges into its own choice and the merge ping-pongs forever.
+    /// This was `reconcile(in:)`, "written to run on launch and still without a caller
+    /// there" — its own doc comment said so. A review pointed out that the claim it had
+    /// gained one was false: `MergeDuplicatesView` calls the new `duplicateGroups(among:)`
+    /// and `mergeDuplicate(_:among:in:)`, not this, so this stayed an orphan.
     ///
-    /// Grouping is by every key a lookup can arrive on, his alias ROWS included, and it is
-    /// transitive: if A shares a name key with B and B shares an alias key with C, all three
-    /// are one purchase. A union-find keeps that from depending on the order the rows come
-    /// back in.
+    /// Splitting it rather than giving it a caller, because it did two things of opposite
+    /// character. The merge half **should never run unattended** — silently folding two
+    /// foods he considers different is worse than leaving both, which is why the screen
+    /// shows a group and waits. It is gone; the screen supersedes it.
+    ///
+    /// The repair half is worth running every launch and is not destructive. `aliasBlob` is
+    /// the predicate-queryable index over the alias ROWS, and the rows are the truth. A
+    /// CloudKit merge of two devices that each added an alias can leave the blob disagreeing
+    /// with them, and then the alias predicate stops finding a row that plainly has the
+    /// alias — a lookup failure with no visible cause. Rebuilding from the rows is
+    /// idempotent and cheap.
+    ///
+    /// Returns how many rows it rewrote, so a caller can say nothing happened.
     @discardableResult
-    func reconcile(in context: ModelContext) throws -> [MergeRecord] {
-        let items = try context.fetch(FetchDescriptor<FoodItem>()).sorted { a, b in
-            if a.createdAt != b.createdAt { return a.createdAt < b.createdAt }
-            return a.id.uuidString < b.id.uuidString
+    func repairAliasIndex(in context: ModelContext) throws -> Int {
+        let items = try context.fetch(FetchDescriptor<FoodItem>())
+        var rewritten = 0
+        for item in items {
+            let rebuilt = item.rebuiltAliasBlob()
+            guard rebuilt != item.aliasBlob else { continue }
+            item.aliasBlob = rebuilt
+            rewritten += 1
         }
-        guard items.count > 1 else {
-            if let only = items.first { reindex(only) }
-            return []
-        }
-
-        var parent = Array(0..<items.count)
-        var owner: [String: Int] = [:]
-
-        for (index, item) in items.enumerated() {
-            // Repair the index while we are here: a blob that a CloudKit merge mangled, or
-            // that a writer appended to by hand, stops the alias predicate finding a row that
-            // plainly has the alias.
-            reindex(item)
-
-            var keys: [String] = []
-            if !item.matchKey.isEmpty { keys.append(item.matchKey) }
-            for alias in item.orderedAliases where !alias.matchKey.isEmpty {
-                keys.append(alias.matchKey)
-            }
-
-            for key in keys {
-                if let existing = owner[key] {
-                    Self.unite(index, existing, in: &parent)
-                } else {
-                    owner[key] = index
-                }
-            }
-        }
-
-        var groups: [Int: [Int]] = [:]
-        for index in items.indices {
-            let root = Self.rootIndex(index, in: &parent)
-            groups[root, default: []].append(index)
-        }
-
-        var records: [MergeRecord] = []
-        for root in groups.keys.sorted() {
-            guard let members = groups[root]?.sorted(), members.count > 1 else { continue }
-            // `items` is already in survivor order, so the lowest index IS the earliest
-            // `createdAt` with the uuid tie-break applied.
-            let rows = members.map { items[$0] }
-            let survivor = rows[0]
-            let record = try merge(Array(rows.dropFirst()), into: survivor, in: context)
-            records.append(record)
-        }
-
-        if !records.isEmpty { try context.save() }
-        return records
+        return rewritten
     }
 
     /// Iterative with path compression, and `inout` rather than a captured `var`, because a
