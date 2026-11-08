@@ -18,6 +18,8 @@ struct ShoppingLineDetailView: View {
 
     @Environment(IngredientCatalog.self) private var catalog
     @Environment(\.modelContext) private var context
+    @Environment(ShoppingListStore.self) private var shopping
+    @Environment(\.dismiss) private var dismiss
 
     @State private var note: String = ""
     /// Zero, not a plausible-looking default. A seeded 120 g is flour's weight and nothing
@@ -281,10 +283,45 @@ struct ShoppingLineDetailView: View {
                 }
                 .padding(.vertical, 2)
                 .accessibilityElement(children: .combine)
+                .swipeActions(edge: .trailing) {
+                    if source.plannedMeal != nil {
+                        Button(role: .destructive) {
+                            stopShopping(for: source)
+                        } label: {
+                            Label("Not cooking this", systemImage: "calendar.badge.minus")
+                        }
+                    }
+                }
             }
         } header: {
             Text("Why it is on the list")
         }
+    }
+
+    /// The ONE caller of `ShoppingListStore.drop(meal:from:in:)`, which until now had
+    /// none anywhere in the tree.
+    ///
+    /// That mattered more than it sounds. `drop` is the only thing that calls the store's
+    /// `recompute`, which is the second of the two entries into the status ladder -- so
+    /// the whole of that path, including the stale-`.needsBridge` fix just made to it, was
+    /// unreachable from any tap. Working code reachable from nowhere is the defect class
+    /// `docs/CODE_REVIEW_01.md` is mostly about, and a fix to unreachable code cannot be
+    /// confirmed even on a Mac with the app running.
+    ///
+    /// Here is where it belongs: the row already names the meal that put this line on the
+    /// list, so "I am not cooking that" is a statement he can make about the thing in
+    /// front of him. It drops the meal from the WHOLE list and not just this line, which
+    /// is what `drop` does and what he would mean -- the sides came from the same meal.
+    ///
+    /// It dismisses unconditionally, on purpose. `drop` deletes any line whose last
+    /// source was that meal, and this screen is a detail view OF a line: staying would
+    /// leave it reading a deleted model object. Going back to the list is also simply
+    /// what he wants to see, because several lines have just changed.
+    @MainActor
+    private func stopShopping(for source: ShoppingListSource) {
+        guard let meal = source.plannedMeal, let list = line.list else { return }
+        shopping.drop(meal: meal, from: list, in: context)
+        dismiss()
     }
 
     private func sourceTitle(_ source: ShoppingListSource) -> String {

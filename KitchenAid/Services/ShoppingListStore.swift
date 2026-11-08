@@ -312,12 +312,29 @@ final class ShoppingListStore {
         // the flag here was `nothingLeftToBuy`, so the line stayed pinned under Needs
         // attention reading "needs weight per cup" for ever. (Code review 01, item 3.)
         //
-        // Nothing else may be dropped, and the list is not arbitrary: `.manual`,
-        // `.parLevel`, `.unresolvedItem` and `.tweaked` are facts about the line or its
-        // item rather than about a quantity, and the ledger's `.expiredStockIgnored` /
-        // `.expiringBeforeNeed`, `.assumedOnHand` and every scaling note `LineFlag.from`
-        // maps came from an inventory read and a scale this path deliberately does not
-        // redo. Clearing one of those would silently lose a fact nothing here can restate.
+        // Nothing else may be dropped, and the honest reason is NOT that the rest are
+        // facts about the line rather than about a quantity. That is what this comment
+        // used to claim and it is wrong for six of them. `.manual`, `.parLevel` and
+        // `.unresolvedItem` really are line-or-item facts. But `.tweaked` is written per
+        // CONTRIBUTION (`ShoppingListBuilder`, `if flat.wasTweaked`), and so is every
+        // scaling note `LineFlag.from` maps — `.noAttendance`, `.unknownYield`,
+        // `.snappedToBatch`, `.overridden`, `.leftoversIncluded`. All six are facts about
+        // WHICH MEALS CONTRIBUTE, which is exactly the side this path re-sums.
+        //
+        // They survive anyway because `ShoppingListSource` stores no `wasTweaked` column
+        // and no scaling notes, so there is nothing here to re-derive them FROM. So they
+        // are KNOWN-STALE after a drop: lose the only meal whose line carried an override
+        // and the line keeps its "your tweak" badge; lose the only meal scaled up for
+        // leftovers and it keeps "extra for leftovers". That is a smaller lie than
+        // clearing a fact nothing can restate, and it is a lie either way — the fix is to
+        // persist those two things on the source row, and then this and
+        // `ShoppingListBuilder`'s copy below should both become one
+        // `derivedFlags(for:)`. Until then a full regenerate is the only thing that
+        // corrects them.
+        //
+        // The ledger's `.expiredStockIgnored` / `.expiringBeforeNeed` and
+        // `.assumedOnHand` are different again: they came from an inventory read this
+        // path deliberately does not redo.
         var flags = line.flags
         flags.remove(.needsBridge)
         flags.remove(.converted)

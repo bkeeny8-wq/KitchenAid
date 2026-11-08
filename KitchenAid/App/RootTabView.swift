@@ -1,8 +1,25 @@
 import SwiftUI
+import SwiftData
 
 struct RootTabView: View {
     @Environment(\.storeUnavailable) private var storeUnavailable
     @Environment(RecipeLoader.self) private var loader
+    /// Optional, like every other lookup of it: the App injects it in the launch task.
+    @Environment(TweakStore.self) private var tweaks: TweakStore?
+
+    /// Lapsed tweaks, counted once rather than on every body evaluation.
+    ///
+    /// `TweakStore.lapseReport()` fetches every tweak and re-resolves every recipe it
+    /// names, which is the right cost for a screen you open and the wrong one for a
+    /// banner that is on screen the whole time the app is. `.task(id:)` below recomputes
+    /// it when the number of tweak rows changes, and a LAPSE itself can only appear when
+    /// the bundled content changes -- which, recipes being compiled-in files, means a new
+    /// build and therefore a fresh launch.
+    @State private var lapsedCount = 0
+
+    /// Read only to drive the recount above. A `@Query` SwiftData never reads is a query
+    /// it never subscribes to, so this must stay used.
+    @Query private var tweakRows: [RecipeTweak]
 
     @State private var selection: AppTab = .today
 
@@ -19,6 +36,18 @@ struct RootTabView: View {
                 .accessibilityIdentifier(tab.identifier)
                 .tag(tab)
             }
+        }
+        .task(id: tweakRows.count) { recountLapses() }
+    }
+
+    @MainActor
+    private func recountLapses() {
+        // A `.missing` report counts as ONE whether or not it carries individual lapses:
+        // the whole recipe file is gone, `DiagnosticsView` renders it as a single row
+        // ("handled WHOLE -- one row, no list of lines"), and counting its empty `lapses`
+        // array as zero would leave the banner down on the worst case of the three.
+        lapsedCount = (tweaks?.lapseReport() ?? []).reduce(0) { total, report in
+            total + (report.status == .missing ? 1 : report.lapses.count)
         }
     }
 
@@ -52,8 +81,14 @@ struct RootTabView: View {
             return broken == 1 ? "1 recipe file could not be read"
                                : "\(broken) recipe files could not be read"
         }
-        return warnedCount == 1 ? "1 recipe has a warning"
-                                : "\(warnedCount) recipes have warnings"
+        if warnedCount > 0 {
+            return warnedCount == 1 ? "1 recipe has a warning"
+                                    : "\(warnedCount) recipes have warnings"
+        }
+        // The third kind, and the only one that is about HIM rather than about a file:
+        // his own tweak no longer matches the recipe it was made against.
+        return lapsedCount == 1 ? "1 of your tweaks no longer fits its recipe"
+                                : "\(lapsedCount) of your tweaks no longer fit their recipes"
     }
 
     /// Two things the user must not have to discover for themselves: that this
@@ -75,7 +110,17 @@ struct RootTabView: View {
             // recipes? A diagnostic means a file could not be used at all; a
             // warning means it loaded but the importer could not work something
             // out, which surfaces later as a quantity that will not scale.
-            if loader.hasDiagnostics || warnedCount > 0 {
+            // `lapsedCount` is in this condition because `DiagnosticsView` is
+            // constructed HERE and nowhere else, so this gate is the only way to reach
+            // the lapsed-tweak section on it -- and a lapse opens neither of the other
+            // two conditions. It resolved by luck until now: 6 of the 8 bundled recipes
+            // still carry importer warnings, so the banner happened to be up. Clearing
+            // those is active work, and a re-import is the very event that BOTH clears a
+            // warning and causes a lapse, so the luck would have run out in the one
+            // moment the screen was needed. `RecipeDetailView`'s lapse notice also tells
+            // him to reach it "from the orange banner at the top of any tab", which would
+            // have become a false instruction.
+            if loader.hasDiagnostics || warnedCount > 0 || lapsedCount > 0 {
                 NavigationLink {
                     DiagnosticsView()
                 } label: {

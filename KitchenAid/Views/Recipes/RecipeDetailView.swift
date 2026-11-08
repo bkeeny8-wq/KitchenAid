@@ -533,9 +533,20 @@ struct RecipeDetailView: View {
                 .foregroundStyle(.secondary)
                 .frame(width: 20, alignment: .trailing)
             VStack(alignment: .leading, spacing: 3) {
-                if !step.title.isEmpty {
+                // The timing and the Changed badge used to live INSIDE `if
+                // !step.title.isEmpty`, which hid both on an untitled step — and
+                // untitled is the common case, not the edge: 6 of the turkey's 10
+                // steps have no title, 7 of the gravy's, 6 of the pancakes'. The
+                // caption below is not inside that branch, so a timing-only tweak
+                // on an untitled step rendered "As written: 30 min" with his new
+                // value nowhere on the row: the silent disagreement this screen's
+                // own comments are about, arrived at from the other end.
+                // `CookStepCard` always had this right.
+                if !step.title.isEmpty || step.durationText != nil || isChanged {
                     HStack(spacing: 6) {
-                        Text(step.title).font(.subheadline.weight(.semibold))
+                        if !step.title.isEmpty {
+                            Text(step.title).font(.subheadline.weight(.semibold))
+                        }
                         if let duration = step.durationText {
                             Text(duration)
                                 .font(.caption.weight(.semibold))
