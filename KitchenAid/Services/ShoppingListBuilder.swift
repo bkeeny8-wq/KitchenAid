@@ -253,6 +253,13 @@ enum ShoppingListBuilder {
                 // `Recipe.servings` substitutes 1 for a non-positive stored value so the scale
                 // neither explodes nor vanishes. This is the one place that can say it did,
                 // because the substitution is invisible through the accessor.
+                //
+                // A file that states NO serving count is a different thing and does not
+                // belong here: it reaches this line with 4, which `Recipe`'s decoder
+                // substituted, and widening this test to catch it would report "serving count
+                // is zero or negative" about a document that says nothing at all. That case
+                // is `Recipe.servingsStated`, and `MealScaling` already badges every line
+                // this dish produces with it. Do not merge the two.
                 if resolved.recipe.servingsNumerator <= 0 {
                     diagnostics.append(.zeroServings(recipeTitle: resolved.title))
                 }

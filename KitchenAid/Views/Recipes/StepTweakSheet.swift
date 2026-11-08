@@ -37,6 +37,10 @@ struct StepTweakSheet: View {
     @State private var minutes = 0
     @State private var hasUpperBound = false
     @State private var upperMinutes = 0
+    /// The pair the step arrived with, kept so a save that changes only the text can write
+    /// the timing back in the SHAPE it came in. See `sameTiming`.
+    @State private var seededMin: Int?
+    @State private var seededMax: Int?
     @State private var didSeed = false
 
     var body: some View {
@@ -60,6 +64,10 @@ struct StepTweakSheet: View {
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save") { save() }
+                    // A step that is gone has nothing to write. The writers would no-op
+                    // harmlessly, but an enabled Save that does nothing is a worse answer
+                    // than a disabled one.
+                    .disabled(resolved.step(id: stepID) == nil)
             }
         }
     }
@@ -70,6 +78,8 @@ struct StepTweakSheet: View {
     private var tweakStore: TweakStore {
         injectedTweakStore ?? TweakStore(container: modelContext.container, loader: loader)
     }
+
+    private var originalStep: RecipeStep? { resolved.originalStep(id: stepID) }
 
     // MARK: - The form
 
@@ -217,6 +227,8 @@ struct StepTweakSheet: View {
         bodyText = step.body
         let low = step.minMinutes
         let high = step.maxMinutes
+        seededMin = low
+        seededMax = high
         isTimed = low != nil || high != nil
         minutes = low ?? high ?? 0
         upperMinutes = high ?? low ?? 0
@@ -229,18 +241,53 @@ struct StepTweakSheet: View {
     /// state and not a delta: it compares the minute pair against the bundled one to
     /// decide `hasMinutesOverride`, and it treats a nil text as "leave the stored override
     /// alone", which a sheet that owns the text must never ask for.
+    ///
+    /// TEXT THAT MATCHES THE DOCUMENT IS WRITTEN AS `""`. `effectiveTitle`/`effectiveBody`
+    /// read `""` as leave-the-bundled-text-alone, and `finishStep` keeps any row whose
+    /// title or body is non-empty. The fields are seeded from the resolved step so that
+    /// reopening shows his own words — so without this an untouched Save would store the
+    /// document's own title as an override and badge the step "Changed" for a change nobody
+    /// made. It also makes retyping the recipe's own wording a revert.
     @MainActor
     private func save() {
-        let low: Int? = isTimed ? min(minutes, hasUpperBound ? upperMinutes : minutes) : nil
-        let high: Int? = isTimed ? max(minutes, hasUpperBound ? upperMinutes : minutes) : nil
+        var low: Int? = isTimed ? min(minutes, hasUpperBound ? upperMinutes : minutes) : nil
+        var high: Int? = isTimed ? max(minutes, hasUpperBound ? upperMinutes : minutes) : nil
+        // Written back in the shape it arrived in when the controls say the same thing, so
+        // a fix to the WORDING cannot flag the timing as changed as well.
+        if sameTiming((low, high), (seededMin, seededMax)) {
+            low = seededMin
+            high = seededMax
+        }
+        // Both sides trimmed, because `TweakStore` trims what it stores and a bundled field
+        // with a trailing space would otherwise never compare equal to anything he types.
+        let typedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let typedBody = bodyText.trimmingCharacters(in: .whitespacesAndNewlines)
+        let bundledTitle = (originalStep?.title ?? "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let bundledBody = (originalStep?.body ?? "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
         tweakStore.setStep(
-            title: title,
-            body: bodyText,
+            title: typedTitle == bundledTitle ? "" : typedTitle,
+            body: typedBody == bundledBody ? "" : typedBody,
             minMinutes: low,
             maxMinutes: high,
             forStep: stepID,
             in: resolved.id
         )
         dismiss()
+    }
+
+    /// Whether two minute pairs state the SAME timing, which is not the same question as
+    /// whether they are equal.
+    ///
+    /// `setStep` decides `hasMinutesOverride` by comparing the pair it is given against the
+    /// bundled pair, and the steppers can only produce a both-or-neither pair. So a file
+    /// that stated a minimum and no maximum would come back as an equal pair, differ from
+    /// the bundle, and leave the step badged "Changed" with an "as written: 30 min" caption
+    /// for a change he never made — the silent-disagreement defect, arrived at from the
+    /// other end. Every bundled file today carries both bounds or neither, so this guards
+    /// the next import rather than fixing a live bug.
+    private func sameTiming(_ a: (Int?, Int?), _ b: (Int?, Int?)) -> Bool {
+        (a.0 ?? a.1) == (b.0 ?? b.1) && (a.1 ?? a.0) == (b.1 ?? b.0)
     }
 }

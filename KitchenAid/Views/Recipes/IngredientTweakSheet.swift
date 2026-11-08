@@ -287,15 +287,28 @@ struct IngredientTweakSheet: View {
         }
     }
 
+    /// Blocked for a line that is gone -- the writers would no-op harmlessly, but an
+    /// enabled Save that does nothing is a worse answer than a disabled one -- and for a
+    /// measured amount of zero, which is the one value this schema's quantities never take:
+    /// nil means there is no amount, and zero would enter arithmetic as one.
     private var isSaveBlocked: Bool {
-        canMeasure && isMeasured && amount.isZero
+        resolved.line(id: lineID) == nil || (canMeasure && isMeasured && amount.isZero)
     }
 
-    /// Three writes, in this order, and the order does not matter: every writer in
+    /// Three writes, and the order between them does not matter: every writer in
     /// `TweakStore` fetches-or-creates the row for this line, seeds its quantity from the
-    /// bundled value first, and drops the row again if what is left says nothing. So a
-    /// save that changes only the note cannot erase the quantity, and a save that reverts
-    /// all three leaves no residue.
+    /// bundled value first, and drops the row again if what is left says nothing. So a save
+    /// that changes only the note cannot erase the quantity, and a save that puts all three
+    /// back leaves no residue.
+    ///
+    /// THE TEXT THAT MATCHES THE DOCUMENT IS WRITTEN AS `""`, AND THAT IS NOT TIDYING.
+    /// `IngredientOverride.effectivePreparation` treats `""` as leave-the-bundled-text-
+    /// alone, and `finishIngredient` keeps any row whose `preparationOverride` is non-empty.
+    /// The fields are seeded from the resolved line so that reopening the sheet shows his
+    /// own values — which means an untouched Save would otherwise write the document's own
+    /// "minced" into the override and badge the line "Changed" for a change nobody made.
+    /// Mapping equal-to-the-document back onto the sentinel also makes "type it back the way
+    /// the recipe has it" a revert, which is what he would expect it to be.
     @MainActor
     private func save() {
         let store = tweakStore
@@ -303,8 +316,27 @@ struct IngredientTweakSheet: View {
             let typed: Quantity? = isMeasured ? Quantity(amount: amount, unit: unit) : nil
             store.setQuantity(typed, forLine: lineID, in: resolved.id)
         }
-        store.setPreparation(preparation, forLine: lineID, in: resolved.id)
-        store.setIngredientNote(note, forLine: lineID, in: resolved.id)
+        // Trimmed on this side too, because `TweakStore` trims what it stores: without it a
+        // trailing space makes the comparison below miss and writes a one-space override.
+        let typedPreparation = preparation.trimmingCharacters(in: .whitespacesAndNewlines)
+        let typedNote = note.trimmingCharacters(in: .whitespacesAndNewlines)
+        // The document's side is trimmed as well. A bundled field with a trailing space
+        // would otherwise never compare equal to anything he can type, and every save would
+        // write an override that changes nothing visible.
+        let bundledPreparation = (originalLine?.preparation ?? "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let bundledNote = (originalLine?.note ?? "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        store.setPreparation(
+            typedPreparation == bundledPreparation ? "" : typedPreparation,
+            forLine: lineID,
+            in: resolved.id
+        )
+        store.setIngredientNote(
+            typedNote == bundledNote ? "" : typedNote,
+            forLine: lineID,
+            in: resolved.id
+        )
         dismiss()
     }
 }
