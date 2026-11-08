@@ -365,46 +365,49 @@ struct PantryView: View {
         scanning
     }
 
-    /// **Asked for, not built**, and said so plainly rather than shown as a button that does
-    /// nothing. Brandon asked for both after seeing the design, so they are intended work and
-    /// not speculation — and the barcode note is load-bearing: a barcode is only a number, so
-    /// there is no design here that assumes a lookup service exists.
+    /// The two scanners, which Brandon asked for after seeing the design.
+    ///
+    /// These were `UnbuiltFeatureView` rows until the scanning layer landed. The honesty they
+    /// carried has moved rather than gone: `ScanGate` says when the device cannot scan or the
+    /// camera is switched off, the receipt list says when a line could not be read, and the
+    /// barcode screen says in so many words that nothing looks a number up. What has changed
+    /// is that each row now opens a screen that does the thing.
+    ///
+    /// Reachable from **Pantry → Scanning**, two taps from the tab bar, which is the
+    /// question CODE_REVIEW_01 says to answer when claiming one of his decisions is built.
     @ViewBuilder
     private var scanning: some View {
         Section {
             NavigationLink {
-                UnbuiltFeatureView(
-                    title: "Receipt scanning",
-                    detail: "The plan is on-device text recognition with the Vision "
-                          + "framework, no network. Receipt text is abbreviated \u{2014} "
-                          + "GV CRM CHS 8Z \u{2014} so it would be matched against the "
-                          + "ingredient catalogue and its aliases, and ask about what it "
-                          + "cannot place once, then remember. None of that is written yet."
-                )
+                ReceiptScanView()
             } label: {
                 toolRow(
                     symbol: "doc.text.viewfinder",
                     title: "Scan a receipt",
-                    detail: "Asked for, not built."
+                    detail: "Read on this device, matched against the catalogue, and checked "
+                          + "by you before anything is added."
                 )
             }
             NavigationLink {
-                UnbuiltFeatureView(
-                    title: "Barcode scanning",
-                    detail: "A barcode is only a number. Turning one into "
-                          + "\u{201C}heavy cream\u{201D} needs a commercial product "
-                          + "database, which means a subscription and a network call this "
-                          + "app does not have. So the first scan of an item would ask what "
-                          + "it is and every later scan would fill itself in \u{2014} the "
-                          + "kitchen becomes its own database. Not written yet."
-                )
+                BarcodeScanView()
             } label: {
                 toolRow(
                     symbol: "barcode.viewfinder",
                     title: "Scan a barcode",
-                    detail: "Asked for, not built."
+                    detail: "A barcode is only a number: the first scan asks what it is, every "
+                          + "later one fills itself in."
                 )
             }
+        } header: {
+            Text("Scanning")
+        } footer: {
+            // The constraint, where he will read it, because a camera in a kitchen app is
+            // exactly where someone would expect a photo to be kept. Photos are declined
+            // everywhere in this app (CLAUDE.md) and a receipt is a photograph of his bank
+            // balance.
+            Text("No picture is ever kept. A frame is read for its text or its number and "
+                 + "discarded, nothing is sent anywhere, and there is no photo library "
+                 + "involved.")
         }
     }
 

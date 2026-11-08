@@ -273,6 +273,12 @@ KNOWN = {
     # `Coordinator` is deliberately absent: whoever writes the representable declares
     # it, so leaving it out keeps this check able to catch a missing declaration.
     "UIView", "NSObject",
+    # `Context` is the opposite case and had to be added the moment the first
+    # representable landed: it is `UIViewControllerRepresentable.Context`, a typealias
+    # the PROTOCOL provides, so `func makeUIViewController(context: Context)` is correct
+    # code that nobody declares anywhere. Check 5 reported it as undeclared, which is a
+    # false positive of this script and not a defect in the view.
+    "Context",
     # XCTest, for the two test targets this script now walks. Listed one by one
     # rather than waved through by an `XCT` prefix rule: a typo'd assertion name
     # is exactly the kind of thing that compiles nowhere and this check exists to
