@@ -241,6 +241,38 @@ KNOWN = {
     # type that was there all along.
     "DisclosureGroup", "ProgressView", "Menu", "LabeledContent", "DatePicker",
     "ToolbarContent", "ToolbarContentBuilder",
+    # VisionKit / Vision / AVFoundation, for the scanning layer. Added ahead of the
+    # views that use them, which is a departure from the "add it when it is first
+    # used" rule above and is deliberate: the services half of receipt and barcode
+    # scanning landed first, and the screens half cannot edit this file. A camera
+    # type missing from here fails this script, and the only fix available to
+    # whoever hits it is to edit a script they were told not to touch.
+    #
+    # `DataScannerViewController` is the right primitive for both scans and the
+    # reason is a constraint, not a preference: it hands back TEXT and BARCODES,
+    # never a frame. There is no way to accidentally keep an image with it.
+    #
+    # Deliberately NOT listed, and not an oversight: VNDocumentCameraViewController,
+    # VNDocumentCameraScan, PHPickerViewController, PHPhotoLibrary, UIImagePicker-
+    # Controller. Every one of them produces or reads a stored picture, and photos
+    # are declined everywhere in this app (CLAUDE.md). A receipt is a photograph of
+    # his bank balance. If one of those names is ever needed, that is the
+    # conversation to have before this list grows.
+    "DataScannerViewController", "DataScannerViewControllerDelegate", "RecognizedItem",
+    "VNRecognizeTextRequest", "VNImageRequestHandler", "VNRecognizedTextObservation",
+    "VNRequest", "VNRecognizedText",
+    "AVCaptureSession", "AVCaptureDevice", "AVCaptureDeviceInput",
+    "AVCaptureMetadataOutput", "AVCaptureMetadataOutputObjectsDelegate",
+    "AVCaptureVideoPreviewLayer", "AVCaptureVideoDataOutput", "AVCaptureConnection",
+    "AVCaptureVideoDataOutputSampleBufferDelegate", "AVMetadataObject",
+    "AVMetadataMachineReadableCodeObject", "AVAuthorizationStatus", "AVMediaType",
+    "CMSampleBuffer", "CMSampleBufferGetImageBuffer", "CVPixelBuffer", "CVImageBuffer",
+    "CGImagePropertyOrientation",
+    # UIKit bridging, for hosting a scanner view controller in SwiftUI.
+    "UIViewController", "UIViewControllerRepresentable", "UIViewRepresentable",
+    # `Coordinator` is deliberately absent: whoever writes the representable declares
+    # it, so leaving it out keeps this check able to catch a missing declaration.
+    "UIView", "NSObject",
     # XCTest, for the two test targets this script now walks. Listed one by one
     # rather than waved through by an `XCT` prefix rule: a typo'd assertion name
     # is exactly the kind of thing that compiles nowhere and this check exists to

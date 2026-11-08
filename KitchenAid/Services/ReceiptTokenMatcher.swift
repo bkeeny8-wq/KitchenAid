@@ -219,6 +219,16 @@ struct ReceiptTokenMatcher {
 
     /// Below this a candidate is not offered at all. One word of three matching a two-word
     /// name lands around here, which is the floor of "worth showing him".
+    ///
+    /// **Do not raise it to tidy the tail.** It is low on purpose, and the reason is not
+    /// generosity. A sweep of 67 realistic receipt lines against the shipped 670-entry
+    /// catalogue showed that weak candidates in the tail are what keep `isConfident`'s gap
+    /// test honest: raising the floor removes the runner-up, a single surviving candidate over
+    /// `confidentScore` is then confident by definition, and a leader eight points ahead of
+    /// the right answer stops being a question and starts being a wrong tin of food in his
+    /// pantry. The visible cost of a low floor is cosmetic — `DOG FOOD` offers `doubanjiang`
+    /// at 74 and `CHS PIZZA` offers `chives` at 74, both as a question with a "skip" next to
+    /// it, neither ever confident. That is the better failure.
     static let minimumScore = 50
     /// A top candidate must reach this before the screen may skip the question.
     static let confidentScore = 80
@@ -375,8 +385,8 @@ struct ReceiptTokenMatcher {
             }
 
             // ...and written together: `8Z`, `64Z`, `16.9FZ`.
-            if let split = numberAndSuffix(lower), let code = sizeUnitCodes[split.suffix],
-               let amount = rational(fromNumber: split.number) {
+            if let glued = numberAndSuffix(lower), let code = sizeUnitCodes[glued.suffix],
+               let amount = rational(fromNumber: glued.number) {
                 if reading.sizeAmount == nil {
                     reading.sizeAmount = amount
                     reading.sizeUnitCode = code
