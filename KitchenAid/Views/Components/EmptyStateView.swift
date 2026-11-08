@@ -10,9 +10,17 @@ import SwiftUI
 /// on. An unreadable recipe file rendered in the same grey as an empty shopping
 /// list is a defect he never sees.
 ///
-/// It is NOT `UnbuiltFeatureView` (in `RootTabView`), which says a feature does
-/// not exist yet. That distinction is worth keeping: an empty state on a screen
-/// that was never built implies a working screen with no data in it.
+/// There was a third kind, and its disappearance is the point. `UnbuiltFeatureView`
+/// said "not built yet" with a hammer on it, for a tab that had no screen behind
+/// it — a distinction worth having, because an empty state on a screen that was
+/// never built implies a working screen with no data in it. Every tab is built
+/// now, and the last two uses of it (the pantry's two scanner rows) became real
+/// screens, so the type had no construction site left and is gone.
+///
+/// The principle it carried did not go with it, and must not: when something
+/// cannot be done, SAY WHICH — a device that cannot scan, a camera switched off,
+/// a recipe file that would not parse. `ScanGate` is the current best example.
+/// `.somethingWrong` is this view's version of the same honesty.
 struct EmptyStateView: View {
     enum Kind {
         /// The store is empty and that is fine. Nothing to fix.

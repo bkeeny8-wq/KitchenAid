@@ -158,31 +158,3 @@ struct BannerView: View {
         .background(tint.opacity(0.12))
     }
 }
-
-/// An honest placeholder.
-///
-/// It says what the tab will do and that it is not built, rather than showing an
-/// empty state that implies a working feature with no data in it. The difference
-/// matters when the person reading it is the one who will ask why their meal
-/// plan is empty.
-struct UnbuiltFeatureView: View {
-    let title: String
-    let detail: String
-
-    var body: some View {
-        VStack(spacing: 14) {
-            Image(systemName: "hammer")
-                .font(.largeTitle)
-                .foregroundStyle(.secondary)
-            Text("Not built yet")
-                .font(.headline)
-            Text(detail)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-        }
-        .padding(28)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationTitle(title)
-    }
-}
