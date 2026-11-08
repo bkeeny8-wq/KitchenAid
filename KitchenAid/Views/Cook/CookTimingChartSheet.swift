@@ -10,8 +10,16 @@ import SwiftUI
 ///
 /// Tapping a row writes its FIRST cell into `selectedKey`, which is what makes
 /// the fact line under the step read "Timing read for a 14 lb bird". That is the
-/// whole output of this screen; it changes nothing else and writes nothing to
-/// the store.
+/// whole output of this screen, and it is all of it: nothing here reads the plan,
+/// resolves a weight or touches the store.
+///
+/// Where that key GOES is the caller's business and has two answers. Opened from
+/// the library it is session state and nothing more. Opened on a planned dish,
+/// `CookView` hands this sheet a binding that also writes the weight onto the
+/// `MealRecipe` -- because the shopping list is built from the plan, and a bird
+/// chosen only here could never reach it. This sheet cannot tell the two apart
+/// and must not try: a screen that knew which it was would be the second place
+/// deciding when a weight is worth storing.
 ///
 /// The table is deliberately untyped in the content model -- nothing parses
 /// "2 hr 10 min" into minutes or "10 lb" into a weight -- so nothing here
@@ -74,7 +82,10 @@ struct CookTimingChartSheet: View {
     private var chrome: some ToolbarContent {
         // Only once there is something to clear. A mis-tap must be undoable --
         // otherwise the fact line under every step claims a weight he never
-        // meant, and there is no other way to take it back.
+        // meant, and there is no other way to take it back. On a planned dish
+        // the caller's binding takes the stored weight with it, which is the
+        // point: the plan must not keep claiming a bird this screen no longer
+        // does.
         if !selectedKey.isEmpty {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Clear") { selectedKey = "" }

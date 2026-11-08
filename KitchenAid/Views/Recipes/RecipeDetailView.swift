@@ -170,11 +170,11 @@ struct RecipeDetailView: View {
         }
     }
 
-    /// "4", or "about 4" when the number is one Brandon supplied in passing
-    /// rather than one the document claims.
+    /// "4", "about 4" for one he supplied in passing, or "not stated" where the document
+    /// gives none — `Recipe.servingsNumberText` owns all three, so this row, the add-meal
+    /// row and the printed sheet cannot word one fact three ways.
     private func servingsText(_ resolved: ResolvedRecipe) -> String {
-        let n = resolved.servings.humanDescription
-        return resolved.recipe.servingsApproximate ? "about \(n)" : n
+        resolved.recipe.servingsNumberText() ?? "not stated"
     }
 
     private func minutesText(_ minutes: Int) -> String {

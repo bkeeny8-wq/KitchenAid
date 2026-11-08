@@ -76,6 +76,11 @@ struct CookView: View {
     /// persisting it would be authoring a variant, which is out of scope.
     @State private var choices: [Int: String] = [:]
     /// The first column of the weight-chart row he picked, e.g. "14 lb".
+    ///
+    /// Seeded from `dish.chosenWeightPounds` on appear and written back to it on every tap,
+    /// so the stove screen opens on the bird he planned and the plan ends up holding the
+    /// bird he actually roasted. Session-only when `dish` is nil -- a recipe opened from the
+    /// library has no plan row to write. See "The bird" below.
     @State private var chartKey: String = ""
     @State private var showIngredients = false
     @State private var showChart = false
@@ -173,12 +178,19 @@ struct CookView: View {
             )
         }
         .sheet(isPresented: $showChart) {
-            if let table = resolved.recipe.tables.first {
+            // The WEIGHT chart by preference, not merely the first table. The key this
+            // sheet writes is parsed back into pounds by `Recipe.pounds(fromWeightCell:)`
+            // before it is stored on the plan, and a first cell from some other table
+            // would either fail that parse or — worse — succeed on a number that is not a
+            // weight. `tables.first` stays as the fallback for a document whose table is
+            // not a weight chart at all, which is the only case the toolbar gate allows
+            // through.
+            if let table = resolved.recipe.weightTable ?? resolved.recipe.tables.first {
                 CookTimingChartSheet(
                     table: table,
                     minutesPerPound: resolved.recipe.minutesPerPound,
                     ovenTempF: resolved.recipe.ovenTempF,
-                    selectedKey: $chartKey
+                    selectedKey: chartKeyBinding(resolved.recipe)
                 )
             }
         }
@@ -209,6 +221,7 @@ struct CookView: View {
         }
         .onAppear {
             keepScreenAwake(true)
+            seedChartKeyFromPlan(resolved.recipe)
             // Shown ONCE per visit, before the first step, because a shout is
             // the kind of instruction that is useless after the fact: knowing
             // the butter had to be unsalted does not help once it is on the
@@ -373,7 +386,11 @@ struct CookView: View {
             lines.append("Makes \(yield)")
         }
         if !chartKey.isEmpty {
-            lines.append("Timing read for a \(chartKey) bird")
+            // The weight leads, so there is no article to get wrong. Written as "a \(key)
+            // bird" this read "a 18 lb bird" for half the chart's own rows -- and now that
+            // the key is seeded from the plan rather than only from a tap, that is the line
+            // he sees on opening the screen rather than one he had to go looking for.
+            lines.append("\(chartKey) bird \u{2014} timing read off the chart")
         }
         for (index, lineID) in choices.sorted(by: { $0.key < $1.key }) {
             guard let component = resolved.component(at: index),
@@ -479,6 +496,72 @@ struct CookView: View {
         guard let meal = dish?.meal else { return }
         guard meal.orderedMealRecipes.count == 1 else { return }
         meal.setStatus(.cooked)
+    }
+
+    // MARK: - The bird
+    //
+    // `chartKey` was session-only, and that was the hole: he could tap his row at the oven,
+    // read the right time off it, and the plan would still be shopping for whatever bird was
+    // chosen on the plan screen -- or for none. The chart row and the plan's
+    // `chosenWeightPounds` are the same fact, so they are kept as one.
+    //
+    // Guarded on `dish` exactly as `markMealCooked()` and `depleteFromPantry()` are: with no
+    // dish there is no plan row to write and this screen behaves as it always did, which is
+    // what "opened from the library" has to mean.
+
+    /// The plan's bird, into the key the chart selects by, once per visit.
+    ///
+    /// Only when `chartKey` is still empty, so re-appearing -- which `onAppear` does on the
+    /// way back from a pushed screen -- cannot overwrite a row he picked here. A stored
+    /// weight the chart has no row for (14 1/2 lb, say) seeds nothing rather than guessing a
+    /// neighbouring row: `weightRow(forPounds:)` compares numerically for that reason, and
+    /// the scale on the plan is still exact either way.
+    private func seedChartKeyFromPlan(_ recipe: Recipe) {
+        guard chartKey.isEmpty,
+              let pounds = dish?.chosenWeightPounds,
+              let first = recipe.weightRow(forPounds: pounds)?.first
+        else { return }
+        chartKey = first.trimmingCharacters(in: .whitespaces)
+    }
+
+    /// The chart's selection, writing through to the plan as well as to this screen.
+    ///
+    /// A plain `$chartKey` would have left the two to disagree. The sheet is handed this
+    /// instead so that one tap does both, rather than the write living in an `onChange` that
+    /// a later edit to the sheet could stop firing.
+    private func chartKeyBinding(_ recipe: Recipe) -> Binding<String> {
+        Binding(
+            get: { chartKey },
+            set: { newKey in
+                chartKey = newKey
+                writeChosenWeight(newKey, recipe: recipe)
+            }
+        )
+    }
+
+    /// Store the bird he actually roasted, so the plan and the shopping list agree with it.
+    ///
+    /// Clearing the row clears the stored weight too, and that is the deliberate half. The
+    /// sheet's Clear button exists to undo a mis-tap, and leaving the plan holding a bird the
+    /// cook screen no longer claims would put the two back out of step -- which is the whole
+    /// defect this binding closes. The cost is real and visible rather than silent: the dish
+    /// reverts to "shopped as written", badged on the plan and on every line it produces.
+    ///
+    /// `isWeightDriven` is checked and not assumed. Another document could print a table
+    /// this sheet can read while having no basis weight to divide by, and storing a weight
+    /// there would be storing a number nothing uses.
+    private func writeChosenWeight(_ key: String, recipe: Recipe) {
+        guard let dish = dish, recipe.isWeightDriven else { return }
+        let trimmed = key.trimmingCharacters(in: .whitespaces)
+        guard !trimmed.isEmpty else {
+            dish.setChosenWeightPounds(nil)
+            return
+        }
+        // No write at all on a cell that does not parse, rather than a clear: a row whose
+        // first cell is not a weight is a reason to leave the plan as he left it, not a
+        // reason to throw away the bird he picked there.
+        guard let pounds = Recipe.pounds(fromWeightCell: trimmed) else { return }
+        dish.setChosenWeightPounds(pounds)
     }
 
     @ViewBuilder

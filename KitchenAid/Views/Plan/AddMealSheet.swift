@@ -172,13 +172,12 @@ struct AddMealSheet: View {
         loader.recipe(id: id)?.title ?? id
     }
 
-    /// "Serves about 4" when the number came from him in passing rather than from the
-    /// document — `servingsApproximate` exists so the UI does not render the two with the
-    /// same confidence.
-    private func servesText(_ recipe: Recipe) -> String {
-        let n = recipe.servings.humanDescription
-        return recipe.servingsApproximate ? "Serves about \(n)" : "Serves \(n)"
-    }
+    /// Three states, all owned by `Recipe.servesLabel()`: the document's count, "about 4"
+    /// for one he gave in passing, and no number at all for one nobody ever gave. This
+    /// used to read `servingsApproximate` alone and so printed the turkey's substituted 4
+    /// as "Serves about 4" — the same words the compotes earn, where he really did say
+    /// "approx 4".
+    private func servesText(_ recipe: Recipe) -> String { recipe.servesLabel() }
 
     private func toggle(_ id: String) {
         if chosenRecipeIDs.contains(id) {

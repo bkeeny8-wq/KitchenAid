@@ -289,7 +289,9 @@ struct TodayView: View {
             return "Last made \(made.formatted(date: .abbreviated, time: .omitted))"
         }
         if !recipe.yieldText.isEmpty { return recipe.yieldText }
-        let serves = recipe.servings.humanDescription
-        return recipe.servingsApproximate ? "Serves about \(serves)" : "Serves \(serves)"
+        // `servesLabel()` and not a fourth spelling of the rule: it owns all three states,
+        // including the one where the document names no count and this must print no
+        // number rather than the substituted 4.
+        return recipe.servesLabel()
     }
 }

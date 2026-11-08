@@ -339,8 +339,11 @@ enum PDFExportService {
     /// a tweaked yield reads as tweaked.
     private static func recipeFacts(_ resolved: ResolvedRecipe, scale: Rational) -> [String] {
         var facts: [String] = []
-        let servings = (resolved.servings * scale).humanDescription
-        facts.append(resolved.recipe.servingsApproximate ? "Serves about \(servings)" : "Serves \(servings)")
+        // SCALED, and through the one owner of the wording. A document that states no
+        // count prints no number here: a sheet taped to a cupboard door claiming "Serves
+        // about 4" for the turkey would be the printed artefact disagreeing with the app,
+        // which is the thing footnotes exist in this exporter to prevent.
+        facts.append(resolved.recipe.servesLabel(scale: scale))
         if scale != .one { facts.append("\u{00D7}\(scale.humanDescription) batch") }
         if let yieldLabel = resolved.scaledYieldLabel(at: scale) { facts.append(yieldLabel) }
         let prefix = resolved.timesAreApproximate ? "about " : ""

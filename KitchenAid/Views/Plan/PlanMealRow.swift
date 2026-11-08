@@ -6,6 +6,9 @@ import SwiftUI
 /// Everything numeric on it is computed by the model layer: `PlannedMeal.portionTotal` and
 /// `MealRecipe.scale(recipeServings:)`, rendered by `PortionSummary`. Nothing here sums a
 /// portion or divides by a serving count.
+///
+/// A dish whose recipe is `isWeightDriven` — a whole roast bird — shows the WEIGHT instead,
+/// because its quantities come from the bird he bought and not from who is eating.
 struct PlanMealRow: View {
     let meal: PlannedMeal
 
@@ -35,7 +38,12 @@ struct PlanMealRow: View {
                 Text(subtitle)
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                PortionSummary(meal: meal, scale: singleDishScale, isCompact: true)
+                PortionSummary(
+                    meal: meal,
+                    scale: singleDishScale,
+                    weight: singleDishWeight,
+                    isCompact: true
+                )
                 if let warning = warning {
                     Label(warning, systemImage: "exclamationmark.triangle.fill")
                         .font(.caption2)
@@ -71,18 +79,43 @@ struct PlanMealRow: View {
         return parts.joined(separator: " \u{00B7} ")
     }
 
-    /// The scale badge is only shown when the meal has exactly ONE dish.
+    /// The one dish and its recipe, when the meal has exactly one of each.
     ///
-    /// Each dish scales separately — he cooks extra of the ragù and not of the salad beside
-    /// it — so a single number across three dishes would be wrong for at least two of them.
-    /// Several dishes means the badge belongs on the dish rows in the editor, and this row
-    /// shows portions alone. `nil` also covers no attendance and a missing yield, which
-    /// `PortionSummary` renders by omitting the badge rather than inventing ×1.
-    private var singleDishScale: Rational? {
+    /// A badge is only shown for a single-dish meal. Each dish scales separately — he cooks
+    /// extra of the ragù and not of the salad beside it — so a single number across three
+    /// dishes would be wrong for at least two of them. Several dishes means the badge
+    /// belongs on the dish rows in the editor, and this row shows portions alone.
+    private var soleDish: (dish: MealRecipe, recipe: Recipe)? {
         let dishes = meal.orderedMealRecipes
         guard dishes.count == 1, let dish = dishes.first else { return nil }
         guard let recipe = dish.recipe(loader) else { return nil }
-        return dish.scale(recipeServings: recipe.servings)
+        return (dish, recipe)
+    }
+
+    /// `nil` covers no attendance and a missing yield, which `PortionSummary` renders by
+    /// omitting the badge rather than inventing ×1 — and now also a bird, which gets
+    /// `singleDishWeight` instead.
+    private var singleDishScale: Rational? {
+        guard let sole = soleDish else { return nil }
+        // A weight-driven dish must NOT come through here. `scale(recipeServings:)` divides
+        // portions by a serving count, and for the turkey that count is the 4 the decoder
+        // substituted for a number no document gives — so this row would have read ×1/2
+        // while the shopping list, which goes through `MealScaling` and divides the chosen
+        // bird by the 14 lb basis, read ×≈1.3. An override is different: it beats both
+        // derivations in `MealScaling` too, so when one is pinned the number it shows is the
+        // number he will shop by.
+        if sole.recipe.isWeightDriven, sole.dish.scaleOverride == nil { return nil }
+        return sole.dish.scale(recipeServings: sole.recipe.servings)
+    }
+
+    /// The bird, for a dish selected by weight: what `PortionSummary` shows where the scale
+    /// badge would otherwise be.
+    private var singleDishWeight: PortionSummary.WeightBadge? {
+        guard let sole = soleDish, sole.recipe.isWeightDriven,
+              sole.dish.scaleOverride == nil
+        else { return nil }
+        if let chosen = sole.dish.chosenWeightPounds { return .chosen(chosen) }
+        return .needed
     }
 
     /// A dish whose recipe has left the bundle. No delete rule can prevent it — the thing

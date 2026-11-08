@@ -36,15 +36,19 @@
   },
 
   "roast-turkey": {
+    "basisWeightPounds": 14,
     "_comment": [
-      "A NOTE-ONLY ENTRY. It sets no field, deliberately -- see why.",
+      "It sets ONE field, and that field is a WEIGHT, not a serving count.",
       "",
       "Asked how many the turkey serves, Brandon answered that the recipe was",
       "for a roughly 14 lb bird. That is the document's basis, not a serving",
       "count, and the two are not interchangeable: the planner divides by",
       "servings, and inventing a number from a weight would be exactly the kind",
       "of guess this file exists to avoid. So the serving count stays UNSTATED,",
-      "its importer warning stays, and nothing here clears it.",
+      "its importer warning stays, and nothing here clears it -- the 14 goes",
+      "into `basisWeightPounds`, which `Recipe` reads and `MealScaling` divides",
+      "the CHOSEN bird weight by. An 18 lb bird is exactly 9/7 of this recipe;",
+      "attendance does not enter, because nobody roasts 1.4 turkeys.",
       "",
       "He also chose to KEEP 'Pan base' and 'Vegetable bed' flagged rather than",
       "resolve or exclude them, so there is no `lines` block for them on",
@@ -54,6 +58,6 @@
       "below)'), whose vegetables ARE listed separately with their own",
       "quantities -- so resolving it to an ingredient would double-count them."
     ],
-    "why": "Brandon, 2026-11-08: 'the turkey was for a roughly 14lb turkey', answering a question about servings. Recorded because it is the fact he gave, and kept out of `servings` because it is not one. Scaling a whole roast bird by portions is still an open question -- the document's 8-row weight chart is the honest route, and the Cook screen now has a row picker for it."
+    "why": "Brandon, 2026-11-08: 'the turkey was for a roughly 14lb turkey', answering a question about servings. Recorded because it is the fact he gave, and kept out of `servings` because it is not one. Scaling a whole roast bird by portions is still an open question -- the document's 8-row weight chart is the honest route, and the Cook screen now has a row picker for it. SETTLED, same day: asked whether to drive its portions off that weight chart instead of a serving count, he said 'yes use the weight chart'. So the 14 lb now lands in `basisWeightPounds` and the recipe is scaled by the bird he buys over the bird the document was written for -- `Recipe.isWeightDriven`, derived in `MealScaling`, and the chosen weight is stored per dish on `MealRecipe` so it reaches the shopping list and not only the Cook screen. 'Roughly' is his word and it is the right precision for this: the chart's rows are 2 lb apart and a bird is sold by whatever it weighs, so the basis being approximate costs nothing, whereas a serving count invented from it would have been wrong in a way nothing could catch."
   }
 }

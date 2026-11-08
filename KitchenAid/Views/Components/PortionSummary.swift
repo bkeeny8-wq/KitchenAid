@@ -14,12 +14,41 @@ import SwiftData
 /// what a `Double` pipeline produces. `humanDescription` prints a kitchen
 /// denominator exactly and marks anything it had to round with "≈", so the
 /// label is never more confident than the value.
+///
+/// A dish the plan selects BY WEIGHT — a whole roast bird — gets `weight`
+/// instead of `scale`: see `WeightBadge`. The portion line above it still
+/// reads, because who is eating is a fact about the meal even when it is not
+/// what sets the quantities.
 struct PortionSummary: View {
+
+    /// What a dish SELECTED BY WEIGHT puts in the badge, in place of a scale.
+    ///
+    /// A whole roast bird is not scaled, it is bought: nobody roasts 1.4
+    /// turkeys. So "×1⅛" is not a number he can act on here — it is the ratio
+    /// between two birds and it reads like a quantity — and the useful badge is
+    /// the bird itself, or the fact that one still has to be chosen.
+    ///
+    /// Added as a SEPARATE case rather than by reinterpreting `scale`, because
+    /// `scale` means "multiply the recipe by this" at both existing call sites
+    /// and a weight is not that number.
+    enum WeightBadge: Hashable, Sendable {
+        /// The bird he picked, in pounds: "18 lb bird".
+        case chosen(Rational)
+        /// Weight-driven and nothing chosen yet. The meal cannot be shopped
+        /// honestly until it is, so this says so rather than going blank.
+        case needed
+    }
+
     let meal: PlannedMeal
     /// nil when there is nothing to scale: no attendance, or a recipe with no
     /// yield. Both are real states the caller surfaces its own way, so this
     /// view omits the badge rather than inventing ×1.
     var scale: Rational? = nil
+    /// Set instead of `scale` for a dish the plan selects by weight. When both
+    /// arrive this one wins, because a weight-driven dish's `scale` is a ratio
+    /// of two bird weights and showing it beside a portion count is the exact
+    /// confusion this case exists to remove.
+    var weight: WeightBadge? = nil
     /// The day cell has room for one line; the meal editor does not need to be
     /// terse.
     var isCompact: Bool = false
@@ -29,9 +58,7 @@ struct PortionSummary: View {
             HStack(spacing: 8) {
                 Text(totalText)
                     .font(.caption.weight(.semibold))
-                if let scale = scale {
-                    scaleBadge(scale)
-                }
+                badge
             }
             .accessibilityElement(children: .combine)
         } else {
@@ -42,12 +69,22 @@ struct PortionSummary: View {
                 HStack(spacing: 10) {
                     Text("= \(totalText)")
                         .font(.subheadline.weight(.semibold))
-                    if let scale = scale {
-                        scaleBadge(scale)
-                    }
+                    badge
                 }
             }
             .accessibilityElement(children: .combine)
+        }
+    }
+
+    /// One badge at most, and the weight takes precedence. Written once here
+    /// rather than twice in the two layouts above, which is where a later edit
+    /// would have made the compact row and the full row disagree.
+    @ViewBuilder
+    private var badge: some View {
+        if let weight = weight {
+            weightBadge(weight)
+        } else if let scale = scale {
+            scaleBadge(scale)
         }
     }
 
@@ -59,6 +96,37 @@ struct PortionSummary: View {
             .padding(.vertical, 3)
             .background(Color.accentColor.opacity(0.16), in: Capsule())
             .accessibilityLabel("scaled \(scale.humanDescription) times the recipe")
+    }
+
+    /// `humanDescription` here as everywhere: 14/1 has to read "14 lb" and not
+    /// "14/1", and an exact interpolation is how a label came to read
+    /// "23 1111/1135 tsp".
+    /// `kind` and not `badge`: the computed property above is called `badge`, and a
+    /// parameter shadowing it is the kind of line a later reader misreads.
+    @ViewBuilder
+    private func weightBadge(_ kind: WeightBadge) -> some View {
+        switch kind {
+        case .chosen(let pounds):
+            Text("\(pounds.humanDescription) lb bird")
+                .font(.caption.weight(.semibold))
+                .monospacedDigit()
+                .padding(.horizontal, 7)
+                .padding(.vertical, 3)
+                .background(Color.accentColor.opacity(0.16), in: Capsule())
+                // No article, so there is none to get wrong: "a 18 pound bird" is what
+                // the obvious phrasing reads for half the chart's own rows.
+                .accessibilityLabel("bird weight \(pounds.humanDescription) pounds")
+        case .needed:
+            // Orange and worded as a job, not a value: until he picks one the
+            // list buys the quantities as written, which is a defensible answer
+            // and not the right one.
+            Text("pick a bird weight")
+                .font(.caption.weight(.semibold))
+                .padding(.horizontal, 7)
+                .padding(.vertical, 3)
+                .background(Color.orange.opacity(0.18), in: Capsule())
+                .accessibilityLabel("no bird weight chosen yet")
+        }
     }
 
     // MARK: - The words

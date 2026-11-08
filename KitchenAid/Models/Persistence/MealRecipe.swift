@@ -40,6 +40,23 @@ final class MealRecipe {
     var scaleOverrideNumerator: Int? = nil
     var scaleOverrideDenominator: Int? = nil
 
+    /// The bird weight he chose for THIS dish, in pounds. `nil` until he picks one.
+    ///
+    /// **It lives on the plan and not in the cook session on purpose.** The shopping list is
+    /// built from the plan, so a weight chosen only on the Cook screen could never reach the
+    /// list — he would shop for a 14 lb bird and roast an 18 lb one. Same reason
+    /// `scaleOverride` is here.
+    ///
+    /// Only meaningful on a `Recipe` whose `isWeightDriven` is true; on any other dish it is
+    /// stored and ignored, because a weight means nothing to a recipe that scales by
+    /// portions. The same numerator/denominator pair as the scale override above, for the
+    /// same reason: exact rationals, and 18/14 has to stay 9/7.
+    ///
+    /// Both `nil` or both set — `setChosenWeightPounds(_:)` is the only writer that cannot
+    /// produce a numerator with no denominator.
+    var chosenWeightNumerator: Int? = nil
+    var chosenWeightDenominator: Int? = nil
+
     /// Cooking extra on purpose, to feed a `.leftovers` meal later. Counted into the scale —
     /// see `requestedPortions`.
     var plannedLeftoverServings: Int? = nil
@@ -67,6 +84,8 @@ final class MealRecipe {
         recipeTitleSnapshot: String = "",
         scaleOverrideNumerator: Int? = nil,
         scaleOverrideDenominator: Int? = nil,
+        chosenWeightNumerator: Int? = nil,
+        chosenWeightDenominator: Int? = nil,
         plannedLeftoverServings: Int? = nil,
         servingsCooked: Int? = nil,
         isPrepAhead: Bool = false,
@@ -79,6 +98,8 @@ final class MealRecipe {
         self.recipeTitleSnapshot = recipeTitleSnapshot
         self.scaleOverrideNumerator = scaleOverrideNumerator
         self.scaleOverrideDenominator = scaleOverrideDenominator
+        self.chosenWeightNumerator = chosenWeightNumerator
+        self.chosenWeightDenominator = chosenWeightDenominator
         self.plannedLeftoverServings = plannedLeftoverServings
         self.servingsCooked = servingsCooked
         self.isPrepAhead = isPrepAhead
@@ -139,6 +160,29 @@ extension MealRecipe {
         scaleOverrideDenominator = newScale.denominator
     }
 
+    /// The chosen weight in pounds, or `nil` when he has not picked one. Both integers must
+    /// be present and the denominator non-zero, or there is no weight — the same guard
+    /// `scaleOverride` applies, for the same reason.
+    var chosenWeightPounds: Rational? {
+        guard let n = chosenWeightNumerator, let d = chosenWeightDenominator, d != 0
+        else { return nil }
+        let r = Rational(n, d)
+        return r > .zero ? r : nil
+    }
+
+    /// Passing `nil` clears both halves, which is the point of having one writer. A
+    /// non-positive weight clears it too: there is no such bird, and storing one would make
+    /// `MealScaling` divide by it.
+    func setChosenWeightPounds(_ newWeight: Rational?) {
+        guard let newWeight = newWeight, newWeight > .zero else {
+            chosenWeightNumerator = nil
+            chosenWeightDenominator = nil
+            return
+        }
+        chosenWeightNumerator = newWeight.numerator
+        chosenWeightDenominator = newWeight.denominator
+    }
+
     /// Portions this dish is being cooked for: the meal's eaters and guests, plus the extra
     /// he is deliberately making for a later leftovers meal.
     ///
@@ -159,6 +203,14 @@ extension MealRecipe {
     /// whose yield is missing or zero is `.unknownYield`. Both are surfaced as badges on
     /// every affected shopping line — a meal with nobody assigned must neither silently buy
     /// nothing nor silently buy for four.
+    ///
+    /// **PORTION ARITHMETIC ONLY, and wrong for a weight-driven recipe.** It takes a serving
+    /// count and not a `Recipe`, so it cannot see `basisWeightPounds` and has no way to know
+    /// that a whole roast bird is selected by weight rather than divided by portions: for
+    /// the turkey it returns portions over the 4 that `Recipe`'s decoder substituted, which
+    /// is the exact number the weight feature exists to stop using. Any screen that can show
+    /// a weight-driven dish must read `MealScaling.scaling(for:recipe:defaultDinerCount:)`,
+    /// which is the one place a dish's scale is derived.
     func scale(recipeServings: Rational) -> Rational? {
         if let override = scaleOverride { return override }
         guard recipeServings > .zero else { return nil }

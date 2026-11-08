@@ -290,4 +290,194 @@ final class QuantityMathTests: XCTestCase {
         let amount = out[0].base / UnitCatalog.teaspoon.baseFactor
         XCTAssertEqual(amount, Rational(9, 32))
     }
+
+    // MARK: - A bird is selected by weight, not scaled by portions
+    //
+    // The roast turkey document states no serving count, and until this feature the
+    // Swift divided by a 4 nobody chose. Asked how many it serves Brandon answered
+    // with a weight -- "the turkey was for a roughly 14lb turkey" -- and then "yes
+    // use the weight chart". Nobody roasts 1.4 turkeys: you buy a bigger bird and
+    // read the longer time off the chart, so the scale is the bird over the basis
+    // and attendance does not enter. Every other dish in the meal is untouched,
+    // which the last test here is for.
+
+    /// The turkey's chart as `scripts/import_recipe.py` parses it out of the
+    /// document, verbatim from `KitchenAid/Resources/Recipes/roast-turkey.json`.
+    /// Built here rather than loaded, so these assertions need no bundle.
+    private func turkeyChart() -> RecipeTable {
+        RecipeTable(
+            name: "Cooking Times",
+            headers: ["Turkey weight", "Total time",
+                      "Covered (first 2/3)", "Uncovered (last 1/3)"],
+            rows: [
+                ["10 lb", "2 hr 10 min", "1 hr 27 min", "43 min"],
+                ["12 lb", "2 hr 36 min", "1 hr 44 min", "52 min"],
+                ["14 lb", "3 hr 02 min", "2 hr 01 min", "1 hr 01 min"],
+                ["16 lb", "3 hr 28 min", "2 hr 19 min", "1 hr 09 min"],
+                ["18 lb", "3 hr 54 min", "2 hr 36 min", "1 hr 18 min"],
+                ["20 lb", "4 hr 20 min", "2 hr 53 min", "1 hr 27 min"],
+                ["22 lb", "4 hr 46 min", "3 hr 11 min", "1 hr 35 min"],
+                ["24 lb", "5 hr 12 min", "3 hr 28 min", "1 hr 44 min"]
+            ]
+        )
+    }
+
+    /// The bundled turkey: a 14 lb basis from `docs/recipe-overrides.json`, the
+    /// chart, and `servingsStated` false with the decoder's substituted 4 sitting
+    /// in `servings` — which is precisely the number none of this may divide by.
+    private func turkey() -> Recipe {
+        var recipe = Recipe(id: "roast-turkey", title: "Roast Turkey")
+        recipe.basisWeightPounds = Rational(14)
+        recipe.tables = [turkeyChart()]
+        recipe.servingsNumerator = 4
+        recipe.servingsDenominator = 1
+        recipe.servingsStated = false
+        return recipe
+    }
+
+    /// One dish of a meal with nobody assigned: `meal` is nil, so
+    /// `requestedPortions` is zero and the `defaultDinerCount` fallback fires.
+    /// That is the state the weight path has to survive, because it is the state a
+    /// shopping list is generated in.
+    private func turkeyDish(weight: Rational? = nil, override: Rational? = nil) -> MealRecipe {
+        let made = MealRecipe(recipeID: "roast-turkey", recipeTitleSnapshot: "Roast Turkey")
+        made.setChosenWeightPounds(weight)
+        made.setScaleOverride(override)
+        return made
+    }
+
+    /// The headline case, exact: an 18 lb bird against the document's 14 lb is
+    /// 9/7. Not 1.2857, and not 1 2/7 rounded anywhere on the way.
+    func testEighteenPoundBirdIsExactlyNineSevenths() {
+        let result = MealScaling.scaling(
+            for: turkeyDish(weight: Rational(18)), recipe: turkey(), defaultDinerCount: 2
+        )
+        XCTAssertEqual(result.scale, Rational(9, 7))
+        XCTAssertEqual(result.scale.numerator, 9)
+        XCTAssertEqual(result.scale.denominator, 7)
+        // And it carries through a quantity exactly: the turkey's 1/2 cup of butter
+        // at 9/7 is 9/14 cup, which no `Double` round trip gives back.
+        XCTAssertEqual(Rational(1, 2) * result.scale, Rational(9, 14))
+        XCTAssertTrue(result.notes.isEmpty, "a chosen weight needs no badge: \(result.notes)")
+    }
+
+    /// The bird the recipe was written for scales to exactly 1 — no drift, and no
+    /// `.snappedToBatch` surprise from a granularity that does not apply.
+    func testTheBasisWeightScalesToOne() {
+        let result = MealScaling.scaling(
+            for: turkeyDish(weight: Rational(14)), recipe: turkey(), defaultDinerCount: 2
+        )
+        XCTAssertEqual(result.scale, .one)
+    }
+
+    /// The defect this feature exists to end. With no weight chosen the dish must
+    /// cook as written and SAY a weight is needed — not fall through to the
+    /// serving-count path, where two default diners over the substituted 4 is 1/2
+    /// and every quantity on the list is halved for no stated reason.
+    func testNoWeightChosenDoesNotDivideByTheSubstitutedServings() {
+        let result = MealScaling.scaling(
+            for: turkeyDish(), recipe: turkey(), defaultDinerCount: 2
+        )
+        XCTAssertEqual(result.scale, .one)
+        XCTAssertNotEqual(result.scale, Rational(1, 2), "this is the old serving-count path")
+        XCTAssertTrue(result.notes.contains(.unknownYield),
+                      "a missing bird weight has to reach a badge")
+        XCTAssertFalse(result.notes.contains(.noAttendance),
+                       "attendance did not produce this number, so it must not explain it")
+        // Portions are still REPORTED — the screens show who is eating — they just
+        // do not divide.
+        XCTAssertEqual(result.portions, Rational(2))
+        XCTAssertTrue(result.description.contains("14 lb"),
+                      "the sentence must name the basis: \(result.description)")
+    }
+
+    /// "Actually ×2" beats everything, chart included. He is allowed to say it and
+    /// the app should not argue.
+    func testAManualOverrideStillBeatsTheChart() {
+        let result = MealScaling.scaling(
+            for: turkeyDish(weight: Rational(18), override: Rational(2)),
+            recipe: turkey(),
+            defaultDinerCount: 2
+        )
+        XCTAssertEqual(result.scale, Rational(2))
+        XCTAssertTrue(result.notes.contains(.overridden))
+    }
+
+    /// `description` lands on every shopping provenance row, so for a weight-driven
+    /// dish it has to name the weight rather than a head count — and render through
+    /// the display ladder, never `exactDescription`, which is how a label came to
+    /// read "23 1111/1135 tsp".
+    func testTheDescriptionNamesTheWeightAndNotAHeadCount() {
+        let result = MealScaling.scaling(
+            for: turkeyDish(weight: Rational(18)), recipe: turkey(), defaultDinerCount: 2
+        )
+        XCTAssertTrue(result.description.contains("18 lb"), result.description)
+        XCTAssertTrue(result.description.contains("14 lb"), result.description)
+        XCTAssertFalse(result.description.contains("eater"), result.description)
+        XCTAssertFalse(result.description.contains("serves"), result.description)
+        // 9/7 exactly would interpolate as "1 2/7". The ladder gives "≈ 1.3".
+        XCTAssertFalse(result.description.contains("2/7"), result.description)
+    }
+
+    /// Both halves or neither. A basis with no chart leaves nothing to pick from
+    /// and a chart with no basis leaves nothing to divide by, and either one
+    /// half-enabling the feature means a dish on a weight-driven screen that
+    /// cannot work.
+    func testIsWeightDrivenNeedsBothTheBasisAndTheChart() {
+        XCTAssertTrue(turkey().isWeightDriven)
+
+        var chartOnly = turkey()
+        chartOnly.basisWeightPounds = nil
+        XCTAssertFalse(chartOnly.isWeightDriven, "a chart with no basis")
+
+        var basisOnly = turkey()
+        basisOnly.tables = []
+        XCTAssertFalse(basisOnly.isWeightDriven, "a basis with no chart")
+
+        // And a basis with a table that is not a weight chart.
+        var wrongTable = turkey()
+        wrongTable.tables = [RecipeTable(
+            name: "Doneness", headers: ["Cut", "Internal temp"], rows: [["Breast", "165 F"]]
+        )]
+        XCTAssertFalse(wrongTable.isWeightDriven, "a table whose first column is not a weight")
+    }
+
+    /// The weights a picker offers, parsed off the chart's own first column, and
+    /// the row lookup the Cook screen reads times from.
+    func testTheChartYieldsItsWeightsAndFindsARowByWeight() {
+        let recipe = turkey()
+        XCTAssertEqual(recipe.selectableWeightsPounds,
+                       [10, 12, 14, 16, 18, 20, 22, 24].map { Rational($0) })
+        XCTAssertEqual(Recipe.pounds(fromWeightCell: "18 lb"), Rational(18))
+        XCTAssertNil(Recipe.pounds(fromWeightCell: "Turkey weight"))
+
+        XCTAssertEqual(recipe.weightRow(forPounds: Rational(18))?.first, "18 lb")
+        XCTAssertEqual(recipe.weightRow(forPounds: Rational(18))?[1], "3 hr 54 min")
+        // Numerically, not by string prefix: a 2 lb weight must not read 20 lb's
+        // times, which `RecipeTable.row(matchingFirstColumn:)`'s fallback would do.
+        XCTAssertNil(recipe.weightRow(forPounds: Rational(2)))
+    }
+
+    /// And nothing moved for a recipe that is not weight-driven. The fixture serves
+    /// 4, two default diners against it is exactly 1/2, and the `.noAttendance`
+    /// badge still fires — the weight branch must be invisible here.
+    func testPortionScalingIsUnchangedForAnOrdinaryRecipe() {
+        var crostini = Recipe(id: "ny-strip-crostini", title: "NY Strip Crostini")
+        crostini.servingsNumerator = 4
+        crostini.servingsDenominator = 1
+        XCTAssertFalse(crostini.isWeightDriven)
+
+        let plain = MealRecipe(recipeID: crostini.id, recipeTitleSnapshot: crostini.title)
+        let result = MealScaling.scaling(for: plain, recipe: crostini, defaultDinerCount: 2)
+        XCTAssertEqual(result.scale, Rational(1, 2))
+        XCTAssertEqual(result.portions, Rational(2))
+        XCTAssertTrue(result.notes.contains(.noAttendance))
+        XCTAssertTrue(result.description.contains("recipe serves 4"), result.description)
+
+        // A weight stored on a dish whose recipe is not weight-driven changes
+        // nothing: there is no basis to divide by, so it is kept and ignored.
+        plain.setChosenWeightPounds(Rational(18))
+        let again = MealScaling.scaling(for: plain, recipe: crostini, defaultDinerCount: 2)
+        XCTAssertEqual(again.scale, Rational(1, 2))
+    }
 }
