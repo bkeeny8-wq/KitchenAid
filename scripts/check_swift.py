@@ -28,14 +28,35 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "KitchenAid")
 
+# The test targets, which until now NOTHING scanned.
+#
+# This script walked `KitchenAid/` only, so three files holding about forty
+# assertions were never brace-checked and never looked at for a type that does
+# not exist -- and the test targets have never been run either, there being no
+# Apple toolchain here. So a test file was the one place in this repo where a
+# reference to missing API had no guard at all, and it is the worst place for
+# one: a test file that will not compile fails the whole target, which is the
+# first thing that gets run after the app finally builds.
+TEST_DIRS = [
+    os.path.join(ROOT, "KitchenAidTests"),
+    os.path.join(ROOT, "KitchenAidUITests"),
+]
+
 problems = []
 
 
 def swift_files():
-    for base, _, names in os.walk(SRC):
-        for n in sorted(names):
-            if n.endswith(".swift"):
-                yield os.path.join(base, n)
+    for root in [SRC] + TEST_DIRS:
+        if not os.path.isdir(root):
+            continue
+        for base, _, names in os.walk(root):
+            for n in sorted(names):
+                if n.endswith(".swift"):
+                    yield os.path.join(base, n)
+
+
+def is_test(path):
+    return any(path.startswith(d + os.sep) for d in TEST_DIRS)
 
 
 def rel(p):
@@ -220,6 +241,16 @@ KNOWN = {
     # type that was there all along.
     "DisclosureGroup", "ProgressView", "Menu", "LabeledContent", "DatePicker",
     "ToolbarContent", "ToolbarContentBuilder",
+    # XCTest, for the two test targets this script now walks. Listed one by one
+    # rather than waved through by an `XCT` prefix rule: a typo'd assertion name
+    # is exactly the kind of thing that compiles nowhere and this check exists to
+    # catch, and a prefix rule would wave that through too.
+    "XCTestCase", "XCUIApplication", "XCUIElement",
+    "XCTAssert", "XCTAssertTrue", "XCTAssertFalse", "XCTAssertEqual",
+    "XCTAssertNotEqual", "XCTAssertNil", "XCTAssertNotNil", "XCTAssertThrowsError",
+    "XCTAssertNoThrow", "XCTAssertGreaterThan", "XCTAssertGreaterThanOrEqual",
+    "XCTAssertLessThan", "XCTAssertLessThanOrEqual", "XCTFail", "XCTSkip",
+    "XCTUnwrap", "XCTAssertIdentical", "XCTAssertEqualWithAccuracy",
 }
 
 used = set()
@@ -369,6 +400,14 @@ else:
                 stack.append(target)
 
     for name in sorted(views_in):
+        # A View declared in a TEST target is not meant to be reachable from
+        # `@main` -- the app does not ship it -- so this check does not apply to
+        # one. Everything else this script does applies to the tests, which is
+        # the point of walking them: a brace that does not balance, or a type
+        # that does not exist, breaks the test target exactly as it would break
+        # the app.
+        if is_test(views_in[name]):
+            continue
         if views_in[name] not in reached:
             problems.append(
                 f"`{name}` ({rel(views_in[name])}) is a View that nothing "

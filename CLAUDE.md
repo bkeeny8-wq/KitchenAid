@@ -223,7 +223,16 @@ python3 -I scripts/check_swift.py
 
 With the two Python tests, this is the whole of what can actually execute in a
 cloud session. **Run it before claiming any Swift change is sound.** It checks
-only what a missing compiler makes expensive to get wrong:
+only what a missing compiler makes expensive to get wrong.
+
+It walks `KitchenAid/` **and both test targets**. It did not always: three test
+files holding about forty assertions were scanned by nothing, which made a test
+the one place in the repo where a reference to missing API had no guard at all
+— and the worst place for one, since a test file that will not compile fails the
+whole target, which is the first thing run after the app builds. The two checks
+that do not apply to a test file are skipped there and say why.
+
+The checks:
 
 - Every `@Model` is in `KitchenAidSchemaV1.models`, and vice versa. A model
   missing from that array is **not** a build error — it simply has no table, and
