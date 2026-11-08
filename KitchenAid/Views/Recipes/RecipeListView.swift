@@ -23,6 +23,11 @@ struct RecipeListView: View {
                         NavigationLink(value: recipe.id) {
                             RecipeRow(recipe: recipe)
                         }
+                        // For the UI tests, which need a handle that does not move when
+                        // the row's wording does. Keyed on the recipe's CONTENT ID, so a
+                        // test names the file it means (`roast-turkey`) rather than a
+                        // title someone may re-word in the document.
+                        .accessibilityIdentifier("recipe.row.\(recipe.id)")
                     }
                 } header: {
                     Text(countLabel)
