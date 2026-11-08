@@ -37,7 +37,7 @@ import Foundation
 /// 1. **A trailing price is stripped, and kept.** `4.99`, `$4.99`, `4.99 F`, `4.99-`. Kept
 ///    because `InventoryLedger.apply` already takes `priceCents`, so a scanned receipt can
 ///    record what he paid without a new field anywhere.
-/// 2. **A size is read where one is written, and invented where it is not.** `8Z`, `2 LB`,
+/// 2. **A size is read where one is written, and NEVER invented where it is not.** `8Z`, `2 LB`,
 ///    `12 CT`, `1.5 L`. A size the parser cannot read is ABSENT, never 1 — an invented
 ///    quantity is a wrong number in his pantry that nothing downstream can detect.
 /// 3. **The size's unit is resolved per candidate, not here.** `8Z` is eight ounces, but
@@ -58,6 +58,12 @@ import Foundation
 ///    middle. The skeleton is the stronger evidence and scores higher.
 /// 8. **Lines that are not items at all are rejected with a named reason**, so the screen can
 ///    say why it skipped something instead of silently dropping a third of the receipt.
+/// 9. **A money-shaped number in front of a unit is a PRICE PER UNIT, not a size**, when the
+///    line also prints a total. `BANANAS 0.59 LB 1.27 F` is 59 cents a pound, not 0.59 lb of
+///    banana. Rule 4 read it as a size on every weighed line of a real receipt — produce,
+///    meat, deli, seafood — and the row then pre-filled "Adds 9 1/2 oz" and wrote that lot,
+///    against a true weight of 2.15 lb. See `Reading.unitPriceCents` for the shape, and for
+///    why the weight is left ABSENT rather than divided out of the two prices.
 ///
 /// ## What it deliberately does not do
 ///
@@ -69,7 +75,11 @@ import Foundation
 ///   the aisle list in this file, which is the kind of copy that drifts; `DAIRY` matches no
 ///   catalogue entry, so it comes back with no candidates and the screen offers nothing.
 /// - It does not care about word order. `CHS CRM` matches `cream cheese`. Receipts are not
-///   written to a grammar, and penalising disorder buys nothing.
+///   written to a grammar, and penalising disorder buys nothing. It was the obvious lever for
+///   `CHOC MILK GAL` matching `milk chocolate` — a baking bar for a gallon of a drink — and it
+///   was not taken: `MILK CHOC BAR` is the same two words the other way round and `milk
+///   chocolate` is the right answer for it. Order would have fixed one and broken the other.
+///   Both are questions now, for want of full coverage, which is the safe half of that trade.
 struct ReceiptTokenMatcher {
 
     // MARK: - What a line was read as
@@ -134,14 +144,41 @@ struct ReceiptTokenMatcher {
         var sizeAmount: Rational? = nil
         var sizeUnitCode: String = ""
 
+        /// The price PER UNIT the line quoted, in cents, with the unit it was quoted in: the
+        /// `0.59` of `BANANAS 0.59 LB 1.27 F`, and the `0.59` of `0.59/LB`. nil means none was
+        /// printed.
+        ///
+        /// Separate from `priceCents`, which is the line TOTAL, and the reason this exists:
+        /// rule 4 read that `0.59` as a SIZE, the banana match was confident, and the row
+        /// pre-filled "Adds 9 1/2 oz" and wrote the lot. The real weight was 2.15 lb. It fired
+        /// on everything sold by weight, which is most of a real receipt.
+        ///
+        /// **The weight is deliberately not divided out of the two prices.** `1.27 / 0.59`
+        /// looks like free arithmetic, but `N.NN LB T.TT` is two layouts and not one: either N
+        /// is the price per pound and T/N is the weight, or N is the weight and T/N is the
+        /// price per pound. T/N is the same number in both readings — only its MEANING is in
+        /// question — so dividing does not resolve the ambiguity, it bets on one of the two
+        /// stores. On the other one it turns a reading that is right today (`2.18 LB 10.88` is
+        /// 2.18 lb of beef) into 4.99 lb, silently, which is this defect again facing the
+        /// other way. The quotient is also exact arithmetic over rounded prices:
+        /// `18.69 / 12.99` is 623/433 lb, a denominator no scale ever printed.
+        ///
+        /// So the amount stays absent. `ReceiptScanView` already has the honest state for it —
+        /// "No amount printed on the receipt. Tap to set one" — and writes no lot until he
+        /// does, while the name is still matched, still learned, and the price still recorded.
+        var unitPriceCents: Int? = nil
+        var unitPriceUnitCode: String = ""
+
         /// A leading count: `2 GV MLK`. nil means none was written.
         var multiplier: Int? = nil
 
         /// The trailing price in cents. nil means none was written.
         var priceCents: Int? = nil
 
-        /// Store codes, tax flags and stray numbers, kept so a screen can show the line being
-        /// taken apart rather than asking him to trust it.
+        /// Store codes, tax flags, prices and stray numbers, kept so a screen can show the
+        /// line being taken apart rather than asking him to trust it. Nothing here is lost
+        /// rather than dropped: the money lands in `priceCents` and `unitPriceCents` as well,
+        /// which is the same treatment the line total has always had.
         var droppedWords: [String] = []
 
         var isItemLine: Bool { rejection == nil }
@@ -175,6 +212,14 @@ struct ReceiptTokenMatcher {
         var nameCoverage: Int = 0
         /// The average confidence of the individual word matches.
         var strength: Int = 0
+        /// The best single IDENTITY word match behind this candidate, in `wordPoints`'s own
+        /// tiers. 70 means nothing better than a loose subsequence was found anywhere in it,
+        /// which `isConfident` refuses — see `confidentWordPoints`. The average cannot answer
+        /// that question: `sparkling water` averages 85 out of a 100 and a 70.
+        ///
+        /// Pack words are left out of it, for the same reason they are left out of coverage:
+        /// `BAG` reaching `bagel` is not evidence about what the line is.
+        var strongestWord: Int = 0
         /// The catalogue name or alias that actually matched, so "why did it pick that" has an
         /// answer: `HVY WHIP CRM` matched `heavy cream` **via** `heavy whipping cream`.
         var matchedVia: String = ""
@@ -198,15 +243,34 @@ struct ReceiptTokenMatcher {
 
         /// Whether the top candidate is clear enough to fill in without asking.
         ///
-        /// Computed, never stored, so it cannot disagree with the candidates it describes. The
-        /// test is deliberately strict in both directions: an exact catalogue name is always
-        /// confident, and an abbreviation match has to be both strong AND clearly ahead of the
-        /// runner-up. A confident wrong answer puts the wrong food in his pantry and he finds
-        /// out in a supermarket; a question costs him one tap.
+        /// Computed, never stored, so it cannot disagree with the candidates it describes. An
+        /// exact catalogue name or shipped alias answers itself; everything reached by
+        /// abbreviation has to clear FOUR separate tests.
+        ///
+        /// It is strict because of what a confident wrong answer costs. It puts the wrong food
+        /// in his pantry and he finds out in a supermarket — and `ReceiptLineDraft` records
+        /// that a confident match he never disputed is not even learned as an alias, because
+        /// when it was, one wrong answer became a permanent entry in his vocabulary that the
+        /// catalogue could never be consulted for again. A question costs him one tap.
+        ///
+        /// Each test is here because a sweep of the shipped 670-entry catalogue found a
+        /// confident WRONG answer that only that test stops:
+        ///
+        /// - `confidentScore` — the match is strong at all.
+        /// - `confidentCoverage` — every identity-bearing word on the line is accounted for.
+        ///   `PASTA SCE` was confidently `pasta`, `CHOC MILK GAL` confidently a baking bar.
+        /// - `confidentWordPoints` — at least one word matched as more than a loose
+        ///   subsequence. `COKE` was confidently `cornflakes`, with no runner-up to measure
+        ///   it against.
+        /// - `confidentGap` — and it is clear of the runner-up. `WATER SPRING` was confidently
+        ///   `sparkling water`, 17 ahead of plain `water`.
         var isConfident: Bool {
             guard let top = candidates.first else { return false }
             if top.isExact { return true }
-            guard top.score >= ReceiptTokenMatcher.confidentScore else { return false }
+            guard top.score >= ReceiptTokenMatcher.confidentScore,
+                  top.tokenCoverage >= ReceiptTokenMatcher.confidentCoverage,
+                  top.strongestWord >= ReceiptTokenMatcher.confidentWordPoints
+            else { return false }
             guard candidates.count > 1 else { return true }
             return top.score - candidates[1].score >= ReceiptTokenMatcher.confidentGap
         }
@@ -231,9 +295,64 @@ struct ReceiptTokenMatcher {
     /// it, neither ever confident. That is the better failure.
     static let minimumScore = 50
     /// A top candidate must reach this before the screen may skip the question.
+    ///
+    /// **Not 81, although 81 would have closed two of the traced defects on its own.** A
+    /// candidate with 50% token coverage scores at most `(2*50 + 2*100 + 100) / 5` = 80
+    /// exactly, so raising this by one point IS the coverage rule below, stated as a
+    /// coincidence of the weights in `score` rather than as a reason — and it stops meaning
+    /// anything the day one of those weights changes. It would also have left the 66%
+    /// coverage cases (`CHOC MLK QT` at 83, `CHOC MILK GAL` at 85) exactly where they were.
     static let confidentScore = 80
     /// ...and be this far ahead of the runner-up.
-    static let confidentGap = 15
+    ///
+    /// 18 and not 15, and those three points are the whole fix for two confident wrong
+    /// answers that nothing else here reaches: `CHS` put `chives` 17 ahead of five cheeses,
+    /// and `WATER SPRING` put `sparkling water` 17 ahead of plain `water`.
+    ///
+    /// 18 and not more, because `GRN ONIONS` reaches `scallion` through its shipped
+    /// `green onion` alias exactly 18 ahead of `onion`, and that one is right. The window is
+    /// one point wide. That is a fact about the shipped catalogue and not a principle, and if
+    /// it ever closes it closes toward asking, which is the safe side.
+    ///
+    /// It costs one correct answer, honestly: `TOMATO SCE` reaches `tomato sauce` 17 ahead of
+    /// `tomato` — the same shape, the same score and the same gap as the sparkling water it
+    /// has to kill, down to the per-word tiers. No threshold can separate those two, so that
+    /// line is a question now as well.
+    static let confidentGap = 18
+
+    /// ...and account for EVERY identity-bearing word the line printed.
+    ///
+    /// The lever that closes the largest family, and the one that generalises: `PASTA SCE`
+    /// was confidently `pasta`, `APPLE SCE` confidently `apple`, `CHOC MILK GAL` and
+    /// `CHOC MLK QT` confidently `milk chocolate`. In every one of them the word carrying the
+    /// identity — `sauce`, `chocolate milk` — has no catalogue entry AT ALL, so the only word
+    /// that did match won outright instead of being asked about. An unexplained word on the
+    /// line is what that absence looks like from in here, and it is the only signal available:
+    /// the catalogue cannot be relied on to contain the answer, and the next missing noun will
+    /// not be `sauce`.
+    ///
+    /// Pack and grade words are already excluded upstream, so `KS ORG CHKN BRST` still reads
+    /// as fully covered. The cost is a one-tap question wherever a word is left over:
+    /// `BACON THICK`, `SHRD CHEDDAR`, `OLIVE OIL XV`, `WHL MLK GAL`. The sweep put that at
+    /// about one line in five of a realistic receipt, against two more confident wrong
+    /// answers it caught that nobody had reported — `TORTILLAS FLOUR` reaching
+    /// `all-purpose flour` through the alias `flour`, and `COKE`.
+    static let confidentCoverage = 100
+
+    /// ...and rest on at least one word that matched as more than a loose subsequence.
+    ///
+    /// The 70-point tier is the catch-all and it reaches a long way: `chs` is a subsequence of
+    /// `chives`, `coke` of `cornflakes`. Both scored 94 — full coverage of a short name — and
+    /// both were confident. `COKE` was the worse of the two and the reason this test exists
+    /// rather than a bigger gap: `cornflakes` was its ONLY candidate, and a lone candidate
+    /// over `confidentScore` is confident by definition with no runner-up to be measured
+    /// against. That is `minimumScore`'s warning arriving from the other direction.
+    ///
+    /// 85 is the consonant skeleton, which is the receipt's own convention and the strong
+    /// evidence `wordPoints` says it is. It leaves `CHKN BRST` confident, which the brief for
+    /// this fix doubted: `brst` IS the skeleton of `breast` and scores 85, and only `chkn`
+    /// takes the loose tier.
+    static let confidentWordPoints = 85
 
     // MARK: - The index
 
@@ -369,10 +488,39 @@ struct ReceiptTokenMatcher {
                 continue
             }
 
+            // `0.59/LB` — a price per pound as one word, because `/` survives the cleaner
+            // above so that `1/2` can. Read here rather than left to fall through: it reached
+            // `nameKey` as the three words `0`, `59` and `lb`, which took the token's coverage
+            // under the floor and lost the match for the whole line. Rule 9.
+            let slashParts = lower.split(separator: "/", omittingEmptySubsequences: false)
+            if slashParts.count == 2, let cents = moneyCents(String(slashParts[0])),
+               let code = sizeUnitCodes[String(slashParts[1])] {
+                if reading.unitPriceCents == nil {
+                    reading.unitPriceCents = cents
+                    reading.unitPriceUnitCode = code
+                }
+                dropped.append(word)
+                index += 1
+                continue
+            }
+
             // A number and a unit, written apart: `2 LB`, `12 CT`, `1 GAL`. Checked before the
             // price rule so `2.34 LB` is a weight and not a price.
             if let amount = rational(fromNumber: lower), index + 1 < words.count,
                let code = sizeUnitCodes[lowered[index + 1]] {
+                // ...unless the number is money-shaped and the line still has a total to
+                // print, in which case it is a price per unit and not a size at all. Rule 9,
+                // and `Reading.unitPriceCents` for why the weight is not divided out of it.
+                if let cents = moneyCents(lower), moneyFollows(words, after: index + 1) {
+                    if reading.unitPriceCents == nil {
+                        reading.unitPriceCents = cents
+                        reading.unitPriceUnitCode = code
+                    }
+                    dropped.append(word)
+                    dropped.append(words[index + 1])
+                    index += 2
+                    continue
+                }
                 if reading.sizeAmount == nil {
                     reading.sizeAmount = amount
                     reading.sizeUnitCode = code
@@ -481,6 +629,7 @@ struct ReceiptTokenMatcher {
                 tokenCoverage: 100,
                 nameCoverage: 100,
                 strength: 100,
+                strongestWord: 100,
                 matchedVia: hit.name,
                 isExact: true,
                 size: reading.size(preferring: hit.dimension)
@@ -507,9 +656,11 @@ struct ReceiptTokenMatcher {
             guard aligned.matched > 0 else { continue }
 
             var matchedSignificant = 0
-            for position in aligned.positions
+            var strongestWord = 0
+            for (offset, position) in aligned.positions.enumerated()
             where !ReceiptTokenMatcher.packWords.contains(tokenWords[position]) {
                 matchedSignificant += 1
+                strongestWord = max(strongestWord, aligned.tiers[offset])
             }
             // At least one word that carries identity has to match. Without this, `ORG` alone
             // reaching `orange` by subsequence put oranges on a chicken line.
@@ -531,6 +682,7 @@ struct ReceiptTokenMatcher {
                 tokenCoverage: tokenCoverage,
                 nameCoverage: nameCoverage,
                 strength: strength,
+                strongestWord: strongestWord,
                 matchedVia: row.text,
                 isExact: row.text == reading.nameKey,
                 size: reading.size(preferring: row.entry.dimension)
@@ -580,12 +732,18 @@ struct ReceiptTokenMatcher {
     /// Greedy and not optimal: a true assignment would cost a matrix and a Hungarian pass to
     /// change the answer on a two-word grocery name approximately never. Order is ignored (see
     /// the note at the top).
+    ///
+    /// `tiers` is parallel to `positions`: the `wordPoints` tier each matched word landed in.
+    /// It is carried because the average in `strength` hides a single loose match, and
+    /// `isConfident` has to be able to see one — `sparkling water` averages 85 out of a 100
+    /// and a 70, which is how `WATER SPRING` was confident.
     static func align(
         _ tokenWords: [String], to entryWords: [String]
-    ) -> (points: Int, matched: Int, positions: [Int]) {
+    ) -> (points: Int, matched: Int, positions: [Int], tiers: [Int]) {
         var used = Array(repeating: false, count: entryWords.count)
         var points = 0
         var positions: [Int] = []
+        var tiers: [Int] = []
 
         for (position, token) in tokenWords.enumerated() {
             var bestPoints = 0
@@ -601,9 +759,12 @@ struct ReceiptTokenMatcher {
                 used[bestIndex] = true
                 points += bestPoints
                 positions.append(position)
+                tiers.append(bestPoints)
             }
         }
-        return (points: points, matched: positions.count, positions: positions)
+        return (
+            points: points, matched: positions.count, positions: positions, tiers: tiers
+        )
     }
 
     /// How much one receipt word is worth against one catalogue word. 0 = no match.
@@ -682,6 +843,20 @@ struct ReceiptTokenMatcher {
               let dollars = Int(whole), let fraction = Int(cents)
         else { return nil }
         return dollars * 100 + fraction
+    }
+
+    /// Whether a money-shaped word appears anywhere after `index`.
+    ///
+    /// Rule 9's second half. A number in front of a unit is only read as a price per unit when
+    /// the line still has a total left to print, because that total is the only thing on the
+    /// line saying the earlier number was a price: `BANANAS 0.59 LB` alone is far more likely
+    /// to be a deli weight, and is still read as one.
+    static func moneyFollows(_ words: [String], after index: Int) -> Bool {
+        guard index + 1 < words.count else { return false }
+        for position in (index + 1)..<words.count where moneyCents(words[position]) != nil {
+            return true
+        }
+        return false
     }
 
     /// `"12"`, `"1.5"`, `"1/2"` -> an exact `Rational`. nil for anything else.

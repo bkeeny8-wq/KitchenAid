@@ -11,6 +11,12 @@ import XCTest
 /// target runs on Brandon's Mac, and read the two assertions in `CODE_REVIEW_01.md` that
 /// passed for the wrong reason before trusting the shape of one here.
 ///
+/// The scores in `testAConfidentAnswerNeedsCoverageStrongEvidenceAndAClearGap` and its pair
+/// were not reasoned out here either. They were swept over the shipped 670-entry
+/// `ingredients.json` — 1,339 names and aliases — against a port of this algorithm, which is
+/// how four confident wrong answers were found after the file claimed none existed. A claim
+/// about this matcher that has not been swept is a guess.
+///
 /// What is NOT covered, and cannot be from here: everything in `BarcodeRegistry` and
 /// `ReceiptIntake` that fetches, because a fetch needs a context. `normalize(_:)` and the
 /// key agreement that makes "once, then remembers" work are testable, and they are the two
@@ -214,6 +220,146 @@ final class ReceiptScanningTests: XCTestCase {
                        "tied candidates sort by name")
     }
 
+    // MARK: - Confident and wrong, which is the worst outcome this feature has
+
+    /// The thirteen entries above, plus the six from the real catalogue that make the traps
+    /// below reachable — and, far more to the point, WITHOUT the four it does not have.
+    ///
+    /// `ingredients.json` ships `chives`, `pasta`, `water`, `sparkling water`, `scallion` and
+    /// `onion`. It ships no `cheese`, no `sauce`, no `chocolate milk` and no `spring water`,
+    /// and that absence IS the defect: when the word carrying the identity has no entry at
+    /// all, the only word that DID match wins outright instead of being asked about. Adding
+    /// those four to the catalogue would hide these four cases and teach the matcher nothing,
+    /// because the next noun it is missing will not be `sauce`.
+    private var catalogueWithTheRealTraps: [CatalogEntry] {
+        catalogue + [
+            entry("chives", "Produce", .volume, "tbsp", ["fresh chives"]),
+            entry("pasta", "Dry goods", .mass, "oz", ["pastas"]),
+            entry("water", "Beverages", .volume, "cup", ["waters"]),
+            entry("sparkling water", "Beverages", .volume, "ml", ["sparkling waters"]),
+            entry("scallion", "Produce", .count, "each",
+                  ["green onion", "spring onion", "scallions"]),
+            entry("onion", "Produce", .count, "each", ["onions"])
+        ]
+    }
+
+    private func trapMatcher() -> ReceiptTokenMatcher {
+        let entries = catalogueWithTheRealTraps
+        return ReceiptTokenMatcher(
+            entries: entries,
+            exactLookup: { name in ReceiptScanningTests.exactLookup(name, in: entries) }
+        )
+    }
+
+    /// **Four confident wrong answers, one for each test in `isConfident`.**
+    ///
+    /// Every one of these filled itself in and said nothing: a receipt line of chives he does
+    /// not buy, pasta sauce filed as pasta, a baking bar for a quart of chocolate milk, and
+    /// sparkling water for the plain bottled kind. They are four separate readings and not a
+    /// loop on purpose — each one defeats a DIFFERENT test, and a loop would still pass if one
+    /// test were doing all the work.
+    func testAConfidentAnswerNeedsCoverageStrongEvidenceAndAClearGap() throws {
+        let m = trapMatcher()
+
+        // 1. The gap, and the loose tier. `chs` is a subsequence of `chives` and covers all of
+        // that short name, which is worth 94, while `cream cheese` can only account for half
+        // of its own name and sits at 77. Seventeen points is not "clearly ahead" of five
+        // cheeses, and a subsequence is not strong evidence on its own.
+        let cheese = m.match("CHS 3.99 F")
+        let chives = try XCTUnwrap(cheese.best)
+        XCTAssertEqual(chives.name, "chives", "ranked: \(cheese.candidates.map { $0.name })")
+        XCTAssertEqual(chives.score, 94)
+        XCTAssertEqual(chives.strongestWord, 70, "a subsequence and nothing better")
+        XCTAssertEqual(cheese.candidates[1].score, 77)
+        XCTAssertFalse(cheese.isConfident, "17 is under the gap and 70 is under the tier")
+        XCTAssertTrue(cheese.needsAnswer)
+        // The cheeses are still offered: the fix is a question, not a shorter list.
+        XCTAssertTrue(cheese.candidates.contains(where: { $0.name == "cream cheese" }))
+
+        // 2. Coverage, at the exact point where the arithmetic made confidence automatic.
+        // `SCE` is sauce and the catalogue has none, so the one word left covers its own name
+        // completely: 50% token coverage, which the weights in `score` cap at 80 — the
+        // threshold exactly — with nothing else on the line to be clear of.
+        let sauce = m.match("PASTA SCE 24Z 2.18")
+        let pasta = try XCTUnwrap(sauce.best)
+        XCTAssertEqual(pasta.name, "pasta")
+        XCTAssertEqual(pasta.score, ReceiptTokenMatcher.confidentScore, "confident by arithmetic")
+        XCTAssertEqual(pasta.tokenCoverage, 50, "half the line was never explained")
+        XCTAssertEqual(sauce.candidates.count, 1, "and nothing to be clear of")
+        XCTAssertFalse(sauce.isConfident)
+
+        // 3. Coverage again, at 66 — which is why that test is 100 and not the two thirds the
+        // review proposed. A quart of chocolate milk, matched to a baking bar at 83 with `QT`
+        // unexplained, and both of the words it did match are strong.
+        let drink = m.match("CHOC MLK QT 1.79")
+        let bar = try XCTUnwrap(drink.best)
+        XCTAssertEqual(bar.name, "milk chocolate")
+        XCTAssertEqual(bar.score, 83)
+        XCTAssertEqual(bar.tokenCoverage, 66)
+        XCTAssertEqual(bar.strongestWord, 90,
+                       "CHOC is a prefix of chocolate: only coverage refuses this one")
+        XCTAssertFalse(drink.isConfident)
+
+        // 4. The gap on its own: full coverage, a word matched at 100, and still wrong.
+        // `spring` is a subsequence of `sparkling`, so `sparkling water` claimed both words at
+        // 97 while plain `water` — which is what the line says — sat 17 behind.
+        let bottled = m.match("WATER SPRING 24 CT 3.98")
+        let sparkling = try XCTUnwrap(bottled.best)
+        XCTAssertEqual(sparkling.name, "sparkling water")
+        XCTAssertEqual(sparkling.score, 97)
+        XCTAssertEqual(sparkling.tokenCoverage, 100)
+        XCTAssertEqual(sparkling.strongestWord, 100)
+        XCTAssertEqual(bottled.candidates[1].name, "water")
+        XCTAssertEqual(sparkling.score - bottled.candidates[1].score, 17)
+        XCTAssertFalse(bottled.isConfident, "nothing but the gap stops this one")
+    }
+
+    /// The other half of the same fix, and the half that makes it one: the clear lines have to
+    /// go on answering themselves. A rule that silences four wrong answers by asking about
+    /// everything is not a rule, it is a retreat.
+    func testTheConfidenceRulesStillLetTheClearLinesAnswerThemselves() throws {
+        let m = trapMatcher()
+
+        // Two consonant skeletons, both words of the name accounted for, and 23 clear of the
+        // nearest thing to it — which is `chives` again, harmless at 74.
+        let creamCheese = m.match("GV CRM CHS 8Z            4.99 F")
+        XCTAssertEqual(try XCTUnwrap(creamCheese.best).name, "cream cheese")
+        XCTAssertTrue(creamCheese.isConfident)
+
+        // The one the brief for this fix expected to break. It reads `CHKN BRST` as two loose
+        // subsequence matches and it is not: `brst` IS the consonant skeleton of `breast` and
+        // scores 85, so the tier test is satisfied by that word alone.
+        let chicken = m.match("KS ORG CHKN BRST 2 LB   12.99")
+        let breast = try XCTUnwrap(chicken.best)
+        XCTAssertEqual(breast.name, "chicken breast")
+        XCTAssertEqual(breast.strongestWord, 85, "BRST is a skeleton, not a subsequence")
+        XCTAssertEqual(breast.tokenCoverage, 100, "ORG is a grade word, not a missed word")
+        XCTAssertTrue(chicken.isConfident)
+
+        // An exact shipped alias answers itself whatever the thresholds are.
+        XCTAssertTrue(m.match("CHEVRE 7.49").isConfident)
+
+        // **The point of the gap being 18 and not 20.** `GRN ONIONS` reaches `scallion`
+        // through its shipped `green onion` alias exactly 18 ahead of plain `onion`, and it is
+        // right. If a later review raises the gap, this is the line that pays for it, and the
+        // failure here is the argument.
+        let scallions = m.match("GRN ONIONS               1.29")
+        let scallion = try XCTUnwrap(scallions.best)
+        XCTAssertEqual(scallion.name, "scallion")
+        XCTAssertEqual(scallion.matchedVia, "green onion")
+        XCTAssertEqual(scallion.score - scallions.candidates[1].score,
+                       ReceiptTokenMatcher.confidentGap, "18, with nothing to spare")
+        XCTAssertTrue(scallions.isConfident)
+
+        // And the same two words the other way round, where `milk chocolate` is the right
+        // answer and is 20 clear of `milk`. `CHOC MLK` above is a question; this is not.
+        let chocolate = m.match("MLK CHOC 2.99")
+        let milkChocolate = try XCTUnwrap(chocolate.best)
+        XCTAssertEqual(milkChocolate.name, "milk chocolate")
+        XCTAssertEqual(milkChocolate.score - chocolate.candidates[1].score, 20)
+        XCTAssertTrue(chocolate.isConfident)
+    }
+
     // MARK: - Aliases
 
     /// A token that matches a shipped ALIAS rather than a name. `chevre` is goat cheese, and
@@ -296,6 +442,68 @@ final class ReceiptScanningTests: XCTestCase {
         // a unit this app knows, so it is dropped rather than read as eight of something.
         let unknown = matcher().match("GV CRM CHS 8QQ 4.99")
         XCTAssertNil(unknown.reading.sizeAmount)
+    }
+
+    /// **A price per pound is not a weight.**
+    ///
+    /// Rule 4 — "a number followed by a unit is a size" — cannot tell `0.59 LB` (dollars per
+    /// pound, with the total still to come) from `2.18 LB` (a weight, with the total still to
+    /// come). It read 59/100 lb of banana, the name matched exactly, the line was confident,
+    /// and the row pre-filled "Adds 9 1/2 oz" and wrote that lot. The weight the two prices
+    /// imply is 1.27 / 0.59, about 2.15 lb.
+    ///
+    /// It fired on everything sold by weight — produce, meat, deli, seafood, which is most of
+    /// a real receipt — and it passed the letter of "never invent a quantity", because the
+    /// number IS printed on the line. It was the wrong number.
+    ///
+    /// The amount is left ABSENT rather than divided out of the two prices;
+    /// `Reading.unitPriceCents` carries the argument for that, which is that the division
+    /// resolves nothing and silently breaks the other layout.
+    func testAPricePerPoundIsNotAWeight() throws {
+        let line = matcher().match("BANANAS 0.59 LB 1.27 F")
+
+        XCTAssertNil(line.reading.sizeAmount, "59 cents a pound is not 0.59 lb of banana")
+        XCTAssertEqual(line.reading.sizeUnitCode, "")
+        XCTAssertEqual(line.reading.unitPriceCents, 59)
+        XCTAssertEqual(line.reading.unitPriceUnitCode, "lb")
+        XCTAssertEqual(line.reading.priceCents, 127, "the total is still the total")
+        XCTAssertNil(line.reading.size(preferring: .mass))
+        XCTAssertNil(line.reading.size(preferring: .count))
+
+        // The MATCH is untouched: it is the amount that is unknown, not the food. He gets a
+        // banana row that wants one tap, not a weight he never saw and would never question.
+        let banana = try XCTUnwrap(line.best)
+        XCTAssertEqual(banana.name, "banana")
+        XCTAssertTrue(line.isConfident)
+        XCTAssertNil(banana.size)
+
+        // Nothing is thrown away either — both words are in the record the screen shows him,
+        // the same way the line total has always been.
+        XCTAssertTrue(line.reading.droppedWords.contains("0.59"))
+        XCTAssertTrue(line.reading.droppedWords.contains("LB"))
+
+        // A bare integer is not money-shaped, so a printed weight still reads as one.
+        let weighed = matcher().match("BANANAS 2 LB 1.27 F")
+        XCTAssertEqual(weighed.reading.sizeAmount, Rational(2))
+        XCTAssertEqual(weighed.reading.sizeUnitCode, "lb")
+        XCTAssertNil(weighed.reading.unitPriceCents)
+
+        // ...and with no total on the line, nothing says the number was a price, so it is
+        // still a size. A deli line that prints only `0.59 LB` is nine and a half ounces.
+        let deli = matcher().match("BANANAS 0.59 LB")
+        XCTAssertEqual(deli.reading.sizeAmount, Rational(59, 100))
+        XCTAssertNil(deli.reading.unitPriceCents)
+
+        // The other spelling, which was worse than wrong: `/` survives the cleaner so that
+        // `1/2` can, so `0.59/LB` reached the name as the words `0`, `59` and `lb`. That took
+        // the token's coverage under the floor and left NO candidates for a line saying
+        // BANANAS.
+        let slashed = matcher().match("BANANAS 0.59/LB 1.27 F")
+        XCTAssertEqual(slashed.reading.nameKey, "banana")
+        XCTAssertNil(slashed.reading.sizeAmount)
+        XCTAssertEqual(slashed.reading.unitPriceCents, 59)
+        XCTAssertEqual(slashed.reading.unitPriceUnitCode, "lb")
+        XCTAssertEqual(try XCTUnwrap(slashed.best).name, "banana")
     }
 
     /// A leading bare integer is a multiplier; a number followed by a unit is a size. `12 CT
