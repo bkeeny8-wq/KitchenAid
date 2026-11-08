@@ -15,6 +15,7 @@
 		4449FAFF2DA24FF6AA64404B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5C7F155C7E755444E96D3D1 /* Assets.xcassets */; };
 		952E0DEF1D2B498B7D9B7A25 /* AttendanceDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B5D5E0502120030FC5A471 /* AttendanceDefault.swift */; };
 		C082663A4252DDB74DA36267 /* AttendanceGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7126B240DE76D3D2828D6FD /* AttendanceGridView.swift */; };
+		6052A6F1AC75C1F9CF896EA3 /* BarcodeRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9272EDEB63F939BEDA28A934 /* BarcodeRegistry.swift */; };
 		1A2D771767D700B284EA6583 /* BelowParView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D645924FC41A69D368C488 /* BelowParView.swift */; };
 		FC03A5A541FFFB36E311AD6E /* CalendarKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649E975FF0ED2BB89BC79D74 /* CalendarKey.swift */; };
 		9B0C36F906B3D6BC1FAF3A0D /* CatalogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6167AB624F4ED65AC981BB /* CatalogEntry.swift */; };
@@ -38,6 +39,7 @@
 		FB0671BF0C831D5B21E3F3B2 /* FlagBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEFDD40F978672998808495 /* FlagBadge.swift */; };
 		B805405EDDCB9B271A8FE13B /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5B9EDF6E40622122C83298 /* FoodItem.swift */; };
 		8F56EA1E4DF48E286B5891A0 /* FoodItemAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C767D35A71F0C2E8C158E09 /* FoodItemAlias.swift */; };
+		2418CEF5DEBBD2E22FDEF8E2 /* FoodItemBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EB35DBA05E5A073719C755 /* FoodItemBarcode.swift */; };
 		F8C887E61E9DFF3D4230FE6C /* FoodItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7F85CCFFBB890DECAA41BD /* FoodItemDetailView.swift */; };
 		70C2CAE52889FC72FD901DD2 /* FoodItemResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D3D45B59AF22A9C25D5EFC /* FoodItemResolver.swift */; };
 		1C2E2E90548ECA00D88DB768 /* GenerateShoppingListSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D40A4AB619CF27EE3C42F8 /* GenerateShoppingListSheet.swift */; };
@@ -82,6 +84,9 @@
 		2C189CFADE160BCD330D07D3 /* QuantitySubtotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDCB6391CE51E144490AC9 /* QuantitySubtotal.swift */; };
 		388C936318CA915836B8DA8C /* Rational.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB8D7281C8C63B560E9275 /* Rational.swift */; };
 		CDF09863E9759E7A6322AE69 /* RationalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9F02F4FDF21BA27DA45A10 /* RationalTests.swift */; };
+		F66591134360EF0382361A7F /* ReceiptIntake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CECB169818F4595C9FA0536 /* ReceiptIntake.swift */; };
+		6346A947312F144CBC4F9639 /* ReceiptScanningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A432F3E962178744A979BB15 /* ReceiptScanningTests.swift */; };
+		E0362A6411029650501EEB23 /* ReceiptTokenMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747FEBAD442394AD080D5C01 /* ReceiptTokenMatcher.swift */; };
 		76DCED2DC87E7869D70E53CD /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5A67F8058309814CD7C4D5 /* Recipe.swift */; };
 		3D53486F36DFABE255A8483D /* RecipeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC65A4E7B8323350A342A436 /* RecipeComponent.swift */; };
 		5D430910E5E1A8F5419917B2 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA8037BFE2932039A7C7477 /* RecipeDetailView.swift */; };
@@ -152,6 +157,7 @@
 		C5C7F155C7E755444E96D3D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		08B5D5E0502120030FC5A471 /* AttendanceDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceDefault.swift; sourceTree = "<group>"; };
 		E7126B240DE76D3D2828D6FD /* AttendanceGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceGridView.swift; sourceTree = "<group>"; };
+		9272EDEB63F939BEDA28A934 /* BarcodeRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeRegistry.swift; sourceTree = "<group>"; };
 		01D645924FC41A69D368C488 /* BelowParView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BelowParView.swift; sourceTree = "<group>"; };
 		649E975FF0ED2BB89BC79D74 /* CalendarKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarKey.swift; sourceTree = "<group>"; };
 		DD6167AB624F4ED65AC981BB /* CatalogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogEntry.swift; sourceTree = "<group>"; };
@@ -175,6 +181,7 @@
 		FCEFDD40F978672998808495 /* FlagBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagBadge.swift; sourceTree = "<group>"; };
 		3B5B9EDF6E40622122C83298 /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
 		0C767D35A71F0C2E8C158E09 /* FoodItemAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemAlias.swift; sourceTree = "<group>"; };
+		E0EB35DBA05E5A073719C755 /* FoodItemBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemBarcode.swift; sourceTree = "<group>"; };
 		3F7F85CCFFBB890DECAA41BD /* FoodItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemDetailView.swift; sourceTree = "<group>"; };
 		26D3D45B59AF22A9C25D5EFC /* FoodItemResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemResolver.swift; sourceTree = "<group>"; };
 		B3D40A4AB619CF27EE3C42F8 /* GenerateShoppingListSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateShoppingListSheet.swift; sourceTree = "<group>"; };
@@ -219,6 +226,9 @@
 		83EDCB6391CE51E144490AC9 /* QuantitySubtotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitySubtotal.swift; sourceTree = "<group>"; };
 		34DB8D7281C8C63B560E9275 /* Rational.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rational.swift; sourceTree = "<group>"; };
 		4D9F02F4FDF21BA27DA45A10 /* RationalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RationalTests.swift; sourceTree = "<group>"; };
+		9CECB169818F4595C9FA0536 /* ReceiptIntake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptIntake.swift; sourceTree = "<group>"; };
+		A432F3E962178744A979BB15 /* ReceiptScanningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScanningTests.swift; sourceTree = "<group>"; };
+		747FEBAD442394AD080D5C01 /* ReceiptTokenMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptTokenMatcher.swift; sourceTree = "<group>"; };
 		AF5A67F8058309814CD7C4D5 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		CC65A4E7B8323350A342A436 /* RecipeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeComponent.swift; sourceTree = "<group>"; };
 		DCA8037BFE2932039A7C7477 /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
@@ -331,6 +341,7 @@
 				96247A5CBCD2FFA2AD91522E /* Eater.swift */,
 				3B5B9EDF6E40622122C83298 /* FoodItem.swift */,
 				0C767D35A71F0C2E8C158E09 /* FoodItemAlias.swift */,
+				E0EB35DBA05E5A073719C755 /* FoodItemBarcode.swift */,
 				57D6F754048C4A3A31EFACDE /* InventoryTransaction.swift */,
 				4428EE9D8E4C280010B05784 /* MealAttendance.swift */,
 				2313900CED54437CAA9B5638 /* MealRecipe.swift */,
@@ -400,12 +411,15 @@
 		AF3EE6CF1677BDC9189B6141 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9272EDEB63F939BEDA28A934 /* BarcodeRegistry.swift */,
 				26D3D45B59AF22A9C25D5EFC /* FoodItemResolver.swift */,
 				AE9D9FB29B1E5C9E440E199E /* IngredientCatalog.swift */,
 				8AAB2A942D7970167A7FD87D /* InventoryLedger.swift */,
 				66733ABB434ACDB0820C0FA2 /* KitchenAidSeed.swift */,
 				CB3F1F36CD5A610AB641D528 /* MealScaling.swift */,
 				B7712E487F4664FB683F646A /* PDFExportService.swift */,
+				9CECB169818F4595C9FA0536 /* ReceiptIntake.swift */,
+				747FEBAD442394AD080D5C01 /* ReceiptTokenMatcher.swift */,
 				F18E73ACA55DE44D58CC7194 /* RecipeGraph.swift */,
 				57AC9658367EB6E31621FFC6 /* RecipeLoader.swift */,
 				B296DB72190DBCA8DC3EB736 /* ShoppingListBuilder.swift */,
@@ -564,6 +578,7 @@
 			children = (
 				6529725AADE8E8D10846416F /* QuantityMathTests.swift */,
 				4D9F02F4FDF21BA27DA45A10 /* RationalTests.swift */,
+				A432F3E962178744A979BB15 /* ReceiptScanningTests.swift */,
 			);
 			path = KitchenAidTests;
 			sourceTree = "<group>";
@@ -726,6 +741,7 @@
 				0C6FB4FC7E3D474F58AF4987 /* Eater.swift in Sources */,
 				B805405EDDCB9B271A8FE13B /* FoodItem.swift in Sources */,
 				8F56EA1E4DF48E286B5891A0 /* FoodItemAlias.swift in Sources */,
+				2418CEF5DEBBD2E22FDEF8E2 /* FoodItemBarcode.swift in Sources */,
 				99F6635CE909549A21EC01CB /* InventoryTransaction.swift in Sources */,
 				A0EEFE0A4562CE88A4431C76 /* MealAttendance.swift in Sources */,
 				2F40F5725C432913646AE717 /* MealRecipe.swift in Sources */,
@@ -754,12 +770,15 @@
 				388C936318CA915836B8DA8C /* Rational.swift in Sources */,
 				CFCE5947C707EAA2E3C3D520 /* ScalingNote.swift in Sources */,
 				481134CC8C291D026F441FF1 /* UnitCatalog.swift in Sources */,
+				6052A6F1AC75C1F9CF896EA3 /* BarcodeRegistry.swift in Sources */,
 				70C2CAE52889FC72FD901DD2 /* FoodItemResolver.swift in Sources */,
 				EF42B608E66D722551B79442 /* IngredientCatalog.swift in Sources */,
 				D7C3BBAD9690A984E0409025 /* InventoryLedger.swift in Sources */,
 				0F812C88DF1A2F7600555B5D /* KitchenAidSeed.swift in Sources */,
 				1BB5730EE3003CF6EB1E04D5 /* MealScaling.swift in Sources */,
 				7B2E2A72FC8B0413CF450BD7 /* PDFExportService.swift in Sources */,
+				F66591134360EF0382361A7F /* ReceiptIntake.swift in Sources */,
+				E0362A6411029650501EEB23 /* ReceiptTokenMatcher.swift in Sources */,
 				87A74134EABF1DD4D42C736E /* RecipeGraph.swift in Sources */,
 				317F0A08A0A052E039C9EEF1 /* RecipeLoader.swift in Sources */,
 				5276617F8A8DCD5303B6B69D /* ShoppingListBuilder.swift in Sources */,
@@ -826,6 +845,7 @@
 			files = (
 				AC5E8A6CAAFC4AED7DF66C01 /* QuantityMathTests.swift in Sources */,
 				CDF09863E9759E7A6322AE69 /* RationalTests.swift in Sources */,
+				6346A947312F144CBC4F9639 /* ReceiptScanningTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
