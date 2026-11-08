@@ -340,6 +340,72 @@ portrait prep-ahead page are one document.
 
 ## 1. File manifest
 
+> ### ⚠ THIS TABLE IS THE DESIGNED LAYOUT, NOT THE BUILT ONE
+>
+> **115 of the 163 files named below do not exist**, and nine of the directories do not
+> exist at all. That is not rot: it is this table doing its job as a work-list and then the
+> Swift being organised differently as it was written. CLAUDE.md governs — the Swift is the
+> contract, and this records where things actually went rather than pretending otherwise.
+> Audited against disk on 2026-11-08.
+>
+> **The model layer consolidated.** Five designed directories became one:
+> `Models/Catalog/`, `Models/Inventory/`, `Models/Overlay/`, `Models/Planning/` and
+> `Models/Shopping/` are all `Models/Persistence/` (20 files). So `FoodItem`, `StockLot`,
+> `RecipeTweak`, `PlannedMeal` and `ShoppingList` are there, not where their rows say.
+> All 21 `@Model` classes exist and are in `KitchenAidSchemaV1.models`; a 22nd,
+> `FoodItemBarcode`, was added for barcode scanning and is not in this document.
+>
+> **Three value types live with their one caller** rather than in `Models/Support/`:
+> `DeleteRefusal` in `Services/FoodItemResolver.swift`, `LedgerDivergence` in
+> `Services/InventoryLedger.swift`, and `CookTimer` became `CookClock` in
+> `Views/Cook/CookReading.swift`. `MergeKey.swift` was never written at all — see §3.7,
+> which explains why.
+>
+> **The eleven `Views/Export/*PrintPage.swift` files are sixteen nested views inside
+> `Services/PDFExportService.swift`.** `Views/Export/` exists and holds three files, none
+> of them these.
+>
+> **`Views/Settings/` was never built**, because `AppTab` argues the tab count down to five
+> and a Settings tab was not one of them. What it promised and what happened:
+> `HouseholdView` → `Views/Household/`; `StorageLocationsView` and `ReconcileView` →
+> `Views/Pantry/` (as `ReconcileReportView`); `StoreFailureBanner` → `BannerView` in
+> `App/RootTabView.swift`. `SettingsView`, `MergeFoodItemsView`, `UnitPreferenceView`,
+> `StoreLayoutView`, `StoreHealthView`, `FoodItemCatalogView`, `MissingRecipesView` and
+> `AttendanceDefaultsView` were **not built**. `MergeFoodItemsView` is the gap that matters:
+> `FoodItemResolver.reconcile` has no caller because of it, which with
+> `@Attribute(.unique)` banned means no de-duplication happens at all.
+>
+> **Renamed, same job:** `RecipeLibraryView` → `RecipeListView`, `CookModeView` →
+> `CookView`, `PlanRootView`/`WeekGridView` → `PlanWeekView`, `DayPlanView` →
+> `PlanDayView`, `AttendanceGrid` → `AttendanceGridView`, `InventoryHomeView` →
+> `PantryView`, `UnresolvedDepletionsView` → `PendingDepletionsView`,
+> `ShoppingListsView` → `ShopView`, `TweakSheet` → `IngredientTweakSheet` +
+> `StepTweakSheet`. Many smaller rows (`RecipeCardRow`, `IngredientLineRow`,
+> `TodayMealCard`, `ShoppingListLineRow`, …) were absorbed into the screen that uses them.
+>
+> **Genuinely not built, and nobody has asked for them:** `App/KitchenAidRouter.swift`
+> (navigation is a `NavigationStack` per tab), `Models/Transfer/*` (drag-and-drop and a
+> custom `UTType`), `Utilities/*` (`Theme`, `AdaptiveLayout`, `KitchenAidFormatting`),
+> `MonthCalendarView`/`MonthDayCell`, `WeekBriefView`, `DuplicateWeekSheet`,
+> `InventoryCountView`, `IngredientInboxView`, `MiseEnPlaceView`, `CookFinishSheet`.
+> (`FractionKeypad` has no file either, but `Views/Components/QuantityField.swift` does
+> its job — exact-rational entry — so that one is a rename in effect, not a gap. It is
+> also the one legitimate user of `exactDescription` in the whole app, because an
+> editable field must round-trip what it shows.)
+>
+> **The tests are the biggest shortfall.** Nine files are named below; three exist
+> (`RationalTests`, `QuantityMathTests`, `ReceiptScanningTests`), and **none of the three
+> has ever been run** — there is no Apple toolchain in the container this was written in.
+> `MealScalingTests`, `ShoppingListBuilderTests`, `TweakStoreTests`, `RecipeGraphTests`,
+> `InventoryLedgerTests`, `FoodItemResolverTests`, `RecipeLoaderTests`,
+> `IngredientCatalogTests` and `UnitCatalogTests` do not exist. Much of what they would
+> cover is asserted inside `QuantityMathTests` instead, which is worth knowing before
+> writing one.
+>
+> Run `python3 -I scripts/check_xcodeproj.py` for the authoritative built file list: it
+> fails if any file on disk is missing from the project, or any project reference is
+> missing from disk.
+
 Every Swift file to be created, grouped by folder, with what it owns. Complete and
 non-overlapping — this is the build work-list, and **every type named anywhere in this
 document has exactly one owning file below.** 21 `@Model` classes, 6 bundled content value
